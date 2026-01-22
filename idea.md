@@ -40,16 +40,18 @@ Browser → `frontend` → `backend` → `copilot` → Copilot CLI → `copilot`
 ## Repo Layout (Monorepo)
 
 ```
-copilot-playground/
-  apps/
-    web/                 # Vite + React + shadcn/ui
-  services/
+copilot-chat-playground/
+  src/
+    frontend/            # Vite + React + shadcn/ui
     backend/             # Node API streaming bridge
-    copilot/             # HTTP wrapper around Copilot CLI
-  workspace/             # optional host-mounted working dir (later)
-  docker-compose.yml
+    copilot/             # HTTP wrapper around Copilot CLI / Copilot SDK
+    shared/              # shared types/utilities (e.g., LogEvent schema)
+  public/                # (repo root) optional shared static assets (currently unused)
+  pnpm-workspace.yaml
+  package.json           # workspace root (scripts)
   .env.example
   .gitignore
+  README.md
   idea.md
 ```
 
@@ -63,9 +65,10 @@ Create a local `.env` (not committed) based on `.env.example`.
   Recommended to use a fine-grained PAT that has **Copilot Requests** permission.  
   Keep this out of the repo and never bake it into images.
 
+
 `.env.example`:
 
-```
+```dotenv
 GH_TOKEN=__PASTE_YOUR_TOKEN_HERE__
 ```
 
@@ -76,17 +79,22 @@ GH_TOKEN=__PASTE_YOUR_TOKEN_HERE__
 ### Frontend (Vite/React + shadcn/ui)
 
 **UI components:**
+
 - `Input` for the prompt
 - `Button` to send
 - `Textarea` read-only to display output
 
+
 **State shape (suggestion):**
+
 - `prompt: string`
 - `output: string`
 - `status: 'empty' | 'waiting' | 'streaming' | 'done' | 'error'`
 - `error?: string`
 
+
 **Streaming approach (recommended first):**
+
 - `fetch("http://localhost:3000/api/chat", { method: "POST", body: ... })`
 - Read `response.body` stream with `ReadableStream` and append chunks to `output`
 
@@ -101,6 +109,7 @@ Expose:
   Response: streamed text
 
 Backend responsibilities:
+
 - Validate input
 - Call the copilot service: `http://copilot:3210/chat`
 - Pipe chunks from copilot to the browser
@@ -123,6 +132,7 @@ Backend responsibilities:
   - streams stdout (and optionally stderr) back
 
 **Later upgrades:**
+
 - Mount `workspace/` into `/workspace` and run with `WORKDIR /workspace`
 - Persist Copilot config under a volume (e.g., `copilot_config:/root/.copilot`)
 
@@ -131,11 +141,13 @@ Backend responsibilities:
 ## Docker Compose Sketch
 
 Ports (example):
+
 - frontend: `5173:5173`
 - backend: `3000:3000`
 - copilot: internal only (optional `3210:3210` for debugging)
 
 Volumes:
+
 - hot reload mounts for frontend/backend
 - optional `./workspace:/workspace`
 
@@ -144,13 +156,16 @@ Volumes:
 ## Milestones
 
 ### Milestone A — UI only (fake streaming)
+
 **Goal:** frontend UX + streaming logic without any Copilot dependency.
 
 **Deliverables:**
+
 - Vite/React app with shadcn/ui input/button/textarea
 - Backend that returns a fake streamed response (e.g., chunks every 100ms)
 
 **Acceptance criteria:**
+
 - Empty state: textarea shows a placeholder like “Type a prompt…”
 - On Send: status becomes `waiting`, button disables, textarea shows “Waiting…”
 - While streaming: output fills incrementally (chunked appends)
@@ -160,13 +175,16 @@ Volumes:
 ---
 
 ### Milestone B — Real Copilot (non-streaming first)
+
 **Goal:** verify authentication + basic connectivity.
 
 **Deliverables:**
+
 - Copilot container builds and runs with `GH_TOKEN`
 - Backend calls copilot wrapper and returns the final output (buffered)
 
 **Acceptance criteria:**
+
 - A simple prompt returns a response end-to-end
 - Errors are readable (auth errors, missing token, etc.)
 - Token remains server-side only
@@ -174,9 +192,11 @@ Volumes:
 ---
 
 ### Milestone C — End-to-end streaming (real stdout streaming)
+
 **Goal:** stream Copilot’s stdout live into the UI.
 
 **Deliverables:**
+
 - Copilot wrapper uses `spawn()` and streams stdout chunk-by-chunk
 - Backend pipes stream to the browser
 - Frontend appends chunks in near real-time
