@@ -4,6 +4,15 @@ We are building a playground for experimenting with GitHub Copilot Chat using th
 ## AGENTS.md
 Also look at '.github/copilot-instructions.md' for overall instructions given to the AI agent.
 
+## Agent skills
+You can discover skills to progressivley load from '.github/skills/' folder.
+Nonexhaustive list:
+- '.github/skills/frontend-design' : Skills related to designing and implementing frontend user interfaces.
+- '.github/skills/typescript' : Skills focused on TypeScript programming and best practices.
+- '.github/skills/vercel-react-best-practices' : Skills around best practices for React
+- '.github/skills/typescript-advanced-types' : Advanced TypeScript concepts and techniques.
+and more.
+
 ## Agents in Copilot Chat Playground
 We have potential agent/subagents to execute in '.github/agents/' folder.
 Nonexhaustive list:
