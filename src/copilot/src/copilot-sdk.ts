@@ -49,7 +49,11 @@ export class CopilotSDKService {
   /**
    * Send a prompt to Copilot and return the buffered response
    */
-  async chat(prompt: string, requestId?: string): Promise<CopilotSDKResponse> {
+  async chat(
+    prompt: string,
+    requestId?: string,
+    systemPrompt?: string
+  ): Promise<CopilotSDKResponse> {
     // Validate token first
     const tokenCheck = validateToken();
     if (!tokenCheck.valid) {
@@ -80,6 +84,7 @@ export class CopilotSDKService {
       const session = await this.client.createSession({
         model: "gpt-4o",
         streaming: true,
+        ...(systemPrompt && { systemMessage: systemPrompt }),
       });
 
       this.emitLog("info", "sdk.session.created", "Copilot session created", {

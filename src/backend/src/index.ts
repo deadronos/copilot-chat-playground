@@ -10,8 +10,12 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "backend" });
 });
 
+// Mode types for safety toggles
+type ChatMode = "explain-only" | "project-helper";
+
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
+  mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
 });
 
 /**
@@ -19,7 +23,8 @@ const ChatRequestSchema = z.object({
  * For Milestone B: buffered response (no streaming yet)
  */
 async function callCopilotService(
-  prompt: string
+  prompt: string,
+  mode: ChatMode = "explain-only"
 ): Promise<{ success: boolean; output?: string; error?: string; errorType?: string }> {
   const copilotUrl = process.env.COPILOT_SERVICE_URL || "http://localhost:3210";
 
@@ -29,7 +34,7 @@ async function callCopilotService(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ prompt, mode }),
     });
 
     if (!response.ok) {
@@ -65,10 +70,17 @@ app.post("/api/chat", async (req, res) => {
     return;
   }
 
-  const { prompt } = parsed.data;
+  const { prompt, mode } = parsed.data;
+
+  // Apply guardrails based on mode
+  if (mode === "explain-only") {
+    // In explain-only mode, we add a system instruction to limit capabilities
+    // This will be passed to the copilot service
+    console.log(`[backend] Mode: ${mode} - applying explain-only guardrails`);
+  }
 
   // Call copilot service
-  const result = await callCopilotService(prompt);
+  const result = await callCopilotService(prompt, mode);
 
   if (!result.success) {
     // Map error types to user-friendly messages
