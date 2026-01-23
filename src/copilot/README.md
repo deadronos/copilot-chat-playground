@@ -1,6 +1,20 @@
 # Copilot Service
 
-This service wraps the GitHub Copilot CLI to provide an HTTP API for chat completions.
+This service provides an HTTP API for GitHub Copilot chat completions using either:
+- **Copilot SDK** (default) - Structured streaming with full event support
+- **Copilot CLI** (fallback) - Direct CLI spawning for simpler use cases
+
+## Architecture
+
+The service uses the **@github/copilot-sdk** for structured event streaming and extensibility. The SDK communicates with the Copilot CLI via JSON-RPC, providing:
+
+- Type-safe session management
+- Structured event streaming (deltas, final messages, tool calls, etc.)
+- Built-in error handling and retries
+- Support for tools and MCP servers
+- EventBus infrastructure for log aggregation and export
+
+The CLI fallback mode is available by setting `USE_COPILOT_SDK=false` in the environment.
 
 ## Setup
 
@@ -48,6 +62,14 @@ pnpm --filter @copilot-playground/copilot dev
 
 The service will start on `http://localhost:3210` by default.
 
+#### Switching between SDK and CLI modes
+
+By default, the service uses the Copilot SDK. To use CLI mode instead:
+
+```bash
+USE_COPILOT_SDK=false pnpm --filter @copilot-playground/copilot dev
+```
+
 ### Production Mode
 
 ```bash
@@ -68,7 +90,10 @@ Response:
 {
   "ok": true,
   "service": "copilot",
-  "tokenConfigured": true
+  "mode": "sdk",
+  "tokenConfigured": true,
+  "binaryAvailable": true,
+  "candidates": [...]
 }
 ```
 
@@ -138,6 +163,27 @@ pnpm --filter @copilot-playground/copilot test # in another terminal
 
 ## Implementation Details
 
-- Uses Node.js `child_process.spawn()` to call the Copilot CLI
-- Buffers stdout/stderr for non-streaming responses (Milestone B)
-- Future: Will support streaming responses (Milestone C)
+### SDK Mode (default)
+
+- Uses `@github/copilot-sdk` for structured event streaming
+- Creates CopilotClient instances that communicate with the CLI via JSON-RPC
+- Handles streaming events (deltas, final messages, tool calls, errors)
+- Provides EventBus for structured logging and observability
+- Automatically manages session lifecycle (create, send, wait, destroy)
+- Supports extending with tools and MCP servers
+
+### CLI Mode (fallback)
+
+- Uses Node.js `child_process.spawn()` to call the Copilot CLI directly
+- Buffers stdout/stderr for responses
+- Falls back to `pnpm exec -- copilot` if binary not in PATH
+- Simpler but less structured than SDK mode
+
+### EventBus
+
+The service includes a lightweight EventBus for structured event logging:
+
+- Emits structured log events with `timestamp`, `level`, `component`, `request_id`, `session_id`, `event_type`, `message`, and `meta`
+- Enables correlation across components via `request_id` and `session_id`
+- Can be extended to support SSE/WebSocket streaming to frontend
+- Supports export of logs as NDJSON or JSON
