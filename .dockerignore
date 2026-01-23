@@ -1,0 +1,40 @@
+# Ignore sensitive files and build artifacts from Docker context
+
+# Sensitive (common host private data) — keep these out of the Docker build context
+.ssh/
+.aws/
+.gnupg/
+.netrc
+.git-crypt
+
+# Node/npm
+node_modules
+**/node_modules
+
+# pnpm
+**/.pnpm
+**/.pnpm-store
+**/.pnpm-debug.log
+
+# Build outputs
+dist
+dist-ssr
+**/dist
+**/dist-ssr
+
+# Git
+.git
+
+# Env files & dotenvx keys (keep private)
+.env
+**/.env
+.env.*.local
+**/.env.*.local
+.env.keys
+.env.keys.*
+.env.key*
+
+# Editor
+.vscode
+.idea
+.DS_Store

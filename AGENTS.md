@@ -21,6 +21,7 @@ Nonexhaustive list:
 - '.github/agents/implement-subagent.agent.md': An agent dedicated to implementing features or code based on given requirements.
 
 ## Library Documentation
+'docs/library/' folder
 
 ### Copilot SDK Notes
 
