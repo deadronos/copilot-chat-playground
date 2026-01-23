@@ -11,7 +11,8 @@ COPY src/backend/package.json ./src/backend/package.json
 COPY src/frontend/package.json ./src/frontend/package.json
 
 # Install ALL dependencies including devDependencies (needed for TypeScript build)
-RUN pnpm install --frozen-lockfile
+# (Explicitly disable prod-only installs in case NODE_ENV=production is set)
+RUN pnpm install --frozen-lockfile --prod=false
 
 # Copy source
 COPY . .
