@@ -6,3 +6,4 @@
 - TASK004 - Milestone F: Switch to Copilot SDK - In Progress
 - TASK005 - Milestone D: Safety Toggles & UX Polish - Done
 - TASK006 - Milestone C: End-to-End Streaming - In Progress
+- TASK007 - Milestone E: Workspace Mount + Compose + Secrets - Pending

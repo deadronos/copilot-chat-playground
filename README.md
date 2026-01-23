@@ -20,6 +20,10 @@ The copilot service supports two modes:
 
 Set `USE_COPILOT_SDK=false` in your environment to use CLI mode.
 
+## Secrets & dotenvx
+
+For Docker/Compose usage with encrypted `.env` files, see the repo guidance in [`docs/library/dotenvx/README.md`](docs/library/dotenvx/README.md). It documents safe-by-default key handling, recommended secret injection patterns, and install options.
+
 ## Getting started
 
 1. Enable pnpm via Corepack (recommended)
