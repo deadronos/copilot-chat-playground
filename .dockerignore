@@ -27,7 +27,9 @@ dist-ssr
 
 # Env files & dotenvx keys (keep private)
 .env
+**/.env
 .env.*.local
+**/.env.*.local
 .env.keys
 .env.keys.*
 .env.key*

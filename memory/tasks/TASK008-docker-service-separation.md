@@ -1,6 +1,6 @@
 # TASK008 — Docker service separation & caching
 
-**Status:** In Progress  
+**Status:** Completed  
 **Added:** 2026-01-23  
 **Updated:** 2026-01-23
 
@@ -23,19 +23,23 @@
 
 ## Progress Tracking
 
-**Overall Status:** In Progress — 20%
+**Overall Status:** Completed — 100%
 
 ### Subtasks
 
 | ID  | Description                      | Status      | Updated    | Notes                      |
 | :-- | :------------------------------- | :---------- | :--------- | :------------------------- |
 | 1.1 | Draft design + requirements      | Complete    | 2026-01-23 | DES008 + EARS requirements |
-| 1.2 | Add backend/frontend Dockerfiles | In Progress | 2026-01-23 |                            |
-| 1.3 | Update compose + validate        | Not Started | 2026-01-23 |                            |
+| 1.2 | Add backend/frontend Dockerfiles | Complete    | 2026-01-23 |                            |
+| 1.3 | Update compose + validate        | Complete    | 2026-01-23 |                            |
 
 ## Progress Log
 
 ### 2026-01-23
 
 - Documented design in `memory/designs/DES008-docker-service-separation.md`.
-- Started implementing separate Dockerfiles per service.
+- Added separate Dockerfiles for `backend` and `frontend`, and refactored `copilot` Dockerfile for pnpm caching.
+- Updated `.dockerignore` so nested pnpm `node_modules` are excluded from the build context.
+- Updated `docker-compose.yml` to build images per service and fixed the `copilot` healthcheck.
+- Fixed `src/copilot/entrypoint.sh` so it does not exit under Debian `dash`.
+- Removed an accidentally committed secret from `src/copilot/.env`.

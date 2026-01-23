@@ -1,7 +1,13 @@
 #!/usr/bin/env sh
 # Fail fast and treat unset variables as errors; try to enable pipefail if supported
 set -eu
-set -o pipefail 2>/dev/null || true
+
+# NOTE: Debian's /bin/sh is usually `dash`, which does not support `pipefail`.
+# With `set -e`, a naive `set -o pipefail || true` can still terminate the script.
+# Enable pipefail only when supported, without tripping `set -e`.
+if (set -o pipefail) 2>/dev/null; then
+  :
+fi
 
 # Entrypoint: inject DOTENV_PRIVATE_KEY_* secrets from /run/secrets if present
 # and then exec the passed command. Only iterate DOTENV_PRIVATE_KEY_* secrets.

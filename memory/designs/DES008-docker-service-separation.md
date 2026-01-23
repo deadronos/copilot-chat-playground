@@ -1,6 +1,6 @@
 # DES008 — Docker service separation & pnpm build caching
 
-**Status:** Draft  
+**Status:** Implemented  
 **Added:** 2026-01-23  
 
 ## Context

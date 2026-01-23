@@ -4,6 +4,9 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 ARG PNPM_VERSION=10.28.1
 
 # pnpm via Corepack (pinned for reproducibility)
