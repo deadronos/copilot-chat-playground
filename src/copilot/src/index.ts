@@ -6,6 +6,7 @@ import fs from "node:fs";
 import { callCopilotCLI, validateToken, getCopilotCandidatePaths } from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
+import { checkWorkspaceMount } from "./workspace-guard.js";
 
 // Create EventBus for structured logging
 const eventBus = createEventBus();
@@ -107,6 +108,14 @@ app.listen(port, async () => {
     console.warn(`[copilot] WARNING: ${tokenCheck.error}`);
   } else {
     console.log(`[copilot] GH_TOKEN configured`);
+  }
+
+  // Check workspace mount and log visibility
+  try {
+    // run but don't fail startup on problems; logs surface issues
+    await checkWorkspaceMount("/workspace", eventBus);
+  } catch (err) {
+    console.warn(`[copilot] Workspace mount check failed: ${err instanceof Error ? err.message : String(err)}`);
   }
 
   // Initialize SDK client if enabled
