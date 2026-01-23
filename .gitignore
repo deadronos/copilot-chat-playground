@@ -25,6 +25,9 @@ dist-ssr
 *.sln
 *.sw?
 
+# dotenvx private key files (keep private!)
+.env.keys
+.env.keys.*
 .env.key*
 .env.*.local
 .env.local
