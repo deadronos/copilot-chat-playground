@@ -53,6 +53,9 @@ importers:
 
   src/copilot:
     dependencies:
+      '@github/copilot':
+        specifier: ^0.0.369
+        version: 0.0.369
       express:
         specifier: ^4.21.2
         version: 4.22.1
@@ -568,6 +571,11 @@ packages:
 
   '@fontsource-variable/inter@5.2.8':
     resolution: {integrity: sha512-kOfP2D+ykbcX/P3IFnokOhVRNoTozo5/JxhAIVYLpea/UBmCQ/YWPBfWIDuBImXX/15KH+eKh4xpEUyS2sQQGQ==}
+
+  '@github/copilot@0.0.369':
+    resolution: {integrity: sha512-uIjzFTYyRSoql/8LqZCUICOV24utytlRnYuu4LsEzRISox9FA7MGfuMmcVZrfuvZg4C7gT/o8Ilm7rNICXf7DA==}
+    engines: {node: '>=22'}
+    hasBin: true
 
   '@hono/node-server@1.19.9':
     resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
@@ -3998,6 +4006,8 @@ snapshots:
   '@floating-ui/utils@0.2.10': {}
 
   '@fontsource-variable/inter@5.2.8': {}
+
+  '@github/copilot@0.0.369': {}
 
   '@hono/node-server@1.19.9(hono@4.11.5)':
     dependencies:
