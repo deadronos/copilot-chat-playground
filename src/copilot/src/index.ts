@@ -1,3 +1,4 @@
+import "dotenv/config"; // loads .env for local development. TODO: revisit .env handling for Docker builds (inject envs into container at runtime)
 import express from "express";
 import { z } from "zod";
 import { callCopilotCLI, validateToken } from "./copilot-cli.js";

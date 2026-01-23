@@ -27,6 +27,9 @@ Create a `.env` file in the repository root with:
 GH_TOKEN=your_personal_access_token_here
 ```
 
+> Note: For local development the Copilot service will load `.env` automatically when started (it reads `.env` from the package directory). For containerized deployments, inject the token into the container environment instead — **TODO**: revisit `.env` handling when building Docker images and prefer injected envs at runtime.
+
+
 Or export it in your shell:
 
 ```bash

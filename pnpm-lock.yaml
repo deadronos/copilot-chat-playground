@@ -56,6 +56,9 @@ importers:
       '@github/copilot':
         specifier: ^0.0.369
         version: 0.0.369
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
       express:
         specifier: ^4.21.2
         version: 4.22.1
