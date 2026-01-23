@@ -14,29 +14,49 @@ const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
 });
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+/**
+ * Calls the copilot service and returns the response
+ * For Milestone B: buffered response (no streaming yet)
+ */
+async function callCopilotService(
+  prompt: string
+): Promise<{ success: boolean; output?: string; error?: string; errorType?: string }> {
+  const copilotUrl = process.env.COPILOT_SERVICE_URL || "http://localhost:3210";
 
-const buildFakeResponse = (prompt: string) => {
-  return [
-    "Copilot Chat Playground — simulated stream",
-    "------------------------------------------",
-    "Prompt received:",
-    prompt.trim(),
-    "",
-    "This is a fake backend stream to validate the frontend UX.",
-    "Chunks arrive roughly every 100ms.",
-    "Milestone B will replace this with real Copilot output.",
-    "",
-  ].join("\n");
-};
+  try {
+    const response = await fetch(`${copilotUrl}/chat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    });
 
-const chunkText = (text: string, size = 24) => {
-  const chunks: string[] = [];
-  for (let index = 0; index < text.length; index += size) {
-    chunks.push(text.slice(index, index + size));
+    if (!response.ok) {
+      const errorData = (await response.json()) as { error?: string; errorType?: string };
+      return {
+        success: false,
+        error: errorData.error || "Copilot service returned an error",
+        errorType: errorData.errorType,
+      };
+    }
+
+    const data = (await response.json()) as { output?: string };
+    return {
+      success: true,
+      output: data.output,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error:
+        error instanceof Error
+          ? `Failed to connect to copilot service: ${error.message}`
+          : "Failed to connect to copilot service",
+      errorType: "connection",
+    };
   }
-  return chunks;
-};
+}
 
 app.post("/api/chat", async (req, res) => {
   const parsed = ChatRequestSchema.safeParse(req.body);
@@ -46,42 +66,42 @@ app.post("/api/chat", async (req, res) => {
   }
 
   const { prompt } = parsed.data;
-  const responseText = buildFakeResponse(prompt);
-  const chunks = chunkText(responseText);
 
-  let clientClosed = false;
-  req.on("close", () => {
-    clientClosed = true;
-  });
+  // Call copilot service
+  const result = await callCopilotService(prompt);
 
+  if (!result.success) {
+    // Map error types to user-friendly messages
+    let userMessage = result.error || "An error occurred";
+    let statusCode = 500;
+
+    if (result.errorType === "token_missing") {
+      userMessage =
+        "GitHub Copilot is not configured. Please set GH_TOKEN environment variable on the server.";
+      statusCode = 503;
+    } else if (result.errorType === "auth") {
+      userMessage =
+        "GitHub Copilot authentication failed. Please check your token permissions.";
+      statusCode = 401;
+    } else if (result.errorType === "connection") {
+      userMessage = "Could not connect to Copilot service. Please check if the service is running.";
+      statusCode = 503;
+    }
+
+    // Return error as plain text for easier frontend handling
+    res.status(statusCode);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.send(`Error: ${userMessage}`);
+    return;
+  }
+
+  // Return successful response as plain text (buffered, not streaming for Milestone B)
   res.status(200);
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Transfer-Encoding", "chunked");
-  res.flushHeaders();
-
-  try {
-    for (const chunk of chunks) {
-      if (clientClosed) {
-        break;
-      }
-      res.write(chunk);
-      await sleep(100);
-    }
-  } catch (error) {
-    if (!res.headersSent) {
-      res.status(500).json({ error: "Streaming failed." });
-      return;
-    }
-  }
-
-  if (!clientClosed) {
-    res.end();
-  }
+  res.send(result.output || "");
 });
 
 const port = Number(process.env.PORT ?? 3000);
 app.listen(port, () => {
-  // eslint-disable-next-line no-console
   console.log(`[backend] listening on http://localhost:${port}`);
 });
