@@ -2,7 +2,7 @@
 name: Context7-Expert
 description: 'Expert in latest library versions, best practices, and correct syntax using up-to-date documentation'
 argument-hint: 'Ask about specific libraries/frameworks (e.g., "Next.js routing", "React hooks", "Tailwind CSS")'
-tools: ['read', 'search', 'web', 'context7/*', 'agent/runSubagent']
+tools: ['read', 'agent', 'search', 'web', 'upstash/context7/*']
 mcp-servers:
   context7:
     type: http
