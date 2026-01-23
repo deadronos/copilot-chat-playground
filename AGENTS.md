@@ -33,3 +33,6 @@ We also have notes for using the Copilot CLI in 'docs/library/copilot-cli/'. Thi
 ### Additional Resources
 If you feel something is missing or could be improved, consider proposing additional folders with structured notes in /docs/library folder.
 
+## Agent Guidance
+See `/docs/agents` for additional agent guidance and playbooks. For example, `/docs/agents/testing` contains testing structure and scope hints.
+
