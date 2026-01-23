@@ -50,24 +50,16 @@ describe("CopilotSDKService", () => {
     });
 
     it("should emit log events when eventBus is provided", async () => {
-      // This test would require mocking the SDK client
-      // For now, we just verify the error path with logging
+      // Test verifies early validation failures don't emit SDK-specific logs
       delete process.env.GH_TOKEN;
       delete process.env.GITHUB_TOKEN;
 
       const eventBus = createEventBus();
-      const logEvents: Array<any> = [];
-      eventBus.onLog((event) => {
-        logEvents.push(event);
-      });
-
       const service = new CopilotSDKService(eventBus);
       const result = await service.chat("test prompt", "test-req-id");
 
       expect(result.success).toBe(false);
       expect(result.errorType).toBe("token_missing");
-      // EventBus should not emit logs for early validation failures
-      // (logged before SDK is involved)
     });
   });
 

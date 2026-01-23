@@ -35,10 +35,10 @@ export class CopilotSDKService {
     }
 
     // Create client - SDK will use GH_TOKEN from environment via CLI
-    // No need to pass token directly; the CLI handles authentication
+    // Auto-start enabled, but auto-restart disabled for more predictable error handling
     this.client = new CopilotClient({
       autoStart: true,
-      autoRestart: true,
+      autoRestart: false,
     });
 
     await this.client.start();
@@ -89,7 +89,6 @@ export class CopilotSDKService {
 
       // Buffer to collect the full response
       let fullResponse = "";
-      const messageBuffers = new Map<string, string>();
 
       // Set up event handlers
       session.on((event) => {
@@ -102,22 +101,15 @@ export class CopilotSDKService {
 
         // Handle different event types
         if (event.type === "assistant.message_delta") {
-          // Accumulate deltas for streaming
+          // Log streaming deltas for observability
           const messageId = event.data.messageId || "default";
-
-          if (!messageBuffers.has(messageId)) {
-            messageBuffers.set(messageId, "");
-          }
-
-          const delta = event.data.deltaContent || "";
-          const current = messageBuffers.get(messageId) || "";
-          messageBuffers.set(messageId, current + delta);
+          const deltaLength = event.data.deltaContent?.length || 0;
 
           this.emitLog("debug", "sdk.message.delta", "Message delta received", {
             requestId,
             sessionId: session.sessionId,
             messageId,
-            deltaLength: delta.length,
+            deltaLength,
           });
         } else if (event.type === "assistant.message") {
           // Final message content - this is canonical

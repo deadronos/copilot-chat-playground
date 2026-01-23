@@ -1,4 +1,5 @@
 import "dotenv/config"; // loads .env for local development. TODO: revisit .env handling for Docker builds (inject envs into container at runtime)
+import crypto from "node:crypto";
 import express from "express";
 import { z } from "zod";
 import fs from "node:fs";
@@ -50,7 +51,7 @@ app.post("/chat", async (req, res) => {
   }
 
   const { prompt } = parsed.data;
-  const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
+  const requestId = crypto.randomUUID();
 
   // Use SDK if enabled, otherwise fall back to CLI
   let result;
