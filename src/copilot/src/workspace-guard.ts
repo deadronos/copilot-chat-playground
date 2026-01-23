@@ -54,10 +54,17 @@ export async function checkWorkspaceMount(
   const tmpPath = path.join(workspacePath, tmpName);
   try {
     await fs.promises.writeFile(tmpPath, "test");
-    // Clean up
-    await fs.promises.rm(tmpPath, { force: true });
+
+    // Mark writable immediately after a successful write
     status.writable = true;
     eventBus?.emitLog({ timestamp: new Date().toISOString(), level: "info", component: "copilot", event_type: "workspace.mount.writable", message: `Workspace is writable at ${workspacePath}` });
+
+    // Attempt cleanup; failure here should not flip writable, but should be logged
+    try {
+      await fs.promises.rm(tmpPath, { force: true });
+    } catch (cleanupErr: any) {
+      eventBus?.emitLog({ timestamp: new Date().toISOString(), level: "warn", component: "copilot", event_type: "workspace.mount.cleanup_error", message: `Workspace cleanup failed at ${workspacePath}: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}` });
+    }
   } catch (err: any) {
     // If the error indicates permission denied, consider read-only
     if (err && (err.code === "EACCES" || err.code === "EPERM")) {

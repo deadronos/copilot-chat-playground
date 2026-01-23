@@ -201,4 +201,29 @@ describe("checkWorkspaceMount", () => {
     const leftover = files.find((f: string) => f.startsWith(".copilot-mount-test-"));
     expect(leftover).toBeUndefined();
   });
+
+  it("keeps writable true when rm fails after a successful write and logs cleanup_error", async () => {
+    tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), "workspace-guard-"));
+
+    // Make rm fail once to simulate cleanup failure after write
+    vi.spyOn(fs.promises, "rm").mockRejectedValueOnce(new Error("cleanup failed"));
+
+    const fakeEventBus = { emitLog: vi.fn() };
+    const status = await checkWorkspaceMount(tempDir, fakeEventBus as any);
+
+    // Writable should remain true because the write succeeded
+    expect(status.exists).toBe(true);
+    expect(status.writable).toBe(true);
+
+    const calls = (fakeEventBus.emitLog as any).mock.calls.map((c: any[]) => c[0]);
+
+    // Ensure we logged the writable event
+    const writableCall = calls.find((c: any) => c.event_type === "workspace.mount.writable");
+    expect(writableCall).toBeTruthy();
+
+    // Ensure we logged a cleanup error but did not flip writable
+    const cleanupCall = calls.find((c: any) => c.event_type === "workspace.mount.cleanup_error");
+    expect(cleanupCall).toBeTruthy();
+    expect(cleanupCall.message).toContain("cleanup failed");
+  });
 });
