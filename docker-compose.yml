@@ -5,11 +5,9 @@ services:
     build:
       context: .
       dockerfile: src/copilot/Dockerfile
-    working_dir: /workspace
+    working_dir: /app
     volumes:
       - ./workspace:/workspace:ro
-      - copilot_node_modules:/workspace/node_modules
-      - copilot_dist:/workspace/dist
     environment:
       - PORT=3210
     ports:
@@ -22,10 +20,10 @@ services:
       retries: 5
 
   backend:
-    image: node:20
-    working_dir: /workspace
-    volumes:
-      - ./:/workspace:cached
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+    working_dir: /app
     environment:
       - PORT=3000
       - COPILOT_SERVICE_URL=http://copilot:3210
@@ -34,21 +32,17 @@ services:
     depends_on:
       - copilot
     # Note: we no longer depend on Docker healthcheck state; the backend should retry connecting to copilot if unavailable.
-    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm --filter @copilot-playground/backend dev"
+    command: pnpm --filter @copilot-playground/backend dev
 
   frontend:
-    image: node:20
-    working_dir: /workspace
-    volumes:
-      - ./:/workspace:cached
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+    working_dir: /app
     ports:
       - "5173:5173"
-    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm --filter @copilot-playground/frontend dev -- --host 0.0.0.0"
+    command: pnpm --filter @copilot-playground/frontend dev -- --host 0.0.0.0
     environment:
       - VITE_API_URL=http://backend:3000/api
     depends_on:
       - backend
-
-volumes:
-  copilot_node_modules:
-  copilot_dist:

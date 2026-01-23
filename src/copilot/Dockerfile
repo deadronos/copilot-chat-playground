@@ -1,51 +1,39 @@
-# Multi-stage Dockerfile for copilot service
-FROM node:20 AS base
-WORKDIR /workspace
-# Ensure Corepack (pnpm) is available
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# syntax=docker/dockerfile:1.7
 
-# Copy lockfile and package manifests to install dependencies (leverages caching)
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-COPY src/copilot/package.json ./src/copilot/package.json
-COPY src/backend/package.json ./src/backend/package.json
-COPY src/frontend/package.json ./src/frontend/package.json
+# Dev-oriented Dockerfile for the copilot service.
+#
+# Notes:
+# - We intentionally run `tsx watch` (the `dev` script) so workspace-local TS packages
+#   like `@copilot-playground/shared` work without needing a separate build step.
+# - Compose mounts a sandbox workspace at `/workspace`; the app itself lives in `/app`.
 
-# Install ALL dependencies including devDependencies (needed for TypeScript build)
-# (Explicitly disable prod-only installs in case NODE_ENV=production is set)
-RUN pnpm install --frozen-lockfile --prod=false
+FROM node:20-bookworm-slim
 
-# Copy source
-COPY . .
+WORKDIR /app
 
-# Build the TypeScript output for production
-RUN pnpm -w build
+ARG PNPM_VERSION=10.28.1
 
-# Final runtime image
-FROM node:20-slim AS runtime
-WORKDIR /workspace
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
 
-# Copy minimal manifests for installing production dependencies
+# 1) Copy only manifests first for better layer caching
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY src/copilot/package.json ./src/copilot/package.json
+COPY src/shared/package.json ./src/shared/package.json
 
-# Install only production dependencies in the runtime image
-RUN pnpm install --frozen-lockfile --prod
+# 2) Install only what copilot needs (and its workspace deps) with a cached pnpm store
+RUN --mount=type=cache,target=/pnpm/store \
+	pnpm config set store-dir /pnpm/store && \
+	pnpm --filter @copilot-playground/copilot... install --frozen-lockfile --prod=false
 
-# Copy built artifacts from the builder (keep dist and src available)
-COPY --from=base /workspace/dist ./dist
-COPY --from=base /workspace/src ./src
+# 3) Copy source
+COPY src/copilot ./src/copilot
+COPY src/shared ./src/shared
 
-# Copy entrypoint and make executable
-COPY --from=base /workspace/src/copilot/entrypoint.sh /workspace/src/copilot/entrypoint.sh
-RUN chmod +x /workspace/src/copilot/entrypoint.sh
-
-# Ensure files are owned by the non-root node user and switch to it
-RUN chown -R node:node /workspace
-USER node
+# Entrypoint exports DOTENV_PRIVATE_KEY_* from /run/secrets if present
+RUN chmod +x /app/src/copilot/entrypoint.sh
 
 ENV PORT=3210
 EXPOSE 3210
 
-ENTRYPOINT ["/workspace/src/copilot/entrypoint.sh"]
-CMD ["pnpm", "--filter", "@copilot-playground/copilot", "start"]
+ENTRYPOINT ["/app/src/copilot/entrypoint.sh"]
+CMD ["pnpm", "--filter", "@copilot-playground/copilot", "dev"]
