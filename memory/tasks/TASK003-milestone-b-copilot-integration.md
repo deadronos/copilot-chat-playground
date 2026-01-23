@@ -111,6 +111,9 @@ The implementation followed a clear path:
 - Tested input validation - proper 400 errors
 - Verified UI displays errors correctly with status badge
 - Screenshot captured showing error handling
+- Added fallback: try 'copilot' then fall back to 'pnpm exec -- copilot' when the binary is not on PATH
+- Enhanced `/health` to report candidate binary paths and their existence for easier diagnostics
+- Improved candidate path discovery to avoid duplicate or incorrect paths and include package-root based probes; health now shows which candidate files exist on disk
 
 **Code Review & Security**
 - Code review identified empty string issue in token validation

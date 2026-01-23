@@ -1,18 +1,25 @@
 import "dotenv/config"; // loads .env for local development. TODO: revisit .env handling for Docker builds (inject envs into container at runtime)
 import express from "express";
 import { z } from "zod";
-import { callCopilotCLI, validateToken } from "./copilot-cli.js";
+import fs from "node:fs";
+import { callCopilotCLI, validateToken, getCopilotCandidatePaths } from "./copilot-cli.js";
 
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 
 app.get("/health", (_req, res) => {
-  // Include token validation status in health check
+  // Include token validation status and binary candidates in health check
   const tokenCheck = validateToken();
+  const candidatePaths = getCopilotCandidatePaths();
+  const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
+  const binaryAvailable = candidates.some((c) => c.exists);
+
   res.json({
     ok: true,
     service: "copilot",
     tokenConfigured: tokenCheck.valid,
+    binaryAvailable,
+    candidates,
   });
 });
 

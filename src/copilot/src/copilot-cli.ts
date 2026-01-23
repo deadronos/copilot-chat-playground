@@ -1,4 +1,7 @@
 import { spawn } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 export interface CopilotResponse {
   success: boolean;
@@ -23,8 +26,38 @@ export function validateToken(): { valid: boolean; error?: string } {
 }
 
 /**
+ * Returns candidate filesystem paths for a local copilot binary to assist diagnostics
+ */
+export function getCopilotCandidatePaths(): string[] {
+  const ext = process.platform === "win32" ? ".cmd" : "";
+  const bin = `copilot${ext}`;
+
+  // Roots to probe (cwd, package root relative to this file, and common monorepo patterns)
+  const fileDir = path.dirname(fileURLToPath(import.meta.url));
+  const packageRoot = path.resolve(fileDir, "..", "..");
+
+  const roots = new Set<string>([
+    process.cwd(),
+    packageRoot,
+    path.resolve(process.cwd(), "src", "copilot"),
+    path.resolve(process.cwd(), ".."),
+  ]);
+
+  const candidates = new Set<string>();
+  candidates.add("copilot");
+
+  for (const r of roots) {
+    candidates.add(path.join(r, "node_modules", ".bin", bin));
+    candidates.add(path.join(r, ".bin", bin));
+  }
+
+  // Normalize and dedupe
+  return Array.from(candidates).map((p) => path.normalize(p));
+}
+
+/**
  * Calls the Copilot CLI with a prompt and returns buffered output
- * This is a non-streaming implementation for Milestone B
+ * Attempts 'copilot' first, then falls back to 'pnpm exec -- copilot ...'
  */
 export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
   // Validate token first
@@ -37,61 +70,115 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
     };
   }
 
-  return new Promise((resolve) => {
-    let stdout = "";
-    let stderr = "";
+  const attempts = [
+    { cmd: "copilot", args: ["-p", prompt, "--silent"] },
+    { cmd: "pnpm", args: ["exec", "--", "copilot", "-p", prompt, "--silent"] },
+  ];
 
-    // Spawn copilot CLI with the prompt
-    const child = spawn("copilot", ["-p", prompt, "--silent"], {
-      env: {
-        ...process.env,
-        // Ensure GH_TOKEN is set (prefer GH_TOKEN over GITHUB_TOKEN)
-        GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
-      },
-    });
+  const tried: string[] = [];
 
-    child.stdout.on("data", (chunk: Buffer) => {
-      stdout += chunk.toString();
-    });
+  // Helper to spawn a command and capture output
+  const spawnCommand = (cmd: string, args: string[]) =>
+    new Promise<{ success: boolean; stdout: string; stderr: string; error?: Error | null }>((resolve) => {
+      let stdout = "";
+      let stderr = "";
 
-    child.stderr.on("data", (chunk: Buffer) => {
-      stderr += chunk.toString();
-    });
+      const child = spawn(cmd, args, {
+        env: {
+          ...process.env,
+          GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
+        },
+      });
 
-    child.on("error", (error) => {
-      resolve({
-        success: false,
-        error: `Failed to spawn copilot CLI: ${error.message}. Is @github/copilot installed?`,
-        errorType: "spawn",
+      if (child.stdout) {
+        child.stdout.on("data", (chunk: Buffer) => {
+          stdout += chunk.toString();
+        });
+      }
+
+      if (child.stderr) {
+        child.stderr.on("data", (chunk: Buffer) => {
+          stderr += chunk.toString();
+        });
+      }
+
+      child.on("error", (error: Error & { code?: string }) => {
+        resolve({ success: false, stdout, stderr, error });
+      });
+
+      child.on("close", (code: number) => {
+        if (code === 0) {
+          resolve({ success: true, stdout, stderr, error: null });
+        } else {
+          const err = new Error(`Process exited with code ${code}`);
+          resolve({ success: false, stdout, stderr, error: err });
+        }
       });
     });
 
-    child.on("close", (code) => {
-      if (code === 0) {
-        resolve({
-          success: true,
-          output: stdout.trim(),
-        });
-      } else {
-        // Determine error type from stderr content
-        let errorType: CopilotResponse["errorType"] = "unknown";
-        const stderrLower = stderr.toLowerCase();
+  for (const attempt of attempts) {
+    tried.push(`${attempt.cmd} ${attempt.args.join(" ")}`);
 
-        if (
-          stderrLower.includes("auth") ||
-          stderrLower.includes("unauthorized") ||
-          stderrLower.includes("invalid token") ||
-          stderrLower.includes("403")
-        ) {
-          errorType = "auth";
+    const result = await spawnCommand(attempt.cmd, attempt.args);
+
+    if (result.success) {
+      return { success: true, output: result.stdout.trim() };
+    }
+
+    // If we got an error indicating executable not found, try candidate binaries on disk
+    if (result.error && ("code" in result.error) && (result.error as any).code === "ENOENT") {
+      const candidates = getCopilotCandidatePaths().map((p) => ({ path: p, exists: fs.existsSync(p) }));
+      const available = candidates.filter((c) => c.exists).map((c) => c.path);
+      console.warn(
+        `[copilot] copilot binary not found when running '${attempt.cmd}'. Trying fallback. Candidates: ${candidates
+          .map((c) => `${c.path} (exists=${c.exists})`)
+          .join(", ")}. Found on disk: ${available.join(", ") || "none"}`
+      );
+
+      // Try spawning the first candidate that exists on disk directly (absolute path)
+      for (const c of available) {
+        tried.push(c);
+        const directResult = await spawnCommand(c, ["-p", prompt, "--silent"]);
+        if (directResult.success) {
+          return { success: true, output: directResult.stdout.trim() };
         }
 
-        resolve({
-          success: false,
-          error: stderr.trim() || `Copilot CLI exited with code ${code}`,
-          errorType,
-        });
+        // If direct spawn failed due to ENOENT, try next
+        if (directResult.error && ("code" in directResult.error) && (directResult.error as any).code === "ENOENT") {
+          continue;
+        }
+
+        // If stderr indicates auth issues, return that
+        const stderrLower = directResult.stderr.toLowerCase();
+        if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
+          return {
+            success: false,
+            error: directResult.stderr.trim() || "Authentication error from Copilot CLI",
+            errorType: "auth",
+          };
+        }
       }
-    });
-  });
+
+      // If none of the direct candidates worked, continue to next attempt (e.g., move from copilot->pnpm or finish)
+      continue; // try next attempt
+    }
+
+    // If stderr indicates auth issues, return that
+    const stderrLower = result.stderr.toLowerCase();
+    if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
+      return {
+        success: false,
+        error: result.stderr.trim() || "Authentication error from Copilot CLI",
+        errorType: "auth",
+      };
+    }
+
+    // Otherwise continue to next attempt
+  }
+
+  return {
+    success: false,
+    error: `Failed to spawn copilot CLI via tried commands: ${tried.join(" | ")}. Is @github/copilot installed? Checked candidates: ${getCopilotCandidatePaths().join(", ")}`,
+    errorType: "spawn",
+  };
 }
