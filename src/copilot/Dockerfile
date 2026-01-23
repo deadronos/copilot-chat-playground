@@ -7,8 +7,10 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy lockfile and package manifests to install dependencies (leverages caching)
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY src/copilot/package.json ./src/copilot/package.json
+COPY src/backend/package.json ./src/backend/package.json
+COPY src/frontend/package.json ./src/frontend/package.json
 
-# Install dependencies (workspace-aware)
+# Install ALL dependencies including devDependencies (needed for TypeScript build)
 RUN pnpm install --frozen-lockfile
 
 # Copy source
