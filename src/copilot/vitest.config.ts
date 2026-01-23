@@ -1,7 +1,8 @@
 import path from "path"
 import { defineConfig } from "vitest/config"
 
-const testsRoot = path.resolve(__dirname, "../../tests/copilot")
+// Normalize to POSIX forward slashes so fast-glob matches correctly on Windows
+const testsRoot = path.resolve(__dirname, "../../tests/copilot").replace(/\\/g, "/");
 
 export default defineConfig({
   test: {

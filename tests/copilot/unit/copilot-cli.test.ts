@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { validateToken } from "../../src/copilot/src/copilot-cli.js";
+import { validateToken } from "../../../src/copilot/src/copilot-cli.js";
 
 describe("validateToken", () => {
   const originalEnv = process.env;

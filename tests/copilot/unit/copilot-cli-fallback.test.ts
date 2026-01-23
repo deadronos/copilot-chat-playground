@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { callCopilotCLI } from "../../src/copilot/src/copilot-cli.js";
+import { callCopilotCLI } from "../../../src/copilot/src/copilot-cli.js";
 
 // Mock child_process.spawn
 vi.mock("node:child_process", () => {
@@ -27,6 +27,9 @@ describe("callCopilotCLI fallback behavior", () => {
   it("falls back to pnpm exec when copilot binary is not found", async () => {
     // First call: copilot -> emit error ENOENT
     // Second call: pnpm -> emit stdout 'OK output' and close 0
+
+    // Ensure no candidate binaries are detected on disk so we exercise pnpm fallback
+    vi.spyOn(require("node:fs"), "existsSync").mockReturnValue(false);
 
     (spawn as unknown as vi.Mock).mockImplementation((cmd: string) => {
       if (cmd === "copilot") {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import path from "node:path";
-import { getCopilotCandidatePaths } from "../../src/copilot/src/copilot-cli.js";
+import { getCopilotCandidatePaths } from "../../../src/copilot/src/copilot-cli.js";
 
 describe("getCopilotCandidatePaths", () => {
   it("always includes 'copilot' and some node_modules .bin candidates", () => {
