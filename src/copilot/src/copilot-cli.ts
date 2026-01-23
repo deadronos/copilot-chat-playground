@@ -12,7 +12,7 @@ export interface CopilotResponse {
  */
 export function validateToken(): { valid: boolean; error?: string } {
   const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
-  if (!token) {
+  if (!token || token.trim() === "") {
     return {
       valid: false,
       error:
