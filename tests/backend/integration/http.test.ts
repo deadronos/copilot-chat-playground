@@ -34,6 +34,50 @@ describe("Backend Service /api/chat endpoint", () => {
     expect(response.status).toBe(400);
   });
 
+  it.skipIf(!serviceRunning)("should accept mode parameter with default value", async () => {
+    const response = await fetch(`${serviceUrl}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: "Hello" }),
+    });
+
+    // Mode should default to "explain-only" even if not provided
+    // Response should be plain text
+    expect(response.headers.get("content-type")).toContain("text/plain");
+  });
+
+  it.skipIf(!serviceRunning)("should accept valid mode parameter", async () => {
+    const response = await fetch(`${serviceUrl}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: "Hello", mode: "explain-only" }),
+    });
+
+    // Response should be plain text
+    expect(response.headers.get("content-type")).toContain("text/plain");
+  });
+
+  it.skipIf(!serviceRunning)("should accept project-helper mode", async () => {
+    const response = await fetch(`${serviceUrl}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: "Hello", mode: "project-helper" }),
+    });
+
+    // Response should be plain text
+    expect(response.headers.get("content-type")).toContain("text/plain");
+  });
+
+  it.skipIf(!serviceRunning)("should reject invalid mode parameter", async () => {
+    const response = await fetch(`${serviceUrl}/api/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: "Hello", mode: "invalid-mode" }),
+    });
+
+    expect(response.status).toBe(400);
+  });
+
   it.skipIf(!serviceRunning)(
     "should return error when copilot service is not available",
     async () => {
