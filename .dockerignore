@@ -9,10 +9,18 @@
 
 # Node/npm
 node_modules
+**/node_modules
+
+# pnpm
+**/.pnpm
+**/.pnpm-store
+**/.pnpm-debug.log
 
 # Build outputs
 dist
 dist-ssr
+**/dist
+**/dist-ssr
 
 # Git
 .git
