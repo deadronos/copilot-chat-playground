@@ -111,9 +111,20 @@ The implementation followed a clear path:
 - Tested input validation - proper 400 errors
 - Verified UI displays errors correctly with status badge
 - Screenshot captured showing error handling
-- Added fallback: try 'copilot' then fall back to 'pnpm exec -- copilot' when the binary is not on PATH
-- Enhanced `/health` to report candidate binary paths and their existence for easier diagnostics
-- Improved candidate path discovery to avoid duplicate or incorrect paths and include package-root based probes; health now shows which candidate files exist on disk
+
+**Spawn Fallback Implementation**
+- Investigated "spawn copilot ENOENT" error - binary not on system PATH
+- Implemented three-tier fallback strategy:
+  1. Try `copilot` (PATH-based spawn)
+  2. Try `pnpm exec -- copilot` (package manager resolution)
+  3. Try direct binary path from getCopilotCandidatePaths() (absolute path spawn)
+- Enhanced `/health` endpoint to report binaryAvailable and candidate paths array
+- Improved candidate path discovery with platform-specific extensions (.cmd on Windows)
+- Fixed Vitest configuration for Windows test discovery (posix path normalization)
+- Added 2 unit tests for candidate path generation (all passing)
+- Added 2 unit tests for pnpm fallback mechanism (all passing)
+- **Direct binary fallback enables Docker deployment without runtime pnpm dependency**
+- All 10 unit tests passing; spawn reliability greatly improved
 
 **Code Review & Security**
 - Code review identified empty string issue in token validation
