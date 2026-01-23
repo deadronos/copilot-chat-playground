@@ -1,5 +1,9 @@
 packages:
-  - "src/frontend"
-  - "src/backend"
-  - "src/copilot"
-  - "src/shared"
+  - src/frontend
+  - src/backend
+  - src/copilot
+  - src/shared
+
+onlyBuiltDependencies:
+  - esbuild
+  - msw
