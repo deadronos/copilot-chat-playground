@@ -21,3 +21,5 @@ export type LogEvent = {
 export function toNdjsonLine(event: LogEvent): string {
   return `${JSON.stringify(event)}\n`;
 }
+
+export { EventBus, createEventBus } from "./event-bus.js";
