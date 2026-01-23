@@ -41,6 +41,7 @@ app.get("/health", (_req, res) => {
 
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
+  mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
 });
 
 app.post("/chat", async (req, res) => {
@@ -50,13 +51,23 @@ app.post("/chat", async (req, res) => {
     return;
   }
 
-  const { prompt } = parsed.data;
+  const { prompt, mode } = parsed.data;
   const requestId = crypto.randomUUID();
+
+  // Apply mode-specific system messages or constraints
+  let systemPrompt = "";
+  if (mode === "explain-only") {
+    systemPrompt =
+      "You are in explain-only mode. Focus on explaining concepts and answering questions. Do not execute commands or make changes to files.";
+  } else if (mode === "project-helper") {
+    systemPrompt =
+      "You are in project-helper mode. You can help with code, execute commands, and interact with the project files.";
+  }
 
   // Use SDK if enabled, otherwise fall back to CLI
   let result;
   if (USE_SDK && sdkService) {
-    result = await sdkService.chat(prompt, requestId);
+    result = await sdkService.chat(prompt, requestId, systemPrompt);
   } else {
     result = await callCopilotCLI(prompt);
   }

@@ -1,14 +1,46 @@
 import * as React from "react";
-import { SparklesIcon, WavesIcon } from "lucide-react";
+import {
+  SparklesIcon,
+  WavesIcon,
+  CopyIcon,
+  DownloadIcon,
+  ShieldCheckIcon,
+  WrenchIcon,
+  CheckIcon,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 type StreamStatus = "empty" | "waiting" | "streaming" | "done" | "error";
+type ChatMode = "explain-only" | "project-helper";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/chat";
+
+const MODE_META: Record<
+  ChatMode,
+  { label: string; description: string; icon: typeof ShieldCheckIcon }
+> = {
+  "explain-only": {
+    label: "Explain-only",
+    description: "Safe mode. Explains concepts without executing code or making changes.",
+    icon: ShieldCheckIcon,
+  },
+  "project-helper": {
+    label: "Project Helper",
+    description: "Full access. Can execute commands and interact with project files.",
+    icon: WrenchIcon,
+  },
+};
 
 const STATUS_META: Record<
   StreamStatus,
@@ -59,12 +91,47 @@ export function ChatPlayground() {
   const [output, setOutput] = React.useState("");
   const [status, setStatus] = React.useState<StreamStatus>("empty");
   const [error, setError] = React.useState<string | null>(null);
+  const [mode, setMode] = React.useState<ChatMode>("explain-only");
+  const [copied, setCopied] = React.useState(false);
 
   const isBusy = status === "waiting" || status === "streaming";
   const statusMeta = STATUS_META[status];
   const outputPlaceholder = output.length
     ? ""
     : outputPlaceholderByStatus[status];
+
+  // Estimate token count (rough approximation: 1 token ≈ 4 characters)
+  const estimatedTokens = Math.ceil(output.length / 4);
+
+  const handleCopy = async () => {
+    if (!output) return;
+    try {
+      await navigator.clipboard.writeText(output);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy text:", err);
+    }
+  };
+
+  const handleExport = () => {
+    if (!output) return;
+    const blob = new Blob([output], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `copilot-output-${Date.now()}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleClear = () => {
+    setOutput("");
+    setError(null);
+    setStatus("empty");
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,7 +148,7 @@ export function ChatPlayground() {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: trimmed }),
+        body: JSON.stringify({ prompt: trimmed, mode }),
       });
 
       if (!response.ok || !response.body) {
@@ -132,16 +199,16 @@ export function ChatPlayground() {
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-900/15 bg-white/70 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-slate-600 shadow-[0_10px_30px_-20px_rgba(15,23,42,0.6)]">
               <SparklesIcon className="size-3" />
-              Milestone A • Local Stream
+              Milestone D • Safety & UX
             </div>
             <div className="space-y-3">
               <h1 className="font-display text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl">
                 Copilot Streamforge
               </h1>
               <p className="max-w-xl text-sm text-slate-600 sm:text-base">
-                A handcrafted simulation of the Copilot streaming experience.
-                Shape the prompt, watch the output arrive in rhythmic bursts,
-                and refine the flow before wiring up the real engine.
+                Enhanced with safety toggles and UX polish. Choose your mode,
+                watch streaming output, and interact with responses through copy,
+                export, and clear actions.
               </p>
             </div>
           </div>
@@ -183,8 +250,8 @@ export function ChatPlayground() {
                     Prompt Studio
                   </h2>
                   <p className="mt-2 text-sm text-slate-500">
-                    Craft a prompt and hit send. The backend simulates a chunked
-                    response so you can tune the UX.
+                    Choose a safety mode and send your prompt. The backend will
+                    respect your mode selection and stream the response.
                   </p>
                 </div>
                 <div className="rounded-full border border-slate-900/10 bg-[#f8f1e7] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-500">
@@ -193,13 +260,62 @@ export function ChatPlayground() {
               </div>
 
               <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
-                <Input
-                  value={prompt}
-                  onChange={(event) => setPrompt(event.target.value)}
-                  placeholder="Describe the response you want to simulate..."
-                  disabled={isBusy}
-                  className="h-11 rounded-2xl border-slate-900/15 bg-white/90 text-base shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)]"
-                />
+                <div className="space-y-4">
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-slate-700">
+                      Safety Mode
+                    </label>
+                    <Select
+                      value={mode}
+                      onValueChange={(value) => setMode(value as ChatMode)}
+                      disabled={isBusy}
+                    >
+                      <SelectTrigger className="h-11 w-full rounded-2xl border border-slate-900/15 bg-white/90 px-4 text-left shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] hover:bg-white/95">
+                        <SelectValue>
+                          {(() => {
+                            const modeMeta = MODE_META[mode];
+                            const Icon = modeMeta.icon;
+                            return (
+                              <div className="flex items-center gap-2">
+                                <Icon className="size-4" />
+                                <span>{modeMeta.label}</span>
+                              </div>
+                            );
+                          })()}
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border border-slate-900/15 bg-white shadow-[0_10px_40px_-20px_rgba(15,23,42,0.6)]">
+                        {(Object.entries(MODE_META) as [ChatMode, typeof MODE_META[ChatMode]][]).map(
+                          ([modeKey, modeMeta]) => {
+                            const Icon = modeMeta.icon;
+                            return (
+                              <SelectItem
+                                key={modeKey}
+                                value={modeKey}
+                                className="cursor-pointer"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Icon className="size-4" />
+                                  <span>{modeMeta.label}</span>
+                                </div>
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <p className="mt-2 text-xs text-slate-500">
+                      {MODE_META[mode].description}
+                    </p>
+                  </div>
+                  <Input
+                    value={prompt}
+                    onChange={(event) => setPrompt(event.target.value)}
+                    placeholder="Describe the response you want to simulate..."
+                    disabled={isBusy}
+                    className="h-11 rounded-2xl border-slate-900/15 bg-white/90 text-base shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)]"
+                  />
+                </div>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <Button
                     type="submit"
@@ -207,7 +323,9 @@ export function ChatPlayground() {
                     disabled={!prompt.trim() || isBusy}
                     className="rounded-2xl bg-slate-900 text-white shadow-[0_16px_32px_-18px_rgba(15,23,42,0.7)] hover:bg-slate-800"
                   >
-                    Send prompt
+                    {isBusy && status === "waiting" && "Connecting..."}
+                    {isBusy && status === "streaming" && "Streaming..."}
+                    {!isBusy && "Send prompt"}
                   </Button>
                   <div className="text-xs text-slate-500">
                     {statusMeta.helper}
@@ -219,12 +337,20 @@ export function ChatPlayground() {
             <div className="rounded-3xl border border-slate-900/10 bg-white/70 p-6 text-sm text-slate-600 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.6)] backdrop-blur-sm">
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.26em] text-slate-500">
                 <WavesIcon className="size-4 text-slate-500" />
-                Stream Notes
+                Safety Features
               </div>
               <ul className="mt-4 space-y-2 text-sm">
-                <li>Chunk cadence: ~100ms for this milestone.</li>
-                <li>Output is plain text for simple UI testing.</li>
-                <li>Next: wire Copilot responses and log events.</li>
+                <li>
+                  <strong>Explain-only mode:</strong> Safe default mode for
+                  explanations without code execution.
+                </li>
+                <li>
+                  <strong>Project helper:</strong> Advanced mode with full
+                  project capabilities (coming soon).
+                </li>
+                <li>
+                  <strong>Copy/Export:</strong> Easily save and share responses.
+                </li>
               </ul>
             </div>
           </div>
@@ -239,24 +365,79 @@ export function ChatPlayground() {
                   Streaming text arrives here as it is emitted from the backend.
                 </p>
               </div>
-              <div className="rounded-full border border-slate-900/10 bg-[#f8f1e7] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-500">
-                {output.length} chars
+              <div className="flex items-center gap-2">
+                <div className="rounded-full border border-slate-900/10 bg-[#f8f1e7] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-500">
+                  {output.length} chars
+                </div>
+                {output.length > 0 && (
+                  <div className="rounded-full border border-slate-900/10 bg-[#f8f1e7] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-500">
+                    ~{estimatedTokens} tokens
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 space-y-4">
               <Textarea
                 value={output}
                 placeholder={outputPlaceholder}
                 readOnly
                 className="min-h-[320px] rounded-2xl border-slate-900/15 bg-white/90 font-mono text-sm leading-relaxed shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)]"
               />
+              
+              {output.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={handleCopy}
+                    className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+                  >
+                    {copied ? (
+                      <>
+                        <CheckIcon className="mr-2 size-4" />
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <CopyIcon className="mr-2 size-4" />
+                        Copy
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={handleExport}
+                    className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+                  >
+                    <DownloadIcon className="mr-2 size-4" />
+                    Export
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={handleClear}
+                    className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+                  >
+                    Clear
+                  </Button>
+                </div>
+              )}
+
               {status === "error" && error && (
                 <div
                   role="alert"
-                  className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+                  className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
                 >
-                  {error}
+                  <div className="font-semibold">Error</div>
+                  <div className="mt-1">{error}</div>
+                  <div className="mt-2 text-xs text-rose-600">
+                    Please check your connection and try again. If the problem persists, verify that the backend service is running.
+                  </div>
                 </div>
               )}
             </div>
