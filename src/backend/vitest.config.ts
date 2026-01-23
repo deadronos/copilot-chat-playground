@@ -1,7 +1,9 @@
 import path from "path"
 import { defineConfig } from "vitest/config"
 
-const testsRoot = path.resolve(__dirname, "../../tests/backend")
+const testsRoot = path
+  .resolve(__dirname, "../../tests/backend")
+  .replace(/\\/g, "/")
 
 export default defineConfig({
   test: {
