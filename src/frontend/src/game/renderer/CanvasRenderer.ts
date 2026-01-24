@@ -9,7 +9,6 @@ export class CanvasRenderer {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   private animationFrameId: number | null = null;
-  private unsubscribe: (() => void) | null = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -24,12 +23,8 @@ export class CanvasRenderer {
    * Start rendering loop
    */
   start(): void {
-    // Subscribe to store changes (without causing React re-renders)
-    // This is done directly on the store instance
-    this.unsubscribe = useGameStore.subscribe(() => {
-      // Store changed, but we'll render on next frame anyway
-    });
-
+    // Note: We don't need to subscribe to store changes since we render on every frame
+    // via requestAnimationFrame, which ensures smooth 60fps rendering
     this.render();
   }
 
@@ -40,10 +35,6 @@ export class CanvasRenderer {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
-    }
-    if (this.unsubscribe) {
-      this.unsubscribe();
-      this.unsubscribe = null;
     }
   }
 

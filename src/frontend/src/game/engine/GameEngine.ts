@@ -1,4 +1,4 @@
-import { useGameStore } from '../stores/gameStore';
+import { useGameStore, type Entity } from '../stores/gameStore';
 
 /**
  * GameEngine manages the game logic and state updates.
@@ -146,7 +146,7 @@ export class GameEngine {
   /**
    * Check for collisions between entities
    */
-  private checkCollisions(entities: typeof useGameStore.prototype.entities): void {
+  private checkCollisions(entities: Entity[]): void {
     const state = useGameStore.getState();
     const collisionRadius = 15;
 

@@ -1,5 +1,8 @@
 import { create } from 'zustand';
 
+// Counter for generating unique entity IDs
+let entityIdCounter = 0;
+
 // Game entity types
 export interface Entity {
   id: string;
@@ -42,7 +45,7 @@ export const useGameStore = create<GameState>((set) => ({
   ...initialState,
   
   addEntity: (entity) => set((state) => ({
-    entities: [...state.entities, { ...entity, id: `entity-${Date.now()}-${Math.random()}` }],
+    entities: [...state.entities, { ...entity, id: `entity-${++entityIdCounter}` }],
   })),
   
   updateEntity: (id, updates) => set((state) => ({
