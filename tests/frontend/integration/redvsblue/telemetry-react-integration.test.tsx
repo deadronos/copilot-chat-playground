@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { TelemetryConnectorCore, TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector"
 import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
+import { render, cleanup } from "@testing-library/react"
+
 
 describe("TelemetryConnector React integration", () => {
   beforeEach(() => {
@@ -77,17 +79,9 @@ describe("TelemetryConnector React integration", () => {
       close() { this.readyState = 3; this.onclose && this.onclose() }
     }
 
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-    let root: any = null
-    // dynamically import React DOM helpers to avoid transform-time issues
-    const React = await import("react")
-    const { createRoot } = await import("react-dom/client")
-    const { act } = await import("react-dom/test-utils")
-    act(() => {
-      root = createRoot(container)
-      root.render(React.createElement(TelemetryConnectorReact, { WebSocketCtor: MockWS as any, drainIntervalMs: 100, batchSize: 10 }))
-    })
+    // Use testing-library render to mount the React connector reliably
+    // Render the connector using testing-library render
+    render(<TelemetryConnectorReact WebSocketCtor={MockWS as any} drainIntervalMs={100} batchSize={10} />)
 
     // push event while UI disabled
     useUIStore.getState().setTelemetryEnabled(false)
@@ -105,7 +99,7 @@ describe("TelemetryConnector React integration", () => {
     expect(payload.find((p: any) => p.type === "react_buffered")).toBeTruthy()
     expect(useTelemetryStore.getState().getBufferLength()).toBe(0)
 
-    act(() => root.unmount())
-    container.remove()
+    // cleanup the render
+    cleanup()
   })
 })
