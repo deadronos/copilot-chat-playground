@@ -5,6 +5,7 @@ import type {
   EngineConfig,
   TelemetryEvent,
 } from "@/redvsblue/types";
+import { serialize } from "./serialize";
 
 // ============================================================================
 // INTERNAL ENTITY CLASSES (not exposed; converted to typed objects via getState)
@@ -470,7 +471,7 @@ export class Engine {
   }
 
   getState(): GameState {
-    return {
+    const snapshot: GameState = {
       ships: this.ships.map((s) => ({
         id: s.id,
         team: s.team,
@@ -503,6 +504,8 @@ export class Engine {
       stars: this.stars,
       timestamp: Date.now(),
     };
+    // Ensure snapshot is serializable for Web Worker migration
+    return serialize(snapshot);
   }
 
   destroy(): void {
