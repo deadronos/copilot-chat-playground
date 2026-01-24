@@ -4,12 +4,39 @@ A local playground for experimenting with a chat UI + backend + Copilot integrat
 
 This repo is a **pnpm workspace** with separate packages under `src/`.
 
+## Demo Screenshot
+![Copilot Chat Playground Screenshot](image.png)
+Frontend ran a prompt against the Copilot service using the SDK mode.
+
+![Docker Compose Stack Screenshot](dockerup.png)
+Docker up and running
+
 ## Packages
 
 - `src/frontend` — Vite + React + shadcn/ui UI
 - `src/backend` — Node.js API (streaming bridge; scaffold)
 - `src/copilot` — **Copilot SDK** / Copilot CLI wrapper service (uses SDK by default)
 - `src/shared` — shared types/utilities (LogEvent, EventBus, NDJSON helper)
+
+## Getting started
+
+1. Enable pnpm via Corepack (recommended)
+
+   - `corepack enable`
+
+2. Install deps
+
+   - `pnpm install`
+
+3. Run everything in dev
+
+   - `pnpm dev`
+
+### Run just one service
+
+- `pnpm dev:frontend`
+- `pnpm dev:backend`
+- `pnpm dev:copilot`
 
 ### Copilot Service Modes
 
