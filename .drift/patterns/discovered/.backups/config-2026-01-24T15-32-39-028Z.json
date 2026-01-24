@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.296Z",
-  "checksum": "0a8493cb30faa21f",
   "category": "config",
   "patterns": [
     {
       "id": "35559ba0aaadad3d",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 209,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.924Z",
-        "lastSeen": "2026-01-24T15:32:38.924Z",
+        "firstSeen": "2026-01-24T15:15:32.950Z",
+        "lastSeen": "2026-01-24T15:15:32.950Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f021871c80f81855",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 144,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2ece2f3756b09c3f",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 192,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d78d08a64d302cb8",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 167,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2088,25 +2131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "39a2eddaf06303c7",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 84,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2611,25 +2666,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "621c2f4fa8b8fccb",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 38,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -2944,25 +3011,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6582e956a101acf2",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 74,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -3467,25 +3546,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "07bb98d7e9d9eb68",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 163,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -3990,25 +4081,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f5da6c9c09dd8847",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 48,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -4513,25 +4616,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "dcbea0bad06c51f5",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.58,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -4681,25 +4796,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f61b81787fd671cb",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 33,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -5084,25 +5211,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d734cd100ef6a46b",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 35,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -5412,25 +5551,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1268cb4fb8f96d8e",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 47,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -5935,25 +6086,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.943Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f52fc372dc03928c",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 60,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\drei-use-gltf.md",
@@ -6458,25 +6621,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0a40fd9b7ca6e88b",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.8,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\references\\workflows.md",
@@ -6681,25 +6856,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6eb873777455f851",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 57,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -7204,25 +7391,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "bc8acd6958d17396",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.82,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 37,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -7637,25 +7836,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "304f0e2aaa5bd3b7",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 53,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -8130,25 +8341,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a0897f29f4179a2b",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 78,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
@@ -8653,25 +8876,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "48a3ce963bc8cfe7",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 45,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
@@ -9106,25 +9341,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "88d542de7904f931",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.74,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\quick_validate.py",
@@ -9314,25 +9561,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "06c80b1b5e0d2af9",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.98,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 38,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -9552,25 +9811,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6824a45e249dfab8",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 76,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -10075,25 +10346,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0134abff643f6c25",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 33,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -10483,25 +10766,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "14f5a454d570e807",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.64,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 40,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\theme-factory\\SKILL.md",
@@ -10826,25 +11121,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f7af822a99d0d017",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 57,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\gltf-loading-optimization.md",
@@ -11349,25 +11656,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fd678e4990cbcda4",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.58,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\gltf-loading-optimization.md",
@@ -11467,25 +11786,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5a780e782ca9d296",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.22,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 9,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-complete-reference.md",
@@ -11545,25 +11876,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c3ae6a38fe2ab5c2",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.3,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 13,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-complete-reference.md",
@@ -11643,25 +11986,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2a508a2e10b1b0ac",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 36,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\AGENTS.md",
@@ -11966,25 +12321,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7e916c35b8f7450b",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.48,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 19,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-closure-leaks.md",
@@ -12109,25 +12476,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e9dcb72e857cb2a4",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.86,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 31,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-cleanup-event-listeners.md",
@@ -12562,25 +12941,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "eb3fd5221a6362d8",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-use-weakmap-for-metadata.md",
@@ -12685,25 +13076,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c924feebcf2a224a",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.34,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 10,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\module-control-types-inclusion.md",
@@ -12763,25 +13166,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e2462b83d7d8c247",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.78,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\runtime-avoid-object-spread-in-loops.md",
@@ -12981,25 +13396,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a3d7d0c402a3f8c3",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.56,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\type-limit-recursion-depth.md",
@@ -13144,25 +13571,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "68ca911481ecdc36",
+      "subcategory": "env-config",
       "name": "Environment Config Detector",
       "description": "Learns environment configuration patterns from your codebase",
-      "subcategory": "env-config",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/env-config",
+          "patternId": "config/env-config/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.47,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\SKILL.md",
@@ -13272,25 +13711,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "env-config"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4e746f92db323f52",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.32,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -13375,25 +13826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "93c93a9dbe2e8324",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.91,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -13478,25 +13941,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "61d85ff71c632b3e",
+      "subcategory": "default-values",
       "name": "Default Values Detector",
       "description": "Learns default value patterns from your codebase",
-      "subcategory": "default-values",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/default-values",
+          "patternId": "config/default-values/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.46,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-memo-with-default-value.md",
@@ -13616,25 +14091,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "default-values"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "46869fd3da45289c",
+      "subcategory": "required-optional",
       "name": "Required/Optional Detector",
       "description": "Learns required/optional configuration patterns from your codebase",
-      "subcategory": "required-optional",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/required-optional",
+          "patternId": "config/required-optional/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.22,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 11,
         "score": 0.9381818181818182,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\migration-guide.md",
@@ -13694,25 +14181,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "required-optional"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6b5960fb8c3d9078",
+      "subcategory": "config-validation",
       "name": "Config Validation Detector",
       "description": "Learns configuration validation patterns from your codebase",
-      "subcategory": "config-validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/config-validation",
+          "patternId": "config/config-validation/type_annotation"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.8745454545454545,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\memory-bank.instructions.md",
@@ -13722,25 +14221,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "config-validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a6d26c56be4652b4",
+      "subcategory": "environment-detection",
       "name": "Environment Detection Detector",
       "description": "Learns environment detection patterns from your codebase",
-      "subcategory": "environment-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/environment-detection",
+          "patternId": "config/environment-detection/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "memory\\productContext.md",
@@ -13750,25 +14261,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "environment-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "bb85ef3778554a12",
+      "subcategory": "feature-flags",
       "name": "Feature Flags Detector",
       "description": "Learns feature flag patterns from your codebase",
-      "subcategory": "feature-flags",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "config/feature-flags",
+          "patternId": "config/feature-flags/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
@@ -13793,13 +14316,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "config",
           "feature-flags"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.054Z",
+  "checksum": "fc35c25d1a2bd18f"
 }

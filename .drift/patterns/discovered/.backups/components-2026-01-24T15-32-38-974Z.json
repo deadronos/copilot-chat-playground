@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.264Z",
-  "checksum": "1b6342fa2f251433",
   "category": "components",
   "patterns": [
     {
       "id": "7d0f5186d82de150",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 208,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.918Z",
-        "lastSeen": "2026-01-24T15:32:38.918Z",
+        "firstSeen": "2026-01-24T15:15:32.943Z",
+        "lastSeen": "2026-01-24T15:15:32.943Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "02e2b56c891767c1",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 187,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.918Z",
-        "lastSeen": "2026-01-24T15:32:38.918Z",
+        "firstSeen": "2026-01-24T15:15:32.943Z",
+        "lastSeen": "2026-01-24T15:15:32.943Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d7c95d53b493bb5d",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 222,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.918Z",
-        "lastSeen": "2026-01-24T15:32:38.918Z",
+        "firstSeen": "2026-01-24T15:15:32.943Z",
+        "lastSeen": "2026-01-24T15:15:32.943Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ffbdc16f4581f897",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 581,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2088,25 +2131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.918Z",
-        "lastSeen": "2026-01-24T15:32:38.919Z",
+        "firstSeen": "2026-01-24T15:15:32.944Z",
+        "lastSeen": "2026-01-24T15:15:32.944Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f97492a347905f19",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 207,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2611,25 +2666,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.919Z",
-        "lastSeen": "2026-01-24T15:32:38.919Z",
+        "firstSeen": "2026-01-24T15:15:32.945Z",
+        "lastSeen": "2026-01-24T15:15:32.945Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c91002dfff08e757",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.78,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 31,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2829,25 +2896,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.919Z",
-        "lastSeen": "2026-01-24T15:32:38.919Z",
+        "firstSeen": "2026-01-24T15:15:32.945Z",
+        "lastSeen": "2026-01-24T15:15:32.945Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1cdefed4094d35a5",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 157,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -3352,25 +3431,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.920Z",
-        "lastSeen": "2026-01-24T15:32:38.920Z",
+        "firstSeen": "2026-01-24T15:15:32.945Z",
+        "lastSeen": "2026-01-24T15:15:32.945Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "492632c2b3f9fe5d",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 89,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -3875,25 +3966,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.920Z",
-        "lastSeen": "2026-01-24T15:32:38.920Z",
+        "firstSeen": "2026-01-24T15:15:32.945Z",
+        "lastSeen": "2026-01-24T15:15:32.945Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d0d3bd5777ee6a2c",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 145,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -4398,25 +4501,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.931Z",
-        "lastSeen": "2026-01-24T15:32:38.931Z",
+        "firstSeen": "2026-01-24T15:15:32.957Z",
+        "lastSeen": "2026-01-24T15:15:32.957Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "83ca972961e54665",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 542,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -4921,25 +5036,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.931Z",
-        "lastSeen": "2026-01-24T15:32:38.931Z",
+        "firstSeen": "2026-01-24T15:15:32.957Z",
+        "lastSeen": "2026-01-24T15:15:32.957Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f6431c33d555b09b",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 146,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5444,25 +5571,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.931Z",
-        "lastSeen": "2026-01-24T15:32:38.931Z",
+        "firstSeen": "2026-01-24T15:15:32.958Z",
+        "lastSeen": "2026-01-24T15:15:32.958Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6e4032f85b10cc50",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 116,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5967,25 +6106,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.931Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.958Z",
+        "lastSeen": "2026-01-24T15:15:32.958Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "82a08305837ecf57",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 511,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -6490,25 +6641,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9f459729c887769f",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 107,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -7013,25 +7176,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7fab4b4dfe2c6ac0",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 44,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -7406,25 +7581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "547e319a2c60819e",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -7929,25 +8116,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.939Z",
-        "lastSeen": "2026-01-24T15:32:38.939Z",
+        "firstSeen": "2026-01-24T15:15:32.966Z",
+        "lastSeen": "2026-01-24T15:15:32.966Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "443103fd4bd5fb6a",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 59,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8407,25 +8606,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.939Z",
-        "lastSeen": "2026-01-24T15:32:38.939Z",
+        "firstSeen": "2026-01-24T15:15:32.966Z",
+        "lastSeen": "2026-01-24T15:15:32.966Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9b39878661eadd9b",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 150,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8930,25 +9141,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.939Z",
-        "lastSeen": "2026-01-24T15:32:38.939Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f40343f2eb8a1d9c",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 58,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9453,25 +9676,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.939Z",
-        "lastSeen": "2026-01-24T15:32:38.939Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9d0da163a2831f47",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 210,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9976,25 +10211,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.939Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "524074baf31db4c7",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 213,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -10499,25 +10746,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5eca7f194d6c5609",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 56,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\frame-delta-time.md",
@@ -11022,25 +11281,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2e16419257b61f77",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 44,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\frame-delta-time.md",
@@ -11525,25 +11796,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.946Z",
-        "lastSeen": "2026-01-24T15:32:38.946Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ccaa32115fd08ded",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 51,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -12018,25 +12301,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.947Z",
-        "lastSeen": "2026-01-24T15:32:38.947Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9c08c8966a03a82a",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 78,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -12541,25 +12836,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.947Z",
-        "lastSeen": "2026-01-24T15:32:38.947Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4cfb9a8ddf7c1ea1",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 61,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -13064,25 +13371,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.947Z",
-        "lastSeen": "2026-01-24T15:32:38.947Z",
+        "firstSeen": "2026-01-24T15:15:32.974Z",
+        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "93626ad3316b48f4",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 140,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -13587,25 +13906,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "089dd3381ce34a5d",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 144,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -14110,25 +14441,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "57308a9fe081b999",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 133,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -14633,25 +14976,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "52845325a253d12e",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 80,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -15156,25 +15511,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9925a6779d5c4584",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 78,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -15679,25 +16046,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "efe94e9861d79e6b",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 50,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -16202,25 +16581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ad17f6e094d62537",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 81,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -16725,25 +17116,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5c29e64aada6eddd",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -17248,25 +17651,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5946e351b33399b6",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 48,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -17771,25 +18186,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "dc2b6455b6820e46",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.68,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\references\\workflows.md",
@@ -17924,25 +18351,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c0378b2803e500fe",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.46,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 14,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\references\\workflows.md",
@@ -18177,25 +18616,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4fb0bae2f27befcf",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 93,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -18700,25 +19151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "44b53cc09bb2bf4a",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 72,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -19223,25 +19686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e3397da89f462d7c",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.11,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 6,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -19276,25 +19751,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ce469d2dd8a11ba8",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 39,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
@@ -19674,25 +20161,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fdbdc4b559d8613b",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.55,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 35,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
@@ -19972,25 +20471,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1a78b43115b924e6",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.38,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 26,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
@@ -20185,25 +20696,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e0b37079cd38c145",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.25,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 17,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\quick_validate.py",
@@ -20333,25 +20856,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ecab534546bd33d5",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.43,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 26,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -20571,25 +21106,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "caf0b0f439d82e32",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 36,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -21094,25 +21641,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7ef0683333e89b93",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 55,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -21617,25 +22176,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8ebf96f1920d7afc",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 47,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -22140,25 +22711,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c7cfef76c5967c94",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.24,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\AGENTS.md",
@@ -22283,25 +22866,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5f4d459310981a06",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 6,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22356,25 +22951,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7343e72bf4953141",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.18,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22434,25 +23041,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7fbb0c3f696533bb",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 6,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22507,25 +23126,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "16ac06d396ead4a1",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22630,25 +23261,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2aaae29505b7b899",
+      "subcategory": "state-patterns",
       "name": "State Patterns Detector",
       "description": "Learns state management patterns from your codebase",
-      "subcategory": "state-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/state-patterns",
+          "patternId": "components/state-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.8935294117647059,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22673,25 +23316,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "state-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9959168dc444319a",
+      "subcategory": "ref-forwarding",
       "name": "Ref Forwarding Detector",
       "description": "Learns ref forwarding patterns from your codebase",
-      "subcategory": "ref-forwarding",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/ref-forwarding",
+          "patternId": "components/ref-forwarding/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -22716,25 +23371,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "ref-forwarding"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8afd060bb9d6eef2",
+      "subcategory": "modal-patterns",
       "name": "Modal Patterns Detector",
       "description": "Learns modal/dialog patterns from your codebase",
-      "subcategory": "modal-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/modal-patterns",
+          "patternId": "components/modal-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 45,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -23239,25 +23906,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "modal-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e75a05d27a18f19b",
+      "subcategory": "component-structure",
       "name": "Component Structure Detector",
       "description": "Learns component structure patterns from your codebase",
-      "subcategory": "component-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/component-structure",
+          "patternId": "components/component-structure/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.34,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\nextjs-hydration.md",
@@ -23347,25 +24026,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "component-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "04530317b6f33615",
+      "subcategory": "duplicate-detection",
       "name": "Duplicate Detection Detector",
       "description": "Learns duplicate component patterns from your codebase",
-      "subcategory": "duplicate-detection",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/duplicate-detection",
+          "patternId": "components/duplicate-detection/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.34,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\nextjs-hydration.md",
@@ -23455,25 +24146,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "duplicate-detection"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6e3adea8619599f9",
+      "subcategory": "near-duplicate",
       "name": "Near Duplicate Detector",
       "description": "Learns near-duplicate component patterns from your codebase",
-      "subcategory": "near-duplicate",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/near-duplicate",
+          "patternId": "components/near-duplicate/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.34,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\nextjs-hydration.md",
@@ -23563,25 +24266,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "near-duplicate"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "56837db697e3303d",
+      "subcategory": "composition",
       "name": "Composition Detector",
       "description": "Learns component composition patterns from your codebase",
-      "subcategory": "composition",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/composition",
+          "patternId": "components/composition/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.12,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\02-refactor-gameengine.md",
@@ -23616,25 +24331,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "composition"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d5915020f92ca616",
+      "subcategory": "props-patterns",
       "name": "Props Patterns Detector",
       "description": "Learns props patterns from your codebase",
-      "subcategory": "props-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "components/props-patterns",
+          "patternId": "components/props-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\input-group.tsx",
@@ -23679,13 +24406,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "components",
           "props-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:32.994Z",
+  "checksum": "e2dfd7b7dc6d4625"
 }

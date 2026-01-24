@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.302Z",
-  "checksum": "82c7a53d874c26f2",
   "category": "documentation",
   "patterns": [
     {
       "id": "79d97a9d9057c0a1",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 145,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.954Z",
+        "lastSeen": "2026-01-24T15:15:32.954Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "60a65d045a8586f6",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 140,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.954Z",
+        "lastSeen": "2026-01-24T15:15:32.954Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9222a6af32bd0346",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 80,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5048bc015807f6ec",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.59,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 32,
         "score": 0.931111111111111,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1883,25 +1926,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.937Z",
-        "lastSeen": "2026-01-24T15:32:38.937Z",
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cb3b38c85fc322d9",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.69,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 27,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2251,25 +2306,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.937Z",
-        "lastSeen": "2026-01-24T15:32:38.937Z",
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5147300b6917ea85",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 37,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2619,25 +2686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.937Z",
-        "lastSeen": "2026-01-24T15:32:38.937Z",
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "44d0e1de1eddc63a",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.9,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 25,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2867,25 +2946,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.937Z",
-        "lastSeen": "2026-01-24T15:32:38.937Z",
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "da434d5bc466d4c8",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 179,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -3390,25 +3481,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.947Z",
-        "lastSeen": "2026-01-24T15:32:38.947Z",
+        "firstSeen": "2026-01-24T15:15:32.974Z",
+        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3caecb308ecd437c",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 114,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -3913,25 +4016,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.948Z",
-        "lastSeen": "2026-01-24T15:32:38.948Z",
+        "firstSeen": "2026-01-24T15:15:32.974Z",
+        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5a47658d2b4f96c7",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 41,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -4231,25 +4346,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1a55e08d3256979e",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 100,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -4754,25 +4881,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fba841ebb19867ac",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 71,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\references\\output-patterns.md",
@@ -5277,25 +5416,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b3c9022ebbe58274",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.58,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.8892307692307693,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -5445,25 +5596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5e01ddd6691972e1",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 74,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -5968,25 +6131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e742e8894315ba8b",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.29,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 25,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -6136,25 +6311,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "335b28a3298dda1f",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.2,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.83,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -6259,25 +6446,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e3af8ab486d82542",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 31,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\migration-checklist.md",
@@ -6702,25 +6901,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ef7630f6b0d316f2",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.23,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 19,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-why-use.md",
@@ -6840,25 +7051,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "39f76bb2fcbc2976",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.48,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\advanced-template-literal-types.md",
@@ -6983,25 +7206,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "834f454ff25e2afc",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.32,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 11,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\async-avoid-loop-await.md",
@@ -7086,25 +7321,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4821319f9cd24b16",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.14,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-use-weakmap-for-metadata.md",
@@ -7144,25 +7391,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7548cc5ec9bbcc4c",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.8866666666666666,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\safety-prefer-unknown-over-any.md",
@@ -7187,25 +7446,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e1c61ea9b20f862a",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -7290,25 +7561,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "61c83ea0ffbad09c",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.2,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 12,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -7413,25 +7696,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1674347fac60c046",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.19,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 15,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-defer-await.md",
@@ -7531,25 +7826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "823acd28799e911b",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-defer-await.md",
@@ -7654,25 +7961,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8f1409f6930ceefe",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\devtools-store.ts",
@@ -7697,25 +8016,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "57484c28a0ea0d68",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\agents\\context7.agent.md",
@@ -7725,25 +8056,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1602f43fb98d9136",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.06,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\agents\\context7.agent.md",
@@ -7763,25 +8106,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "bcf8e7a1673aab75",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\agents\\context7.agent.md",
@@ -7796,25 +8151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "84044ec830cf7b0c",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.24,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 10,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\memory-bank.instructions.md",
@@ -7939,25 +8306,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b02f3bab00c84af9",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.38,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\memory-bank.instructions.md",
@@ -8057,25 +8436,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f2009801b1442f40",
+      "subcategory": "readme-structure",
       "name": "Readme Structure Detector",
       "description": "Learns README structure patterns from your codebase",
-      "subcategory": "readme-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/readme-structure",
+          "patternId": "documentation/readme-structure/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.7949999999999999,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\library\\copilot-cli\\troubleshooting.md",
@@ -8085,25 +8476,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "readme-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "686935b93bc91958",
+      "subcategory": "todo-patterns",
       "name": "Todo Patterns Detector",
       "description": "Learns TODO/FIXME comment patterns from your codebase",
-      "subcategory": "todo-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/todo-patterns",
+          "patternId": "documentation/todo-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\library\\copilot-sdk\\01-installation-auth.md",
@@ -8118,25 +8521,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "todo-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "17a8d72d60d8290c",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.06,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\02-refactor-gameengine.md",
@@ -8156,25 +8571,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8f56d6d0ad2b3cfd",
+      "subcategory": "deprecation",
       "name": "Deprecation Detector",
       "description": "Learns deprecation patterns from your codebase",
-      "subcategory": "deprecation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/deprecation",
+          "patternId": "documentation/deprecation/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.7366666666666666,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -8189,25 +8616,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "deprecation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8b929553acc4dc08",
+      "subcategory": "jsdoc-patterns",
       "name": "JSDoc Patterns Detector",
       "description": "Learns JSDoc documentation patterns from your codebase",
-      "subcategory": "jsdoc-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/jsdoc-patterns",
+          "patternId": "documentation/jsdoc-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\example.tsx",
@@ -8222,25 +8661,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "jsdoc-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "09490db8021d68fd",
+      "subcategory": "example-code",
       "name": "Example Code Detector",
       "description": "Learns example code patterns from your codebase",
-      "subcategory": "example-code",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "documentation/example-code",
+          "patternId": "documentation/example-code/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\example.tsx",
@@ -8255,13 +8706,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "documentation",
           "example-code"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.072Z",
+  "checksum": "bef4a21ec2a860b5"
 }
