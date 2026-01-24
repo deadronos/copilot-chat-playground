@@ -1,8 +1,17 @@
 # [DES007] - Milestone E: Workspace Mount + Compose + Secrets
 
-**Status:** Draft
+**Status:** Completed ✅
 **Added:** 2026-01-23
-**Updated:** 2026-01-23
+**Updated:** 2026-01-24
+
+## Implementation
+
+- Milestone work completed in commits on 2026-01-23/24: implemented workspace mount, adjusted `WORKDIR`, added Compose wiring, and documented dotenvx secrets-first key handling (see commits: `886301f8`, `2a5c6a3`, `3cdb2ae`, `695bfe2`, `31a1063`, `e37b033`).
+- Changes include Dockerfile and Compose updates and documentation enhancements in repo docs/ and README.
+
+---
+
+
 
 ## Summary
 

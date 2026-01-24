@@ -6,5 +6,6 @@
 - TASK004 - Milestone F: Switch to Copilot SDK - In Progress
 - TASK005 - Milestone D: Safety Toggles & UX Polish - Done
 - TASK006 - Milestone C: End-to-End Streaming - In Progress
-- TASK007 - Milestone E: Workspace Mount + Compose + Secrets - Pending
+- TASK007 - Milestone E: Workspace Mount + Compose + Secrets - Completed ✅  (2026-01-24)
 - TASK008 - Docker service separation & caching - Done
+- TASK009 - Document & validate secrets-first pattern - Pending (2026-01-24)
