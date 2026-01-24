@@ -6,6 +6,7 @@ import type { EngineConfig, Team } from "@/redvsblue/types"
 import { CanvasRenderer } from "@/redvsblue/renderer"
 import { selectSnapshot, useGameState } from "@/redvsblue/stores/gameState"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
+import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
 
 export type UseGameOptions = {
   canvasRef: RefObject<HTMLCanvasElement | null>
@@ -162,13 +163,22 @@ export function useGame(options: UseGameOptions): Controls {
 
       // Telemetry: forward engine telemetry events to telemetry store
       // Respect both engine config (enableTelemetry) and UI toggle (telemetryEnabled)
+      // remove any previously-registered handler before adding a new one (prevent duplicate handlers)
+      if (telemetryHandler) engine.off("telemetry", telemetryHandler)
+
       telemetryHandler = (data: unknown) => {
-        const evt = data as import("./types").TelemetryEvent
-        const engineEnabled = defaultConfig.enableTelemetry ?? true
-        const uiEnabled = useUIStore.getState().telemetryEnabled ?? true
-        if (!engineEnabled || !uiEnabled) return
-        // push into telemetry store (stores handle id/timestamp enrichment)
-        import("./stores/telemetry").then((m) => m.useTelemetryStore.getState().pushTelemetry(evt))
+        try {
+          const evt = data as import("./types").TelemetryEvent
+          const engineEnabled = defaultConfig.enableTelemetry ?? true
+          const uiEnabled = useUIStore.getState().telemetryEnabled ?? true
+          if (!engineEnabled || !uiEnabled) return
+          // push into telemetry store (stores handle id/timestamp enrichment)
+          useTelemetryStore.getState().pushTelemetry(evt)
+        } catch (err) {
+          // Defensive: ensure telemetry handler errors don't break engine loop
+          // eslint-disable-next-line no-console
+          console.error("telemetry handler error", err)
+        }
       }
 
       engine.on("telemetry", telemetryHandler)
