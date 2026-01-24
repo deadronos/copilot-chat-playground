@@ -8,6 +8,9 @@ services:
       - ./workspace:/workspace:ro
     environment:
       - PORT=3210
+      # Auth: pass through from your host env / Compose .env (do not commit secrets).
+      - GH_TOKEN
+      - GITHUB_TOKEN
     ports:
       - "3210:3210"
     healthcheck:
