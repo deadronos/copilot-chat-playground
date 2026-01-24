@@ -11,9 +11,8 @@ Frontend ran a prompt against the Copilot service using the SDK mode.
 ![Docker Compose Stack Screenshot](dockerup.png)
 Docker up and running
 
-YouTue Demo Video:
-[`https://www.youtube.com/watch?v=ycVCQS6mjZg`]
-
+YouTube Demo Video:
+[YouTube Demo Video](https://www.youtube.com/watch?v=ycVCQS6mjZg)
 
 ## Packages
 
