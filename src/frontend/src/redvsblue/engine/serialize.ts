@@ -44,8 +44,8 @@ function isSerializable(value: unknown, visited = new WeakSet<object>()): boolea
       return false;
     }
 
-    // DOM nodes are not serializable
-    if (value instanceof Node) {
+    // DOM nodes are not serializable (Node is not defined in Web Workers)
+    if (typeof Node !== "undefined" && value instanceof Node) {
       return false;
     }
 

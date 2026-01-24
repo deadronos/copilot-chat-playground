@@ -6,6 +6,7 @@ import type {
   TelemetryEvent,
 } from "@/redvsblue/types";
 import { serialize } from "./serialize";
+import { createRng, type RNG } from "./rng";
 
 // ============================================================================
 // INTERNAL ENTITY CLASSES (not exposed; converted to typed objects via getState)
@@ -20,12 +21,12 @@ class Particle {
   color: string;
   id: string;
 
-  constructor(id: string, x: number, y: number, color: string) {
+  constructor(id: string, x: number, y: number, color: string, rng: RNG) {
     this.id = id;
     this.x = x;
     this.y = y;
-    this.vx = (Math.random() - 0.5) * 5;
-    this.vy = (Math.random() - 0.5) * 5;
+    this.vx = (rng() - 0.5) * 5;
+    this.vy = (rng() - 0.5) * 5;
     this.life = 1.0;
     this.color = color;
   }
@@ -112,19 +113,20 @@ class Ship {
     x: number,
     y: number,
     team: Team,
-    maxHealth: number
+    maxHealth: number,
+    rng: RNG
   ) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.team = team;
-    this.vx = Math.random() - 0.5;
-    this.vy = Math.random() - 0.5;
-    this.angle = Math.random() * Math.PI * 2;
+    this.vx = rng() - 0.5;
+    this.vy = rng() - 0.5;
+    this.angle = rng() * Math.PI * 2;
     this.color = team === "red" ? "#ff4d4d" : "#4d4dff";
     this.health = maxHealth;
     this.maxHealth = maxHealth;
-    this.cooldown = Math.random() * 20;
+    this.cooldown = rng() * 20;
     this.radius = 12;
   }
 
@@ -159,7 +161,9 @@ class Ship {
     particles: Particle[],
     width: number,
     height: number,
-    config: { turnSpeed: number; shipThrust: number; visionDist: number }
+    config: { turnSpeed: number; shipThrust: number; visionDist: number },
+    rng: RNG,
+    createParticleId: () => string
   ): void {
     const { enemy, dist } = this.getNearestEnemy(
       ships,
@@ -193,10 +197,10 @@ class Ship {
       if (Math.abs(diff) < 1.0) {
         this.vx += Math.cos(this.angle) * config.shipThrust;
         this.vy += Math.sin(this.angle) * config.shipThrust;
-        if (Math.random() > 0.5) {
+        if (rng() > 0.5) {
           const px = this.x - Math.cos(this.angle) * 15;
           const py = this.y - Math.sin(this.angle) * 15;
-          particles.push(new Particle(this.id + "-thrust-" + Date.now(), px, py, "orange"));
+          particles.push(new Particle(createParticleId(), px, py, "orange", rng));
         }
       }
 
@@ -251,11 +255,17 @@ export class Engine {
   private config: EngineConfig | null = null;
   private eventHandlers = new Map<string, Set<(data: unknown) => void>>();
   private entityIdCounter: number = 0;
+  private rng: RNG = Math.random;
+
+  private nextEntityId(prefix: string): string {
+    return `${prefix}-${this.entityIdCounter++}`;
+  }
 
   init(config: EngineConfig): void {
     this.config = config;
     this.tick = 0;
     this.entityIdCounter = 0;
+    this.rng = Number.isFinite(config.seed) ? createRng(config.seed as number) : Math.random;
     this.ships = [];
     this.bullets = [];
     this.particles = [];
@@ -275,11 +285,11 @@ export class Engine {
       this.stars.push({
         id: `star-${i}`,
         position: {
-          x: Math.random() * this.config.canvasWidth,
-          y: Math.random() * this.config.canvasHeight,
+          x: this.rng() * this.config.canvasWidth,
+          y: this.rng() * this.config.canvasHeight,
         },
-        brightness: Math.random(),
-        size: Math.random() * 1.5,
+        brightness: this.rng(),
+        size: this.rng() * 1.5,
       });
     }
   }
@@ -292,11 +302,19 @@ export class Engine {
 
     // Update ships
     for (const ship of this.ships) {
-      ship.updateAI(this.ships, this.particles, this.config.canvasWidth, this.config.canvasHeight, {
-        turnSpeed: 0.08,
-        shipThrust: 0.2,
-        visionDist: 800,
-      });
+      ship.updateAI(
+        this.ships,
+        this.particles,
+        this.config.canvasWidth,
+        this.config.canvasHeight,
+        {
+          turnSpeed: 0.08,
+          shipThrust: 0.2,
+          visionDist: 800,
+        },
+        this.rng,
+        () => this.nextEntityId("particle")
+      );
       ship.update(this.config.canvasWidth, this.config.canvasHeight, 0.98);
 
       // Check if ship should shoot
@@ -314,7 +332,7 @@ export class Engine {
       ) {
         const bulletPos = ship.shoot();
         const bullet = new Bullet(
-          `bullet-${this.entityIdCounter++}`,
+          this.nextEntityId("bullet"),
           bulletPos.x,
           bulletPos.y,
           bulletPos.angle,
@@ -325,7 +343,7 @@ export class Engine {
           50
         );
         this.bullets.push(bullet);
-        ship.cooldown = 20 + Math.random() * 10;
+        ship.cooldown = 20 + this.rng() * 10;
 
         this.emit("telemetry", {
           type: "bullet_fired",
@@ -384,10 +402,11 @@ export class Engine {
           for (let k = 0; k < 5; k++) {
             this.particles.push(
               new Particle(
-                `particle-${this.entityIdCounter++}`,
+                this.nextEntityId("particle"),
                 bullet.x,
                 bullet.y,
-                ship.color
+                ship.color,
+                this.rng
               )
             );
           }
@@ -397,18 +416,20 @@ export class Engine {
             for (let k = 0; k < 15; k++) {
               this.particles.push(
                 new Particle(
-                  `particle-${this.entityIdCounter++}`,
+                  this.nextEntityId("particle"),
                   ship.x,
                   ship.y,
-                  "white"
+                  "white",
+                  this.rng
                 )
               );
               this.particles.push(
                 new Particle(
-                  `particle-${this.entityIdCounter++}`,
+                  this.nextEntityId("particle"),
                   ship.x,
                   ship.y,
-                  ship.color
+                  ship.color,
+                  this.rng
                 )
               );
             }
@@ -433,20 +454,21 @@ export class Engine {
     if (!this.config) return;
 
     let x: number;
-    const y = Math.random() * this.config.canvasHeight;
+    const y = this.rng() * this.config.canvasHeight;
 
     if (team === "red") {
-      x = Math.random() * (this.config.canvasWidth * 0.3);
+      x = this.rng() * (this.config.canvasWidth * 0.3);
     } else {
-      x = this.config.canvasWidth - Math.random() * (this.config.canvasWidth * 0.3);
+      x = this.config.canvasWidth - this.rng() * (this.config.canvasWidth * 0.3);
     }
 
     const ship = new Ship(
-      `ship-${this.entityIdCounter++}`,
+      this.nextEntityId("ship"),
       x,
       y,
       team,
-      this.config.shipMaxHealth
+      this.config.shipMaxHealth,
+      this.rng
     );
     this.ships.push(ship);
 

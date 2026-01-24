@@ -142,6 +142,9 @@ export interface EngineConfig {
   shipMaxHealth: number;
   /** Whether to emit telemetry events to backend/Copilot server */
   enableTelemetry: boolean;
+
+  /** Optional seed for deterministic simulation runs */
+  seed?: number;
 }
 
 /**

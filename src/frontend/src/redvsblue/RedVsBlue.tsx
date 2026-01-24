@@ -1,17 +1,36 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { selectBlueCount, selectRedCount, useGameState } from "@/redvsblue/stores/gameState";
 import { useGame } from "@/redvsblue/useGame";
 import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
+import { runPerfBench } from "@/redvsblue/bench/perfBench";
+import { useUIStore } from "@/redvsblue/stores/uiStore";
+
+const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+const initialWorkerMode = params?.get("rvbWorker") === "1";
+const initialRendererParam = params?.get("rvbRenderer");
+
+if (initialRendererParam === "offscreen") {
+  useUIStore.getState().setSelectedRenderer("offscreen");
+}
 
 const RedVsBlue: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  // Ensures a fresh <canvas> element per mount (important for OffscreenCanvas + React StrictMode).
+  const [canvasInstanceKey] = useState(() => String(Date.now()) + "-" + Math.random().toString(36).slice(2));
+
+  const selectedRenderer = useUIStore((s) => s.selectedRenderer);
+  const workerMode = initialWorkerMode;
 
   const redCount = useGameState(selectRedCount);
   const blueCount = useGameState(selectBlueCount);
 
-  const { spawnShip, reset } = useGame({ canvasRef, containerRef });
+  const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
+
+  if (import.meta.env.DEV) {
+    ;(globalThis as any).__rvbBench = { runPerfBench }
+  }
 
   return (
     <div
@@ -31,7 +50,7 @@ const RedVsBlue: React.FC = () => {
         .btn-red { border-bottom: 3px solid #ff4d4d; } .btn-blue { border-bottom: 3px solid #4d4dff; } .btn-reset { border-bottom: 3px solid white; }
       `}</style>
 
-      <canvas ref={canvasRef} id="gameCanvas" />
+      <canvas key={`${selectedRenderer}-${canvasInstanceKey}`} ref={canvasRef} id="gameCanvas" />
 
       <TelemetryConnectorReact />
 
