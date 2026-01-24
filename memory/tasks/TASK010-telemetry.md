@@ -35,6 +35,12 @@ Add a telemetry pipeline so the engine emits structured TelemetryEvent objects w
 ### 2026-01-24
 - Phase 2: Implement telemetry store — added `src/frontend/src/redvsblue/stores/telemetry.ts` and `tests/frontend/unit/redvsblue/telemetryStore.test.ts`. Unit tests passed locally. ✅
 
+### 2026-01-24
+- Phase 3: Wire engine telemetry emits — added UI toggle (`uiStore.telemetryEnabled`) and wiring in `useGame` to forward engine `telemetry` events to the telemetry store. Added `engine-telemetry-wiring.test.ts`. ✅
+
+### 2026-01-24
+- Phase 4: Implement TelemetryConnector — added `TelemetryConnector` core, React mount, and tests (`telemetryConnector.test.ts`). Connector supports batching, reconnect with backoff, requeue on failure, and respects UI & env toggles. Unit tests pass locally. ✅
+
 ### 2026-01-24 (Implementation)
 - Added `TelemetryEvent` type with optional `id`, `data`, `sessionId`, `seq`, and `version` fields.
 - Implemented `ensureTelemetryEvent(partial)` helper in `src/frontend/src/redvsblue/telemetry.ts` which assigns `id` and `timestamp` when missing.
