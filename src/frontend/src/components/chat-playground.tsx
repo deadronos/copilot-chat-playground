@@ -27,8 +27,15 @@ import RedVsBlue from "@/redvsblue/RedVsBlue";
 type StreamStatus = "empty" | "waiting" | "streaming" | "done" | "error";
 type ChatMode = "explain-only" | "project-helper";
 
-const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? "/api";
-const API_URL = `${API_BASE.replace(/\/$/, "")}/chat`;
+// Runtime configuration: prefer VITE_API_URL if provided; otherwise fall back to proxy
+const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? undefined;
+const VITE_BACKEND_URL = (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? undefined;
+const DEFAULT_PROXY_API_BASE = "/api"; // proxied by Vite dev server
+
+// Default API URL used before probing completes
+const DEFAULT_API_URL = VITE_API_URL
+  ? `${VITE_API_URL.replace(/\/$/, "")}/chat`
+  : `${DEFAULT_PROXY_API_BASE}/chat`; 
 
 const MODE_META: Record<
   ChatMode,
@@ -99,7 +106,54 @@ export function ChatPlayground() {
   const [copied, setCopied] = React.useState(false);
   const [isRedVsBlueOpen, setIsRedVsBlueOpen] = React.useState(false);
 
+  // Runtime backend detection: prefer VITE_API_URL; otherwise probe VITE_BACKEND_URL or localhost:3000
+  const [apiUrl, setApiUrl] = React.useState<string>(() => DEFAULT_API_URL);
+  const [backendProbeInfo, setBackendProbeInfo] = React.useState<string | null>(null);
+
   const isBusy = status === "waiting" || status === "streaming";
+
+  React.useEffect(() => {
+    // If a direct API URL was explicitly provided, use it and skip probing
+    if (VITE_API_URL) {
+      setBackendProbeInfo(`Using API URL from VITE_API_URL`);
+      return;
+    }
+
+    let active = true;
+    const candidates: string[] = [];
+    if (VITE_BACKEND_URL) candidates.push(VITE_BACKEND_URL);
+    candidates.push("http://localhost:3000");
+
+    const probe = async () => {
+      for (const candidate of candidates) {
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 1500);
+          const res = await fetch(`${candidate.replace(/\/$/, "")}/health`, {
+            signal: controller.signal,
+          });
+          clearTimeout(timeout);
+          if (!active) return;
+          if (res.ok) {
+            setApiUrl(`${candidate.replace(/\/$/, "")}/api/chat`);
+            setBackendProbeInfo(`Backend reachable at ${candidate}`);
+            return;
+          }
+        } catch (e) {
+          // ignore and try next candidate
+        }
+      }
+      if (active) {
+        setBackendProbeInfo(null); // leave it to the proxy /api
+      }
+    };
+
+    probe();
+
+    return () => {
+      active = false;
+    };
+  }, [VITE_API_URL, VITE_BACKEND_URL]);
   const statusMeta = STATUS_META[status];
   const outputPlaceholder = output.length
     ? ""
@@ -150,7 +204,7 @@ export function ChatPlayground() {
     setStatus("waiting");
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: trimmed, mode }),
@@ -302,7 +356,11 @@ export function ChatPlayground() {
                   </p>
                 </div>
                 <div className="rounded-full border border-slate-900/10 bg-[#f8f1e7] px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-500">
-                  Local-only
+                  {backendProbeInfo ? (
+                    <span className="text-[10px] normal-case">{backendProbeInfo}</span>
+                  ) : (
+                    "Local-only"
+                  )}
                 </div>
               </div>
 

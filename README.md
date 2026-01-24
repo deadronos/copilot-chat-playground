@@ -11,6 +11,11 @@ Frontend ran a prompt against the Copilot service using the SDK mode.
 ![Docker Compose Stack Screenshot](dockerup.png)
 Docker up and running
 
+YouTube Demo Video:
+[YouTube Demo Video](https://www.youtube.com/watch?v=ycVCQS6mjZg)
+Demo Video downscaled here:
+[Demo Video in Repo](./Copilot_Chat_PlayGround_Docker.mp4)
+
 ## Packages
 
 - `src/frontend` — Vite + React + shadcn/ui UI
