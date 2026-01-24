@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.270Z",
-  "checksum": "1beec9959c2b22df",
   "category": "api",
   "patterns": [
     {
       "id": "0e58fd015c9c7809",
+      "subcategory": "route-structure",
       "name": "Route Structure Detector",
       "description": "Detects route URL structure patterns and flags inconsistencies",
-      "subcategory": "route-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/route-structure",
+          "patternId": "api/route-structure/restful"
+        }
+      },
       "confidence": {
+        "frequency": 0.07,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\webapp-testing\\examples\\static_html_automation.py",
@@ -54,25 +61,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "route-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8159d72683aa7b66",
+      "subcategory": "route-structure",
       "name": "Route Structure Detector",
       "description": "Detects route URL structure patterns and flags inconsistencies",
-      "subcategory": "route-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/route-structure",
+          "patternId": "api/route-structure/express-route"
+        }
+      },
       "confidence": {
+        "frequency": 0.07,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\webapp-testing\\examples\\static_html_automation.py",
@@ -112,25 +131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "route-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "466131ffea66a2cb",
+      "subcategory": "http-methods",
       "name": "HTTP Methods Detector",
       "description": "Detects HTTP method usage patterns and flags RESTful convention violations",
-      "subcategory": "http-methods",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/http-methods",
+          "patternId": "api/http-methods/fetch-api"
+        }
+      },
       "confidence": {
+        "frequency": 0.07,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "warning",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
@@ -172,94 +203,134 @@
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 128,
-          "column": 30
+          "column": 30,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 168,
-          "column": 30
+          "column": 30,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use POST.",
+          "deviationScore": 0.4
         },
         {
           "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 128,
-          "column": 30
+          "column": 30,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 168,
-          "column": 30
+          "column": 30,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use POST.",
+          "deviationScore": 0.4
         },
         {
           "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 128,
-          "column": 30
+          "column": 30,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 168,
-          "column": 30
+          "column": 30,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use POST.",
+          "deviationScore": 0.4
         },
         {
           "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 128,
-          "column": 30
+          "column": 30,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
           "line": 168,
-          "column": 30
+          "column": 30,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use POST.",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 46,
-          "column": 28
+          "column": 28,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 89,
-          "column": 28
+          "column": 28,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 192,
-          "column": 3
+          "column": 3,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use POST.",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\index.ts",
           "line": 32,
-          "column": 28
+          "column": 28,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         },
         {
           "file": "src\\backend\\src\\index.ts",
           "line": 32,
-          "column": 28
+          "column": 28,
+          "reason": "Inconsistent HTTP method for read operation. Most read operations use GET.",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\frontend\\src\\components\\chat-playground.tsx",
           "line": 153,
-          "column": 30
+          "column": 30,
+          "reason": "Using POST for read operation. Consider using GET for idempotent read operations.",
+          "deviationScore": 0.7
         }
       ],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "http-methods"
         ]
-      }
+      },
+      "severity": "warning",
+      "autoFixable": false
     },
     {
       "id": "bed8eb5d1fc5ee80",
+      "subcategory": "http-methods",
       "name": "HTTP Methods Detector",
       "description": "Detects HTTP method usage patterns and flags RESTful convention violations",
-      "subcategory": "http-methods",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/http-methods",
+          "patternId": "api/http-methods/method-post"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
@@ -304,25 +375,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "http-methods"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cfdb5c2d1b3b1445",
+      "subcategory": "http-methods",
       "name": "HTTP Methods Detector",
       "description": "Detects HTTP method usage patterns and flags RESTful convention violations",
-      "subcategory": "http-methods",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/http-methods",
+          "patternId": "api/http-methods/method-delete"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
@@ -347,25 +430,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "http-methods"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5192459a9c9fed9b",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/format-standard"
+        }
+      },
       "confidence": {
+        "frequency": 0.17,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 17,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "warning",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\basic-store.ts",
@@ -457,64 +552,92 @@
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 193,
-          "column": 5
+          "column": 5,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 64,
-          "column": 5
+          "column": 5,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 137,
-          "column": 5
+          "column": 5,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 18,
-          "column": 26
+          "column": 26,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 25,
-          "column": 28
+          "column": 28,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\backend\\src\\app.ts",
           "line": 190,
-          "column": 24
+          "column": 24,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\copilot\\src\\copilot-sdk.ts",
           "line": 167,
-          "column": 7
+          "column": 7,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         },
         {
           "file": "src\\copilot\\src\\copilot-sdk.ts",
           "line": 5,
-          "column": 37
+          "column": 37,
+          "reason": "Response envelope is missing an error field",
+          "deviationScore": 0.4
         }
       ],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "warning",
+      "autoFixable": false
     },
     {
       "id": "3894ca4b67cd56f4",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/pagination-offset"
+        }
+      },
       "confidence": {
+        "frequency": 0.15,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 15,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\basic-store.ts",
@@ -594,25 +717,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9fb82d35047efcef",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/pagination-metadata"
+        }
+      },
       "confidence": {
+        "frequency": 0.15,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 15,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\basic-store.ts",
@@ -692,25 +827,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6b7362c6af38af10",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/format-custom"
+        }
+      },
       "confidence": {
+        "frequency": 0.05,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
@@ -740,25 +887,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "415c8513aa722393",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/envelope-structure"
+        }
+      },
       "confidence": {
+        "frequency": 0.09,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 9,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
@@ -808,25 +967,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9228d174411b092a",
+      "subcategory": "route-structure",
       "name": "Route Structure Detector",
       "description": "Detects route URL structure patterns and flags inconsistencies",
-      "subcategory": "route-structure",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/route-structure",
+          "patternId": "api/route-structure/restful-route"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\backend\\src\\app.ts",
@@ -841,25 +1012,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "route-structure"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "256c50d0ca5581b1",
+      "subcategory": "http-methods",
       "name": "HTTP Methods Detector",
       "description": "Detects HTTP method usage patterns and flags RESTful convention violations",
-      "subcategory": "http-methods",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/http-methods",
+          "patternId": "api/http-methods/express-handler"
+        }
+      },
       "confidence": {
+        "frequency": 0.03,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 3,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\backend\\src\\app.ts",
@@ -879,25 +1062,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "http-methods"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8d86d287837d0684",
+      "subcategory": "http-methods",
       "name": "HTTP Methods Detector",
       "description": "Detects HTTP method usage patterns and flags RESTful convention violations",
-      "subcategory": "http-methods",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/http-methods",
+          "patternId": "api/http-methods/method-get"
+        }
+      },
       "confidence": {
+        "frequency": 0.03,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 3,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\backend\\src\\app.ts",
@@ -917,25 +1112,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "http-methods"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0c360398e820ed1d",
+      "subcategory": "response-envelope",
       "name": "Response Envelope Detector",
       "description": "Detects response envelope patterns and flags inconsistencies",
-      "subcategory": "response-envelope",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "api/response-envelope",
+          "patternId": "api/response-envelope/express-response"
+        }
+      },
       "confidence": {
+        "frequency": 0.03,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 3,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\backend\\src\\app.ts",
@@ -955,13 +1162,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "api",
           "response-envelope"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.007Z",
+  "checksum": "0639c9ffa2a9f8d6"
 }

@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.268Z",
-  "checksum": "ea8a8359cdbeb2ad",
   "category": "styling",
   "patterns": [
     {
       "id": "e60fbf70fa1d83b7",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 208,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.920Z",
-        "lastSeen": "2026-01-24T15:32:38.920Z",
+        "firstSeen": "2026-01-24T15:15:32.945Z",
+        "lastSeen": "2026-01-24T15:15:32.945Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "dc29ccbb13933e0b",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 200,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "81c818417779d0e6",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 51,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cef9247b39ce53b7",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 0.42,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 10,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1693,25 +1736,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "919e75cf675d4dd1",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.6,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 9,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -1866,25 +1921,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9bb379d909e6e990",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 30,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2364,25 +2431,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9fea529e28cdc7a4",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 99,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2887,25 +2966,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.932Z",
-        "lastSeen": "2026-01-24T15:32:38.932Z",
+        "firstSeen": "2026-01-24T15:15:32.959Z",
+        "lastSeen": "2026-01-24T15:15:32.959Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f161b71a2261e0fa",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 38,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -3410,25 +3501,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f5cbedade099b8e6",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -3933,25 +4036,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0116dba94744b6cb",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 74,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -4456,25 +4571,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e2f46c4c197ac1b2",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 158,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -4979,25 +5106,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "35bea6e24835df1e",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.54,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 25,
         "score": 0.865,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5242,25 +5381,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "803f8581ff55de72",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 163,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5765,25 +5916,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f98cfa4ea26fc2be",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 40,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -6243,25 +6406,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "787794e143915bdd",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 64,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -6766,25 +6941,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6575a0cf54b28bfa",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 36,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -7289,25 +7476,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0b75fdd62ea631ca",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 43,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -7812,25 +8011,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f1f344572c514742",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 48,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8335,25 +8546,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c9bb489cff12cbe9",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 74,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8858,25 +9081,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2e787fe8487baa8d",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 31,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9381,25 +9616,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.967Z",
+        "lastSeen": "2026-01-24T15:15:32.967Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8170b59342a9d30a",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 38,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9904,25 +10151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.940Z",
-        "lastSeen": "2026-01-24T15:32:38.940Z",
+        "firstSeen": "2026-01-24T15:15:32.968Z",
+        "lastSeen": "2026-01-24T15:15:32.968Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "da60592dfb0b1814",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 58,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\drei-use-gltf.md",
@@ -10427,25 +10686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "264dab959ea713c6",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 102,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\frame-delta-time.md",
@@ -10950,25 +11221,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.946Z",
-        "lastSeen": "2026-01-24T15:32:38.946Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3df079313f367643",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\frame-delta-time.md",
@@ -10993,25 +11276,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.946Z",
-        "lastSeen": "2026-01-24T15:32:38.946Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "33abf6594f1e824f",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 115,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -11516,25 +11811,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5c2277fac9847914",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 71,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -12039,25 +12346,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ba25aae94904e14c",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 45,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -12562,25 +12881,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b15d3f5fe776c9cd",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 42,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -13085,25 +13416,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "243ae285047dda9d",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 34,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -13608,25 +13951,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "62300c2c419ee789",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.66,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 13,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\theme-factory\\SKILL.md",
@@ -13796,25 +14151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8ce4599fd5d26dca",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 32,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\animation-system.md",
@@ -14319,25 +14686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "dfdf51182564da94",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.66,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\animation-system.md",
@@ -14667,25 +15046,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6da7644fa853a879",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.64,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 39,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\audio-spatial.md",
@@ -15010,25 +15401,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "eba29a49948c6a9c",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.41,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 23,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\audio-spatial.md",
@@ -15178,25 +15581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f1d8c14ee8e5f14d",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.93,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 21,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -15646,25 +16061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2d20b8b0e8f96e6b",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.22,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\raycasting-optimization.md",
@@ -15724,25 +16151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2941b4310a3fe820",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\raycasting-optimization.md",
@@ -15787,25 +16226,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "baae1705faf24c4c",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.52,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 12,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\raycasting-optimization.md",
@@ -15940,25 +16391,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "8aaf52b14c95886d",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 28,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-complete-reference.md",
@@ -16338,25 +16801,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c378bf6b84f82a57",
+      "subcategory": "responsive",
       "name": "Responsive Detector",
       "description": "Learns responsive design patterns from your codebase",
-      "subcategory": "responsive",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/responsive",
+          "patternId": "styling/responsive/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-post-processing.md",
@@ -16401,25 +16876,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "responsive"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2de06907e75b1456",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.66,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\webxr-setup.md",
@@ -16589,25 +17076,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "699980b3f71de38b",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\advanced-satisfies-operator.md",
@@ -16652,25 +17151,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6c4e8adf533afd32",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.26,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\advanced-template-literal-types.md",
@@ -16740,25 +17251,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5c7a945baa99cede",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 34,
         "score": 0.9199999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -17218,25 +17741,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3010187e37dd8cb1",
+      "subcategory": "class-naming",
       "name": "Class Naming Detector",
       "description": "Learns class naming patterns from your codebase",
-      "subcategory": "class-naming",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/class-naming",
+          "patternId": "styling/class-naming/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.52,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\runtime-use-for-of-for-iteration.md",
@@ -17371,25 +17906,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "class-naming"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9bfabee67dc0edfd",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 22,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -17684,25 +18231,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a82e88d154f62e77",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.56,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 12,
         "score": 0.92,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -17847,25 +18406,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b23976bae3216092",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\docker-setup-guide.md",
@@ -17890,25 +18461,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fc33487396af4fd9",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.24,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.74,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -17973,25 +18556,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9d6683f281ca4e70",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.14,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.74,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -18031,25 +18626,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3a70ac389070209c",
+      "subcategory": "color-usage",
       "name": "Color Usage Detector",
       "description": "Learns color usage patterns from your codebase",
-      "subcategory": "color-usage",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/color-usage",
+          "patternId": "styling/color-usage/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.9037078651685393,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -18079,25 +18686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "color-usage"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0f26bf86ea215f09",
+      "subcategory": "typography",
       "name": "Typography Detector",
       "description": "Learns typography patterns from your codebase",
-      "subcategory": "typography",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/typography",
+          "patternId": "styling/typography/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.12,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -18132,25 +18751,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "typography"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "182eb75180d9e9e5",
+      "subcategory": "z-index-scale",
       "name": "Z-Index Scale Detector",
       "description": "Learns z-index scale patterns from your codebase",
-      "subcategory": "z-index-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/z-index-scale",
+          "patternId": "styling/z-index-scale/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.04,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\alert-dialog.tsx",
@@ -18165,25 +18796,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "z-index-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1cf78ba063d37d40",
+      "subcategory": "design-tokens",
       "name": "Design Tokens Detector",
       "description": "Learns design token patterns from your codebase",
-      "subcategory": "design-tokens",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/design-tokens",
+          "patternId": "styling/design-tokens/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
@@ -18228,25 +18871,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "design-tokens"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4748457b0e1b119d",
+      "subcategory": "spacing-scale",
       "name": "Spacing Scale Detector",
       "description": "Learns spacing scale patterns from your codebase",
-      "subcategory": "spacing-scale",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/spacing-scale",
+          "patternId": "styling/spacing-scale/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.9116666666666666,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\combobox.tsx",
@@ -18276,25 +18931,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "spacing-scale"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a4fa80d208e7681f",
+      "subcategory": "tailwind-patterns",
       "name": "Tailwind Patterns Detector",
       "description": "Learns Tailwind CSS patterns from your codebase",
-      "subcategory": "tailwind-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "styling/tailwind-patterns",
+          "patternId": "styling/tailwind-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.02,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\textarea.tsx",
@@ -18309,13 +18976,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "styling",
           "tailwind-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.002Z",
+  "checksum": "cebd9eac65fcc61b"
 }

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:15:33.325Z",
-  "checksum": "eb939965be6624c5",
+  "generatedAt": "2026-01-24T15:32:39.300Z",
+  "checksum": "93d0ace39f7c905d",
   "category": "accessibility",
   "patterns": [
     {
@@ -59,8 +59,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "aria-roles"
@@ -227,8 +227,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "aria-roles"
@@ -585,8 +585,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "keyboard-nav"
@@ -643,8 +643,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "keyboard-nav"
@@ -926,8 +926,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "focus-management"
@@ -979,8 +979,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "accessibility",
           "focus-management"
@@ -1502,8 +1502,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.972Z",
-        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "firstSeen": "2026-01-24T15:32:38.944Z",
+        "lastSeen": "2026-01-24T15:32:38.945Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -2010,8 +2010,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.972Z",
-        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "firstSeen": "2026-01-24T15:32:38.945Z",
+        "lastSeen": "2026-01-24T15:32:38.945Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -2233,8 +2233,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.978Z",
-        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "firstSeen": "2026-01-24T15:32:38.951Z",
+        "lastSeen": "2026-01-24T15:32:38.951Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -2426,8 +2426,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.978Z",
-        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "firstSeen": "2026-01-24T15:32:38.951Z",
+        "lastSeen": "2026-01-24T15:32:38.951Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -2469,8 +2469,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.978Z",
-        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "firstSeen": "2026-01-24T15:32:38.951Z",
+        "lastSeen": "2026-01-24T15:32:38.951Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -2712,8 +2712,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.978Z",
-        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "firstSeen": "2026-01-24T15:32:38.951Z",
+        "lastSeen": "2026-01-24T15:32:38.951Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -3235,8 +3235,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.978Z",
-        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "firstSeen": "2026-01-24T15:32:38.951Z",
+        "lastSeen": "2026-01-24T15:32:38.951Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -3453,8 +3453,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.979Z",
-        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "firstSeen": "2026-01-24T15:32:38.953Z",
+        "lastSeen": "2026-01-24T15:32:38.953Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -3666,8 +3666,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.979Z",
-        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "firstSeen": "2026-01-24T15:32:38.953Z",
+        "lastSeen": "2026-01-24T15:32:38.953Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -3784,8 +3784,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.979Z",
-        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "firstSeen": "2026-01-24T15:32:38.953Z",
+        "lastSeen": "2026-01-24T15:32:38.953Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -3867,8 +3867,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.980Z",
-        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "firstSeen": "2026-01-24T15:32:38.953Z",
+        "lastSeen": "2026-01-24T15:32:38.953Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -4190,8 +4190,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.957Z",
+        "lastSeen": "2026-01-24T15:32:38.957Z",
         "tags": [
           "accessibility",
           "aria-roles"
@@ -4423,8 +4423,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.957Z",
+        "lastSeen": "2026-01-24T15:32:38.957Z",
         "tags": [
           "accessibility",
           "aria-roles"
@@ -4491,8 +4491,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "accessibility",
           "keyboard-nav"
@@ -4559,8 +4559,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "accessibility",
           "focus-management"
@@ -4847,8 +4847,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.959Z",
+        "lastSeen": "2026-01-24T15:32:38.959Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -5175,8 +5175,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.985Z",
-        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "firstSeen": "2026-01-24T15:32:38.959Z",
+        "lastSeen": "2026-01-24T15:32:38.959Z",
         "tags": [
           "accessibility",
           "heading-hierarchy"
@@ -5228,8 +5228,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.985Z",
-        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "firstSeen": "2026-01-24T15:32:38.959Z",
+        "lastSeen": "2026-01-24T15:32:38.959Z",
         "tags": [
           "accessibility",
           "alt-text"
@@ -5266,8 +5266,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.985Z",
-        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "keyboard-nav"
@@ -5304,8 +5304,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.985Z",
-        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "focus-management"
@@ -5427,8 +5427,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "aria-roles"
@@ -5545,8 +5545,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "keyboard-nav"
@@ -5663,8 +5663,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "focus-management"
@@ -5691,8 +5691,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "semantic-html"
@@ -5719,8 +5719,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "accessibility",
           "heading-hierarchy"
@@ -5747,8 +5747,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.961Z",
+        "lastSeen": "2026-01-24T15:32:38.961Z",
         "tags": [
           "accessibility",
           "aria-roles"

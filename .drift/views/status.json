@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-24T15:15:33.252Z",
+  "generatedAt": "2026-01-24T15:32:39.222Z",
   "health": {
     "score": 41,
     "trend": "stable",
@@ -30,21 +30,21 @@
     "discovered": 710,
     "ignored": 0,
     "byCategory": {
-      "auth": 46,
-      "security": 48,
-      "errors": 51,
       "structural": 60,
       "components": 61,
       "styling": 56,
-      "logging": 45,
-      "testing": 51,
+      "api": 14,
+      "auth": 46,
+      "errors": 51,
       "data-access": 69,
+      "testing": 51,
+      "logging": 45,
+      "security": 48,
       "config": 44,
       "types": 52,
-      "documentation": 38,
       "performance": 43,
       "accessibility": 32,
-      "api": 14
+      "documentation": 38
     }
   },
   "issues": {
@@ -73,8 +73,8 @@
     "sensitiveExposures": 0
   },
   "lastScan": {
-    "timestamp": "2026-01-24T15:15:33.204Z",
-    "duration": 77638,
+    "timestamp": "2026-01-24T15:32:39.179Z",
+    "duration": 76618,
     "filesScanned": 818,
     "patternsFound": 710,
     "errors": 0

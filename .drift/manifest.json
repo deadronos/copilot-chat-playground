@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:15:33.280Z",
+  "generatedAt": "2026-01-24T15:32:39.252Z",
   "projectRoot": "D:\\GitHub\\copilot-chat-playground",
   "stats": {
     "patterns": {
       "total": 710,
       "byCategory": {
-        "auth": 46,
-        "security": 48,
-        "errors": 51,
         "structural": 60,
         "components": 61,
         "styling": 56,
-        "logging": 45,
-        "testing": 51,
+        "api": 14,
+        "auth": 46,
+        "errors": 51,
         "data-access": 69,
+        "testing": 51,
+        "logging": 45,
+        "security": 48,
         "config": 44,
         "types": 52,
-        "documentation": 38,
         "performance": 43,
         "accessibility": 32,
-        "api": 14
+        "documentation": 38
       },
       "byStatus": {
         "discovered": 710,
@@ -65,22 +65,22 @@
   },
   "fileHashes": {},
   "lastScan": {
-    "timestamp": "2026-01-24T15:15:33.204Z",
-    "duration": 77638,
+    "timestamp": "2026-01-24T15:32:39.179Z",
+    "duration": 76618,
     "filesScanned": 818,
     "patternsFound": 710,
     "errors": 0
   },
   "views": {
     "status": {
-      "generatedAt": "2026-01-24T15:15:33.279Z",
+      "generatedAt": "2026-01-24T15:32:39.251Z",
       "stale": true,
       "invalidatedBy": [
         "pattern stats updated"
       ]
     },
     "patternIndex": {
-      "generatedAt": "2026-01-24T15:15:33.279Z",
+      "generatedAt": "2026-01-24T15:32:39.251Z",
       "stale": true,
       "invalidatedBy": [
         "pattern stats updated"

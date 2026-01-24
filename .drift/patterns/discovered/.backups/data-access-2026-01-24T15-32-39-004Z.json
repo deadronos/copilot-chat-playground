@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.276Z",
-  "checksum": "49a74749478908b6",
   "category": "data-access",
   "patterns": [
     {
       "id": "7d2a3f6187cfb8f6",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 109,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.923Z",
+        "firstSeen": "2026-01-24T15:15:32.948Z",
+        "lastSeen": "2026-01-24T15:15:32.948Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "acd891b8e4a3d652",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 151,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.923Z",
+        "firstSeen": "2026-01-24T15:15:32.949Z",
+        "lastSeen": "2026-01-24T15:15:32.949Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3c196e9f7eaaf397",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 316,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.923Z",
+        "firstSeen": "2026-01-24T15:15:32.949Z",
+        "lastSeen": "2026-01-24T15:15:32.949Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0eebf61d1e432b9b",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 230,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2088,25 +2131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.923Z",
+        "firstSeen": "2026-01-24T15:15:32.949Z",
+        "lastSeen": "2026-01-24T15:15:32.949Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9e8ba1039ef7e2c5",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 223,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2611,25 +2666,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.923Z",
+        "firstSeen": "2026-01-24T15:15:32.949Z",
+        "lastSeen": "2026-01-24T15:15:32.949Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3068ed52bc03c5e2",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 275,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -3134,25 +3201,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.923Z",
-        "lastSeen": "2026-01-24T15:32:38.924Z",
+        "firstSeen": "2026-01-24T15:15:32.949Z",
+        "lastSeen": "2026-01-24T15:15:32.949Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a5d2fc3e35e3d52b",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 35,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -3642,25 +3721,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.924Z",
-        "lastSeen": "2026-01-24T15:32:38.924Z",
+        "firstSeen": "2026-01-24T15:15:32.950Z",
+        "lastSeen": "2026-01-24T15:15:32.950Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "bb8eb94a92f7c91d",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 48,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -4115,25 +4206,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.924Z",
-        "lastSeen": "2026-01-24T15:32:38.924Z",
+        "firstSeen": "2026-01-24T15:15:32.950Z",
+        "lastSeen": "2026-01-24T15:15:32.950Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "18d4fe025805dbd1",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 109,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -4638,25 +4741,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.924Z",
-        "lastSeen": "2026-01-24T15:32:38.924Z",
+        "firstSeen": "2026-01-24T15:15:32.950Z",
+        "lastSeen": "2026-01-24T15:15:32.950Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7db5c81845c4d1d4",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 342,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5161,25 +5276,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.960Z",
+        "lastSeen": "2026-01-24T15:15:32.960Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6d4e0df03c108eb0",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 0.75,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 53,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5559,25 +5686,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.933Z",
-        "lastSeen": "2026-01-24T15:32:38.933Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4a94f7b9d4ae6831",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.11,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 11,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -5637,25 +5776,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "14d03130c965c0c7",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 53,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -6160,25 +6311,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "489b09abf19e6e83",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 125,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -6683,25 +6846,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.934Z",
-        "lastSeen": "2026-01-24T15:32:38.934Z",
+        "firstSeen": "2026-01-24T15:15:32.961Z",
+        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1e360574f8238d6c",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 46,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -7206,25 +7381,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "bf8633f8d8ec470c",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 57,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -7729,25 +7916,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7535a4ab4e0e310c",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.95,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 42,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8022,25 +8221,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f36f1263cb74ef20",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 88,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -8545,25 +8756,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fcdc40fdf4292562",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 79,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9068,25 +9291,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "39794ea9670decb2",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 94,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -9591,25 +9826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.969Z",
+        "lastSeen": "2026-01-24T15:15:32.969Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c50641f74c5f383f",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 119,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -10114,25 +10361,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.942Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cab829e94fa435b2",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -10637,25 +10896,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.942Z",
-        "lastSeen": "2026-01-24T15:32:38.943Z",
+        "firstSeen": "2026-01-24T15:15:32.970Z",
+        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "54412ba43326fda5",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 98,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-never-set-state-in-useframe.md",
@@ -11160,25 +11431,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.947Z",
-        "lastSeen": "2026-01-24T15:32:38.947Z",
+        "firstSeen": "2026-01-24T15:15:32.974Z",
+        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "575c4597b32f5d85",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 153,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -11683,25 +11966,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.975Z",
+        "lastSeen": "2026-01-24T15:15:32.975Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b99785da9e067b7b",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 72,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -12206,25 +12501,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "93a602c9096c78b2",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\references\\workflows.md",
@@ -12429,25 +12736,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c4ebd5d4c3efc4fe",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -12952,25 +13271,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "25b496667380972f",
+      "subcategory": "orm-model",
       "name": "ORM Model Detector",
       "description": "Detects ORM model/entity definitions to extract table mappings",
-      "subcategory": "orm-model",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/orm-model",
+          "patternId": "data-access/boundaries/orm-model/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 0.15,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -13030,25 +13361,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "orm-model"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "aafd6503f83b42c2",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 14,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -13553,25 +13896,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.977Z",
+        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b419ca947a6dfcf3",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.12,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.9161538461538461,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -13616,25 +13971,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f1ead8a0b62d02b5",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/string_literal"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 34,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -14074,25 +14441,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "91a04160222d8d1a",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.7,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -14447,25 +14826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "6da0f2f9f0571097",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.57,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 36,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\quick_validate.py",
@@ -14755,25 +15146,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.952Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "22d6661a940ba81a",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 38,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -15178,25 +15581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "173a443f13737421",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.98,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 39,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -15691,25 +16106,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cb73a6fe92347cc6",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 26,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -16029,25 +16456,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b604316a8b0ab796",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 112,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -16552,25 +16991,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f14de1638a691173",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 98,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\geometry-instanced-mesh.md",
@@ -17075,25 +17526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2412e310c7d9a385",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.66,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 27,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\geometry-instanced-mesh.md",
@@ -17263,25 +17726,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b2c6c57ca76387d4",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 46,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\raycasting-optimization.md",
@@ -17786,25 +18261,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ef9ec1f612d0cada",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.56,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 6,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
@@ -18089,25 +18576,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "17597f4c8eb9a8d1",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.89,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 37,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\AGENTS.md",
@@ -18557,25 +19056,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "776a153d5fe10643",
+      "subcategory": "n-plus-one",
       "name": "N+1 Query Detector",
       "description": "Learns N+1 query patterns from your codebase",
-      "subcategory": "n-plus-one",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/n-plus-one",
+          "patternId": "data-access/n-plus-one/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\advanced-branded-types.md",
@@ -18840,25 +19351,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "n-plus-one"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cc9eeb97915efcbc",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\advanced-template-literal-types.md",
@@ -18943,25 +19466,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "20ba495dc130ea78",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 12,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-closure-leaks.md",
@@ -19366,25 +19901,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "82024504b6e98c7e",
+      "subcategory": "dto-patterns",
       "name": "DTO Patterns Detector",
       "description": "Learns Data Transfer Object patterns from your codebase",
-      "subcategory": "dto-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/dto-patterns",
+          "patternId": "data-access/dto-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.24,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-clear-timers.md",
@@ -19449,25 +19996,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "dto-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5a63e6c410e1512a",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.62,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.8922222222222222,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\module-use-type-imports.md",
@@ -19627,25 +20186,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5099ad925a0cc31f",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.945,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\type-avoid-large-unions.md",
@@ -19670,25 +20241,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0d8d34d04c1ad98a",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.48,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 17,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -19813,25 +20396,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3b36b576a97a25c6",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.38,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 11,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -19931,25 +20526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "58135008904aff57",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.32,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\migration-guide.md",
@@ -20034,25 +20641,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ab6a3efc20ac2f73",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\references\\nextjs-hydration.md",
@@ -20077,25 +20696,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e418a499033e694e",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 22,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
@@ -20500,25 +21131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3b696fa2d7794810",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.82,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 13,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
@@ -20813,25 +21456,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f42a525f3fac8427",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.18,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 3,
         "score": 0.948125,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\agents\\Conductor.agent.md",
@@ -20926,25 +21581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d42178bed1112039",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 10,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\copilot-instructions.md",
@@ -21029,25 +21696,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "842105131ed56f1b",
+      "subcategory": "query-patterns",
       "name": "Query Patterns Detector",
       "description": "Learns query patterns from your codebase",
-      "subcategory": "query-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/query-patterns",
+          "patternId": "data-access/query-patterns/type_annotation"
+        }
+      },
       "confidence": {
+        "frequency": 0.01,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.79,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\memory-bank.instructions.md",
@@ -21057,25 +21736,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a645e37057beb1db",
+      "subcategory": "validation",
       "name": "Validation Patterns Detector",
       "description": "Learns validation patterns from your codebase",
-      "subcategory": "validation",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/validation",
+          "patternId": "data-access/validation/type_annotation"
+        }
+      },
       "confidence": {
+        "frequency": 0.01,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 1,
         "score": 0.8825,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\memory-bank.instructions.md",
@@ -21085,25 +21776,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "validation"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "37cb781fe3a27caa",
+      "subcategory": "repository-pattern",
       "name": "Repository Pattern Detector",
       "description": "Learns repository patterns from your codebase",
-      "subcategory": "repository-pattern",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/repository-pattern",
+          "patternId": "data-access/repository-pattern/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.06,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 3,
         "score": 0.860625,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
@@ -21123,25 +21826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "repository-pattern"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1da35fa5538ad449",
+      "subcategory": "sensitive-field",
       "name": "Sensitive Field Detector",
       "description": "Auto-detects potentially sensitive fields/columns in data models",
-      "subcategory": "sensitive-field",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/sensitive-field",
+          "patternId": "data-access/boundaries/sensitive-field/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.15,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docker-compose.override.example.yml",
@@ -21221,25 +21936,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "sensitive-field"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "99aa2ab254e09b7a",
+      "subcategory": "sensitive-field",
       "name": "Sensitive Field Detector",
       "description": "Auto-detects potentially sensitive fields/columns in data models",
-      "subcategory": "sensitive-field",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/sensitive-field",
+          "patternId": "data-access/boundaries/sensitive-field/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 0.29,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 7,
         "score": 0.6824999999999999,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docker-compose.override.example.yml",
@@ -21389,25 +22116,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "sensitive-field"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "367cc411c1dd896a",
+      "subcategory": "connection-pooling",
       "name": "Connection Pooling Detector",
       "description": "Learns connection pooling patterns from your codebase",
-      "subcategory": "connection-pooling",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/connection-pooling",
+          "patternId": "data-access/connection-pooling/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
@@ -21437,25 +22176,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "connection-pooling"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "2b70b8132c47b17b",
+      "subcategory": "transaction",
       "name": "Transaction Patterns Detector",
       "description": "Learns transaction patterns from your codebase",
-      "subcategory": "transaction",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/transaction",
+          "patternId": "data-access/transaction/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.05,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
@@ -21485,25 +22236,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "transaction"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "eba4e5cb9d09e70c",
+      "subcategory": "orm-model",
       "name": "ORM Model Detector",
       "description": "Detects ORM model/entity definitions to extract table mappings",
-      "subcategory": "orm-model",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/orm-model",
+          "patternId": "data-access/boundaries/orm-model/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.07,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "pnpm-lock.yaml",
@@ -21528,25 +22291,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "orm-model"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ea560da75b4e4d3b",
+      "subcategory": "sensitive-field",
       "name": "Sensitive Field Detector",
       "description": "Auto-detects potentially sensitive fields/columns in data models",
-      "subcategory": "sensitive-field",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/sensitive-field",
+          "patternId": "data-access/boundaries/sensitive-field/string_literal"
+        }
+      },
       "confidence": {
+        "frequency": 0.62,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 13,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "pnpm-lock.yaml",
@@ -21861,25 +22636,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "sensitive-field"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "07fc372d1d78b8c6",
+      "subcategory": "sensitive-field",
       "name": "Sensitive Field Detector",
       "description": "Auto-detects potentially sensitive fields/columns in data models",
-      "subcategory": "sensitive-field",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/sensitive-field",
+          "patternId": "data-access/boundaries/sensitive-field/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.26,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 11,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "pnpm-lock.yaml",
@@ -22014,25 +22801,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.960Z",
-        "lastSeen": "2026-01-24T15:32:38.960Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "sensitive-field"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "3495c026f07adac4",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.18,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 6,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\copilot\\src\\index.ts",
@@ -22092,25 +22891,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9ca64faf77905c12",
+      "subcategory": "query-access",
       "name": "Query Access Detector",
       "description": "Detects data access points in code (ORM queries, raw SQL)",
-      "subcategory": "query-access",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/query-access",
+          "patternId": "data-access/boundaries/query-access/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.21,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\components\\ui\\select.tsx",
@@ -22170,25 +22981,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "query-access"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "eb5dee4c60d2f8c3",
+      "subcategory": "sensitive-field",
       "name": "Sensitive Field Detector",
       "description": "Auto-detects potentially sensitive fields/columns in data models",
-      "subcategory": "sensitive-field",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "data-access/boundaries/sensitive-field",
+          "patternId": "data-access/boundaries/sensitive-field/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.06,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 2,
         "score": 0.8825,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": "src\\frontend\\src\\redvsblue\\RedVsBlue.tsx",
@@ -22223,13 +23046,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.961Z",
-        "lastSeen": "2026-01-24T15:32:38.961Z",
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "source": "auto-detected",
         "tags": [
           "data-access",
           "sensitive-field"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.034Z",
+  "checksum": "df7e7dc294d0a5da"
 }

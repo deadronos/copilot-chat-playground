@@ -1,20 +1,27 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:32:39.298Z",
-  "checksum": "9163fe5c05e3adf5",
   "category": "performance",
   "patterns": [
     {
       "id": "e3d0e56ac10e9499",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 356,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -519,25 +526,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "38395507307d384a",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 199,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1042,25 +1061,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "775a302ec0ba7a57",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 161,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -1565,25 +1596,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.929Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "290c7bc95c2e6506",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 185,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2088,25 +2131,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.929Z",
-        "lastSeen": "2026-01-24T15:32:38.930Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "90a439f31b2eb878",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 130,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\code-review\\SKILL.md",
@@ -2611,25 +2666,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.930Z",
-        "lastSeen": "2026-01-24T15:32:38.930Z",
+        "firstSeen": "2026-01-24T15:15:32.955Z",
+        "lastSeen": "2026-01-24T15:15:32.955Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "acf1c71483252955",
+      "subcategory": "debounce-throttle",
       "name": "Debounce Throttle Detector",
       "description": "Learns debounce and throttle patterns from your codebase",
-      "subcategory": "debounce-throttle",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/debounce-throttle",
+          "patternId": "performance/debounce-throttle/import"
+        }
+      },
       "confidence": {
+        "frequency": 0.32,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 13,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\frontend-design\\SKILL.md",
@@ -2714,25 +2781,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.937Z",
-        "lastSeen": "2026-01-24T15:32:38.937Z",
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "debounce-throttle"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d199952f4e2c85e8",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 107,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -3237,25 +3316,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "0e83a1ee61b7bd3e",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 75,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -3760,25 +3851,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "daa5420493255c6e",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 53,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
@@ -4283,25 +4386,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "276f6f1fe7d9fa0b",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.64,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\drei-use-gltf.md",
@@ -4466,25 +4581,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b67b36b3b1d30210",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 64,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\drei-use-gltf.md",
@@ -4989,25 +5116,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c601bb44270ee3e7",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 5,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\drei-use-gltf.md",
@@ -5052,25 +5191,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.945Z",
-        "lastSeen": "2026-01-24T15:32:38.945Z",
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9730f9c16107a8f5",
+      "subcategory": "debounce-throttle",
       "name": "Debounce Throttle Detector",
       "description": "Learns debounce and throttle patterns from your codebase",
-      "subcategory": "debounce-throttle",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/debounce-throttle",
+          "patternId": "performance/debounce-throttle/unknown"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 85,
         "score": 0.77,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\frame-delta-time.md",
@@ -5575,25 +5726,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.946Z",
-        "lastSeen": "2026-01-24T15:32:38.946Z",
+        "firstSeen": "2026-01-24T15:15:32.973Z",
+        "lastSeen": "2026-01-24T15:15:32.973Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "debounce-throttle"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "85d8360177c62556",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 62,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\rules\\perf-zustand-selectors.md",
@@ -6098,25 +6261,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.949Z",
-        "lastSeen": "2026-01-24T15:32:38.949Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "601b3f5dfaf60cff",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.36,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 17,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -6211,25 +6386,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "689a119f39f1d0d5",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 78,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
@@ -6734,25 +6921,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.950Z",
-        "lastSeen": "2026-01-24T15:32:38.950Z",
+        "firstSeen": "2026-01-24T15:15:32.976Z",
+        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5696d61d449e195e",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 46,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -7217,25 +7416,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "cef42f9ab7b0e7a9",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 25,
         "score": 0.9161538461538461,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -7500,25 +7711,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.951Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "a0c76b1b43d13519",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 26,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
@@ -7858,25 +8081,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.951Z",
-        "lastSeen": "2026-01-24T15:32:38.952Z",
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "9938a2cf3583d79f",
+      "subcategory": "debounce-throttle",
       "name": "Debounce Throttle Detector",
       "description": "Learns debounce and throttle patterns from your codebase",
-      "subcategory": "debounce-throttle",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/debounce-throttle",
+          "patternId": "performance/debounce-throttle/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\skill-creator\\SKILL.md",
@@ -7981,25 +8216,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.953Z",
-        "lastSeen": "2026-01-24T15:32:38.953Z",
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "debounce-throttle"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "153bdece98244579",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 48,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -8404,25 +8651,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e9623bccff2bc174",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 21,
         "score": 0.82,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
@@ -8717,25 +8976,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.954Z",
-        "lastSeen": "2026-01-24T15:32:38.954Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e92df009f2867075",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.58,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 21,
         "score": 0.9116666666666666,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\gltf-loading-optimization.md",
@@ -8885,25 +9156,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e702ebf4d49be10a",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 54,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
@@ -9408,25 +9691,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "b46c32c769b6a9eb",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/import"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 35,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
@@ -9711,25 +10006,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f870503a7d251ec6",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 43,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\physics-integration.md",
@@ -10234,25 +10541,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.981Z",
+        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c81f87f6b7f1e043",
+      "subcategory": "debounce-throttle",
       "name": "Debounce Throttle Detector",
       "description": "Learns debounce and throttle patterns from your codebase",
-      "subcategory": "debounce-throttle",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/debounce-throttle",
+          "patternId": "performance/debounce-throttle/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.82,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 28,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-complete-reference.md",
@@ -10462,25 +10781,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "debounce-throttle"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e4b0ad3fa68017f1",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 32,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
@@ -10965,25 +11296,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.955Z",
-        "lastSeen": "2026-01-24T15:32:38.955Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "c62828f602c7de9d",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 46,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\async-avoid-unnecessary-async.md",
@@ -11418,25 +11761,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.956Z",
-        "lastSeen": "2026-01-24T15:32:38.956Z",
+        "firstSeen": "2026-01-24T15:15:32.982Z",
+        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "e9403844c808ebc4",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.48,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -11561,25 +11916,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "fdf2f1ec79df5034",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 20,
         "score": 0.8533333333333333,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -12084,25 +12451,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ea0242be571ffb71",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/conditional"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 43,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -12492,25 +12871,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "5264a6a49192d02c",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/function_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.64,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 16,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -12635,25 +13026,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "7776ced78f3b0589",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 27,
         "score": 0.8999999999999999,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -13158,25 +13561,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d501ff2654ea53cd",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.7,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
@@ -13356,25 +13771,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "f72147f1d0f6f3c4",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\module-use-type-imports.md",
@@ -13399,25 +13826,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "1a1c9c8c93fb1ebc",
+      "subcategory": "bundle-size",
       "name": "Bundle Size Detector",
       "description": "Learns bundle size optimization patterns from your codebase",
-      "subcategory": "bundle-size",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/bundle-size",
+          "patternId": "performance/bundle-size/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 0.08,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.7949999999999999,
         "level": "medium"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\module-use-type-imports.md",
@@ -13442,25 +13881,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "bundle-size"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "876b9d5cdf22c3c8",
+      "subcategory": "debounce-throttle",
       "name": "Debounce Throttle Detector",
       "description": "Learns debounce and throttle patterns from your codebase",
-      "subcategory": "debounce-throttle",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/debounce-throttle",
+          "patternId": "performance/debounce-throttle/property_access"
+        }
+      },
       "confidence": {
+        "frequency": 0.4,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\runtime-cache-property-access.md",
@@ -13565,25 +14016,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.957Z",
-        "lastSeen": "2026-01-24T15:32:38.957Z",
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "debounce-throttle"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "579c57730e9e8867",
+      "subcategory": "code-splitting",
       "name": "Code Splitting Detector",
       "description": "Learns code splitting patterns from your codebase",
-      "subcategory": "code-splitting",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/code-splitting",
+          "patternId": "performance/code-splitting/assignment"
+        }
+      },
       "confidence": {
+        "frequency": 0.52,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 18,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\tscfg-isolate-modules.md",
@@ -13718,25 +14181,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "code-splitting"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "d48562b55869a263",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.16,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 4,
         "score": 0.90125,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\type-avoid-deep-generics.md",
@@ -13781,25 +14256,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "ad5bec2c23198639",
+      "subcategory": "caching-patterns",
       "name": "Caching Patterns Detector",
       "description": "Learns caching patterns from your codebase",
-      "subcategory": "caching-patterns",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/caching-patterns",
+          "patternId": "performance/caching-patterns/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.64,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 24,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript\\references\\type-avoid-deep-generics.md",
@@ -13944,25 +14431,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "caching-patterns"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "df8ab9a2f9fba98d",
+      "subcategory": "lazy-loading",
       "name": "Lazy Loading Detector",
       "description": "Learns lazy loading patterns from your codebase",
-      "subcategory": "lazy-loading",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/lazy-loading",
+          "patternId": "performance/lazy-loading/class_definition"
+        }
+      },
       "confidence": {
+        "frequency": 0.32,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 8,
         "score": 0.92,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
@@ -14047,25 +14546,37 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.958Z",
-        "lastSeen": "2026-01-24T15:32:38.958Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "lazy-loading"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     },
     {
       "id": "4f9e7b8bfb86977f",
+      "subcategory": "memoization",
       "name": "Memoization Detector",
       "description": "Learns memoization patterns from your codebase",
-      "subcategory": "memoization",
-      "status": "discovered",
+      "detector": {
+        "type": "regex",
+        "config": {
+          "detectorId": "performance/memoization",
+          "patternId": "performance/memoization/function_call"
+        }
+      },
       "confidence": {
+        "frequency": 1,
+        "consistency": 0.9,
+        "age": 0,
+        "spread": 45,
         "score": 0.95,
         "level": "high"
       },
-      "severity": "info",
       "locations": [
         {
           "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
@@ -14570,13 +15081,18 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:32:38.959Z",
-        "lastSeen": "2026-01-24T15:32:38.959Z",
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "source": "auto-detected",
         "tags": [
           "performance",
           "memoization"
         ]
-      }
+      },
+      "severity": "info",
+      "autoFixable": false
     }
-  ]
+  ],
+  "lastUpdated": "2026-01-24T15:15:33.064Z",
+  "checksum": "d014e5b42f192958"
 }

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "generatedAt": "2026-01-24T15:15:33.319Z",
-  "checksum": "1ad28120365725db",
+  "generatedAt": "2026-01-24T15:32:39.292Z",
+  "checksum": "04026ece819a143b",
   "category": "types",
   "patterns": [
     {
@@ -519,8 +519,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.950Z",
-        "lastSeen": "2026-01-24T15:15:32.950Z",
+        "firstSeen": "2026-01-24T15:32:38.924Z",
+        "lastSeen": "2026-01-24T15:32:38.925Z",
         "tags": [
           "types",
           "file-location"
@@ -1042,8 +1042,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.951Z",
-        "lastSeen": "2026-01-24T15:15:32.951Z",
+        "firstSeen": "2026-01-24T15:32:38.925Z",
+        "lastSeen": "2026-01-24T15:32:38.925Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -1565,8 +1565,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.952Z",
-        "lastSeen": "2026-01-24T15:15:32.952Z",
+        "firstSeen": "2026-01-24T15:32:38.925Z",
+        "lastSeen": "2026-01-24T15:32:38.926Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -2088,8 +2088,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.952Z",
-        "lastSeen": "2026-01-24T15:15:32.952Z",
+        "firstSeen": "2026-01-24T15:32:38.926Z",
+        "lastSeen": "2026-01-24T15:32:38.928Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -2611,8 +2611,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.954Z",
-        "lastSeen": "2026-01-24T15:15:32.954Z",
+        "firstSeen": "2026-01-24T15:32:38.928Z",
+        "lastSeen": "2026-01-24T15:32:38.929Z",
         "tags": [
           "types",
           "type-assertions"
@@ -3134,8 +3134,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.961Z",
-        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "firstSeen": "2026-01-24T15:32:38.934Z",
+        "lastSeen": "2026-01-24T15:32:38.934Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -3657,8 +3657,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.961Z",
-        "lastSeen": "2026-01-24T15:15:32.961Z",
+        "firstSeen": "2026-01-24T15:32:38.934Z",
+        "lastSeen": "2026-01-24T15:32:38.935Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -4180,8 +4180,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.962Z",
-        "lastSeen": "2026-01-24T15:15:32.962Z",
+        "firstSeen": "2026-01-24T15:32:38.935Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -4703,8 +4703,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.963Z",
-        "lastSeen": "2026-01-24T15:15:32.963Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -5226,8 +5226,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.963Z",
-        "lastSeen": "2026-01-24T15:15:32.963Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "utility-types"
@@ -5749,8 +5749,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.963Z",
-        "lastSeen": "2026-01-24T15:15:32.963Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "type-assertions"
@@ -6272,8 +6272,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "type-assertions"
@@ -6795,8 +6795,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "type-assertions"
@@ -7203,8 +7203,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.936Z",
         "tags": [
           "types",
           "any-usage"
@@ -7726,8 +7726,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.936Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "types",
           "any-usage"
@@ -7814,8 +7814,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.964Z",
-        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "firstSeen": "2026-01-24T15:32:38.937Z",
+        "lastSeen": "2026-01-24T15:32:38.937Z",
         "tags": [
           "types",
           "any-usage"
@@ -8337,8 +8337,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.970Z",
-        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "firstSeen": "2026-01-24T15:32:38.943Z",
+        "lastSeen": "2026-01-24T15:32:38.943Z",
         "tags": [
           "types",
           "file-location"
@@ -8860,8 +8860,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.970Z",
-        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "firstSeen": "2026-01-24T15:32:38.943Z",
+        "lastSeen": "2026-01-24T15:32:38.943Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -9383,8 +9383,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.970Z",
-        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "firstSeen": "2026-01-24T15:32:38.943Z",
+        "lastSeen": "2026-01-24T15:32:38.943Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -9906,8 +9906,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.970Z",
-        "lastSeen": "2026-01-24T15:15:32.970Z",
+        "firstSeen": "2026-01-24T15:32:38.943Z",
+        "lastSeen": "2026-01-24T15:32:38.944Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -10429,8 +10429,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.971Z",
-        "lastSeen": "2026-01-24T15:15:32.971Z",
+        "firstSeen": "2026-01-24T15:32:38.944Z",
+        "lastSeen": "2026-01-24T15:32:38.944Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -10857,8 +10857,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.972Z",
-        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "firstSeen": "2026-01-24T15:32:38.944Z",
+        "lastSeen": "2026-01-24T15:32:38.944Z",
         "tags": [
           "types",
           "utility-types"
@@ -11380,8 +11380,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.972Z",
-        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "firstSeen": "2026-01-24T15:32:38.944Z",
+        "lastSeen": "2026-01-24T15:32:38.944Z",
         "tags": [
           "types",
           "type-assertions"
@@ -11903,8 +11903,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.972Z",
-        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "firstSeen": "2026-01-24T15:32:38.945Z",
+        "lastSeen": "2026-01-24T15:32:38.945Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -12426,8 +12426,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.974Z",
-        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "firstSeen": "2026-01-24T15:32:38.947Z",
+        "lastSeen": "2026-01-24T15:32:38.947Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -12934,8 +12934,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.974Z",
-        "lastSeen": "2026-01-24T15:15:32.974Z",
+        "firstSeen": "2026-01-24T15:32:38.947Z",
+        "lastSeen": "2026-01-24T15:32:38.947Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -13457,8 +13457,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.976Z",
-        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "firstSeen": "2026-01-24T15:32:38.949Z",
+        "lastSeen": "2026-01-24T15:32:38.949Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -13755,8 +13755,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.976Z",
-        "lastSeen": "2026-01-24T15:15:32.976Z",
+        "firstSeen": "2026-01-24T15:32:38.949Z",
+        "lastSeen": "2026-01-24T15:32:38.949Z",
         "tags": [
           "types",
           "any-usage"
@@ -14278,8 +14278,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.977Z",
-        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "firstSeen": "2026-01-24T15:32:38.950Z",
+        "lastSeen": "2026-01-24T15:32:38.950Z",
         "tags": [
           "types",
           "file-location"
@@ -14486,8 +14486,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.977Z",
-        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "firstSeen": "2026-01-24T15:32:38.950Z",
+        "lastSeen": "2026-01-24T15:32:38.950Z",
         "tags": [
           "types",
           "file-location"
@@ -15009,8 +15009,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.977Z",
-        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "firstSeen": "2026-01-24T15:32:38.950Z",
+        "lastSeen": "2026-01-24T15:32:38.950Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -15277,8 +15277,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.977Z",
-        "lastSeen": "2026-01-24T15:15:32.977Z",
+        "firstSeen": "2026-01-24T15:32:38.950Z",
+        "lastSeen": "2026-01-24T15:32:38.950Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -15800,8 +15800,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "type-assertions"
@@ -16308,8 +16308,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "file-location"
@@ -16676,8 +16676,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -17199,8 +17199,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "file-location"
@@ -17722,8 +17722,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -17830,8 +17830,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.981Z",
-        "lastSeen": "2026-01-24T15:15:32.981Z",
+        "firstSeen": "2026-01-24T15:32:38.955Z",
+        "lastSeen": "2026-01-24T15:32:38.955Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -18203,8 +18203,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.982Z",
-        "lastSeen": "2026-01-24T15:15:32.982Z",
+        "firstSeen": "2026-01-24T15:32:38.956Z",
+        "lastSeen": "2026-01-24T15:32:38.956Z",
         "tags": [
           "types",
           "type-assertions"
@@ -18416,8 +18416,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.957Z",
+        "lastSeen": "2026-01-24T15:32:38.957Z",
         "tags": [
           "types",
           "utility-types"
@@ -18539,8 +18539,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.957Z",
+        "lastSeen": "2026-01-24T15:32:38.957Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -18622,8 +18622,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.957Z",
+        "lastSeen": "2026-01-24T15:32:38.957Z",
         "tags": [
           "types",
           "utility-types"
@@ -18865,8 +18865,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "file-location"
@@ -19268,8 +19268,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "naming-conventions"
@@ -19511,8 +19511,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.983Z",
-        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "interface-vs-type"
@@ -19574,8 +19574,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "any-usage"
@@ -19682,8 +19682,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "any-usage"
@@ -19985,8 +19985,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "utility-types"
@@ -20028,8 +20028,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.958Z",
+        "lastSeen": "2026-01-24T15:32:38.958Z",
         "tags": [
           "types",
           "generic-patterns"
@@ -20101,8 +20101,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.959Z",
+        "lastSeen": "2026-01-24T15:32:38.959Z",
         "tags": [
           "types",
           "type-assertions"
@@ -20259,8 +20259,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.984Z",
-        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "firstSeen": "2026-01-24T15:32:38.959Z",
+        "lastSeen": "2026-01-24T15:32:38.959Z",
         "tags": [
           "types",
           "utility-types"
@@ -20287,8 +20287,8 @@
       ],
       "outliers": [],
       "metadata": {
-        "firstSeen": "2026-01-24T15:15:32.986Z",
-        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "firstSeen": "2026-01-24T15:32:38.960Z",
+        "lastSeen": "2026-01-24T15:32:38.960Z",
         "tags": [
           "types",
           "utility-types"
