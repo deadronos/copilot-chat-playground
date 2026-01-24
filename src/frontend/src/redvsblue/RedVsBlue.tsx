@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 import { selectBlueCount, selectRedCount, useGameState } from "@/redvsblue/stores/gameState";
 import { useGame } from "@/redvsblue/useGame";
+import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
 
 const RedVsBlue: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -31,6 +32,8 @@ const RedVsBlue: React.FC = () => {
       `}</style>
 
       <canvas ref={canvasRef} id="gameCanvas" />
+
+      <TelemetryConnectorReact />
 
       <div id="ui-layer">
         <div className="top-bar">
