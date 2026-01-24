@@ -41,7 +41,7 @@ Create a `.env` file in the repository root with:
 GH_TOKEN=your_personal_access_token_here
 ```
 
-> Note: For local development the Copilot service will load `.env` automatically when started (it reads `.env` from the package directory). For containerized deployments, inject the token into the container environment instead — **TODO**: revisit `.env` handling when building Docker images and prefer injected envs at runtime.
+> Note: For local development the Copilot service will load `.env` automatically when started (it reads `.env` from the package directory). For containerized deployments, inject the token into the container environment at runtime.
 
 
 Or export it in your shell:
@@ -51,6 +51,60 @@ export GH_TOKEN=your_personal_access_token_here
 ```
 
 **Note**: The service also accepts `GITHUB_TOKEN` as a fallback, but `GH_TOKEN` takes precedence.
+
+### Docker / Compose token injection (recommended)
+
+This repo’s root `docker-compose.yml` passes `GH_TOKEN`/`GITHUB_TOKEN` through to the `copilot` container **if** they are set in your shell (or in the Compose `.env` file).
+
+#### Option A: Compose `.env` (dev-friendly)
+
+1. Create a repo-root `.env` (already gitignored):
+
+```dotenv
+GH_TOKEN=ghp_your_token_here
+```
+
+1. Start the stack:
+
+```bash
+docker compose up --build
+```
+
+#### Option B: Docker secrets (production-safe)
+
+For a secrets-first path, mount the token as a Docker secret (file) and let the container entrypoint export it.
+
+1. Create a local secret file (do **not** commit):
+
+- `./secrets/GH_TOKEN` (file contents = your token)
+
+1. Create a local compose override (do **not** commit):
+
+```yaml
+# docker-compose.override.yml
+services:
+  copilot:
+    secrets:
+      - GH_TOKEN
+
+secrets:
+  GH_TOKEN:
+    file: ./secrets/GH_TOKEN
+```
+
+The container entrypoint reads `/run/secrets/GH_TOKEN` (and `/run/secrets/GITHUB_TOKEN` if provided) and exports them as environment variables before starting the service.
+
+> Guardrail: avoid passing tokens on the CLI (e.g. `docker run -e GH_TOKEN=...`) except as a dev-only convenience.
+
+### dotenvx keys in Docker (optional)
+
+If you use `dotenvx` encrypted env files (e.g. committing encrypted `.env.production`), inject decryption keys at runtime via Docker secrets:
+
+- Secret file name must match the env var name, e.g. `/run/secrets/DOTENV_PRIVATE_KEY_PRODUCTION`
+
+The entrypoint will export any `/run/secrets/DOTENV_PRIVATE_KEY_*` files into `DOTENV_PRIVATE_KEY_*` env vars.
+
+See repo guidance: `docs/library/dotenvx/README.md`.
 
 ## Running the Service
 
@@ -86,6 +140,7 @@ GET /health
 ```
 
 Response:
+
 ```json
 {
   "ok": true,
@@ -109,6 +164,7 @@ Content-Type: application/json
 ```
 
 **Success Response (200)**:
+
 ```json
 {
   "output": "GitHub Copilot is an AI pair programmer..."
@@ -127,6 +183,7 @@ Content-Type: application/json
 The service provides clear, actionable error messages:
 
 ### Missing Token
+
 ```json
 {
   "error": "Missing GitHub token. Set GH_TOKEN or GITHUB_TOKEN environment variable with a PAT that has 'Copilot Requests' permission.",
@@ -135,6 +192,7 @@ The service provides clear, actionable error messages:
 ```
 
 ### Authentication Failure
+
 ```json
 {
   "error": "Authentication failed...",
@@ -151,11 +209,13 @@ The service provides clear, actionable error messages:
 ## Testing
 
 Run unit tests:
+
 ```bash
 pnpm --filter @copilot-playground/copilot test
 ```
 
 Run integration tests (requires service to be running):
+
 ```bash
 pnpm --filter @copilot-playground/copilot dev # in one terminal
 pnpm --filter @copilot-playground/copilot test # in another terminal

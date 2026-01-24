@@ -63,10 +63,10 @@ Quick: install Docker & Compose, then run the full stack with `docker compose up
 services:
   copilot:
     secrets:
-      - dotenv_private_key_production
+      - DOTENV_PRIVATE_KEY_PRODUCTION
 secrets:
-  dotenv_private_key_production:
-    file: ./secrets/dotenv_private_key_production
+  DOTENV_PRIVATE_KEY_PRODUCTION:
+    file: ./secrets/DOTENV_PRIVATE_KEY_PRODUCTION
 ```
 
 - The copilot image entrypoint reads `/run/secrets/DOTENV_PRIVATE_KEY_*` and exports `DOTENV_PRIVATE_KEY_*` for `dotenvx` usage. See `docs/library/dotenvx/README.md` for details.
