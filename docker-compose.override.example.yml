@@ -1,0 +1,27 @@
+# Example override for local secrets-first injection.
+#
+# Usage:
+#   1) Copy to docker-compose.override.yml (gitignored)
+#   2) Create the secret files under ./secrets/
+#   3) Run: docker compose up --build
+#
+# Guardrails:
+# - Do NOT commit docker-compose.override.yml or ./secrets/*
+# - Avoid passing secrets on the CLI except as a dev-only convenience
+
+services:
+  copilot:
+    secrets:
+      # Copilot authentication token (preferred)
+      - GH_TOKEN
+
+      # dotenvx decryption keys (optional). Use the name that matches your env file.
+      # For encrypted .env.production -> DOTENV_PRIVATE_KEY_PRODUCTION
+      - DOTENV_PRIVATE_KEY_PRODUCTION
+
+secrets:
+  GH_TOKEN:
+    file: ./secrets/GH_TOKEN
+
+  DOTENV_PRIVATE_KEY_PRODUCTION:
+    file: ./secrets/DOTENV_PRIVATE_KEY_PRODUCTION

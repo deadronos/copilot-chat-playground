@@ -27,12 +27,12 @@ Use a **secret manager** or **Docker secrets** and map the private key to `DOTEN
 Suggested pattern:
 
 - Store the key as a secret (Docker secrets, Kubernetes secrets, cloud secret manager).
-- Mount the secret as a file (e.g., `/run/secrets/dotenv_private_key_production`).
+- Mount the secret as a file whose **filename matches the env var**, e.g. `/run/secrets/DOTENV_PRIVATE_KEY_PRODUCTION`.
 - At container start, read the file and export `DOTENV_PRIVATE_KEY_PRODUCTION` before running the app.
 
 Example entrypoint pattern (conceptual):
 
-- Read `/run/secrets/dotenv_private_key_production`.
+- Read `/run/secrets/DOTENV_PRIVATE_KEY_PRODUCTION`.
 - Export `DOTENV_PRIVATE_KEY_PRODUCTION` using the file contents.
 - Run: `dotenvx run -f .env.production -- <your command>`.
 
