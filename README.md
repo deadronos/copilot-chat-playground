@@ -1,6 +1,6 @@
-# Copilot Chat Playground (local)
+# Copilot Chat Playground
 
-A local-only learning playground for experimenting with a small chat UI + backend + (eventually) Copilot integration.
+A local playground for experimenting with a chat UI + backend + Copilot integration. The Docker Compose stack works locally (frontend, backend, and copilot services), and the Copilot service supports both the **Copilot SDK (default)** and the **Copilot CLI (fallback)**.
 
 This repo is a **pnpm workspace** with separate packages under `src/`.
 
@@ -48,6 +48,45 @@ RUN corepack enable && pnpm install --frozen-lockfile --prod
 ```
 
 Keeping `pnpm-lock.yaml` available to Docker builds helps ensure reproducible images (do not add it to `.dockerignore` if you expect it to be used during image builds).
+
+Quick verification — Docker & Copilot ✅
+
+- Build & run the full stack:
+  - `docker compose up --build`
+  - Or run detached: `docker compose up -d --build`
+- Verify running services:
+  - `docker compose ps`
+  - `docker compose logs -f copilot`
+- Check Copilot health and mode (works for SDK and CLI):
+  - `curl -s http://localhost:3210/health | jq .` (inspect `mode`, `tokenConfigured`, `binaryAvailable`)
+- Quick API test (requires `GH_TOKEN` configured):
+  - `curl -X POST http://localhost:3210/chat -H 'Content-Type: application/json' -d '{"prompt":"What is GitHub Copilot?"}'`
+
+Note: The Copilot service uses the **SDK by default**. To force the CLI fallback set `USE_COPILOT_SDK=false` (env or Compose override).
+
+## Workspace mount (read-only default)
+
+- The Compose stack mounts the host `./workspace` into the `copilot` container as a **read-only** bind mount by default (e.g. `./workspace:/workspace:ro`) to avoid accidental modification of your working tree or host secrets.
+- If you need write access for builds or tests, prefer a **named volume** or a dedicated writable path instead of making the entire repo writable.
+- To enable writable access in a dev-only override, create a `docker-compose.override.yml` and adjust the `volumes` entry for `copilot`, for example:
+
+```yaml
+services:
+  copilot:
+    volumes:
+      - ./workspace:/workspace:rw
+```
+
+- Quick verification inside a running container:
+
+```bash
+# Should print "read-only mount" when mount is read-only
+docker compose exec copilot sh -c 'touch /workspace/should_fail 2>/dev/null || echo "read-only mount"'
+# Inspect mount options on Linux
+docker compose exec copilot sh -c 'grep /workspace /proc/mounts || mount | grep /workspace'
+```
+
+See `docs/milestone-e-workspace-mount.md` for additional checks and safety guidance.
 
 ## Getting started
 
