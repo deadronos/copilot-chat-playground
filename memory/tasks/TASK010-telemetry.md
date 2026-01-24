@@ -29,6 +29,12 @@ Add a telemetry pipeline so the engine emits structured TelemetryEvent objects w
 ### 2026-01-24
 - Task created and plan written. Phase 1 (Analyze & Types) starting.
 
+### 2026-01-24
+- Phase 1 complete: added `TelemetryEvent` type and `ensureTelemetryEvent` helper, documented env vars. Tests added and passing. ✅
+
+### 2026-01-24
+- Phase 2: Implement telemetry store — added `src/frontend/src/redvsblue/stores/telemetry.ts` and `tests/frontend/unit/redvsblue/telemetryStore.test.ts`. Unit tests passed locally. ✅
+
 ### 2026-01-24 (Implementation)
 - Added `TelemetryEvent` type with optional `id`, `data`, `sessionId`, `seq`, and `version` fields.
 - Implemented `ensureTelemetryEvent(partial)` helper in `src/frontend/src/redvsblue/telemetry.ts` which assigns `id` and `timestamp` when missing.

@@ -14,6 +14,22 @@ Common commands:
 ## AGENTS.md
 Also look at '.github/copilot-instructions.md' for overall instructions given to the AI agent.
 
+## Memory Bank
+Instruction for Memory at `.github/instructions/memory-bank.instructions.md`
+We also follow `.github/instructions/spec-driven-workflow-v1.instructions.md` for spec-driven workflow. This should inform designs/specs to create in /memory/designs/ and tasks in /memory/tasks/
+
+The Memory Bank is located in the `memory/` folder. It contains:
+- `activeContext.md`: Current context and relevant information for the agent.
+- `progress.md`: Ongoing progress updates and logs. 
+
+### Memory Bank Tasks
+
+- `memory/tasks/`: Individual task files with EARS-style requirements and implementation plans.
+
+### Memory Bank Designs
+
+The `memory/designs/` folder contains design documents that outline the architecture and specifications for various features and components in the project.
+
 ## Agent skills
 You can discover skills to progressivley load from '.github/skills/' folder.
 Nonexhaustive list:
