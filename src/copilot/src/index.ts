@@ -106,6 +106,14 @@ app.listen(port, async () => {
   const tokenCheck = validateToken();
   if (!tokenCheck.valid) {
     console.warn(`[copilot] WARNING: ${tokenCheck.error}`);
+
+    // If the raw env looks like an encrypted dotenvx value, add an extra hint
+    const rawToken = process.env.GH_TOKEN || process.env.GITHUB_TOKEN || "";
+    if (rawToken.startsWith("encrypted:")) {
+      console.warn(
+        `[copilot] WARNING: GH_TOKEN looks like a dotenvx-encrypted value. Use a runtime secret or decrypted token instead (see docs/library/dotenvx/README.md).`
+      );
+    }
   } else {
     console.log(`[copilot] GH_TOKEN configured`);
   }

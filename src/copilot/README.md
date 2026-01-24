@@ -1,6 +1,7 @@
 # Copilot Service
 
 This service provides an HTTP API for GitHub Copilot chat completions using either:
+
 - **Copilot SDK** (default) - Structured streaming with full event support
 - **Copilot CLI** (fallback) - Direct CLI spawning for simpler use cases
 
@@ -63,6 +64,10 @@ This repo’s root `docker-compose.yml` passes `GH_TOKEN`/`GITHUB_TOKEN` through
 ```dotenv
 GH_TOKEN=ghp_your_token_here
 ```
+
+> Important: `docker compose` does **not** automatically decrypt dotenvx-encrypted values.
+> If your `.env` contains `encrypted:...` values, the container will receive the encrypted string.
+> For tokens, prefer Docker secrets (Option B) or keep the dev `.env` value plaintext.
 
 1. Start the stack:
 

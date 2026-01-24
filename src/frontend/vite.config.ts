@@ -9,6 +9,14 @@ export default defineConfig({
   server: {
     // Force host binding so Docker port mapping reaches the dev server
     host: true,
+    // Proxy `/api` to the backend service (resolves `backend` within Docker network)
+    proxy: {
+      "/api": {
+        target: "http://backend:3000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   resolve: {
     alias: {

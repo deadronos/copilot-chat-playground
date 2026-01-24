@@ -18,7 +18,7 @@ fi
 # - Empty secrets are ignored.
 
 if [ -d "/run/secrets" ]; then
-  for f in /run/secrets/DOTENV_PRIVATE_KEY_*; do
+  for f in /run/secrets/DOTENV_PRIVATE_KEY*; do
     # If the glob didn't match, the loop will iterate the literal pattern — guard against that
     if [ ! -f "$f" ]; then
       continue

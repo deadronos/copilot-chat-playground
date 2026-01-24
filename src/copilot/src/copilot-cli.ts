@@ -15,6 +15,7 @@ export interface CopilotResponse {
  */
 export function validateToken(): { valid: boolean; error?: string } {
   const token = process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
+
   if (!token || token.trim() === "") {
     return {
       valid: false,
@@ -22,6 +23,17 @@ export function validateToken(): { valid: boolean; error?: string } {
         "Missing GitHub token. Set GH_TOKEN or GITHUB_TOKEN environment variable with a PAT that has 'Copilot Requests' permission.",
     };
   }
+
+  // Detect common misconfiguration: dotenvx encrypted values (e.g. "encrypted:...")
+  // These are not usable by the Copilot API — the token must be the plaintext PAT.
+  if (token.startsWith("encrypted:")) {
+    return {
+      valid: false,
+      error:
+        "GH_TOKEN appears to be an encrypted dotenvx value (starts with \"encrypted:\").\nProvide a plaintext token at runtime (Docker secret or plaintext .env) or mount the decrypted value into the container.",
+    };
+  }
+
   return { valid: true };
 }
 

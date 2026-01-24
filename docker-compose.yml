@@ -1,3 +1,9 @@
+secrets:
+  DOTENV_PRIVATE_KEY:
+    file: ./.env.keys
+  GH_TOKEN:
+    file: ./.env
+
 services:
   copilot:
     build:
@@ -44,6 +50,6 @@ services:
       - "5173:5173"
     command: pnpm --filter @copilot-playground/frontend dev -- --host 0.0.0.0
     environment:
-      - VITE_API_URL=http://backend:3000/api
+      - VITE_API_URL=/api
     depends_on:
       - backend

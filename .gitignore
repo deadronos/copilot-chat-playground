@@ -35,3 +35,9 @@ dist-ssr
 .env.key*
 .env.*.local
 .env.local
+
+# Docker Compose local overrides & secrets (do not commit)
+docker-compose.override.yml
+docker-compose.override.yaml
+secrets/
+env.keys
