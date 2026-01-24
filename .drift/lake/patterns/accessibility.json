@@ -1,0 +1,5759 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-01-24T15:15:33.325Z",
+  "checksum": "eb939965be6624c5",
+  "category": "accessibility",
+  "patterns": [
+    {
+      "id": "70b00435469dab39",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 30,
+          "column": 102
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 30,
+          "column": 102
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 37,
+          "column": 63
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 30,
+          "column": 102
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 30,
+          "column": 102
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 364
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 402
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 435
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    },
+    {
+      "id": "40b813828207880c",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 36,
+          "column": 87
+        },
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 20
+        },
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 39
+        },
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 25
+        },
+        {
+          "file": ".agents\\skills\\webapp-testing\\SKILL.md",
+          "line": 88,
+          "column": 40
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 36,
+          "column": 87
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 34
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 20
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 39
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 25
+        },
+        {
+          "file": ".codex\\skills\\webapp-testing\\SKILL.md",
+          "line": 88,
+          "column": 40
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 294,
+          "column": 121
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 36,
+          "column": 87
+        },
+        {
+          "file": ".github\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 20
+        },
+        {
+          "file": ".github\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 39
+        },
+        {
+          "file": ".github\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 25
+        },
+        {
+          "file": ".github\\skills\\webapp-testing\\SKILL.md",
+          "line": 88,
+          "column": 40
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 36,
+          "column": 87
+        },
+        {
+          "file": ".opencode\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 34
+        },
+        {
+          "file": ".opencode\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 20
+        },
+        {
+          "file": ".opencode\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 477,
+          "column": 39
+        },
+        {
+          "file": ".opencode\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 487,
+          "column": 25
+        },
+        {
+          "file": ".opencode\\skills\\webapp-testing\\SKILL.md",
+          "line": 88,
+          "column": 40
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 5,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 5,
+          "column": 40
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 4,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 4,
+          "column": 19
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    },
+    {
+      "id": "47a0aa704b493419",
+      "name": "Keyboard Navigation Detector",
+      "description": "Learns keyboard navigation patterns from your codebase",
+      "subcategory": "keyboard-nav",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1033,
+          "column": 25
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1074,
+          "column": 25
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 17,
+          "column": 25
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 58,
+          "column": 25
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".agents\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".codex\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1033,
+          "column": 25
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1074,
+          "column": 25
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 17,
+          "column": 25
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 58,
+          "column": 25
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".codex\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".github\\agents\\implement-subagent.agent.md",
+          "line": 8,
+          "column": 49
+        },
+        {
+          "file": ".github\\agents\\implement-subagent.agent.md",
+          "line": 38,
+          "column": 76
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 64,
+          "column": 19
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 209,
+          "column": 26
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 271,
+          "column": 10
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 107,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".github\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1033,
+          "column": 25
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1074,
+          "column": 25
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 17,
+          "column": 25
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 58,
+          "column": 25
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".github\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".opencode\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1033,
+          "column": 25
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1074,
+          "column": 25
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 17,
+          "column": 25
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 58,
+          "column": 25
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".opencode\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": "AGENTS.md",
+          "line": 21,
+          "column": 40
+        },
+        {
+          "file": "AGENTS.md",
+          "line": 30,
+          "column": 57
+        },
+        {
+          "file": "docs\\library\\copilot-sdk\\README.md",
+          "line": 3,
+          "column": 30
+        },
+        {
+          "file": "docs\\milestone-e-workspace-mount.md",
+          "line": 5,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\02-refactor-gameengine.md",
+          "line": 215,
+          "column": 37
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1177,
+          "column": 12
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3499,
+          "column": 23
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3572,
+          "column": 88
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3810,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4165,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1148,
+          "column": 44
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1157,
+          "column": 61
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 9,
+          "column": 93
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 298,
+          "column": 6
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 26,
+          "column": 43
+        },
+        {
+          "file": "memory\\tasks\\TASK005-milestone-d-safety-ux.md",
+          "line": 23,
+          "column": 16
+        },
+        {
+          "file": "memory\\tasks\\TASK005-milestone-d-safety-ux.md",
+          "line": 134,
+          "column": 56
+        },
+        {
+          "file": "memory\\tasks\\TASK007-milestone-e-workspace-mount.md",
+          "line": 67,
+          "column": 50
+        },
+        {
+          "file": "src\\frontend\\src\\components\\component-example.tsx",
+          "line": 333,
+          "column": 30
+        },
+        {
+          "file": "src\\frontend\\src\\components\\component-example.tsx",
+          "line": 335,
+          "column": 29
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "keyboard-nav"
+        ]
+      }
+    },
+    {
+      "id": "160a67dfe980a20a",
+      "name": "Keyboard Navigation Detector",
+      "description": "Learns keyboard navigation patterns from your codebase",
+      "subcategory": "keyboard-nav",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.8533333333333333,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 773,
+          "column": 180
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 977,
+          "column": 144
+        },
+        {
+          "file": "src\\frontend\\src\\components\\component-example.tsx",
+          "line": 66,
+          "column": 273
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "keyboard-nav"
+        ]
+      }
+    },
+    {
+      "id": "129438ce407eef3f",
+      "name": "Focus Management Detector",
+      "description": "Learns focus management patterns from your codebase",
+      "subcategory": "focus-management",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\SKILL.md",
+          "line": 148,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".agents\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".codex\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\SKILL.md",
+          "line": 148,
+          "column": 34
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".codex\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".github\\agents\\implement-subagent.agent.md",
+          "line": 8,
+          "column": 49
+        },
+        {
+          "file": ".github\\agents\\implement-subagent.agent.md",
+          "line": 38,
+          "column": 76
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 64,
+          "column": 19
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 209,
+          "column": 26
+        },
+        {
+          "file": ".github\\instructions\\memory-bank.instructions.md",
+          "line": 271,
+          "column": 10
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 107,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".github\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\SKILL.md",
+          "line": 148,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".github\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 29,
+          "column": 1
+        },
+        {
+          "file": ".opencode\\skills\\r3f-best-practices\\SKILL.md",
+          "line": 113,
+          "column": 34
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\SKILL.md",
+          "line": 148,
+          "column": 34
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 525,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 12,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 52,
+          "column": 39
+        },
+        {
+          "file": ".opencode\\skills\\zustand-game-patterns\\SKILL.md",
+          "line": 14,
+          "column": 29
+        },
+        {
+          "file": "AGENTS.md",
+          "line": 21,
+          "column": 40
+        },
+        {
+          "file": "AGENTS.md",
+          "line": 30,
+          "column": 57
+        },
+        {
+          "file": "docs\\library\\copilot-sdk\\README.md",
+          "line": 3,
+          "column": 30
+        },
+        {
+          "file": "docs\\milestone-e-workspace-mount.md",
+          "line": 5,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\02-refactor-gameengine.md",
+          "line": 215,
+          "column": 37
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1177,
+          "column": 12
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3499,
+          "column": 23
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3572,
+          "column": 88
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3810,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4165,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1148,
+          "column": 44
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1157,
+          "column": 61
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 9,
+          "column": 93
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 26,
+          "column": 43
+        },
+        {
+          "file": "memory\\tasks\\TASK005-milestone-d-safety-ux.md",
+          "line": 23,
+          "column": 16
+        },
+        {
+          "file": "memory\\tasks\\TASK005-milestone-d-safety-ux.md",
+          "line": 134,
+          "column": 56
+        },
+        {
+          "file": "memory\\tasks\\TASK007-milestone-e-workspace-mount.md",
+          "line": 67,
+          "column": 50
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "focus-management"
+        ]
+      }
+    },
+    {
+      "id": "82ea10fd5f726858",
+      "name": "Focus Management Detector",
+      "description": "Learns focus management patterns from your codebase",
+      "subcategory": "focus-management",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.8144444444444444,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".codex\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".github\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": ".opencode\\skills\\frontend-design\\SKILL.md",
+          "line": 32,
+          "column": 151
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 773,
+          "column": 180
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 977,
+          "column": 144
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.964Z",
+        "lastSeen": "2026-01-24T15:15:32.964Z",
+        "tags": [
+          "accessibility",
+          "focus-management"
+        ]
+      }
+    },
+    {
+      "id": "48695d78f71a2ee4",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 305,
+          "column": 22
+        },
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 493,
+          "column": 35
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\references\\output-patterns.md",
+          "line": 44,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\references\\output-patterns.md",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 142,
+          "column": 31
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 153,
+          "column": 28
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\SKILL.md",
+          "line": 16,
+          "column": 35
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\SKILL.md",
+          "line": 47,
+          "column": 35
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\SKILL.md",
+          "line": 56,
+          "column": 4
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\arctic-frost.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\botanical-garden.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\desert-rose.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\forest-canopy.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\golden-hour.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\midnight-galaxy.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\modern-minimalist.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\ocean-depths.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\ocean-depths.md",
+          "line": 7,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\sunset-boulevard.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\theme-factory\\themes\\tech-innovation.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 8,
+          "column": 51
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 9,
+          "column": 18
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 10,
+          "column": 26
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 10,
+          "column": 52
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\physics-integration.md",
+          "line": 10,
+          "column": 45
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\tsl-why-use.md",
+          "line": 13,
+          "column": 13
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\SKILL.md",
+          "line": 266,
+          "column": 51
+        },
+        {
+          "file": ".agents\\skills\\typescript\\SKILL.md",
+          "line": 105,
+          "column": 4
+        },
+        {
+          "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
+          "line": 25,
+          "column": 62
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 270,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 289,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 306,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 318,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 808,
+          "column": 13
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 836,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 859,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 956,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 816,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 816,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 830,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 830,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 853,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 853,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1391,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1400,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 494,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1538,
+          "column": 19
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1540,
+          "column": 59
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 274,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 295,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 306,
+          "column": 22
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 323,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 280,
+          "column": 62
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 21,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 40,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 57,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 69,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 25,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 46,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 57,
+          "column": 22
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 74,
+          "column": 12
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 31,
+          "column": 62
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-dynamic-imports.md",
+          "line": 12,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-derived-state.md",
+          "line": 18,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-derived-state.md",
+          "line": 27,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-transitions.md",
+          "line": 4,
+          "column": 20
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-transitions.md",
+          "line": 10,
+          "column": 59
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 22,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 19,
+          "column": 13
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 47,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 70,
+          "column": 8
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 27,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 27,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 41,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 41,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 64,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 64,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\SKILL.md",
+          "line": 12,
+          "column": 82
+        },
+        {
+          "file": ".agents\\skills\\webapp-testing\\SKILL.md",
+          "line": 29,
+          "column": 16
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 20,
+          "column": 45
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 16,
+          "column": 45
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 305,
+          "column": 22
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 493,
+          "column": 35
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\references\\output-patterns.md",
+          "line": 44,
+          "column": 8
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\references\\output-patterns.md",
+          "line": 49,
+          "column": 8
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 142,
+          "column": 31
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 153,
+          "column": 28
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\SKILL.md",
+          "line": 16,
+          "column": 35
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\SKILL.md",
+          "line": 47,
+          "column": 35
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\SKILL.md",
+          "line": 56,
+          "column": 4
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\arctic-frost.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\botanical-garden.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\desert-rose.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\forest-canopy.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\golden-hour.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\midnight-galaxy.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\modern-minimalist.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\ocean-depths.md",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\ocean-depths.md",
+          "line": 7,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\theme-factory\\themes\\sunset-boulevard.md",
+          "line": 14,
+          "column": 5
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "b7f885ac7bc0c382",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 39,
+          "column": 34
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 98,
+          "column": 71
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 114,
+          "column": 64
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 165,
+          "column": 45
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 233,
+          "column": 30
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-exhaustive-checks.md",
+          "line": 62,
+          "column": 23
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 843,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-dependencies.md",
+          "line": 36,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 251,
+          "column": 13
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 259,
+          "column": 27
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 267,
+          "column": 19
+        },
+        {
+          "file": ".codex\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 39,
+          "column": 34
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 98,
+          "column": 71
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 114,
+          "column": 64
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 165,
+          "column": 45
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 233,
+          "column": 30
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\safety-exhaustive-checks.md",
+          "line": 62,
+          "column": 23
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 843,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\async-dependencies.md",
+          "line": 36,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 251,
+          "column": 13
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 259,
+          "column": 27
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 267,
+          "column": 19
+        },
+        {
+          "file": ".github\\agents\\Conductor.agent.md",
+          "line": 119,
+          "column": 35
+        },
+        {
+          "file": ".github\\agents\\Conductor.agent.md",
+          "line": 189,
+          "column": 22
+        },
+        {
+          "file": ".github\\agents\\Conductor.agent.md",
+          "line": 190,
+          "column": 22
+        },
+        {
+          "file": ".github\\agents\\Conductor.agent.md",
+          "line": 191,
+          "column": 22
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 271,
+          "column": 68
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 638,
+          "column": 71
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 226,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 39,
+          "column": 34
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 98,
+          "column": 71
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 114,
+          "column": 64
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 165,
+          "column": 45
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 233,
+          "column": 30
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\safety-exhaustive-checks.md",
+          "line": 62,
+          "column": 23
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 843,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\async-dependencies.md",
+          "line": 36,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 251,
+          "column": 13
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 259,
+          "column": 27
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 267,
+          "column": 19
+        },
+        {
+          "file": ".opencode\\skills\\playwright-best-practices\\SKILL.md",
+          "line": 39,
+          "column": 34
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 98,
+          "column": 71
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 114,
+          "column": 64
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 165,
+          "column": 45
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 233,
+          "column": 30
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\safety-exhaustive-checks.md",
+          "line": 62,
+          "column": 23
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 843,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\async-dependencies.md",
+          "line": 36,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 251,
+          "column": 13
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 259,
+          "column": 27
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 267,
+          "column": 19
+        },
+        {
+          "file": "docs\\docker-setup-guide.md",
+          "line": 81,
+          "column": 15
+        },
+        {
+          "file": "docs\\docker-setup-guide.md",
+          "line": 121,
+          "column": 37
+        },
+        {
+          "file": "docs\\docker-setup-guide.md",
+          "line": 136,
+          "column": 69
+        },
+        {
+          "file": "docs\\library\\copilot-sdk\\01-installation-auth.md",
+          "line": 38,
+          "column": 26
+        },
+        {
+          "file": "docs\\library\\copilot-sdk\\05-mcp.md",
+          "line": 23,
+          "column": 28
+        },
+        {
+          "file": "docs\\library\\dotenvx\\README.md",
+          "line": 55,
+          "column": 46
+        },
+        {
+          "file": "docs\\milestone-e-workspace-mount.md",
+          "line": 78,
+          "column": 33
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 97,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 97,
+          "column": 36
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1627,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1627,
+          "column": 36
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4272,
+          "column": 98
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1240,
+          "column": 1
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 1381,
+          "column": 1
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3288,
+          "column": 42
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "file": "idea.md",
+          "line": 66,
+          "column": 52
+        },
+        {
+          "file": "idea.md",
+          "line": 126,
+          "column": 16
+        },
+        {
+          "file": "memory\\activeContext.md",
+          "line": 18,
+          "column": 97
+        },
+        {
+          "file": "memory\\designs\\DES007-milestone-e-workspace-mount.md",
+          "line": 116,
+          "column": 26
+        },
+        {
+          "file": "memory\\designs\\DES008-docker-service-separation.md",
+          "line": 24,
+          "column": 68
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 14,
+          "column": 63
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 13,
+          "column": 67
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 23,
+          "column": 65
+        },
+        {
+          "file": "memory\\projectbrief.md",
+          "line": 16,
+          "column": 29
+        },
+        {
+          "file": "memory\\tasks\\TASK007-milestone-e-workspace-mount.md",
+          "line": 18,
+          "column": 29
+        },
+        {
+          "file": "memory\\tasks\\TASK007-milestone-e-workspace-mount.md",
+          "line": 37,
+          "column": 27
+        },
+        {
+          "file": "memory\\tasks\\TASK007-milestone-e-workspace-mount.md",
+          "line": 38,
+          "column": 55
+        },
+        {
+          "file": "memory\\tasks\\TASK009-document-secrets-and-ci-checks.md",
+          "line": 9,
+          "column": 207
+        },
+        {
+          "file": "memory\\tasks\\TASK009-document-secrets-and-ci-checks.md",
+          "line": 15,
+          "column": 41
+        },
+        {
+          "file": "plans\\milestone-e-workspace-mount-plan.md",
+          "line": 8,
+          "column": 42
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 2437,
+          "column": 3
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 6069,
+          "column": 3
+        },
+        {
+          "file": "README.md",
+          "line": 8,
+          "column": 39
+        },
+        {
+          "file": "README.md",
+          "line": 61,
+          "column": 125
+        },
+        {
+          "file": "src\\frontend\\src\\components\\component-example.tsx",
+          "line": 82,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\example.tsx",
+          "line": 19,
+          "column": 3
+        },
+        {
+          "file": "src\\frontend\\src\\components\\example.tsx",
+          "line": 25,
+          "column": 3
+        },
+        {
+          "file": "src\\frontend\\src\\components\\example.tsx",
+          "line": 37,
+          "column": 8
+        },
+        {
+          "file": "src\\frontend\\src\\components\\example.tsx",
+          "line": 39,
+          "column": 12
+        },
+        {
+          "file": "workspace\\idea.md",
+          "line": 66,
+          "column": 52
+        },
+        {
+          "file": "workspace\\idea.md",
+          "line": 126,
+          "column": 16
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.972Z",
+        "lastSeen": "2026-01-24T15:15:32.972Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "e0b248ac45351a50",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 117,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 273,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 823,
+          "column": 16
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 846,
+          "column": 16
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 16,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 29,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 34,
+          "column": 16
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 57,
+          "column": 16
+        },
+        {
+          "file": ".agents\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 117,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 273,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 823,
+          "column": 16
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 846,
+          "column": 16
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 16,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 29,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 34,
+          "column": 16
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 57,
+          "column": 16
+        },
+        {
+          "file": ".codex\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 117,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 273,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 823,
+          "column": 16
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 846,
+          "column": 16
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 16,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 29,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 34,
+          "column": 16
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 57,
+          "column": 16
+        },
+        {
+          "file": ".github\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 117,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 273,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 85,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 823,
+          "column": 16
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 846,
+          "column": 16
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 16,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 29,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 34,
+          "column": 16
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 57,
+          "column": 16
+        },
+        {
+          "file": ".opencode\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 35,
+          "column": 5
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "79f7111e2b01ba9b",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 123,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 303,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 76,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
+          "line": 148,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 979,
+          "column": 30
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 45,
+          "column": 30
+        },
+        {
+          "file": ".agents\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 106,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 123,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 303,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 76,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
+          "line": 148,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 979,
+          "column": 30
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 45,
+          "column": 30
+        },
+        {
+          "file": ".codex\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 106,
+          "column": 5
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 72,
+          "column": 196
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 123,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 303,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 76,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
+          "line": 148,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 979,
+          "column": 30
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 45,
+          "column": 30
+        },
+        {
+          "file": ".github\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 106,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 123,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 303,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\package_skill.py",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\rules\\mobile-optimization.md",
+          "line": 76,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\rules\\tsl-compute-shaders.md",
+          "line": 148,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 979,
+          "column": 30
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 45,
+          "column": 30
+        },
+        {
+          "file": ".opencode\\skills\\webapp-testing\\scripts\\with_server.py",
+          "line": 106,
+          "column": 5
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 28,
+          "column": 26
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "31bead9681992604",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.945,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 189,
+          "column": 5
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "bc321cbaa8606a33",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.8999999999999999,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 222,
+          "column": 19
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-avoid-barrel-imports.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-avoid-circular-dependencies.md",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-skip-lib-check.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-avoid-deep-generics.md",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-avoid-large-unions.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-limit-recursion-depth.md",
+          "line": 51,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-barrel-imports.md",
+          "line": 40,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-min-max-loop.md",
+          "line": 74,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 222,
+          "column": 19
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\module-avoid-barrel-imports.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\module-avoid-circular-dependencies.md",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\tscfg-skip-lib-check.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\type-avoid-deep-generics.md",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\type-avoid-large-unions.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\type-limit-recursion-depth.md",
+          "line": 51,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\bundle-barrel-imports.md",
+          "line": 40,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\js-min-max-loop.md",
+          "line": 74,
+          "column": 3
+        },
+        {
+          "file": ".github\\agents\\Conductor.agent.md",
+          "line": 113,
+          "column": 16
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 222,
+          "column": 19
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\module-avoid-barrel-imports.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\module-avoid-circular-dependencies.md",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\tscfg-skip-lib-check.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\type-avoid-deep-generics.md",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\type-avoid-large-unions.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\type-limit-recursion-depth.md",
+          "line": 51,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\bundle-barrel-imports.md",
+          "line": 40,
+          "column": 3
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\js-min-max-loop.md",
+          "line": 74,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 222,
+          "column": 19
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\module-avoid-barrel-imports.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\module-avoid-circular-dependencies.md",
+          "line": 63,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\tscfg-skip-lib-check.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\type-avoid-deep-generics.md",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\type-avoid-large-unions.md",
+          "line": 47,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\type-limit-recursion-depth.md",
+          "line": 51,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 59,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\bundle-barrel-imports.md",
+          "line": 40,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\js-min-max-loop.md",
+          "line": 74,
+          "column": 3
+        },
+        {
+          "file": "memory\\designs\\DES007-milestone-e-workspace-mount.md",
+          "line": 32,
+          "column": 37
+        },
+        {
+          "file": "README.md",
+          "line": 77,
+          "column": 79
+        },
+        {
+          "file": "README.md",
+          "line": 77,
+          "column": 155
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "b3d2710c66a70941",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\scripts\\init_skill.py",
+          "line": 179,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\tsl-post-processing.md",
+          "line": 146,
+          "column": 4
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\advanced-branded-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\advanced-satisfies-operator.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\advanced-template-literal-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\async-avoid-loop-await.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\async-avoid-unnecessary-async.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\async-defer-await.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\async-explicit-return-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\async-parallel-promises.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\mem-avoid-closure-leaks.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\mem-avoid-global-state.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\mem-cleanup-event-listeners.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\mem-clear-timers.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\mem-use-weakmap-for-metadata.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-avoid-barrel-imports.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-avoid-circular-dependencies.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-control-types-inclusion.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-dynamic-imports.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\module-use-type-imports.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-avoid-object-spread-in-loops.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-cache-property-access.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-for-of-for-iteration.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-string-methods.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-assertion-functions.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-const-assertions.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-exhaustive-checks.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-prefer-unknown-over-any.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-strict-null-checks.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-enable-incremental.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-exclude-properly.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-isolate-modules.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-project-references.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-skip-lib-check.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\tscfg-strict-function-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-avoid-deep-generics.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-avoid-large-unions.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-explicit-return-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-extract-conditional-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-interfaces-over-intersections.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-limit-recursion-depth.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\typescript-advanced-types\\SKILL.md",
+          "line": 261,
+          "column": 44
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 308,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 395,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 2330,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 2457,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\advanced-event-handler-refs.md",
+          "line": 40,
+          "column": 3
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\advanced-event-handler-refs.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\advanced-use-latest.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-api-routes.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-defer-await.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-dependencies.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-parallel.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\async-suspense-boundaries.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-barrel-imports.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-conditional.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-defer-third-party.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-dynamic-imports.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\bundle-preload.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-event-listeners.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-localstorage-schema.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-passive-event-listeners.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\client-swr-dedup.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-batch-dom-css.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-cache-function-results.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-cache-property-access.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-cache-storage.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-combine-iterations.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-early-exit.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-hoist-regexp.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-index-maps.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-length-check-first.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-min-max-loop.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-set-map-lookups.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-tosorted-immutable.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-activity.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-animate-svg-wrapper.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-conditional-render.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-content-visibility.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-hoist-jsx.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-hydration-no-flicker.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rendering-svg-precision.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-defer-reads.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-dependencies.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-derived-state.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-functional-setstate.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-lazy-state-init.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-memo-with-default-value.md",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-memo.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-simple-expression-in-memo.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\rerender-transitions.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-auth-actions.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-cache-lru.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-cache-react.md",
+          "line": 2,
+          "column": 1
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-dedup-props.md",
+          "line": 2,
+          "column": 1
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.978Z",
+        "lastSeen": "2026-01-24T15:15:32.978Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "66735f41976d0468",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 343,
+          "column": 146
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 194,
+          "column": 7
+        },
+        {
+          "file": ".agents\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".agents\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1896,
+          "column": 159
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\js-batch-dom-css.md",
+          "line": 105,
+          "column": 159
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 343,
+          "column": 146
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 194,
+          "column": 7
+        },
+        {
+          "file": ".codex\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".codex\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1896,
+          "column": 159
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\js-batch-dom-css.md",
+          "line": 105,
+          "column": 159
+        },
+        {
+          "file": ".github\\copilot-instructions.md",
+          "line": 30,
+          "column": 90
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 131,
+          "column": 199
+        },
+        {
+          "file": ".github\\instructions\\spec-driven-workflow-v1.instructions.md",
+          "line": 144,
+          "column": 67
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 343,
+          "column": 146
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 194,
+          "column": 7
+        },
+        {
+          "file": ".github\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".github\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1896,
+          "column": 159
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\js-batch-dom-css.md",
+          "line": 105,
+          "column": 159
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 343,
+          "column": 146
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\rules\\error-handling-recovery.md",
+          "line": 194,
+          "column": 7
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 20
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 8,
+          "column": 62
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 1896,
+          "column": 159
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\js-batch-dom-css.md",
+          "line": 105,
+          "column": 159
+        },
+        {
+          "file": "docs\\docker-setup-guide.md",
+          "line": 159,
+          "column": 41
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 47,
+          "column": 53
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 2348,
+          "column": 149
+        },
+        {
+          "file": "docs\\redvsblue\\tasks\\02-refactor-gameengine\\006-pr6-worker-implementation.md",
+          "line": 22,
+          "column": 181
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "36191663ad4094e7",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.8970833333333332,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 311,
+          "column": 137
+        },
+        {
+          "file": ".agents\\skills\\three-best-practices\\SKILL.md",
+          "line": 15,
+          "column": 60
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 10
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 40
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 311,
+          "column": 137
+        },
+        {
+          "file": ".codex\\skills\\three-best-practices\\SKILL.md",
+          "line": 15,
+          "column": 60
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 40
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 10
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 40
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 311,
+          "column": 137
+        },
+        {
+          "file": ".github\\skills\\three-best-practices\\SKILL.md",
+          "line": 15,
+          "column": 60
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 40
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 10
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 40
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 311,
+          "column": 137
+        },
+        {
+          "file": ".opencode\\skills\\three-best-practices\\SKILL.md",
+          "line": 15,
+          "column": 60
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 970,
+          "column": 40
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 10
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 36,
+          "column": 40
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 745,
+          "column": 274
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4276,
+          "column": 306
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 11057
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 11195
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 11304
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 11668
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 11733
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 12237
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 12541
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 4291,
+          "column": 12862
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 977,
+          "column": 330
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1006,
+          "column": 85
+        },
+        {
+          "file": "docs\\redvsblue\\tasks\\02-refactor-gameengine\\006-pr6-worker-implementation.md",
+          "line": 7,
+          "column": 76
+        },
+        {
+          "file": "memory\\designs\\DES004-milestone-f-sdk-migration.md",
+          "line": 9,
+          "column": 144
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "d0128f69ab2e4d50",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 99,
+          "column": 29
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 77
+        },
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 100
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 99,
+          "column": 29
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 77
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 100
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 99,
+          "column": 29
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 77
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 100
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 99,
+          "column": 29
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 77
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 225,
+          "column": 100
+        },
+        {
+          "file": "docker-compose.yml",
+          "line": 23,
+          "column": 80
+        },
+        {
+          "file": "docs\\library\\dotenvx\\README.md",
+          "line": 25,
+          "column": 133
+        },
+        {
+          "file": "docs\\milestone-e-workspace-mount.md",
+          "line": 9,
+          "column": 125
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 977,
+          "column": 301
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3566,
+          "column": 243
+        },
+        {
+          "file": "memory\\designs\\DES008-docker-service-separation.md",
+          "line": 8,
+          "column": 117
+        },
+        {
+          "file": "memory\\systemPatterns.md",
+          "line": 13,
+          "column": 71
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.979Z",
+        "lastSeen": "2026-01-24T15:15:32.979Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "76c2f4012d0b72dc",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\skill-creator\\SKILL.md",
+          "line": 221,
+          "column": 31
+        },
+        {
+          "file": ".codex\\skills\\skill-creator\\SKILL.md",
+          "line": 221,
+          "column": 31
+        },
+        {
+          "file": ".github\\skills\\skill-creator\\SKILL.md",
+          "line": 221,
+          "column": 31
+        },
+        {
+          "file": ".opencode\\skills\\skill-creator\\SKILL.md",
+          "line": 221,
+          "column": 31
+        },
+        {
+          "file": "docs\\library\\dotenvx\\README.md",
+          "line": 5,
+          "column": 224
+        },
+        {
+          "file": "memory\\designs\\DES007-milestone-e-workspace-mount.md",
+          "line": 39,
+          "column": 164
+        },
+        {
+          "file": "memory\\designs\\DES007-milestone-e-workspace-mount.md",
+          "line": 39,
+          "column": 236
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 9,
+          "column": 260
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 18,
+          "column": 18
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 18,
+          "column": 71
+        },
+        {
+          "file": "memory\\designs\\DES009-secrets-first-dotenvx.md",
+          "line": 18,
+          "column": 114
+        },
+        {
+          "file": "memory\\tasks\\TASK008-docker-service-separation.md",
+          "line": 13,
+          "column": 79
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.980Z",
+        "lastSeen": "2026-01-24T15:15:32.980Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "b0d5ecd73ac72eae",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 19,
+          "column": 41
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 20,
+          "column": 39
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 30,
+          "column": 38
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 31,
+          "column": 36
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 60,
+          "column": 52
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 23,
+          "column": 58
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 38,
+          "column": 53
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 40,
+          "column": 48
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 610,
+          "column": 20
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-auth-actions.md",
+          "line": 45,
+          "column": 20
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 19,
+          "column": 41
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 20,
+          "column": 39
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 30,
+          "column": 38
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 31,
+          "column": 36
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 60,
+          "column": 52
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 23,
+          "column": 58
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 38,
+          "column": 53
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 40,
+          "column": 48
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 610,
+          "column": 20
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-auth-actions.md",
+          "line": 45,
+          "column": 20
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 19,
+          "column": 41
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 20,
+          "column": 39
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 30,
+          "column": 38
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 31,
+          "column": 36
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 60,
+          "column": 52
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 23,
+          "column": 58
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 38,
+          "column": 53
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 40,
+          "column": 48
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 610,
+          "column": 20
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-auth-actions.md",
+          "line": 45,
+          "column": 20
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 19,
+          "column": 41
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 20,
+          "column": 39
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 30,
+          "column": 38
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 31,
+          "column": 36
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-prefer-array-methods.md",
+          "line": 60,
+          "column": 52
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 23,
+          "column": 58
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 38,
+          "column": 53
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 40,
+          "column": 48
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 610,
+          "column": 20
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-auth-actions.md",
+          "line": 45,
+          "column": 20
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 875,
+          "column": 24
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 334,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 339,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 370,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 376,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 382,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 388,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 394,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 680,
+          "column": 34
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 723,
+          "column": 54
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 741,
+          "column": 56
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 285,
+          "column": 29
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 328,
+          "column": 49
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 346,
+          "column": 51
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 155,
+          "column": 54
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 159,
+          "column": 28
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 50,
+          "column": 36
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 54,
+          "column": 36
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 95,
+          "column": 48
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 97,
+          "column": 22
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    },
+    {
+      "id": "d2ed9ae7a907a68b",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 24,
+          "column": 21
+        },
+        {
+          "file": ".agents\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 18,
+          "column": 3
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 24,
+          "column": 21
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 18,
+          "column": 3
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 13,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 24,
+          "column": 21
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 18,
+          "column": 3
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\runtime-use-set-for-lookups.md",
+          "line": 24,
+          "column": 21
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\safety-use-type-guards.md",
+          "line": 18,
+          "column": 3
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 331,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 347,
+          "column": 9
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 172,
+          "column": 5
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 175,
+          "column": 5
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 180,
+          "column": 5
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4574,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4698,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4797,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4935,
+          "column": 7
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 480,
+          "column": 19
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 43,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 51,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 54,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 60,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 66,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 72,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 78,
+          "column": 5
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 13,
+          "column": 142
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 13,
+          "column": 165
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 14,
+          "column": 82
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 14,
+          "column": 109
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 15,
+          "column": 77
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\button.tsx",
+          "line": 15,
+          "column": 100
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 52,
+          "column": 152
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 52,
+          "column": 168
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 54,
+          "column": 303
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 54,
+          "column": 319
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 69,
+          "column": 7
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 204,
+          "column": 7
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\input-group.tsx",
+          "line": 15,
+          "column": 7
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\input-group.tsx",
+          "line": 51,
+          "column": 7
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.983Z",
+        "lastSeen": "2026-01-24T15:15:32.983Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    },
+    {
+      "id": "e8674e36e509a839",
+      "name": "Keyboard Navigation Detector",
+      "description": "Learns keyboard navigation patterns from your codebase",
+      "subcategory": "keyboard-nav",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 826,
+          "column": 374
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3568,
+          "column": 463
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 286
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 312
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 339
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "tags": [
+          "accessibility",
+          "keyboard-nav"
+        ]
+      }
+    },
+    {
+      "id": "62d4200cb79f53c5",
+      "name": "Focus Management Detector",
+      "description": "Learns focus management patterns from your codebase",
+      "subcategory": "focus-management",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".codex\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".github\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": ".opencode\\skills\\typescript\\references\\type-simplify-mapped-types.md",
+          "line": 10,
+          "column": 121
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 826,
+          "column": 374
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 3568,
+          "column": 463
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 286
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 312
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\badge.tsx",
+          "line": 8,
+          "column": 339
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "tags": [
+          "accessibility",
+          "focus-management"
+        ]
+      }
+    },
+    {
+      "id": "ca0ebb1ef8a39fb1",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 805,
+          "column": 9
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 961,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 987,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "file": ".agents\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 16,
+          "column": 9
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 130,
+          "column": 9
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 805,
+          "column": 9
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 961,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 987,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "file": ".codex\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 16,
+          "column": 9
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 130,
+          "column": 9
+        },
+        {
+          "file": ".github\\agents\\context7.agent.md",
+          "line": 10,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 805,
+          "column": 9
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 961,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 987,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "file": ".github\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 16,
+          "column": 9
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 130,
+          "column": 9
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 805,
+          "column": 9
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 961,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\AGENTS.md",
+          "line": 987,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-after-nonblocking.md",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "file": ".opencode\\skills\\vercel-react-best-practices\\rules\\server-parallel-fetching.md",
+          "line": 16,
+          "column": 9
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 130,
+          "column": 9
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 2699,
+          "column": 11
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001-redvsblue-idea-and-refactor.md",
+          "line": 2742,
+          "column": 11
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 530,
+          "column": 14
+        },
+        {
+          "file": "src\\backend\\src\\app.ts",
+          "line": 48,
+          "column": 7
+        },
+        {
+          "file": "src\\backend\\src\\app.ts",
+          "line": 91,
+          "column": 7
+        },
+        {
+          "file": "src\\backend\\src\\index.ts",
+          "line": 34,
+          "column": 7
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 155,
+          "column": 9
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 20,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 40,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 52,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 63,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 74,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\integration\\http.test.ts",
+          "line": 87,
+          "column": 9
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 106,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 146,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 183,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 214,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 236,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 254,
+          "column": 7
+        },
+        {
+          "file": "tests\\backend\\unit\\chat-stream.test.ts",
+          "line": 287,
+          "column": 7
+        },
+        {
+          "file": "tests\\copilot\\integration\\http.test.ts",
+          "line": 20,
+          "column": 7
+        },
+        {
+          "file": "tests\\copilot\\integration\\http.test.ts",
+          "line": 32,
+          "column": 7
+        },
+        {
+          "file": "tests\\copilot\\integration\\http.test.ts",
+          "line": 46,
+          "column": 7
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.984Z",
+        "lastSeen": "2026-01-24T15:15:32.984Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "522ab28da9d3accd",
+      "name": "Heading Hierarchy Detector",
+      "description": "Learns heading hierarchy patterns from your codebase",
+      "subcategory": "heading-hierarchy",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 27
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 15
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 32
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 40
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 42
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 11
+        },
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 43
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 11
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 27
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 15
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 32
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 11
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 40
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 11
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 42
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 11
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 43
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 11
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 27
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 15
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 32
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 11
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 40
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 11
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 42
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 11
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 43
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 11
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 217,
+          "column": 27
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 15
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 32
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 11
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 174,
+          "column": 40
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 11
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\computed-store.ts",
+          "line": 178,
+          "column": 42
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 11
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\slices-pattern.ts",
+          "line": 203,
+          "column": 43
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 627,
+          "column": 21
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 629,
+          "column": 22
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 649,
+          "column": 22
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 691,
+          "column": 25
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 693,
+          "column": 26
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 803,
+          "column": 23
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 805,
+          "column": 24
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1994,
+          "column": 25
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 1996,
+          "column": 26
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 2273,
+          "column": 37
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 229,
+          "column": 36
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 1705,
+          "column": 74
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 2699,
+          "column": 110
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 252,
+          "column": 16
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 254,
+          "column": 17
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 296,
+          "column": 20
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 298,
+          "column": 21
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 408,
+          "column": 18
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 410,
+          "column": 19
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 506,
+          "column": 20
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 508,
+          "column": 21
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "tags": [
+          "accessibility",
+          "heading-hierarchy"
+        ]
+      }
+    },
+    {
+      "id": "0df5d9c3b59fb2a1",
+      "name": "Alt Text Detector",
+      "description": "Learns alt text patterns from your codebase",
+      "subcategory": "alt-text",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".agents\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 24
+        },
+        {
+          "file": ".codex\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 24
+        },
+        {
+          "file": ".github\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 24
+        },
+        {
+          "file": ".opencode\\skills\\zustand-state-management\\templates\\async-actions-store.ts",
+          "line": 241,
+          "column": 24
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\alert-dialog.tsx",
+          "line": 110,
+          "column": 53
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\alert-dialog.tsx",
+          "line": 112,
+          "column": 27
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "tags": [
+          "accessibility",
+          "alt-text"
+        ]
+      }
+    },
+    {
+      "id": "58dee1a8ba260a2d",
+      "name": "Keyboard Navigation Detector",
+      "description": "Learns keyboard navigation patterns from your codebase",
+      "subcategory": "keyboard-nav",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".github\\agents\\code-review-subagent.agent.md",
+          "line": 59,
+          "column": 50
+        },
+        {
+          "file": "src\\copilot\\src\\index.ts",
+          "line": 62,
+          "column": 38
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\input-group.tsx",
+          "line": 59,
+          "column": 64
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "tags": [
+          "accessibility",
+          "keyboard-nav"
+        ]
+      }
+    },
+    {
+      "id": "2413a69e1a43145b",
+      "name": "Focus Management Detector",
+      "description": "Learns focus management patterns from your codebase",
+      "subcategory": "focus-management",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": ".github\\agents\\code-review-subagent.agent.md",
+          "line": 59,
+          "column": 50
+        },
+        {
+          "file": "src\\copilot\\src\\index.ts",
+          "line": 62,
+          "column": 38
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\input-group.tsx",
+          "line": 59,
+          "column": 64
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.985Z",
+        "lastSeen": "2026-01-24T15:15:32.985Z",
+        "tags": [
+          "accessibility",
+          "focus-management"
+        ]
+      }
+    },
+    {
+      "id": "91b5bd99d39985e9",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.77,
+        "level": "medium"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "docs\\library\\copilot-sdk\\06-system-message-and-guardrails.md",
+          "line": 27,
+          "column": 11
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 506,
+          "column": 1
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 707,
+          "column": 27
+        },
+        {
+          "file": "docs\\redvsblue\\copilot-cli-sessionlog\\001a-wiring-redvsblue-into-frontend.md",
+          "line": 709,
+          "column": 28
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 107,
+          "column": 10
+        },
+        {
+          "file": "memory\\designs\\DES005-milestone-d-safety-ux.md",
+          "line": 114,
+          "column": 17
+        },
+        {
+          "file": "memory\\tasks\\TASK005-milestone-d-safety-ux.md",
+          "line": 100,
+          "column": 40
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 1998,
+          "column": 3
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4574,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4698,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4797,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 4935,
+          "column": 7
+        },
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 5594,
+          "column": 3
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 312,
+          "column": 22
+        },
+        {
+          "file": "src\\frontend\\src\\components\\chat-playground.tsx",
+          "line": 314,
+          "column": 23
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 94,
+          "column": 32
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\field.tsx",
+          "line": 96,
+          "column": 6
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 11,
+          "column": 32
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 13,
+          "column": 6
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 24,
+          "column": 10
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    },
+    {
+      "id": "d963045ead435282",
+      "name": "Keyboard Navigation Detector",
+      "description": "Learns keyboard navigation patterns from your codebase",
+      "subcategory": "keyboard-nav",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "memory\\activeContext.md",
+          "line": 3,
+          "column": 11
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 126
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 182
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 233
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 339
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 55
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 55
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 139
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 86
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "keyboard-nav"
+        ]
+      }
+    },
+    {
+      "id": "78d7f68a6e8cb41f",
+      "name": "Focus Management Detector",
+      "description": "Learns focus management patterns from your codebase",
+      "subcategory": "focus-management",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.95,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "memory\\activeContext.md",
+          "line": 3,
+          "column": 11
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 126
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 182
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 233
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 74,
+          "column": 339
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 92,
+          "column": 55
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 132,
+          "column": 55
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\dropdown-menu.tsx",
+          "line": 213,
+          "column": 139
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 10
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 26
+        },
+        {
+          "file": "src\\frontend\\src\\components\\ui\\select.tsx",
+          "line": 114,
+          "column": 86
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "focus-management"
+        ]
+      }
+    },
+    {
+      "id": "d92d2d0c391d8dd2",
+      "name": "Semantic HTML Detector",
+      "description": "Learns semantic HTML patterns from your codebase",
+      "subcategory": "semantic-html",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.87,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "memory\\designs\\DES004-milestone-f-sdk-migration.md",
+          "line": 124,
+          "column": 9
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "semantic-html"
+        ]
+      }
+    },
+    {
+      "id": "c1e84cddf17eb85a",
+      "name": "Heading Hierarchy Detector",
+      "description": "Learns heading hierarchy patterns from your codebase",
+      "subcategory": "heading-hierarchy",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.8999999999999999,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "pnpm-lock.yaml",
+          "line": 1038,
+          "column": 95
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "heading-hierarchy"
+        ]
+      }
+    },
+    {
+      "id": "0823a830e17aea46",
+      "name": "ARIA Roles Detector",
+      "description": "Learns ARIA roles patterns from your codebase",
+      "subcategory": "aria-roles",
+      "status": "discovered",
+      "confidence": {
+        "score": 0.945,
+        "level": "high"
+      },
+      "severity": "info",
+      "locations": [
+        {
+          "file": "src\\frontend\\src\\components\\ui\\label.tsx",
+          "line": 8,
+          "column": 10
+        }
+      ],
+      "outliers": [],
+      "metadata": {
+        "firstSeen": "2026-01-24T15:15:32.986Z",
+        "lastSeen": "2026-01-24T15:15:32.986Z",
+        "tags": [
+          "accessibility",
+          "aria-roles"
+        ]
+      }
+    }
+  ]
+}
