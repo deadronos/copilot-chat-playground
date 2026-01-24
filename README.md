@@ -14,7 +14,7 @@ Docker up and running
 YouTube Demo Video:
 [YouTube Demo Video](https://www.youtube.com/watch?v=ycVCQS6mjZg)
 Demo Video downscaled here:
-[Demo Video in Repo](Copilot%20CLI%20Local%20Playground%20Demo%20Video.mp4)
+[Demo Video in Repo](./Copilot_Chat_PlayGround_Docker.mp4)
 
 ## Packages
 
