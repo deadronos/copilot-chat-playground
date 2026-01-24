@@ -30,6 +30,9 @@ export type {
   Engine,
 } from "@/redvsblue/types";
 
+// Re-export serialization helpers for Web Worker migration
+export { serialize, cloneGameState } from "./serialize";
+
 import type { Engine as EngineInterface, EngineConfig } from "@/redvsblue/types";
 import { Engine } from "./engine";
 
