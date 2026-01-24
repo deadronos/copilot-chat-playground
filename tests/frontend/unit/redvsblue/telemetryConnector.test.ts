@@ -116,4 +116,50 @@ describe("TelemetryConnectorCore", () => {
 
     connector.stop()
   })
+
+  it("uses navigator.sendBeacon on beforeunload and clears buffer", async () => {
+    useTelemetryStore.getState().clearTelemetry()
+    useTelemetryStore.getState().pushTelemetry({ type: "u1" } as any)
+    useTelemetryStore.getState().pushTelemetry({ type: "u2" } as any)
+
+    const sendBeacon = vi.fn(() => true)
+    ;(navigator as any).sendBeacon = sendBeacon
+
+    const connector = new TelemetryConnectorCore({ url: "https://example/tele", batchSize: 10, drainIntervalMs: 10 })
+    connector.start()
+
+    // simulate page unload
+    window.dispatchEvent(new Event("beforeunload"))
+
+    expect(sendBeacon).toHaveBeenCalledTimes(1)
+    const calledWith = sendBeacon.mock.calls[0]
+    expect(calledWith[0]).toBe("https://example/tele")
+    const payload = JSON.parse(calledWith[1])
+    expect(payload.length).toBe(2)
+    expect(useTelemetryStore.getState().getBufferLength()).toBe(0)
+
+    // cleanup
+    delete (navigator as any).sendBeacon
+    connector.stop()
+  })
+
+  it("requeues buffer if sendBeacon absent or returns false", async () => {
+    useTelemetryStore.getState().clearTelemetry()
+    useTelemetryStore.getState().pushTelemetry({ type: "v1" } as any)
+
+    const sendBeacon = vi.fn(() => false)
+    ;(navigator as any).sendBeacon = sendBeacon
+
+    const connector = new TelemetryConnectorCore({ url: "https://example/tele", batchSize: 10, drainIntervalMs: 10 })
+    connector.start()
+
+    window.dispatchEvent(new Event("beforeunload"))
+
+    expect(sendBeacon).toHaveBeenCalledTimes(1)
+    // since sendBeacon returned false, buffer should be restored
+    expect(useTelemetryStore.getState().getBufferLength()).toBe(1)
+
+    delete (navigator as any).sendBeacon
+    connector.stop()
+  })
 })

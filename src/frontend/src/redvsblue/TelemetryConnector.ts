@@ -36,11 +36,44 @@ export class TelemetryConnectorCore {
     this.backoffMs = this.backoffBaseMs
   }
 
+  private handleBeforeUnload = () => {
+    try {
+      const batch = useTelemetryStore.getState().drainTelemetry(this.batchSize)
+      if (!batch || batch.length === 0) return
+
+      // If sendBeacon is available, use it for a best-effort synchronous send during unload
+      const nav: Navigator | null = typeof navigator !== "undefined" ? navigator : null
+      if (nav && typeof (nav as unknown as { sendBeacon?: unknown }).sendBeacon === "function") {
+        let ok = false
+        try {
+          const sb = (nav as unknown as { sendBeacon: (u: string, d: BodyInit) => boolean }).sendBeacon
+          ok = sb.call(nav, this.url, JSON.stringify(batch))
+        } catch {
+          ok = false
+        }
+        if (!ok) {
+          // requeue at head so events aren't lost
+          useTelemetryStore.setState((s) => ({ telemetryBuffer: [...batch, ...s.telemetryBuffer] }))
+        }
+      } else {
+        // No sendBeacon available; requeue so events can be sent later
+        useTelemetryStore.setState((s) => ({ telemetryBuffer: [...batch, ...s.telemetryBuffer] }))
+      }
+    } catch {
+      // be defensive on unload - swallow errors
+    }
+  }
+
   start() {
     if (!this.stopped) return
     this.stopped = false
     this.connect()
     this.drainTimer = setInterval(() => this.tryDrain(), this.drainIntervalMs)
+
+    // register unload handler to attempt to flush buffered telemetry
+    if (typeof window !== "undefined" && typeof window.addEventListener === "function") {
+      window.addEventListener("beforeunload", this.handleBeforeUnload)
+    }
   }
 
   stop() {
@@ -48,8 +81,12 @@ export class TelemetryConnectorCore {
     if (this.drainTimer) clearInterval(this.drainTimer)
     if (this.reconnectTimer) clearTimeout(this.reconnectTimer)
     if (this.ws) {
-      try { this.ws.close() } catch (e) {}
+      try { this.ws.close() } catch (e) { void e }
       this.ws = null
+    }
+
+    if (typeof window !== "undefined" && typeof window.removeEventListener === "function") {
+      window.removeEventListener("beforeunload", this.handleBeforeUnload)
     }
   }
 
