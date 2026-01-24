@@ -43,7 +43,8 @@ export const useTelemetryStore = create<TelemetryStore>((set, get) => ({
 
   peek: (n) => {
     const count = n ?? get().telemetryBuffer.length
-    return get().telemetryBuffer.slice(0, count)
+    // Return shallow copies to prevent external mutations from affecting the store
+    return get().telemetryBuffer.slice(0, count).map(e => ({ ...e }))
   },
 
   clearTelemetry: () => set({ telemetryBuffer: [] }),

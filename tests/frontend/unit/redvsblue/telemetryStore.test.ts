@@ -42,6 +42,24 @@ describe("redvsblue/telemetry store", () => {
     const peeked = useTelemetryStore.getState().peek(1)
     expect(peeked.map((e) => e.type)).toEqual(["x"])
     expect(useTelemetryStore.getState().getBufferLength()).toBe(2)
+
+    // immutability: mutating peeked shouldn't affect store
+    peeked[0].type = "mutated"
+    expect(useTelemetryStore.getState().telemetryBuffer[0].type).toBe("x")
+  })
+
+  it("drain with n greater than buffer length returns all and clears buffer", () => {
+    useTelemetryStore.getState().pushTelemetry({ type: "a" })
+    useTelemetryStore.getState().pushTelemetry({ type: "b" })
+    const drained = useTelemetryStore.getState().drainTelemetry(10)
+    expect(drained.map((e: any) => e.type)).toEqual(["a", "b"])
+    expect(useTelemetryStore.getState().getBufferLength()).toBe(0)
+  })
+
+  it("default type is 'unknown' when missing", () => {
+    useTelemetryStore.getState().pushTelemetry({})
+    const evt = useTelemetryStore.getState().telemetryBuffer[0]
+    expect(evt.type).toBe("unknown")
   })
 
   it("clearTelemetry empties buffer", () => {
@@ -57,6 +75,6 @@ describe("redvsblue/telemetry store", () => {
     useTelemetryStore.getState().pushTelemetry({ type: "3" })
     useTelemetryStore.getState().pushTelemetry({ type: "4" })
     expect(useTelemetryStore.getState().getBufferLength()).toBe(3)
-    expect(useTelemetryStore.getState().telemetryBuffer.map((e) => e.type)).toEqual(["2", "3", "4"])
+    expect(useTelemetryStore.getState().telemetryBuffer.map((e: any) => e.type)).toEqual(["2", "3", "4"])
   })
 })
