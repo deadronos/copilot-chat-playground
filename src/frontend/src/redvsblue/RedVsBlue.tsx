@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const RedVsBlue: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const spawnShipRef = useRef<(team: 'red' | 'blue') => void>(() => {});
   const resetSimulationRef = useRef<() => void>(() => {});
   const rafRef = useRef<number | null>(null);
@@ -10,11 +11,12 @@ const RedVsBlue: React.FC = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    let width = container.clientWidth;
+    let height = container.clientHeight;
     canvas.width = width;
     canvas.height = height;
 
@@ -155,23 +157,37 @@ const RedVsBlue: React.FC = () => {
       checkCollisions(); rafRef.current = requestAnimationFrame(loop);
     }
 
-    function handleResize() { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; initStars(); }
+    function handleResize() { 
+      if (!canvas || !container) return;
+      width = container.clientWidth; 
+      height = container.clientHeight; 
+      canvas.width = width; 
+      canvas.height = height; 
+      initStars(); 
+    }
 
-    window.addEventListener('resize', handleResize);
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    
+    resizeObserver.observe(container);
 
     initStars(); resetSimulation(); loop();
 
     spawnShipRef.current = spawnShip; resetSimulationRef.current = resetSimulation;
 
-    return () => { window.removeEventListener('resize', handleResize); if (rafRef.current) cancelAnimationFrame(rafRef.current); };
+    return () => { 
+      resizeObserver.disconnect();
+      if (rafRef.current) cancelAnimationFrame(rafRef.current); 
+    };
   }, []);
 
   const handleSpawn = (team: 'red'|'blue') => { spawnShipRef.current(team); };
   const handleReset = () => { resetSimulationRef.current(); };
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      <style>{
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+      <style>{`
         body { margin: 0; background-color: #050510; color: white; font-family: 'Courier New', Courier, monospace; }
         canvas { display: block; }
         #ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; }
@@ -182,7 +198,7 @@ const RedVsBlue: React.FC = () => {
         button { background: #333; color: white; border: 1px solid #555; padding: 10px 20px; font-family: inherit; font-size: 16px; cursor: pointer; transition: 0.2s; }
         button:hover { background: #555; } button:active { transform: translateY(1px); }
         .btn-red { border-bottom: 3px solid #ff4d4d; } .btn-blue { border-bottom: 3px solid #4d4dff; } .btn-reset { border-bottom: 3px solid white; }
-      }</style>
+      `}</style>
 
       <canvas ref={canvasRef} id="gameCanvas" />
 

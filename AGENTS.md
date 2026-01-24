@@ -1,6 +1,16 @@
 # Project Description
 We are building a playground for experimenting with GitHub Copilot Chat using the Copilot SDK. This project includes a frontend interface, a backend server, and integration with the Copilot SDK to facilitate interactive chat sessions with AI assistance.
 
+## Quick Start
+
+**This is a pnpm monorepo.** Use `pnpm` for all package management operations, not `npm` or `yarn`.
+
+Common commands:
+- `pnpm install` - Install all dependencies
+- `pnpm -F @copilot-playground/frontend build` - Build frontend
+- `pnpm -F @copilot-playground/backend build` - Build backend
+- `pnpm -F <package-name> dev` - Run dev server for a package
+
 ## AGENTS.md
 Also look at '.github/copilot-instructions.md' for overall instructions given to the AI agent.
 
