@@ -9,10 +9,12 @@ export default defineConfig({
   server: {
     // Force host binding so Docker port mapping reaches the dev server
     host: true,
-    // Proxy `/api` to the backend service (resolves `backend` within Docker network)
+    // Proxy `/api` to the backend service.
+    // Use the BACKEND_URL environment variable for local development (e.g., `BACKEND_URL=http://localhost:3000`).
+    // Default remains `http://backend:3000` which resolves inside the Docker network.
     proxy: {
       "/api": {
-        target: "http://backend:3000",
+        target: process.env.BACKEND_URL || "http://backend:3000",
         changeOrigin: true,
         secure: false,
       },
