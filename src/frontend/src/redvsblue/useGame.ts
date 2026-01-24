@@ -143,6 +143,9 @@ export function useGame(options: UseGameOptions): Controls {
     renderer.init(canvas)
     rendererRef.current = renderer
 
+    // telemetry handler reference so we can unregister on cleanup
+    let telemetryHandler: ((data: unknown) => void) | null = null
+
     const configureEngine = () => {
       const { width, height } = getCanvasSize(canvas, container)
       applyCanvasSize(canvas, width, height)
@@ -156,6 +159,19 @@ export function useGame(options: UseGameOptions): Controls {
       })
       engine.reset()
       useGameState.getState().setSnapshot(engine.getState())
+
+      // Telemetry: forward engine telemetry events to telemetry store
+      // Respect both engine config (enableTelemetry) and UI toggle (telemetryEnabled)
+      telemetryHandler = (data: unknown) => {
+        const evt = data as import("./types").TelemetryEvent
+        const engineEnabled = defaultConfig.enableTelemetry ?? true
+        const uiEnabled = useUIStore.getState().telemetryEnabled ?? true
+        if (!engineEnabled || !uiEnabled) return
+        // push into telemetry store (stores handle id/timestamp enrichment)
+        import("./stores/telemetry").then((m) => m.useTelemetryStore.getState().pushTelemetry(evt))
+      }
+
+      engine.on("telemetry", telemetryHandler)
     }
 
     configureEngine()
@@ -178,6 +194,7 @@ export function useGame(options: UseGameOptions): Controls {
       unsubscribe()
       stop()
       renderer.destroy()
+      if (telemetryHandler) engine.off("telemetry", telemetryHandler)
       engine.destroy()
       rendererRef.current = null
       engineRef.current = null
