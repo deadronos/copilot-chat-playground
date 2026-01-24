@@ -1,8 +1,5 @@
 import type {
   Team,
-  Ship as ShipType,
-  Bullet as BulletType,
-  Particle as ParticleType,
   Star as StarType,
   GameState,
   EngineConfig,
@@ -233,7 +230,7 @@ class Ship {
     if (this.cooldown > 0) this.cooldown--;
   }
 
-  shoot(bulletSpeed: number, bulletDamage: number, bulletLife: number): { x: number; y: number; angle: number } {
+  shoot(): { x: number; y: number; angle: number } {
     const bx = this.x + Math.cos(this.angle) * 15;
     const by = this.y + Math.sin(this.angle) * 15;
     return { x: bx, y: by, angle: this.angle };
@@ -288,6 +285,7 @@ export class Engine {
 
   update(deltaTime: number): void {
     if (!this.config) return;
+    void deltaTime;
 
     this.tick++;
 
@@ -313,11 +311,7 @@ export class Engine {
         ship.cooldown <= 0 &&
         dist < 400
       ) {
-        const bulletPos = ship.shoot(
-          this.config.bulletSpeed,
-          this.config.bulletDamage,
-          50
-        );
+        const bulletPos = ship.shoot();
         const bullet = new Bullet(
           `bullet-${this.entityIdCounter++}`,
           bulletPos.x,
