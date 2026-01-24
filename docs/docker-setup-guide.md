@@ -56,17 +56,26 @@ Quick: install Docker & Compose, then run the full stack with `docker compose up
 
 ## Secrets & dotenvx (secrets-first) 🔒
 
+> Note: Docker **Compose** secrets (used with `docker compose up`) are file-backed and are mounted into the container under `/run/secrets/<name>`.
+> Docker **Swarm** secrets (`docker secret create`, `docker stack deploy`) can be marked `external: true`.
+> If you see `unsupported external secret ...`, it usually means a Swarm-only secret was configured while running plain Compose.
+
 - **Do not** bake `.env.keys` into images or commit them to Git. Use Docker secrets or an external secret manager to inject `DOTENV_PRIVATE_KEY_*` at runtime.
-- Example (compose snippet):
+- Recommended approach in this repo: use a **local Compose override** (gitignored) so the committed `docker-compose.yml` stays secret-free.
+
+  - Copy `docker-compose.override.example.yml` → `docker-compose.override.yml`
+  - Put secret files under `./secrets/` (also gitignored)
+
+Example (override snippet):
 
 ```yaml
 services:
   copilot:
     secrets:
-      - dotenv_private_key_production
+      - DOTENV_PRIVATE_KEY_PRODUCTION
 secrets:
-  dotenv_private_key_production:
-    file: ./secrets/dotenv_private_key_production
+  DOTENV_PRIVATE_KEY_PRODUCTION:
+    file: ./secrets/DOTENV_PRIVATE_KEY_PRODUCTION
 ```
 
 - The copilot image entrypoint reads `/run/secrets/DOTENV_PRIVATE_KEY_*` and exports `DOTENV_PRIVATE_KEY_*` for `dotenvx` usage. See `docs/library/dotenvx/README.md` for details.

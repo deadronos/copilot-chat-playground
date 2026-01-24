@@ -56,6 +56,9 @@ importers:
       '@copilot-playground/shared':
         specifier: workspace:*
         version: link:../shared
+      '@dotenvx/dotenvx':
+        specifier: ^1.52.0
+        version: 1.52.0
       '@github/copilot':
         specifier: ^0.0.392
         version: 0.0.392

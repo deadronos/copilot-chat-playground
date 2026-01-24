@@ -24,7 +24,8 @@ import { cn } from "@/lib/utils";
 type StreamStatus = "empty" | "waiting" | "streaming" | "done" | "error";
 type ChatMode = "explain-only" | "project-helper";
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/chat";
+const API_BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? "/api";
+const API_URL = `${API_BASE.replace(/\/$/, "")}/chat`;
 
 const MODE_META: Record<
   ChatMode,
@@ -152,9 +153,33 @@ export function ChatPlayground() {
       });
 
       if (!response.ok || !response.body) {
-        const message = response.ok
+        // Try to surface a helpful, actionable message for token/config errors
+        let message = response.ok
           ? "Streaming response was empty."
           : `Request failed with status ${response.status}.`;
+        try {
+          const ct = response.headers.get("content-type") || "";
+          if (ct.includes("application/json")) {
+            const data = await response.json();
+            if (data?.errorType === "token_missing") {
+              message = "Copilot service is not configured on the server. Please ensure GH_TOKEN/GITHUB_TOKEN or runtime secrets are provided on the server (see project docs).";
+            } else if (data?.errorType === "auth") {
+              message = "Copilot authentication failed on the server. Check token permissions (Copilot Requests).";
+            } else if (data?.error) {
+              message = String(data.error);
+            }
+          } else {
+            const text = await response.text();
+            if (text && /token_missing|GitHub Copilot is not configured|Missing GitHub token/i.test(text)) {
+              message = "Copilot service is not configured on the server. Please ensure GH_TOKEN/GITHUB_TOKEN or runtime secrets are provided on the server (see project docs).";
+            } else if (text) {
+              message = text;
+            }
+          }
+        } catch (e) {
+          // ignore parsing errors and fall back to the status message
+        }
+
         throw new Error(message);
       }
 
@@ -180,9 +205,27 @@ export function ChatPlayground() {
 
       setStatus("done");
     } catch (caught) {
-      const message =
-        caught instanceof Error ? caught.message : "Streaming failed.";
-      setError(message);
+      const message = caught instanceof Error ? caught.message : "Streaming failed.";
+
+      // Detect common network failures and show friendly guidance
+      const netFailurePatterns = [
+        /Failed to fetch/i,
+        /NetworkError/i,
+        /ECONNREFUSED/i,
+        /ERR_NAME_NOT_RESOLVED/i,
+        /timeout/i,
+      ];
+
+      const looksLikeNetworkError = netFailurePatterns.some((r) => r.test(message));
+
+      if (looksLikeNetworkError) {
+        setError(
+          "Cannot reach backend service. Ensure the backend is running and reachable (e.g., run `docker compose ps` and check logs)."
+        );
+      } else {
+        setError(message);
+      }
+
       setStatus("error");
     }
   };
@@ -436,7 +479,13 @@ export function ChatPlayground() {
                   <div className="font-semibold">Error</div>
                   <div className="mt-1">{error}</div>
                   <div className="mt-2 text-xs text-rose-600">
-                    Please check your connection and try again. If the problem persists, verify that the backend service is running.
+                    {error.includes("Copilot service is not configured") ? (
+                      <>Server is missing GitHub token. For local dev, set <code>GH_TOKEN</code> in a repo-root <code>.env</code> or use Docker secrets (see docs/library/dotenvx/README.md).</>
+                    ) : error.includes("authentication") ? (
+                      <>Authentication failed. Verify token permissions (Copilot Requests) and check server logs.</>
+                    ) : (
+                      <>Please check your connection and try again. If the problem persists, verify that the backend service is running and check server logs.</>
+                    )}
                   </div>
                 </div>
               )}

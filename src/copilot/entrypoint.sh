@@ -10,10 +10,15 @@ if (set -o pipefail) 2>/dev/null; then
 fi
 
 # Entrypoint: inject DOTENV_PRIVATE_KEY_* secrets from /run/secrets if present
-# and then exec the passed command. Only iterate DOTENV_PRIVATE_KEY_* secrets.
+# and then exec the passed command.
+#
+# Security posture:
+# - We only read a narrow allow-list of filenames from /run/secrets.
+# - We do not print secret values.
+# - Empty secrets are ignored.
 
 if [ -d "/run/secrets" ]; then
-  for f in /run/secrets/DOTENV_PRIVATE_KEY_*; do
+  for f in /run/secrets/DOTENV_PRIVATE_KEY*; do
     # If the glob didn't match, the loop will iterate the literal pattern — guard against that
     if [ ! -f "$f" ]; then
       continue
@@ -24,6 +29,21 @@ if [ -d "/run/secrets" ]; then
     if [ -r "$f" ]; then
       val=$(cat "$f")
       # Only export non-empty values
+      if [ -n "$val" ]; then
+        export "$name"="$val"
+      fi
+    fi
+  done
+
+  # Also support GitHub tokens as secrets-first injection (for Copilot auth).
+  # Docker secrets are mounted as files under /run/secrets/<name>.
+  for name in GH_TOKEN GITHUB_TOKEN; do
+    f="/run/secrets/$name"
+    if [ ! -f "$f" ]; then
+      continue
+    fi
+    if [ -r "$f" ]; then
+      val=$(cat "$f")
       if [ -n "$val" ]; then
         export "$name"="$val"
       fi
