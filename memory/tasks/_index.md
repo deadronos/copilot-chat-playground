@@ -9,3 +9,4 @@
 - TASK007 - Milestone E: Workspace Mount + Compose + Secrets - Completed ✅  (2026-01-24)
 - TASK008 - Docker service separation & caching - Done
 - TASK009 - Document & validate secrets-first pattern - Pending (2026-01-24)
+- TASK010 - Telemetry & Event Emitter (PR 004) - In Progress (2026-01-24)
