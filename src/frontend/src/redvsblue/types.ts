@@ -147,23 +147,34 @@ export interface EngineConfig {
 /**
  * Telemetry event sent to backend/Copilot server.
  * Used for AI analysis, gameplay statistics, and Copilot integration.
- * 
- * Event types include:
- * - "ship_spawned": New ship entered the game
- * - "ship_destroyed": Ship was destroyed
- * - "bullet_fired": Ship fired a bullet
- * - "bullet_hit": Bullet hit a ship
- * - "game_started": Game session started
- * - "game_ended": Game session ended
+ *
+ * Minimal shape to support flexible payloads and forward-compatibility.
+ *
+ * Event fields:
+ * - `id` (optional): unique event id assigned at creation time
+ * - `type`: event type string (e.g., "ship_destroyed")
+ * - `timestamp`: milliseconds since epoch when event occurred
+ * - `data` (optional): event-specific payload
+ * - `sessionId` (optional): session id for grouping events
+ * - `seq` (optional): sequence number for ordering
+ * - `version` (optional): schema or producer version
  */
 export interface TelemetryEvent {
+  /** Optional unique identifier for the event */
+  id?: string;
   /** Type of event (e.g., "ship_destroyed", "bullet_fired") */
   type: string;
   /** Timestamp when the event occurred (milliseconds since epoch) */
   timestamp: number;
   /** Event-specific data payload (structure varies by event type) */
-  data: Record<string, unknown>;
-}
+  data?: Record<string, unknown>;
+  /** Optional session id to group events */
+  sessionId?: string;
+  /** Optional sequence number to help ordering */
+  seq?: number;
+  /** Optional version string for producer/schema */
+  version?: string;
+} 
 
 /**
  * Main game engine interface.
