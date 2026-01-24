@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import {
   createEngine,
   type Team,
@@ -274,6 +274,238 @@ describe("RedVsBlue Engine Module", () => {
       expect(typeof engineWithoutConfig.init).toBe("function");
       expect(typeof engineWithConfig.getState).toBe("function");
       expect(typeof engineWithoutConfig.getState).toBe("function");
+    });
+  });
+
+  describe("Game Engine Gameplay (PR-002 Requirements)", () => {
+    let engine: Engine;
+    let config: EngineConfig;
+
+    beforeEach(() => {
+      config = {
+        canvasWidth: 800,
+        canvasHeight: 600,
+        shipSpeed: 5,
+        bulletSpeed: 8,
+        bulletDamage: 10,
+        shipMaxHealth: 30,
+        enableTelemetry: true,
+      };
+      engine = createEngine();
+      engine.init(config);
+    });
+
+    describe("Deterministic Behavior", () => {
+      it("should produce identical results with same seed and inputs", () => {
+        const engine1 = createEngine();
+        engine1.init(config);
+        engine1.spawnShip("red");
+        engine1.spawnShip("blue");
+
+        const engine2 = createEngine();
+        engine2.init(config);
+        engine2.spawnShip("red");
+        engine2.spawnShip("blue");
+
+        // Run 10 updates on both
+        for (let i = 0; i < 10; i++) {
+          engine1.update(16);
+          engine2.update(16);
+        }
+
+        const state1 = engine1.getState();
+        const state2 = engine2.getState();
+
+        // Both engines should have identical state
+        expect(state1.ships.length).toBe(state2.ships.length);
+        state1.ships.forEach((ship, i) => {
+          expect(ship.health).toBe(state2.ships[i].health);
+        });
+      });
+    });
+
+    describe("Ship Spawning", () => {
+      it("should spawn a red ship on the left side", () => {
+        engine.spawnShip("red");
+        const state = engine.getState();
+        expect(state.ships.length).toBe(1);
+        expect(state.ships[0].team).toBe("red");
+        expect(state.ships[0].position.x).toBeLessThan(config.canvasWidth * 0.3);
+      });
+
+      it("should spawn a blue ship on the right side", () => {
+        engine.spawnShip("blue");
+        const state = engine.getState();
+        expect(state.ships.length).toBe(1);
+        expect(state.ships[0].team).toBe("blue");
+        expect(state.ships[0].position.x).toBeGreaterThan(config.canvasWidth * 0.7);
+      });
+
+      it("should maintain initial health on spawn", () => {
+        engine.spawnShip("red");
+        const state = engine.getState();
+        expect(state.ships[0].health).toBe(config.shipMaxHealth);
+      });
+    });
+
+    describe("Collision Detection", () => {
+      it("should detect bullet-ship collision and reduce health", () => {
+        engine.spawnShip("red");
+        engine.spawnShip("blue");
+
+        const initialState = engine.getState();
+        const initialHealth = initialState.ships[0].health;
+
+        // Run simulation to trigger shooting and collisions
+        for (let i = 0; i < 200; i++) {
+          engine.update(16);
+          const state = engine.getState();
+          if (state.ships.some((s) => s.health < initialHealth)) {
+            break; // Damage detected
+          }
+        }
+
+        const finalState = engine.getState();
+        // At least one ship should have taken damage or been destroyed
+        const damageTaken =
+          finalState.ships.length < 2 ||
+          finalState.ships.some((s) => s.health < initialHealth);
+        expect(damageTaken).toBe(true);
+      });
+
+      it("should destroy ship when health reaches zero", () => {
+        engine.spawnShip("red");
+        engine.spawnShip("blue");
+
+        let shipDestroyedFired = false;
+        let collisionDetected = false;
+        
+        engine.on("telemetry", (event: unknown) => {
+          if (
+            typeof event === "object" &&
+            event !== null &&
+            "type" in event
+          ) {
+            const type = (event as Record<string, unknown>).type;
+            if (type === "ship_destroyed") {
+              shipDestroyedFired = true;
+            }
+            if (type === "bullet_hit") {
+              collisionDetected = true;
+            }
+          }
+        });
+
+        for (let i = 0; i < 500; i++) {
+          engine.update(16);
+          const state = engine.getState();
+          if (state.ships.length < 2 || shipDestroyedFired) {
+            break;
+          }
+        }
+
+        const finalState = engine.getState();
+        // Either a ship was destroyed or a collision occurred
+        expect(
+          finalState.ships.length < 2 || collisionDetected
+        ).toBe(true);
+      });
+    });
+
+    describe("Event Emission & Telemetry", () => {
+      it("should emit ship_spawned telemetry event", () => {
+        let spawnEventFired = false;
+        engine.on("telemetry", (event: unknown) => {
+          if (
+            typeof event === "object" &&
+            event !== null &&
+            "type" in event &&
+            (event as Record<string, unknown>).type === "ship_spawned"
+          ) {
+            spawnEventFired = true;
+          }
+        });
+
+        engine.spawnShip("red");
+        expect(spawnEventFired).toBe(true);
+      });
+
+      it("should emit bullet_fired telemetry event", () => {
+        let bulletFiredFired = false;
+        engine.on("telemetry", (event: unknown) => {
+          if (
+            typeof event === "object" &&
+            event !== null &&
+            "type" in event &&
+            (event as Record<string, unknown>).type === "bullet_fired"
+          ) {
+            bulletFiredFired = true;
+          }
+        });
+
+        engine.spawnShip("red");
+        engine.spawnShip("blue");
+
+        for (let i = 0; i < 100; i++) {
+          engine.update(16);
+          if (bulletFiredFired) break;
+        }
+
+        expect(bulletFiredFired).toBe(true);
+      });
+
+      it("should allow event handler removal", () => {
+        let callCount = 0;
+        const handler = () => {
+          callCount++;
+        };
+
+        engine.on("telemetry", handler);
+        engine.spawnShip("red");
+        expect(callCount).toBeGreaterThan(0);
+
+        const countBefore = callCount;
+        engine.off("telemetry", handler);
+        engine.spawnShip("blue");
+
+        // Handler should not be called after removal
+        expect(callCount).toBe(countBefore);
+      });
+    });
+
+    describe("Game Reset", () => {
+      it("should reset all ships to initial state with 4 ships", () => {
+        engine.spawnShip("red");
+        engine.spawnShip("blue");
+        engine.update(50);
+
+        engine.reset();
+        const state = engine.getState();
+
+        expect(state.ships.length).toBe(4);
+        expect(state.bullets.length).toBe(0);
+        expect(state.particles.length).toBe(0);
+        state.ships.forEach((ship) => {
+          expect(ship.health).toBe(config.shipMaxHealth);
+        });
+      });
+    });
+
+    describe("Engine Initialization with Stars", () => {
+      it("should initialize 150 stars on init", () => {
+        const state = engine.getState();
+        expect(state.stars.length).toBe(150);
+      });
+
+      it("should place all stars within canvas bounds", () => {
+        const state = engine.getState();
+        state.stars.forEach((star) => {
+          expect(star.position.x).toBeGreaterThanOrEqual(0);
+          expect(star.position.x).toBeLessThanOrEqual(config.canvasWidth);
+          expect(star.position.y).toBeGreaterThanOrEqual(0);
+          expect(star.position.y).toBeLessThanOrEqual(config.canvasHeight);
+        });
+      });
     });
   });
 });

@@ -241,4 +241,17 @@ export interface Engine {
    * @param data - Event data payload
    */
   emit(event: string, data: unknown): void;
+
+  /**
+   * Spawn a new ship in the game.
+   * Red ships spawn on the left, blue ships on the right.
+   * @param team - Team affiliation ("red" or "blue")
+   */
+  spawnShip(team: Team): void;
+
+  /**
+   * Reset the game to initial state with 4 ships (2 red, 2 blue).
+   * Clears all bullets, particles, and resets the tick counter.
+   */
+  reset(): void;
 }
