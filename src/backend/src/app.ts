@@ -161,7 +161,7 @@ const RULE_RANGES = {
 };
 
 const CONFIG_RANGES = {
-  snapshotIntervalMs: { min: 250, max: 10_000, default: 2_000 },
+  snapshotIntervalMs: { min: 5_000, max: 60_000, default: 30_000 },
 };
 
 const MAX_SNAPSHOT_BUFFER = 120;

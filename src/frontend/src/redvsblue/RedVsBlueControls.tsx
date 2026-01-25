@@ -5,6 +5,8 @@ type RedVsBlueControlsProps = {
   onSpawnBlue: () => void
   onReset: () => void
   onAskCopilot: () => void
+  autoDecisionsEnabled: boolean
+  onToggleAutoDecisions: (enabled: boolean) => void
 }
 
 const RedVsBlueControls: React.FC<RedVsBlueControlsProps> = ({
@@ -12,6 +14,8 @@ const RedVsBlueControls: React.FC<RedVsBlueControlsProps> = ({
   onSpawnBlue,
   onReset,
   onAskCopilot,
+  autoDecisionsEnabled,
+  onToggleAutoDecisions,
 }) => (
   <div className="controls">
     <button className="btn-red" onClick={onSpawnRed}>
@@ -26,6 +30,14 @@ const RedVsBlueControls: React.FC<RedVsBlueControlsProps> = ({
     <button className="btn-copilot" onClick={onAskCopilot}>
       Ask Copilot
     </button>
+    <label className="auto-decisions-toggle">
+      <input
+        type="checkbox"
+        checked={autoDecisionsEnabled}
+        onChange={(event) => onToggleAutoDecisions(event.target.checked)}
+      />
+      Auto-decisions
+    </label>
   </div>
 )
 
