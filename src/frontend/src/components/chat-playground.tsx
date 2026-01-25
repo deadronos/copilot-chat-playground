@@ -140,7 +140,7 @@ export function ChatPlayground() {
             setBackendProbeInfo(`Backend reachable at ${candidate}`);
             return;
           }
-        } catch (e) {
+        } catch {
           // ignore and try next candidate
         }
       }
@@ -154,7 +154,7 @@ export function ChatPlayground() {
     return () => {
       active = false;
     };
-  }, [VITE_API_URL, VITE_BACKEND_URL]);
+  }, []); // VITE_* env vars are static at runtime; intentionally skip including them in deps
   const statusMeta = STATUS_META[status];
   const outputPlaceholder = output.length
     ? ""
@@ -235,7 +235,7 @@ export function ChatPlayground() {
               message = text;
             }
           }
-        } catch (e) {
+        } catch {
           // ignore parsing errors and fall back to the status message
         }
 
