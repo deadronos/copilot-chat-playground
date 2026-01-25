@@ -124,6 +124,10 @@ export function createApp(): express.Express {
   app.post("/api/redvsblue/match/start", async (req, res) => {
     const traceId = randomUUID();
     const requestId = randomUUID();
+    logStructuredEvent("info", "match.start.received", { traceId, requestId }, {
+      method: req.method,
+      path: req.path,
+    });
     const parsed = MatchStartSchema.safeParse(req.body);
     if (!parsed.success) {
       logValidationFailure({ traceId, requestId }, parsed.error.issues, req);
@@ -152,6 +156,13 @@ export function createApp(): express.Express {
     setMatchSession(matchId, session);
     await persistMatchSession(session);
 
+    logStructuredEvent("info", "match.start.success", { traceId, requestId, matchId, sessionId }, {
+      rulesVersion,
+      effectiveRules: session.effectiveRules,
+      effectiveConfig: session.effectiveConfig,
+      warnings: session.warnings,
+    });
+
     res.status(200).json({
       matchId,
       sessionId,
@@ -168,6 +179,10 @@ export function createApp(): express.Express {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.snapshot.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
 
     if (!session) {
@@ -196,6 +211,15 @@ export function createApp(): express.Express {
 
     const snapshotPayload = parsed.data;
     recordSnapshot(session, snapshotPayload);
+    logStructuredEvent("info", "match.snapshot.recorded", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      storedSnapshots: session.snapshots.length,
+      requestDecision: snapshotPayload.requestDecision ?? false,
+    });
 
     let notificationText: string | undefined;
     let validatedDecision: ValidatedDecision | undefined;
@@ -210,6 +234,12 @@ export function createApp(): express.Express {
 
     if (snapshotPayload.requestDecision) {
       const decisionRequestId = randomUUID();
+      logStructuredEvent("info", "match.decision.requested", {
+        traceId,
+        requestId: decisionRequestId,
+        matchId,
+        sessionId: session.sessionId,
+      });
       const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId, {
         decisionTail: REHYDRATION_DECISION_TAIL,
       });
@@ -244,6 +274,12 @@ export function createApp(): express.Express {
           }
         );
         decisionRejectedReason = reason;
+        logStructuredEvent("warn", "match.decision.rejected", {
+          traceId,
+          requestId: decisionRequestId,
+          matchId,
+          sessionId: session.sessionId,
+        }, { reason });
       } else {
         const parsedDecision = parseDecisionProposal(decisionResult.output);
         if (!parsedDecision.proposal) {
@@ -271,6 +307,12 @@ export function createApp(): express.Express {
             { error: reason }
           );
           decisionRejectedReason = reason;
+          logStructuredEvent("warn", "match.decision.invalid", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { reason });
         } else if (parsedDecision.proposal.requestId !== decisionRequestId) {
           const reason = "Decision requestId mismatch";
           const record: DecisionAuditRecord = {
@@ -297,6 +339,12 @@ export function createApp(): express.Express {
             { error: reason }
           );
           decisionRejectedReason = reason;
+          logStructuredEvent("warn", "match.decision.invalid", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { reason });
         } else {
           const { validatedDecision: validated, rejectionReason } = validateDecision(
             session.decisionState,
@@ -317,6 +365,12 @@ export function createApp(): express.Express {
             session.decisionHistory.push(record);
             logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
             decisionRejectedReason = record.reason;
+            logStructuredEvent("warn", "match.decision.rejected", {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            }, { reason: record.reason });
           } else {
             validatedDecision = validated;
             const decisionNote =
@@ -336,12 +390,32 @@ export function createApp(): express.Express {
             };
             session.decisionHistory.push(record);
             logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+            logStructuredEvent("info", "match.decision.accepted", {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            }, {
+              team: validated.params.team,
+              count: validated.params.count,
+              warnings: validated.warnings,
+            });
           }
         }
       }
     }
 
     await persistMatchSession(session);
+    logStructuredEvent("info", "match.snapshot.response", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      notificationText,
+      decisionRejectedReason,
+      hasValidatedDecision: Boolean(validatedDecision),
+    });
 
     res.status(200).json({
       ok: true,
@@ -360,6 +434,10 @@ export function createApp(): express.Express {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.ask.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
 
     if (!session) {
@@ -392,6 +470,15 @@ export function createApp(): express.Express {
         "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
     }
 
+    logStructuredEvent("info", "match.ask.response", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      commentaryLength: commentary.length,
+    });
+
     res.status(200).json({
       matchId,
       sessionId: session.sessionId,
@@ -405,16 +492,23 @@ export function createApp(): express.Express {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.end.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
     const sessionId = session?.sessionId;
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
-      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+      logStructuredEvent("info", "match.end.noop", { traceId, requestId, matchId }, {
+        reason: "Unknown matchId",
+      });
+      res.status(204).send();
       return;
     }
 
     deleteMatchSession(matchId);
     await removePersistedSession(matchId);
+    logStructuredEvent("info", "match.end.success", { traceId, requestId, matchId, sessionId });
     res.status(200).json({ ok: true, matchId, sessionId, requestId, traceId });
   });
 
