@@ -49,3 +49,7 @@ https://github.com/deadronos/copilot-chat-playground/issues/60
 - Split RedVsBlue engine entities/core update loop and added deterministic snapshot parity test.
 - Added /api/chat streaming parity integration test.
 - Open question: whether to add Playwright E2E suite now (docs/agents/testing notes E2E deferred).
+### 2026-01-25
+- Added DES019 to defer Playwright E2E coverage to a future task.
+- Ran backend tests: `pnpm -F @copilot-playground/backend test` (pass; 1 skipped).
+- Ran frontend tests: `pnpm -F @copilot-playground/frontend test` (pass; 1 skipped).

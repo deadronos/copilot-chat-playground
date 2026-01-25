@@ -26,7 +26,7 @@ describe("ChatPlayground presentational components", () => {
       />
     )
 
-    expect(screen.getByText("Streaming")).toBeInTheDocument()
+    expect(screen.getByText("Streaming")).toBeTruthy()
   })
 
   it("renders PromptPanel with disabled submit when prompt is empty", () => {
@@ -60,8 +60,9 @@ describe("ChatPlayground presentational components", () => {
       />
     )
 
-    expect(screen.getByText("Safety Mode")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /send prompt/i })).toBeDisabled()
+    expect(screen.getByText("Safety Mode")).toBeTruthy()
+    const submitButton = screen.getByRole("button", { name: /send prompt/i })
+    expect(submitButton.hasAttribute("disabled")).toBe(true)
   })
 
   it("renders StreamOutputPanel actions when output is present", () => {
@@ -79,8 +80,8 @@ describe("ChatPlayground presentational components", () => {
       />
     )
 
-    expect(screen.getByRole("button", { name: /copy/i })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /export/i })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /clear/i })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /copy/i })).toBeTruthy()
+    expect(screen.getByRole("button", { name: /export/i })).toBeTruthy()
+    expect(screen.getByRole("button", { name: /clear/i })).toBeTruthy()
   })
 })
