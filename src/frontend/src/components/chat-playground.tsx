@@ -23,6 +23,7 @@ import {
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import RedVsBlue from "@/redvsblue/RedVsBlue";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 type StreamStatus = "empty" | "waiting" | "streaming" | "done" | "error";
 type ChatMode = "explain-only" | "project-helper";
@@ -582,7 +583,9 @@ export function ChatPlayground() {
             <CollapsibleContent className="mt-6">
               {isRedVsBlueOpen ? (
                 <div className="rounded-2xl border border-slate-900/10 bg-slate-900 overflow-hidden aspect-video">
-                  <RedVsBlue />
+                  <ErrorBoundary name="RedVsBlue">
+                    <RedVsBlue />
+                  </ErrorBoundary>
                 </div>
               ) : (
                 <div className="rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/50 px-6 py-12 text-center">

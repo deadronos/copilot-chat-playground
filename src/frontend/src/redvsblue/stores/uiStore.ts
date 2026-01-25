@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-export type RendererId = "canvas"
+export type RendererId = "canvas" | "offscreen"
 
 export type UIStore = {
   running: boolean
@@ -23,4 +23,3 @@ export const useUIStore = create<UIStore>((set) => ({
   setFps: (fps) => set({ fps }),
   setTelemetryEnabled: (enabled) => set({ telemetryEnabled: enabled }),
 }))
-

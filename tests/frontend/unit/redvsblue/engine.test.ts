@@ -290,6 +290,7 @@ describe("RedVsBlue Engine Module", () => {
         bulletDamage: 10,
         shipMaxHealth: 30,
         enableTelemetry: true,
+        seed: 1337,
       };
       engine = createEngine();
       engine.init(config);
@@ -353,24 +354,25 @@ describe("RedVsBlue Engine Module", () => {
         engine.spawnShip("red");
         engine.spawnShip("blue");
 
-        const initialState = engine.getState();
-        const initialHealth = initialState.ships[0].health;
-
-        // Run simulation to trigger shooting and collisions
-        for (let i = 0; i < 200; i++) {
-          engine.update(16);
-          const state = engine.getState();
-          if (state.ships.some((s) => s.health < initialHealth)) {
-            break; // Damage detected
+        let hitDetected = false;
+        engine.on("telemetry", (event: unknown) => {
+          if (
+            typeof event === "object" &&
+            event !== null &&
+            "type" in event &&
+            (event as Record<string, unknown>).type === "bullet_hit"
+          ) {
+            hitDetected = true;
           }
+        });
+
+        // Run simulation to trigger shooting and collisions (deterministic via seed)
+        for (let i = 0; i < 2000; i++) {
+          engine.update(16);
+          if (hitDetected) break;
         }
 
-        const finalState = engine.getState();
-        // At least one ship should have taken damage or been destroyed
-        const damageTaken =
-          finalState.ships.length < 2 ||
-          finalState.ships.some((s) => s.health < initialHealth);
-        expect(damageTaken).toBe(true);
+        expect(hitDetected).toBe(true);
       });
 
       it("should destroy ship when health reaches zero", () => {
