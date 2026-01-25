@@ -138,7 +138,7 @@ describe("CopilotSDKService", () => {
 
     it("should log model mismatch when requested model differs from actual provider model", { timeout: 10000 }, async () => {
       process.env.GH_TOKEN = "token"
-      process.env.COPILOT_DEFAULT_MODEL = "gpt-4o"
+      process.env.COPILOT_DEFAULT_MODEL = "gpt-5-mini"
 
       const eventBus = createEventBus();
       const emitSpy = vi.spyOn(eventBus, 'emitLog');
@@ -173,7 +173,7 @@ describe("CopilotSDKService", () => {
       const mismatch = calls.find((c: any) => c.event_type === 'sdk.model.mismatch');
       expect(mismatch).toBeDefined();
       expect(mismatch.level).toBe('warn');
-      expect(mismatch.meta.requestedModel).toBe('gpt-4o');
+      expect(mismatch.meta.requestedModel).toBe('gpt-5-mini');
       expect(mismatch.meta.actualModel).toBe('claude-sonnet-4.5');
 
       spy.mockRestore();
