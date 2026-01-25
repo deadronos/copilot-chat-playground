@@ -165,8 +165,19 @@ describe("RedVsBlue Phase 1 API", () => {
       counts: { red: 1, blue: 1 },
       recentMajorEvents: [],
       requestDecision: true,
+      requestOverrides: true,
     };
 
+    // Also test that when requestOverrides is false, AI-proposed overrides are ignored
+    const snapshotNoOverrides = {
+      timestamp: Date.now(),
+      snapshotId: "snap-ask-3",
+      gameSummary: { redCount: 1, blueCount: 1, totalShips: 2 },
+      counts: { red: 1, blue: 1 },
+      recentMajorEvents: [],
+      requestDecision: true,
+      requestOverrides: false,
+    };
     const response = await fetch(`${baseUrl}/api/redvsblue/match/match-5/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -177,6 +188,27 @@ describe("RedVsBlue Phase 1 API", () => {
     const body = await response.json();
     expect(body.validatedDecision).toBeTruthy();
     expect(body.validatedDecision.type).toBe("spawnShips");
+    // Overrides should be present and clamped
+    expect(body.validatedDecision.params.overrides).toBeTruthy();
+    expect(body.validatedDecision.params.overrides.bulletDamage).toBeLessThanOrEqual(50);
+
+    // Now call ask with requestOverrides: false on a fresh match to avoid cooldown.
+    await fetch(`${baseUrl}/api/redvsblue/match/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matchId: "match-6", rulesVersion: "v1" }),
+    });
+
+    const responseNoOv = await fetch(`${baseUrl}/api/redvsblue/match/match-6/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: "Make a move", snapshot: snapshotNoOverrides }),
+    });
+
+    expect(responseNoOv.ok).toBe(true);
+    const bodyNoOv = await responseNoOv.json();
+    expect(bodyNoOv.validatedDecision).toBeTruthy();
+    expect(bodyNoOv.validatedDecision.params.overrides).toBeUndefined();
 
     spy.mockRestore();
   });

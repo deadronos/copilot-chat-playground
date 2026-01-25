@@ -80,6 +80,7 @@ const SnapshotSchema = z.object({
     )
     .max(50),
   requestDecision: z.boolean().optional(),
+  requestOverrides: z.boolean().optional(),
 });
 
 const AskSchema = z.object({
@@ -350,7 +351,8 @@ export function createApp(): express.Express {
           const { validatedDecision: validated, rejectionReason } = validateDecision(
             session.decisionState,
             parsedDecision.proposal,
-            timestamp
+            timestamp,
+            Boolean(snapshotPayload?.requestOverrides)
           );
           if (!validated) {
             const record: DecisionAuditRecord = {
@@ -569,7 +571,8 @@ export function createApp(): express.Express {
               const { validatedDecision: validated, rejectionReason } = validateDecision(
                 session.decisionState,
                 proposal,
-                Date.now()
+                Date.now(),
+                Boolean(snapshotPayload.requestOverrides)
               );
               if (validated) {
                 validatedDecision = validated;

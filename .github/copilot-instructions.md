@@ -2,6 +2,8 @@
 
 **Purpose:** Provide clear, actionable rules for the Copilot agent working in this repository so interactions, contributions, and automation remain consistent and safe.
 
+## Agent Skills
+- Encouraged to look for and use agent skills in .github/skills or other skills folder, consider multiple skills may be applicable and helpful.
 
 ## Core Behavior (short & precise)
 - Ask concise clarifying questions before making changes if requirements are ambiguous.

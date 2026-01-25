@@ -53,7 +53,8 @@ export function parseDecisionProposal(
 export function validateDecision(
   decisionState: DecisionState,
   proposal: DecisionProposal,
-  now: number
+  now: number,
+  allowOverrides: boolean = true
 ): { validatedDecision?: ValidatedDecision; rejectionReason?: string } {
   if (decisionState.appliedDecisionIds.has(proposal.requestId)) {
     return { rejectionReason: "Duplicate decision requestId" };
@@ -93,9 +94,9 @@ export function validateDecision(
     return { rejectionReason: "No spawn allowance available" };
   }
 
-  // Process optional overrides: clamp to rule ranges and emit warnings when clamped
+  // Process optional overrides: if allowed by client, clamp to rule ranges and emit warnings when clamped
   let appliedOverrides: Record<string, number> | undefined = undefined;
-  if (proposal.params.overrides) {
+  if (allowOverrides && proposal.params.overrides) {
     appliedOverrides = {};
     const ranges = loadRedVsBlueConfig().config.ruleRanges;
     const clamp = (key: string, value: number, min: number, max: number) => {
@@ -129,6 +130,9 @@ export function validateDecision(
     if (Object.keys(appliedOverrides).length === 0) {
       appliedOverrides = undefined;
     }
+  } else if (!allowOverrides && proposal.params.overrides) {
+    // Overrides were proposed but client requested overrides be ignored
+    warnings.push("AI override proposal ignored (client disabled overrides).");
   }
 
   const validatedDecision: ValidatedDecision = {

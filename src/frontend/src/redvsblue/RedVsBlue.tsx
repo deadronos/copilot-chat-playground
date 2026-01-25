@@ -50,6 +50,8 @@ const RedVsBlue: React.FC = () => {
   const [commentary, setCommentary] = useState<string | null>(null);
   const [snapshotIntervalMs, setSnapshotIntervalMs] = useState(DEFAULT_SNAPSHOT_INTERVAL_MS);
   const [autoDecisionsEnabled, setAutoDecisionsEnabled] = useState(false);
+  const [aiOverrideMessage, setAiOverrideMessage] = useState<string | null>(null);
+  const aiOverrideTimeoutRef = useRef<number | null>(null);
 
   const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
 
@@ -90,7 +92,19 @@ const RedVsBlue: React.FC = () => {
       if (decision.warnings && decision.warnings.length > 0) {
         showToast(`AI Director warning: ${decision.warnings.join("; ")}`);
       }
-    },
+      // If AI provided overrides, display them in the HUD briefly for player feedback
+      if (decision.params.overrides && Object.keys(decision.params.overrides).length > 0) {
+        const parts: string[] = [];
+        for (const [k, v] of Object.entries(decision.params.overrides)) {
+          if (v !== undefined && v !== null) parts.push(`${k}=${v}`);
+        }
+        const msg = `AI applied: ${parts.join(", ")}`;
+        setAiOverrideMessage(msg);
+        if (aiOverrideTimeoutRef.current) {
+          window.clearTimeout(aiOverrideTimeoutRef.current);
+        }
+        aiOverrideTimeoutRef.current = window.setTimeout(() => setAiOverrideMessage(null), 6000);
+      }    },
     [showToast, spawnShip]
   );
 
@@ -175,6 +189,7 @@ const RedVsBlue: React.FC = () => {
         counts: { red: redCount, blue: blueCount },
         recentMajorEvents: [],
         requestDecision: autoDecisionsEnabled,
+        requestOverrides: useUIStore.getState().allowAIOverrides,
       };
       void (async () => {
         try {
@@ -260,6 +275,7 @@ const RedVsBlue: React.FC = () => {
         counts: { red: redCount, blue: blueCount },
         recentMajorEvents,
         requestDecision: DEFAULT_REDVSBLUE_CONFIG_VALUES.defaultAskRequestDecision,
+        requestOverrides: useUIStore.getState().allowAIOverrides,
       };
     }
 
@@ -294,7 +310,7 @@ const RedVsBlue: React.FC = () => {
       <TelemetryConnectorReact />
 
       <div id="ui-layer">
-        <RedVsBlueHud redCount={redCount} blueCount={blueCount} />
+        <RedVsBlueHud redCount={redCount} blueCount={blueCount} aiOverrideMessage={aiOverrideMessage} />
         <RedVsBlueControls
           onSpawnRed={() => spawnShip("red")}
           onSpawnBlue={() => spawnShip("blue")}
@@ -302,6 +318,8 @@ const RedVsBlue: React.FC = () => {
           onAskCopilot={handleAskCopilot}
           autoDecisionsEnabled={autoDecisionsEnabled}
           onToggleAutoDecisions={handleAutoDecisionsToggle}
+          allowAIOverrides={useUIStore((s) => s.allowAIOverrides)}
+          onToggleAllowAIOverrides={(enabled: boolean) => useUIStore.getState().setAllowAIOverrides(enabled)}
         />
       </div>
       {commentary && (
