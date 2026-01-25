@@ -1,6 +1,6 @@
 # TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails)
 
-**Status:** In Progress  
+**Status:** Completed  
 **Added:** 2026-01-25  
 **Updated:** 2026-01-25
 **Design:** DES020-refactor-monoliths-phase-3.md
@@ -23,7 +23,7 @@ Finalize the refactor by documenting the new module layout, adding CI and covera
 - [ ] Cleanup & polish
   - [x] Update README and relevant docs to reflect new module layout.
   - [x] Remove deprecated exports or unused files from the pre-refactor layout.
-  - [ ] Verify no dead imports and run typecheck/tests.
+  - [x] Verify no dead imports and run typecheck/tests.
 
 ## Acceptance Criteria
 - Docs and CI changes merged and verified on main
@@ -39,3 +39,6 @@ https://github.com/deadronos/copilot-chat-playground/issues/61
 - Added DES020 documenting module boundaries and guardrails.
 - Added CI coverage thresholds and router thinness guard, plus workflow wiring.
 - Updated README module layout notes and removed unused frontend example components.
+### 2026-01-25
+- Ran `pnpm -r test` (passes; some integration tests skipped by design).
+- Ran `pnpm -r build` after fixing TS errors (removing unused React imports, resolving engine export duplicates, and simplifying shared EventBus to avoid node:events).
