@@ -10,6 +10,7 @@ import { useUIStore } from "@/redvsblue/stores/uiStore"
 import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
 import { EngineWorkerWrapper } from "@/redvsblue/worker/engineWorkerWrapper"
 import type { Engine as EngineAPI } from "@/redvsblue/types"
+import { applyCanvasSize } from "@copilot-playground/shared"
 
 export type UseGameOptions = {
   canvasRef: RefObject<HTMLCanvasElement | null>
@@ -44,13 +45,6 @@ function getCanvasSize(
   const width = el instanceof HTMLElement ? el.clientWidth : canvas.clientWidth ?? 0
   const height = el instanceof HTMLElement ? el.clientHeight : canvas.clientHeight ?? 0
   return { width, height }
-}
-
-function applyCanvasSize(canvas: HTMLCanvasElement, width: number, height: number): void {
-  const nextWidth = Math.max(1, Math.floor(width))
-  const nextHeight = Math.max(1, Math.floor(height))
-  if (canvas.width !== nextWidth) canvas.width = nextWidth
-  if (canvas.height !== nextHeight) canvas.height = nextHeight
 }
 
 export function useGame(options: UseGameOptions): Controls {

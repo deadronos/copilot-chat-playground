@@ -8,6 +8,9 @@
 - Complete Milestone F: switch to Copilot SDK (`TASK004`) and validate with integration tests.
 - Add automated tests for secrets handling and Compose startup (`TASK009`).
 - Add CI validation steps for SDK and Compose integration.
+- Execute monolith refactor Phase 1 (`TASK018`) and verify test coverage.
+- Monolith refactor Phase 3 (`TASK020`) completed with docs, CI guardrails, and validation runs.
+- Plan Playwright E2E implementation (`TASK021`) when ready.
 
 **Known issues:**
 - Read/write workspace mounts are deferred and require explicit opt-in.

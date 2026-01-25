@@ -8,9 +8,10 @@
     "build": "pnpm -r build",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
+    "ci:coverage": "pnpm -F @copilot-playground/backend test:coverage && pnpm -F @copilot-playground/frontend test:coverage && pnpm -F @copilot-playground/copilot test:coverage",
+    "ci:guardrails": "node scripts/ci/check-router-thin.mjs",
     "dev:frontend": "pnpm --filter @copilot-playground/frontend dev",
     "dev:backend": "pnpm --filter @copilot-playground/backend dev",
     "dev:copilot": "pnpm --filter @copilot-playground/copilot dev"
   }
 }
-

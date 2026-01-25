@@ -3,11 +3,13 @@ import path from "path"
 import { defineConfig } from "vitest/config"
 
 const testsRoot = path.resolve(__dirname, "../../tests/frontend").replace(/\\/g, '/')
+const sharedEntry = path.resolve(__dirname, "../shared/src/index.ts").replace(/\\/g, "/")
 
 export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@copilot-playground/shared": sharedEntry,
       // Ensure tests that live outside the package (tests/frontend/...) can resolve React and testing libs
       react: path.resolve(__dirname, "node_modules/react"),
       "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
@@ -23,5 +25,17 @@ export default defineConfig({
     ],
     globals: true,
     passWithNoTests: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "lcov", "json-summary"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: ["src/**/*.d.ts"],
+      thresholds: {
+        lines: 30,
+        functions: 25,
+        branches: 20,
+        statements: 30,
+      },
+    },
   },
 })
