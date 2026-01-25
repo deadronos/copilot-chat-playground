@@ -16,4 +16,6 @@
 - TASK014 - RedVsBlue AI Director Phase 1 (Contracts + Commentary) - Completed (2026-01-25)
 - TASK015 - RedVsBlue AI Director Phase 2 (Decision Pipeline) - Completed (2026-01-25)
 - TASK016 - RedVsBlue AI Director Phase 3 (Auto-Decisions) - Completed (2026-01-25)
-- TASK017 - RedVsBlue AI Director Phase 4 (Resilience + Observability) - Completed (2026-01-25)
+- TASK017 - RedVsBlue AI Director Phase 4 (Resilience + Observability) - Completed (2026-01-25)- TASK018 - Refactor: Monolithic files — Phase 1 (Discovery & safe splits) - Pending (2026-01-25)
+- TASK019 - Refactor: Monolithic files — Phase 2 (Break into modules & add tests) - Pending (2026-01-25)
+- TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails) - Pending (2026-01-25)
