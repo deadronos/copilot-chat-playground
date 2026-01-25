@@ -87,7 +87,12 @@ flowchart TD
 7. `tasks/` folder (and `designs/` folder too )
    - Contains individual markdown files for each task
    - Each task has its own dedicated file with format `TASKID-taskname.md`
-   - Task IDs must remain unique across both `memory/tasks` and `memory/tasks/COMPLETED`; check both directories before allocating a number because completed tasks may be archived there.
+   - Task IDs must remain unique across both `memory/tasks` and `memory/tasks/COMPLETED` (completed tasks may be archived there). Follow a deterministic allocation procedure to avoid ambiguity and race conditions:
+     1. Scan `memory/tasks` and `memory/tasks/COMPLETED` for existing numeric prefixes (format: `TASK###-name.md`).
+     2. Choose the next ID as `max(existing IDs) + 1` and use a zero-padded 3-digit format (for example, `TASK022-short-name.md`).
+     3. Immediately create a placeholder file for the chosen ID and commit it to reserve the number (or run `scripts/alloc-next-id --type task` if available).
+     4. Prefer using the helper script to avoid races; if the script is unavailable, claim quickly and open a small PR to reserve the ID.
+     5. A CI/lint check should enforce unique numeric prefixes across `memory/tasks` and `memory/tasks/COMPLETED` to prevent duplicates.
    - Includes task index file (`_index.md`) listing all tasks with their statuses
    - Preserves complete thought process and history for each task
 

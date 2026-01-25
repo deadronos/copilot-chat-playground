@@ -9,9 +9,12 @@ applyTo: '**'
 
 Hint: use memory folder ( look at .github/instructions/memory-bank.instructions.md for templates)
 use /memory/designs folder to store designs
-ensure design IDs stay unique across `/memory/designs` and `/memory/designs/COMPLETED`; check both locations before assigning a new number because completed designs may be archived there.
+ensure design IDs stay unique across `/memory/designs` and `/memory/designs/COMPLETED`. Follow this allocation procedure to pick the next free ID:
+- Scan `memory/designs` and `memory/designs/COMPLETED` for numeric prefixes (e.g., `DES022-name.md`) and pick `max(existing) + 1` (zero-pad to 3 digits).
+- Create a placeholder `DES###-short-name.md` and commit it immediately to reserve the ID, or use `scripts/alloc-next-id --type design` when available.
+- Add a CI/lint rule to assert no duplicate numeric prefixes across both folders.
 use /memory/tasks folder to store task files
-ensure task IDs stay unique across `/memory/tasks` and `/memory/tasks/COMPLETED`; verify both directories before reserving a new number.
+ensure task IDs stay unique across `/memory/tasks` and `/memory/tasks/COMPLETED`. Use the same allocation procedure (scan, choose max+1, zero-pad to 3 digits, reserve by committing a placeholder or using `scripts/alloc-next-id --type task`).
 
 Receipt: "Follow a 6-phase spec-driven loop: Analyze → Design → Implement → Validate → Reflect → Handoff."
 
