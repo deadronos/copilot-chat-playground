@@ -51,7 +51,7 @@ https://github.com/deadronos/copilot-chat-playground/issues/59
 | 1.3 | Frontend unit tests: useStreamingChat + useApiProbe | Complete | 2026-01-25 | Added hook tests. |
 | 1.4 | Extract helpers into `@copilot-playground/shared` | Complete | 2026-01-25 | clamp/estimate/prompt/canvas extracted. |
 | 1.5 | Integration tests: snapshot flow + /api/chat fallback | Complete | 2026-01-25 | Added backend integration tests. |
-| 1.6 | PR-ready cleanup and verification | Not Started | 2026-01-25 | Pending test run + docs checks. |
+| 1.6 | PR-ready cleanup and verification | In Progress | 2026-01-25 | Backend tests pass; frontend tests failing on config defaults. |
 
 ## Progress Log
 ### 2026-01-25
@@ -62,5 +62,5 @@ https://github.com/deadronos/copilot-chat-playground/issues/59
 - Added backend unit tests for decision validation and shared helpers.
 - Added frontend hook tests + canvas sizing helper test.
 - Added backend integration tests for RedVsBlue snapshot flow and chat fallback.
-- Tests not run yet (pnpm filters pending).
+- Ran `pnpm install`, backend tests pass, frontend tests failing in `tests/frontend/unit/redvsblue/config.test.ts` (bulletDamage expected 10, got 5).
 
