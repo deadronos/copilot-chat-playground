@@ -1,6 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildDecisionPrompt, clampNumber, estimateTokenCount } from "@copilot-playground/shared";
+import {
+  buildDecisionPrompt,
+  clampNumber,
+  estimateTokenCount,
+  loadRedVsBlueConfig,
+} from "@copilot-playground/shared";
 
 import type {
   MatchConfig,
@@ -17,16 +22,9 @@ type ClientConfigInput = {
   snapshotIntervalMs?: number;
 };
 
-const RULE_RANGES = {
-  shipSpeed: { min: 1, max: 10, default: 5 },
-  bulletSpeed: { min: 2, max: 20, default: 8 },
-  bulletDamage: { min: 1, max: 50, default: 10 },
-  shipMaxHealth: { min: 10, max: 100, default: 30 },
-};
-
-const CONFIG_RANGES = {
-  snapshotIntervalMs: { min: 5_000, max: 60_000, default: 30_000 },
-};
+const { config: redVsBlueConfig } = loadRedVsBlueConfig();
+const RULE_RANGES = redVsBlueConfig.ruleRanges;
+const CONFIG_RANGES = redVsBlueConfig.configRanges;
 
 const MAX_SNAPSHOT_BUFFER = 120;
 const REHYDRATION_SNAPSHOT_LIMIT = 25;

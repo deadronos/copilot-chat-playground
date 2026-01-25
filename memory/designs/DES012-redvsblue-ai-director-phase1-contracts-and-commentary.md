@@ -71,3 +71,7 @@ This section is a checklist we will repeat in each phase design doc.
 - Rules are normalized/clamped and returned as `effectiveRules`.
 - Snapshots are validated and stored with bounded retention.
 - Manual ask returns toast commentary.
+
+## Note
+
+- Rule/config defaults and decision limits are now centralized in `@copilot-playground/shared` (see DES022) to prevent frontend/backend drift.

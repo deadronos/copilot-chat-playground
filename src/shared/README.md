@@ -2,4 +2,6 @@
 
 Shared types/utilities for the playground.
 
-Currently includes a small `LogEvent` type + `toNdjsonLine()` helper.
+Includes:
+- Structured logging types and helpers.
+- RedVsBlue shared configuration (defaults, ranges, decision limits, env overrides).
