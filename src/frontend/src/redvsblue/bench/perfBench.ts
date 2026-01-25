@@ -1,4 +1,5 @@
 import { createEngine } from "@/redvsblue/engine";
+import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index";
 import type { EngineConfig, Team } from "@/redvsblue/types";
 import { EngineWorkerWrapper } from "@/redvsblue/worker/engineWorkerWrapper";
 
@@ -47,10 +48,7 @@ export async function runPerfBench(opts: PerfBenchOptions): Promise<PerfBenchRes
   const config: EngineConfig = {
     canvasWidth,
     canvasHeight,
-    shipSpeed: 5,
-    bulletSpeed: 8,
-    bulletDamage: 10,
-    shipMaxHealth: 30,
+    ...DEFAULT_ENGINE_CONFIG,
     enableTelemetry: false,
     seed: opts.seed ?? 123,
     ...(opts.config ?? {}),

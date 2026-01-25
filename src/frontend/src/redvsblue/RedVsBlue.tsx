@@ -5,13 +5,14 @@ import { selectBlueCount, selectRedCount, selectSnapshot, useGameState } from "@
 import { useGame } from "@/redvsblue/useGame";
 import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
 import { runPerfBench } from "@/redvsblue/bench/perfBench";
+import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index";
 import { useUIStore } from "@/redvsblue/stores/uiStore";
 import RedVsBlueCanvas from "@/redvsblue/RedVsBlueCanvas";
 import RedVsBlueControls from "@/redvsblue/RedVsBlueControls";
 import RedVsBlueHud from "@/redvsblue/RedVsBlueHud";
 import RedVsBlueStyles from "@/redvsblue/RedVsBlueStyles";
 
-const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+const params: URLSearchParams | null = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
 const initialWorkerMode = params?.get("rvbWorker") === "1";
 const initialRendererParam = params?.get("rvbRenderer");
 
@@ -19,7 +20,9 @@ if (initialRendererParam === "offscreen") {
   useUIStore.getState().setSelectedRenderer("offscreen");
 }
 
-const DEFAULT_SNAPSHOT_INTERVAL_MS = 2_000;
+import { DEFAULT_UI_CONFIG } from "@/redvsblue/config/index"
+
+const DEFAULT_SNAPSHOT_INTERVAL_MS = DEFAULT_UI_CONFIG.snapshotIntervalMs;
 
 const createId = (): string => {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -47,7 +50,8 @@ const RedVsBlue: React.FC = () => {
   const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
 
   if (import.meta.env.DEV) {
-    ;(globalThis as any).__rvbBench = { runPerfBench }
+    const g = globalThis as unknown as { __rvbBench?: unknown }
+    g.__rvbBench = { runPerfBench }
   }
 
   const showToast = useCallback((message: string) => {
@@ -57,7 +61,7 @@ const RedVsBlue: React.FC = () => {
     }
     toastTimeoutRef.current = window.setTimeout(() => {
       setCommentary(null);
-    }, 4_500);
+    }, DEFAULT_UI_CONFIG.toastTimeoutMs);
   }, []);
 
   useEffect(() => {
@@ -82,13 +86,13 @@ const RedVsBlue: React.FC = () => {
             matchId,
             rulesVersion: "v1",
             proposedRules: {
-              shipSpeed: 5,
-              bulletSpeed: 8,
-              bulletDamage: 10,
-              shipMaxHealth: 30,
+              shipSpeed: DEFAULT_ENGINE_CONFIG.shipSpeed,
+              bulletSpeed: DEFAULT_ENGINE_CONFIG.bulletSpeed,
+              bulletDamage: DEFAULT_ENGINE_CONFIG.bulletDamage,
+              shipMaxHealth: DEFAULT_ENGINE_CONFIG.shipMaxHealth,
             },
             clientConfig: {
-              snapshotIntervalMs: DEFAULT_SNAPSHOT_INTERVAL_MS,
+              snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs,
             },
           }),
         });

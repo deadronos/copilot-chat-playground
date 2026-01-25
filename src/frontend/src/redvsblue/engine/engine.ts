@@ -5,6 +5,7 @@ import type {
   EngineConfig,
   TelemetryEvent,
 } from "@/redvsblue/types";
+import { DEFAULT_ENGINE_TUNING, DEFAULT_UI_CONFIG } from "@/redvsblue/config/index";
 import { serialize } from "./serialize";
 import { createRng, type RNG } from "./rng";
 
@@ -25,8 +26,8 @@ class Particle {
     this.id = id;
     this.x = x;
     this.y = y;
-    this.vx = (rng() - 0.5) * 5;
-    this.vy = (rng() - 0.5) * 5;
+    this.vx = (rng() - 0.5) * DEFAULT_ENGINE_TUNING.particleVelocityMul;
+    this.vy = (rng() - 0.5) * DEFAULT_ENGINE_TUNING.particleVelocityMul;
     this.life = 1.0;
     this.color = color;
   }
@@ -34,7 +35,7 @@ class Particle {
   update(): void {
     this.x += this.vx;
     this.y += this.vy;
-    this.life -= 0.03;
+    this.life -= DEFAULT_ENGINE_TUNING.particleLifeDecay;
   }
 }
 
@@ -62,7 +63,8 @@ class Bullet {
     ownerId: string,
     bulletSpeed: number,
     bulletDamage: number,
-    bulletLife: number
+    bulletLife: number,
+    bulletRadius: number
   ) {
     this.id = id;
     this.x = x;
@@ -73,7 +75,7 @@ class Bullet {
     this.life = bulletLife;
     this.team = team;
     this.color = team === "red" ? "#ffcccc" : "#ccccff";
-    this.radius = 3;
+    this.radius = bulletRadius;
     this.active = true;
     this.ownerId = ownerId;
     this.damage = bulletDamage;
@@ -114,7 +116,8 @@ class Ship {
     y: number,
     team: Team,
     maxHealth: number,
-    rng: RNG
+    rng: RNG,
+    shipRadius: number
   ) {
     this.id = id;
     this.x = x;
@@ -126,8 +129,8 @@ class Ship {
     this.color = team === "red" ? "#ff4d4d" : "#4d4dff";
     this.health = maxHealth;
     this.maxHealth = maxHealth;
-    this.cooldown = rng() * 20;
-    this.radius = 12;
+    this.cooldown = rng() * DEFAULT_ENGINE_TUNING.cooldownRandom;
+    this.radius = shipRadius;
   }
 
   getNearestEnemy(
@@ -161,10 +164,25 @@ class Ship {
     particles: Particle[],
     width: number,
     height: number,
-    config: { turnSpeed: number; shipThrust: number; visionDist: number },
+    config: {
+      turnSpeed: number;
+      shipThrust: number;
+      visionDist: number;
+      aimTurnThreshold?: number;
+      fireAimCloseThreshold?: number;
+      fireAngleThreshold?: number;
+      idleAngleIncrement?: number;
+      idleDamping?: number;
+    },
     rng: RNG,
     createParticleId: () => string
   ): void {
+    const aimTurnThreshold = config.aimTurnThreshold ?? 0.05;
+    const fireAimCloseThreshold = config.fireAimCloseThreshold ?? 1.0;
+    const fireAngleThreshold = config.fireAngleThreshold ?? 0.2;
+    const idleAngleIncrement = config.idleAngleIncrement ?? 0.01;
+    const idleDamping = config.idleDamping ?? 0.95;
+
     const { enemy, dist } = this.getNearestEnemy(
       ships,
       width,
@@ -190,11 +208,11 @@ class Ship {
       while (diff > Math.PI) diff -= Math.PI * 2;
 
       // Turn towards enemy
-      if (diff > 0.05) this.angle += config.turnSpeed;
-      else if (diff < -0.05) this.angle -= config.turnSpeed;
+      if (diff > aimTurnThreshold) this.angle += config.turnSpeed;
+      else if (diff < -aimTurnThreshold) this.angle -= config.turnSpeed;
 
       // Thrust when mostly aimed
-      if (Math.abs(diff) < 1.0) {
+      if (Math.abs(diff) < fireAimCloseThreshold) {
         this.vx += Math.cos(this.angle) * config.shipThrust;
         this.vy += Math.sin(this.angle) * config.shipThrust;
         if (rng() > 0.5) {
@@ -205,14 +223,14 @@ class Ship {
       }
 
       // Fire when aimed at close enemy
-      if (Math.abs(diff) < 0.2 && this.cooldown <= 0 && dist < 400) {
+      if (Math.abs(diff) < fireAngleThreshold && this.cooldown <= 0 && dist < config.visionDist) {
         // Firing is handled by the engine
       }
     } else {
       // No enemy, idle rotation
-      this.angle += 0.01;
-      this.vx *= 0.95;
-      this.vy *= 0.95;
+      this.angle += idleAngleIncrement;
+      this.vx *= idleDamping;
+      this.vy *= idleDamping;
     }
   }
 
@@ -280,8 +298,9 @@ export class Engine {
 
   private initStars(): void {
     if (!this.config) return;
+    const ui = { ...DEFAULT_UI_CONFIG, ...(this.config.ui ?? {}) };
     this.stars = [];
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < ui.starsCount; i++) {
       this.stars.push({
         id: `star-${i}`,
         position: {
@@ -298,37 +317,40 @@ export class Engine {
     if (!this.config) return;
     void deltaTime;
 
+    const tuning = { ...DEFAULT_ENGINE_TUNING, ...(this.config?.tuning ?? {}) };
+
     this.tick++;
 
     // Update ships
     for (const ship of this.ships) {
+
       ship.updateAI(
         this.ships,
         this.particles,
         this.config.canvasWidth,
         this.config.canvasHeight,
         {
-          turnSpeed: 0.08,
-          shipThrust: 0.2,
-          visionDist: 800,
+          turnSpeed: tuning.turnSpeed,
+          shipThrust: tuning.shipThrust,
+          visionDist: tuning.visionDist,
         },
         this.rng,
         () => this.nextEntityId("particle")
       );
-      ship.update(this.config.canvasWidth, this.config.canvasHeight, 0.98);
+      ship.update(this.config.canvasWidth, this.config.canvasHeight, tuning.friction);
 
       // Check if ship should shoot
       const { enemy, dist } = ship.getNearestEnemy(
         this.ships,
         this.config.canvasWidth,
         this.config.canvasHeight,
-        800
+        tuning.visionDist
       );
       if (
         enemy &&
-        Math.abs(Math.atan2(enemy.y - ship.y, enemy.x - ship.x) - ship.angle) < 0.2 &&
+        Math.abs(Math.atan2(enemy.y - ship.y, enemy.x - ship.x) - ship.angle) < tuning.fireAngleThreshold &&
         ship.cooldown <= 0 &&
-        dist < 400
+        dist < tuning.fireDist
       ) {
         const bulletPos = ship.shoot();
         const bullet = new Bullet(
@@ -340,10 +362,11 @@ export class Engine {
           ship.id,
           this.config.bulletSpeed,
           this.config.bulletDamage,
-          50
+          tuning.bulletLife,
+          tuning.bulletRadius
         );
         this.bullets.push(bullet);
-        ship.cooldown = 20 + this.rng() * 10;
+        ship.cooldown = tuning.cooldownBase + this.rng() * tuning.cooldownRandom;
 
         this.emit("telemetry", {
           type: "bullet_fired",
@@ -377,6 +400,7 @@ export class Engine {
 
   private checkCollisions(): void {
     if (!this.config) return;
+    const tuning = { ...DEFAULT_ENGINE_TUNING, ...(this.config?.tuning ?? {}) };
 
     for (let i = this.bullets.length - 1; i >= 0; i--) {
       const bullet = this.bullets[i];
@@ -399,7 +423,7 @@ export class Engine {
           } as TelemetryEvent);
 
           // Create particles
-          for (let k = 0; k < 5; k++) {
+          for (let k = 0; k < tuning.hitParticles; k++) {
             this.particles.push(
               new Particle(
                 this.nextEntityId("particle"),
@@ -413,7 +437,7 @@ export class Engine {
 
           // Check if ship dies
           if (ship.health <= 0) {
-            for (let k = 0; k < 15; k++) {
+            for (let k = 0; k < tuning.deathParticles; k++) {
               this.particles.push(
                 new Particle(
                   this.nextEntityId("particle"),
@@ -462,13 +486,15 @@ export class Engine {
       x = this.config.canvasWidth - this.rng() * (this.config.canvasWidth * 0.3);
     }
 
+    const tuning = { ...DEFAULT_ENGINE_TUNING, ...(this.config?.tuning ?? {}) };
     const ship = new Ship(
       this.nextEntityId("ship"),
       x,
       y,
       team,
       this.config.shipMaxHealth,
-      this.rng
+      this.rng,
+      tuning.shipRadius
     );
     this.ships.push(ship);
 
@@ -502,7 +528,7 @@ export class Engine {
         angle: s.angle,
         health: s.health,
         maxHealth: s.maxHealth,
-        isThrusting: Math.abs(s.vx) > 0.1 || Math.abs(s.vy) > 0.1,
+        isThrusting: Math.abs(s.vx) > (this.config?.tuning?.isThrustingThreshold ?? DEFAULT_ENGINE_TUNING.isThrustingThreshold) || Math.abs(s.vy) > (this.config?.tuning?.isThrustingThreshold ?? DEFAULT_ENGINE_TUNING.isThrustingThreshold),
         isFiring: s.cooldown === 0,
       })),
       bullets: this.bullets.map((b) => ({
@@ -514,15 +540,18 @@ export class Engine {
         damage: b.damage,
         ownerId: b.ownerId,
       })),
-      particles: this.particles.map((p) => ({
-        id: p.id,
-        position: { x: p.x, y: p.y },
-        velocity: { x: p.vx, y: p.vy },
-        color: p.color,
-        size: 2,
-        lifetime: 33.33,
-        age: (1 - p.life) * 33.33,
-      })),
+      particles: this.particles.map((p) => {
+        const ui = { ...DEFAULT_UI_CONFIG, ...(this.config?.ui ?? {}) };
+        return {
+          id: p.id,
+          position: { x: p.x, y: p.y },
+          velocity: { x: p.vx, y: p.vy },
+          color: p.color,
+          size: ui.particleRenderSize,
+          lifetime: ui.particleLifetimeMs,
+          age: (1 - p.life) * ui.particleLifetimeMs,
+        }
+      }),
       stars: this.stars,
       timestamp: Date.now(),
     };

@@ -8,7 +8,7 @@ export interface TelemetryConnectorOptions {
   drainIntervalMs?: number
   backoffBaseMs?: number
   backoffMaxMs?: number
-  WebSocketCtor?: any
+  WebSocketCtor?: (new (url: string) => WebSocket) | undefined
   autoStart?: boolean
 }
 
@@ -135,6 +135,7 @@ export class TelemetryConnectorCore {
     try {
       this.ws.send(JSON.stringify(batch))
     } catch (err) {
+      console.warn("telemetry send failed", err)
       // requeue at head
       useTelemetryStore.setState((s) => ({ telemetryBuffer: [...batch, ...s.telemetryBuffer] }))
       // close socket to trigger reconnect

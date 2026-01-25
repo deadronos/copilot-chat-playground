@@ -6,7 +6,7 @@ import type { TelemetryEvent } from './types'
  */
 export function ensureTelemetryEvent(partial: Partial<TelemetryEvent>): TelemetryEvent {
   const id = partial.id ?? (typeof crypto !== 'undefined' && 'randomUUID' in crypto
-    ? (crypto as any).randomUUID()
+    ? (crypto as { randomUUID?: () => string }).randomUUID!()
     : `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`)
   const timestamp = partial.timestamp ?? Date.now()
 
