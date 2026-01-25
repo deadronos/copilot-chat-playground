@@ -4,7 +4,7 @@ import {
   deserializeMatchSession,
   enforceTokenBudget,
   serializeMatchSession,
-} from "../../src/backend/src/app"
+} from "../../src/backend/src/services/match-store.js"
 
 type Session = Parameters<typeof compactSessionSnapshots>[0]
 type Snapshot = Parameters<typeof buildStrategicSummary>[0][number]
