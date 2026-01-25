@@ -11,10 +11,18 @@ Finalize the refactor by documenting the new module layout, adding CI and covera
 - WHEN refactor is complete, THE SYSTEM SHALL have design docs in `memory/designs/` describing module boundaries and rationale. [Acceptance: design docs added and referenced in PRs]
 - WHEN adding CI checks, THE SYSTEM SHALL enforce coverage thresholds for modified packages and ensure routers stay thin. [Acceptance: CI passes and checks enforced]
 
-## Implementation Plan
-- Add design doc(s) to `memory/designs/DES***-refactor-*` and link to RFC
-- Configure CI to enforce coverage and add lint rules for file sizes or router responsibilities
-- Update README and docs, remove legacy artifacts
+## Implementation Plan (Checklist)
+- [ ] Documentation & design
+  - [ ] Add design doc(s) in `memory/designs/` describing new module boundaries and rationale.
+  - [ ] Link design docs in task files and reference in PR descriptions.
+- [ ] CI guardrails
+  - [ ] Add coverage thresholds for modified packages (frontend/backend/copilot).
+  - [ ] Add lint rule or script to warn on oversized files / router logic in `app.ts`.
+  - [ ] Ensure CI fails when thresholds are violated.
+- [ ] Cleanup & polish
+  - [ ] Update README and relevant docs to reflect new module layout.
+  - [ ] Remove deprecated exports or unused files from the pre-refactor layout.
+  - [ ] Verify no dead imports and run typecheck/tests.
 
 ## Acceptance Criteria
 - Docs and CI changes merged and verified on main
