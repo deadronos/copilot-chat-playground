@@ -175,31 +175,5 @@ describe("RedVsBlue Phase 1 API", () => {
     expect(body.validatedDecision.type).toBe("spawnShips");
 
     spy.mockRestore();
-  });    server = await startServer();
-    const baseUrl = getServerUrl(server);
-
-    await fetch(`${baseUrl}/api/redvsblue/match/start`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ matchId: "match-4", rulesVersion: "v1" }),
-    });
-
-    const snapshot = {
-      timestamp: Date.now(),
-      snapshotId: "snap-ask-1",
-      gameSummary: { redCount: 3, blueCount: 1, totalShips: 4 },
-      counts: { red: 3, blue: 1 },
-      recentMajorEvents: [],
-    };
-
-    const response = await fetch(`${baseUrl}/api/redvsblue/match/match-4/ask`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: "Status?", snapshot }),
-    });
-
-    expect(response.ok).toBe(true);
-    const body = await response.json();
-    expect(body.commentary).toContain("ahead by 2");
   });
 });

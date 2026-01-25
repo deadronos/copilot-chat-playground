@@ -12,6 +12,7 @@ import {
   type TelemetryEvent,
   type Engine,
 } from "@/redvsblue/engine";
+import { DEFAULT_UI_CONFIG } from "@/redvsblue/config/index";
 
 describe("RedVsBlue Engine Module", () => {
   describe("should export createEngine function", () => {
