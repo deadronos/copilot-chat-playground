@@ -10,7 +10,7 @@ export type UIConfig = {
 }
 
 export const DEFAULT_UI_CONFIG: UIConfig = {
-  snapshotIntervalMs: 2_000,
+  snapshotIntervalMs: 30_000,
   toastTimeoutMs: 4_500,
   starsCount: 150,
   particleLifetimeMs: 33.33,

@@ -46,6 +46,7 @@ const RedVsBlue: React.FC = () => {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [commentary, setCommentary] = useState<string | null>(null);
   const [snapshotIntervalMs, setSnapshotIntervalMs] = useState(DEFAULT_SNAPSHOT_INTERVAL_MS);
+  const [autoDecisionsEnabled, setAutoDecisionsEnabled] = useState(false);
 
   const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
 
@@ -63,6 +64,14 @@ const RedVsBlue: React.FC = () => {
       setCommentary(null);
     }, DEFAULT_UI_CONFIG.toastTimeoutMs);
   }, []);
+
+  const handleAutoDecisionsToggle = useCallback(
+    (enabled: boolean) => {
+      setAutoDecisionsEnabled(enabled);
+      showToast(enabled ? "Auto-decisions enabled." : "Auto-decisions disabled.");
+    },
+    [showToast]
+  );
 
   const applyValidatedDecision = useCallback(
     (decision: {
@@ -162,7 +171,7 @@ const RedVsBlue: React.FC = () => {
         gameSummary: summary,
         counts: { red: redCount, blue: blueCount },
         recentMajorEvents: [],
-        requestDecision: true,
+        requestDecision: autoDecisionsEnabled,
       };
       void (async () => {
         try {
@@ -199,7 +208,7 @@ const RedVsBlue: React.FC = () => {
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [applyValidatedDecision, blueCount, redCount, sessionId, showToast, snapshotIntervalMs]);
+  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, redCount, sessionId, showToast, snapshotIntervalMs]);
 
   useEffect(() => {
     return () => {
@@ -252,6 +261,8 @@ const RedVsBlue: React.FC = () => {
           onSpawnBlue={() => spawnShip("blue")}
           onReset={reset}
           onAskCopilot={handleAskCopilot}
+          autoDecisionsEnabled={autoDecisionsEnabled}
+          onToggleAutoDecisions={handleAutoDecisionsToggle}
         />
       </div>
       {commentary && (
