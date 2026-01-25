@@ -85,8 +85,12 @@ export class CopilotSDKService {
       // Create a new session with streaming enabled
       const systemMessage = systemPrompt ? ({ content: systemPrompt, mode: systemMode ?? 'append' } as SystemMessageConfig) : undefined;
 
+      // Allow overriding the default model via env var for easier testing
+      const model = (process.env.COPILOT_DEFAULT_MODEL as string) || "gpt-4o";
+      this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
+
       const session = await this.client.createSession({
-        model: "gpt-4o",
+        model,
         streaming: true,
         ...(systemMessage && { systemMessage }),
       });
@@ -94,6 +98,7 @@ export class CopilotSDKService {
       this.emitLog("info", "sdk.session.created", "Copilot session created", {
         requestId,
         sessionId: session.sessionId,
+        model,
       });
 
       // Buffer to collect the full response

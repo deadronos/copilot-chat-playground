@@ -14,15 +14,11 @@
 - [Troubleshooting playbook](#troubleshooting-playbook)
 - [References](#references)
 
-<a id="overview"></a>
-
 ## Overview
 
 **Purpose:** Describe the Red vs Blue game orchestration: how the frontend, backend, and Copilot service interact to provide an AI "Director" that can recommend and (optionally) trigger in‑game actions.
 
 ---
-
-<a id="architecture-and-components"></a>
 
 ## Architecture and Components
 
@@ -37,8 +33,6 @@
 
 ---
 
-<a id="match-lifecycle"></a>
-
 ## Match lifecycle (quick)
 
 1. Frontend: `POST /api/redvsblue/match/start` → backend creates `MatchSession` and persists it.
@@ -50,8 +44,6 @@
 
 ---
 
-<a id="safety-and-controls"></a>
-
 ## Safety and Controls
 
 - **Middleware Referee** enforces limits: per‑decision max spawn, per‑minute budget, cooldowns, duplicate request rejection. See `src/backend/src/services/decision-referee.ts` and constants in `DECISION_LIMITS`.
@@ -59,8 +51,6 @@
 - **Token budget** & summary compaction: snapshots are compacted and summarized to keep prompts within a configured token budget.
 
 ---
-
-<a id="configuration-and-environment"></a>
 
 ## Configuration and Environment
 
@@ -71,8 +61,6 @@
 - Docker Compose: `docker-compose.yml` includes `copilot`, `backend`, and `frontend` services and wiring.
 
 ---
-
-<a id="tests-and-validation"></a>
 
 ## Tests and Validation
 
@@ -90,8 +78,6 @@ Run tests (monorepo, pnpm):
 
 ---
 
-<a id="observability-and-troubleshooting"></a>
-
 ## Observability and Troubleshooting
 
 - Logs: backend prints structured events for decision accept/reject/errors (`logDecisionAudit`, `logStructuredEvent`). Watch backend logs for Copilot calls and rejection reasons.
@@ -103,8 +89,6 @@ Run tests (monorepo, pnpm):
 
 ---
 
-<a id="operational-checklist"></a>
-
 ## Operational checklist
 
 - [ ] Ensure `copilot` service is running and healthy.
@@ -113,8 +97,6 @@ Run tests (monorepo, pnpm):
 - [ ] Inspect `/tmp/redvsblue-sessions` and backend logs for decision audit records.
 
 ---
-
-<a id="examples"></a>
 
 ## Examples
 
@@ -258,27 +240,29 @@ Response: `200 OK` (session cleaned up and persisted file removed).
 - Check service: `curl http://localhost:3210/health`
 - Confirm `tokenConfigured: true` and `mode` (sdk|cli).
 
-2. Streaming vs non-streaming
+1. Streaming vs non-streaming
 
 - If `/chat/stream` returns 404, backend falls back to buffered `/chat`. Look at `callCopilotServiceStream` logs and `callCopilotService` error fields.
 
-3. Decisions are being rejected or clamped
+1. Decisions are being rejected or clamped
 
 - Review backend logs for structured decision audit events ( `decision accepted` / `decision rejected` / `decision invalid` ).
 - Inspect persisted session file in `REDVSBLUE_PERSIST_DIR` to check `decisionHistory`, `decisionState`, and `strategicSummary`.
 
-4. Token budget/summaries
+1. Token budget/summaries
 
 - If prompts are trimmed, check `REDVSBLUE_TOKEN_BUDGET` and session `strategicSummary` / `snapshots` length. Consider raising budget or increasing compaction thresholds for long matches.
 
-5. Frontend not applying validated decisions
+1. Frontend not applying validated decisions
 
 - Ensure `Auto-decisions` is enabled (UI toggle) or that client code handles `validatedDecision` in snapshot response and calls `spawnShip`.
 
-6) Missing persisted sessions
+1. Missing persisted sessions
+
 - Verify `REDVSBLUE_PERSIST_DIR` path and process permissions. Backend writes JSON files named `<matchId>.json`.
 
-7) Quick local checks
+1. Quick local checks
+
 - `docker compose ps` and `docker compose logs copilot backend` to view service status and errors.
 
 ---
