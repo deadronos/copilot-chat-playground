@@ -125,11 +125,15 @@ export class Engine {
     this.particles = [];
     this.tick = 0;
 
-    // Spawn initial ships
-    this.spawnShip("red");
-    this.spawnShip("red");
-    this.spawnShip("blue");
-    this.spawnShip("blue");
+    // Spawn initial ships; honor UI config's per-team initial ships if present
+    const uiInitial = (this.config?.ui?.initialShipsPerTeam ?? DEFAULT_UI_CONFIG.initialShipsPerTeam) as number;
+    const perTeam = Number.isFinite(uiInitial) && uiInitial > 0 ? Math.max(0, Math.floor(uiInitial)) : DEFAULT_UI_CONFIG.initialShipsPerTeam;
+    for (let i = 0; i < perTeam; i++) {
+      this.spawnShip("red");
+    }
+    for (let i = 0; i < perTeam; i++) {
+      this.spawnShip("blue");
+    }
   }
 
   getState(): GameState {

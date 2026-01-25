@@ -484,7 +484,7 @@ describe("RedVsBlue Engine Module", () => {
         engine.reset();
         const state = engine.getState();
 
-        expect(state.ships.length).toBe(4);
+        expect(state.ships.length).toBe(DEFAULT_UI_CONFIG.initialShipsPerTeam * 2);
         expect(state.bullets.length).toBe(0);
         expect(state.particles.length).toBe(0);
         state.ships.forEach((ship) => {

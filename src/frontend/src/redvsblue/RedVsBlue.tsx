@@ -7,6 +7,9 @@ import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
 import { runPerfBench } from "@/redvsblue/bench/perfBench";
 import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index";
 import { useUIStore } from "@/redvsblue/stores/uiStore";
+import { DEFAULT_REDVSBLUE_CONFIG_VALUES } from "@copilot-playground/shared";
+import { useTelemetryStore } from "@/redvsblue/stores/telemetry";
+import type { TelemetryEvent } from "@/redvsblue/types";
 import RedVsBlueCanvas from "@/redvsblue/RedVsBlueCanvas";
 import RedVsBlueControls from "@/redvsblue/RedVsBlueControls";
 import RedVsBlueHud from "@/redvsblue/RedVsBlueHud";
@@ -224,11 +227,47 @@ const RedVsBlue: React.FC = () => {
       return;
     }
     const matchId = matchIdRef.current;
+
+    // Build a snapshot payload if we have a recent snapshot available so the
+    // backend can generate commentary based on the freshest game state. Include
+    // recent major telemetry events and set requestDecision based on shared defaults.
+    const snapshot = latestSnapshotRef.current;
+    const body: Record<string, unknown> = { question: "Status update" };
+    if (snapshot) {
+      const summary = {
+        redCount,
+        blueCount,
+        totalShips: redCount + blueCount,
+      };
+
+      // Pull recent telemetry events and convert to the compact 'recentMajorEvents' shape
+      const allTelemetry = useTelemetryStore.getState().peek();
+      const majorTypes = new Set(["ship_destroyed", "ship_spawned", "explosion", "bullet_hit"]);
+      const recentMajorEvents = allTelemetry
+        .filter((e: TelemetryEvent) => majorTypes.has(e.type))
+        .slice(-20)
+        .map((e: TelemetryEvent) => ({
+          type: e.type,
+          timestamp: e.timestamp,
+          team: (e.data as any)?.team,
+          summary: (e.data as any)?.summary,
+        }));
+
+      body.snapshot = {
+        timestamp: snapshot.timestamp,
+        snapshotId: createId(),
+        gameSummary: summary,
+        counts: { red: redCount, blue: blueCount },
+        recentMajorEvents,
+        requestDecision: DEFAULT_REDVSBLUE_CONFIG_VALUES.defaultAskRequestDecision,
+      };
+    }
+
     try {
       const response = await fetch(`/api/redvsblue/match/${matchId}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: "Status update" }),
+        body: JSON.stringify(body),
       });
       if (!response.ok) {
         const text = await response.text();

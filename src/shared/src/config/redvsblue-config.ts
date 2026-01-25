@@ -15,6 +15,7 @@ export type RedVsBlueRuleValues = {
 
 export type RedVsBlueConfigValues = {
   snapshotIntervalMs: number;
+  defaultAskRequestDecision: boolean;
 };
 
 export type RuleRanges = {
@@ -113,6 +114,7 @@ export const DEFAULT_REDVSBLUE_RULES: RedVsBlueRuleValues = {
 
 export const DEFAULT_REDVSBLUE_CONFIG_VALUES: RedVsBlueConfigValues = {
   snapshotIntervalMs: DEFAULT_REDVSBLUE_CONFIG_RANGES.snapshotIntervalMs.default,
+  defaultAskRequestDecision: true,
 };
 
 type DeepPartial<T> = {
