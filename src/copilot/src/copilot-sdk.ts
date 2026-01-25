@@ -1,5 +1,6 @@
 import { CopilotClient } from "@github/copilot-sdk";
 import type { SystemMessageConfig } from "@github/copilot-sdk";
+import { getDefaultModel } from "./defaults.js";
 import type { EventBus } from "@copilot-playground/shared";
 import { validateToken } from "./copilot-cli.js";
 
@@ -85,8 +86,8 @@ export class CopilotSDKService {
       // Create a new session with streaming enabled
       const systemMessage = systemPrompt ? ({ content: systemPrompt, mode: systemMode ?? 'append' } as SystemMessageConfig) : undefined;
 
-      // Allow overriding the default model via env var for easier testing
-      const model = (process.env.COPILOT_DEFAULT_MODEL as string) || "gpt-5-mini";
+      // Determine the effective model using a centralized accessor
+      const model = getDefaultModel();
       this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
 
       const session = await this.client.createSession({
