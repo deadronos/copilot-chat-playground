@@ -24,9 +24,9 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { cn } from "@/lib/utils";
 import RedVsBlue from "@/redvsblue/RedVsBlue";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-
-type StreamStatus = "empty" | "waiting" | "streaming" | "done" | "error";
-type ChatMode = "explain-only" | "project-helper";
+import { estimateTokenCount } from "@copilot-playground/shared";
+import { useApiProbe } from "@/hooks/useApiProbe";
+import { useStreamingChat, type ChatMode, type StreamStatus } from "@/hooks/useStreamingChat";
 
 // Runtime configuration: prefer VITE_API_URL if provided; otherwise fall back to proxy
 const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? undefined;
@@ -100,68 +100,24 @@ const outputPlaceholderByStatus: Record<StreamStatus, string> = {
 
 export function ChatPlayground() {
   const [prompt, setPrompt] = React.useState("");
-  const [output, setOutput] = React.useState("");
-  const [status, setStatus] = React.useState<StreamStatus>("empty");
-  const [error, setError] = React.useState<string | null>(null);
   const [mode, setMode] = React.useState<ChatMode>("explain-only");
   const [copied, setCopied] = React.useState(false);
   const [isRedVsBlueOpen, setIsRedVsBlueOpen] = React.useState(false);
 
   // Runtime backend detection: prefer VITE_API_URL; otherwise probe VITE_BACKEND_URL or localhost:3000
-  const [apiUrl, setApiUrl] = React.useState<string>(() => DEFAULT_API_URL);
-  const [backendProbeInfo, setBackendProbeInfo] = React.useState<string | null>(null);
-
-  const isBusy = status === "waiting" || status === "streaming";
-
-  React.useEffect(() => {
-    // If a direct API URL was explicitly provided, use it and skip probing
-    if (VITE_API_URL) {
-      setBackendProbeInfo(`Using API URL from VITE_API_URL`);
-      return;
-    }
-
-    let active = true;
-    const candidates: string[] = [];
-    if (VITE_BACKEND_URL) candidates.push(VITE_BACKEND_URL);
-    candidates.push("http://localhost:3000");
-
-    const probe = async () => {
-      for (const candidate of candidates) {
-        try {
-          const controller = new AbortController();
-          const timeout = setTimeout(() => controller.abort(), 1500);
-          const res = await fetch(`${candidate.replace(/\/$/, "")}/health`, {
-            signal: controller.signal,
-          });
-          clearTimeout(timeout);
-          if (!active) return;
-          if (res.ok) {
-            setApiUrl(`${candidate.replace(/\/$/, "")}/api/chat`);
-            setBackendProbeInfo(`Backend reachable at ${candidate}`);
-            return;
-          }
-        } catch {
-          // ignore and try next candidate
-        }
-      }
-      if (active) {
-        setBackendProbeInfo(null); // leave it to the proxy /api
-      }
-    };
-
-    probe();
-
-    return () => {
-      active = false;
-    };
-  }, []); // VITE_* env vars are static at runtime; intentionally skip including them in deps
+  const { apiUrl, backendProbeInfo } = useApiProbe({
+    defaultApiUrl: DEFAULT_API_URL,
+    apiUrlOverride: VITE_API_URL,
+    backendUrlOverride: VITE_BACKEND_URL,
+  });
+  const { output, status, error, isBusy, submit, clear } = useStreamingChat();
   const statusMeta = STATUS_META[status];
   const outputPlaceholder = output.length
     ? ""
     : outputPlaceholderByStatus[status];
 
   // Estimate token count (rough approximation: 1 token ≈ 4 characters)
-  const estimatedTokens = Math.ceil(output.length / 4);
+  const estimatedTokens = estimateTokenCount(output);
 
   const handleCopy = async () => {
     if (!output) return;
@@ -188,105 +144,12 @@ export function ChatPlayground() {
   };
 
   const handleClear = () => {
-    setOutput("");
-    setError(null);
-    setStatus("empty");
+    clear();
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmed = prompt.trim();
-    if (!trimmed || isBusy) {
-      return;
-    }
-
-    setError(null);
-    setOutput("");
-    setStatus("waiting");
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: trimmed, mode }),
-      });
-
-      if (!response.ok || !response.body) {
-        // Try to surface a helpful, actionable message for token/config errors
-        let message = response.ok
-          ? "Streaming response was empty."
-          : `Request failed with status ${response.status}.`;
-        try {
-          const ct = response.headers.get("content-type") || "";
-          if (ct.includes("application/json")) {
-            const data = await response.json();
-            if (data?.errorType === "token_missing") {
-              message = "Copilot service is not configured on the server. Please ensure GH_TOKEN/GITHUB_TOKEN or runtime secrets are provided on the server (see project docs).";
-            } else if (data?.errorType === "auth") {
-              message = "Copilot authentication failed on the server. Check token permissions (Copilot Requests).";
-            } else if (data?.error) {
-              message = String(data.error);
-            }
-          } else {
-            const text = await response.text();
-            if (text && /token_missing|GitHub Copilot is not configured|Missing GitHub token/i.test(text)) {
-              message = "Copilot service is not configured on the server. Please ensure GH_TOKEN/GITHUB_TOKEN or runtime secrets are provided on the server (see project docs).";
-            } else if (text) {
-              message = text;
-            }
-          }
-        } catch {
-          // ignore parsing errors and fall back to the status message
-        }
-
-        throw new Error(message);
-      }
-
-      setStatus("streaming");
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
-        }
-        const chunk = decoder.decode(value, { stream: true });
-        if (chunk) {
-          setOutput((prev) => prev + chunk);
-        }
-      }
-
-      const finalChunk = decoder.decode();
-      if (finalChunk) {
-        setOutput((prev) => prev + finalChunk);
-      }
-
-      setStatus("done");
-    } catch (caught) {
-      const message = caught instanceof Error ? caught.message : "Streaming failed.";
-
-      // Detect common network failures and show friendly guidance
-      const netFailurePatterns = [
-        /Failed to fetch/i,
-        /NetworkError/i,
-        /ECONNREFUSED/i,
-        /ERR_NAME_NOT_RESOLVED/i,
-        /timeout/i,
-      ];
-
-      const looksLikeNetworkError = netFailurePatterns.some((r) => r.test(message));
-
-      if (looksLikeNetworkError) {
-        setError(
-          "Cannot reach backend service. Ensure the backend is running and reachable (e.g., run `docker compose ps` and check logs)."
-        );
-      } else {
-        setError(message);
-      }
-
-      setStatus("error");
-    }
+    await submit({ prompt, apiUrl, mode });
   };
 
   return (
