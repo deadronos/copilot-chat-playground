@@ -1,6 +1,7 @@
 # DES013 — Red vs Blue AI Director (Phase 2: Decision Pipeline + Middleware Referee)
 
 **Status:** Draft
+**Associated Issue:** [#48](https://github.com/deadronos/copilot-chat-playground/issues/48)
 **Date:** 2026-01-25
 
 ## Overview

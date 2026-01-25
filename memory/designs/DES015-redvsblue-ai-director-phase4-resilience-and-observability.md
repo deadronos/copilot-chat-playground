@@ -1,6 +1,7 @@
 # DES015 — Red vs Blue AI Director (Phase 4: Rehydration, Summarization, Observability)
 
 **Status:** Draft
+**Associated Issue:** [#50](https://github.com/deadronos/copilot-chat-playground/issues/50)
 **Date:** 2026-01-25
 
 ## Overview

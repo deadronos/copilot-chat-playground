@@ -1,6 +1,7 @@
 # DES014 — Red vs Blue AI Director (Phase 3: Periodic Snapshots + Auto-Decisions)
 
 **Status:** Draft
+**Associated Issue:** [#49](https://github.com/deadronos/copilot-chat-playground/issues/49)
 **Date:** 2026-01-25
 
 ## Overview

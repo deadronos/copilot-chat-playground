@@ -1,6 +1,7 @@
 # DES012 — Red vs Blue AI Director (Phase 1: Contracts + Commentary)
 
 **Status:** Draft
+**Associated Issue:** [#47](https://github.com/deadronos/copilot-chat-playground/issues/47)
 **Date:** 2026-01-25
 
 ## Overview
