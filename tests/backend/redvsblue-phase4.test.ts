@@ -5,6 +5,7 @@ import {
   enforceTokenBudget,
   serializeMatchSession,
 } from "../../src/backend/src/services/match-store.js"
+import { DEFAULT_REDVSBLUE_CONFIG_VALUES, DEFAULT_REDVSBLUE_RULES } from "@copilot-playground/shared"
 
 type Session = Parameters<typeof compactSessionSnapshots>[0]
 type Snapshot = Parameters<typeof buildStrategicSummary>[0][number]
@@ -22,13 +23,13 @@ const baseSession = (snapshots: Snapshot[]): Session => ({
   sessionId: "session-1",
   rulesVersion: "v1",
   effectiveRules: {
-    shipSpeed: 5,
-    bulletSpeed: 8,
-    bulletDamage: 10,
-    shipMaxHealth: 30,
+    shipSpeed: DEFAULT_REDVSBLUE_RULES.shipSpeed,
+    bulletSpeed: DEFAULT_REDVSBLUE_RULES.bulletSpeed,
+    bulletDamage: DEFAULT_REDVSBLUE_RULES.bulletDamage,
+    shipMaxHealth: DEFAULT_REDVSBLUE_RULES.shipMaxHealth,
   },
   effectiveConfig: {
-    snapshotIntervalMs: 30000,
+    snapshotIntervalMs: DEFAULT_REDVSBLUE_CONFIG_VALUES.snapshotIntervalMs,
   },
   warnings: [],
   snapshots,

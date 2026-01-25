@@ -70,5 +70,8 @@ Split backend, frontend, and engine monoliths into testable modules while preser
 - **Risk:** Playwright requirement conflicts with testing guidance.  
   **Mitigation:** implement component tests now; ask owner about adding Playwright suite.
 
+## Note
+- RedVsBlue rule/config defaults and decision limits now live in `@copilot-playground/shared` (DES022) to avoid frontend/backend drift.
+
 ## Open Questions
 - Should we introduce Playwright tooling now or defer to Phase 3 per testing playbook?

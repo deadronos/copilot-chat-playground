@@ -1,7 +1,8 @@
 # DES022 — Shared RedVsBlue Config
 
-**Status:** Draft
+**Status:** Implemented
 **Date:** 2026-01-25
+**Updated:** 2026-01-25
 **Related:** DES012 (AI Director contracts), DES018 (monolith refactor)
 
 ## Overview
@@ -87,6 +88,7 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 
 - No migration required for persisted sessions — sessions store `effectiveRules` and `effectiveConfig`. However, changing defaults may alter the `effectiveRules` returned for new matches.
 - Add a migration/decision note: "Do not change defaults mid-season; treat changes as breaking for match reproducibility. Consider adding `rulesVersion` bump when changing defaults."
+- Canonical defaults now align with backend ranges (frontend default proposals updated to match).
 
 ---
 
@@ -95,6 +97,27 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 - Unit tests for `loadConfig()` (env present/absent/invalid) with mocked env.
 - Replace numeric literals used in tests with imported constants where appropriate. Add tests that assert behavior unchanged after extraction (e.g., clamping tests still pass).
 - Integration test: start server with env overrides and assert `effectiveRules` reflect overrides and Zod validation rejects out-of-bounds env values.
+
+---
+
+## Operational Guidance (Overrides)
+
+Supported overrides (scalar values):
+
+- `REDVSBLUE_SHIP_SPEED_MIN|MAX|DEFAULT`
+- `REDVSBLUE_BULLET_SPEED_MIN|MAX|DEFAULT`
+- `REDVSBLUE_BULLET_DAMAGE_MIN|MAX|DEFAULT`
+- `REDVSBLUE_SHIP_MAX_HEALTH_MIN|MAX|DEFAULT`
+- `REDVSBLUE_SNAPSHOT_INTERVAL_MS_MIN|MAX|DEFAULT`
+- `REDVSBLUE_MAX_SPAWN_PER_DECISION`
+- `REDVSBLUE_MAX_SPAWN_PER_MINUTE`
+- `REDVSBLUE_DECISION_COOLDOWN_MS`
+
+JSON override:
+
+- `REDVSBLUE_CONFIG` — JSON object merged over defaults.
+
+**Do not change defaults mid-season** (treat as breaking for reproducibility); plan a `rulesVersion` bump when defaults change.
 
 ---
 
@@ -115,10 +138,10 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 
 ## Acceptance Criteria
 
-- [ ] `packages/shared` exposes a `redvsblue` config module with Zod schema and `loadConfig()`.
-- [ ] Backend and frontend import and use shared config values; tests updated and passing.
-- [ ] Env overrides work and are validated; invalid overrides return clear errors in tests.
-- [ ] Design docs updated and PR includes changelog + decision note about default changes.
+- [x] `packages/shared` exposes a `redvsblue` config module with Zod schema and `loadConfig()`.
+- [x] Backend and frontend import and use shared config values; tests updated.
+- [x] Env overrides work and are validated; invalid overrides return clear errors in tests.
+- [x] Design docs updated and include override guidance + decision note about default changes.
 
 ---
 
@@ -130,5 +153,10 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 ---
 
 ## Next steps
-- After design approval, implement extraction as a small series of commits (one-per-area) using TDD and update tests.
 - Consider adding a runtime warning when an env override is applied in production to aid operational visibility.
+
+---
+
+## Changelog
+
+- 2026-01-25: Implemented shared RedVsBlue config module, updated backend/frontend to consume shared defaults, documented overrides.

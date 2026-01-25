@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest"
+import { DEFAULT_REDVSBLUE_DECISION_LIMITS } from "@copilot-playground/shared"
 import { validateDecision } from "../../../src/backend/src/services/decision-referee.js"
 import type { DecisionState } from "../../../src/backend/src/services/redvsblue-types.js"
 
@@ -39,7 +40,9 @@ describe("validateDecision", () => {
     }
 
     const result = validateDecision(decisionState, proposal, now)
-    expect(result.validatedDecision?.params.count).toBe(5)
+    expect(result.validatedDecision?.params.count).toBe(
+      DEFAULT_REDVSBLUE_DECISION_LIMITS.maxSpawnPerDecision
+    )
     expect(result.validatedDecision?.warnings.length).toBe(1)
   })
 
