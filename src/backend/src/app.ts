@@ -1,4 +1,6 @@
 import { randomUUID } from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 import cors from "cors";
 import express from "express";
 import { z } from "zod";
@@ -59,6 +61,9 @@ type MatchSession = {
   snapshots: SnapshotPayload[];
   decisionState: DecisionState;
   decisionHistory: DecisionAuditRecord[];
+  strategicSummary: string | null;
+  summaryUpdatedAt: number | null;
+  lastCompactionAt: number | null;
   createdAt: number;
   updatedAt: number;
 };
@@ -90,6 +95,7 @@ type DecisionAuditRecord = {
   requestId: string;
   matchId: string;
   sessionId: string;
+  traceId?: string;
   status: "accepted" | "rejected" | "invalid";
   proposedDecision?: DecisionProposal;
   validatedDecision?: ValidatedDecision;
@@ -102,6 +108,23 @@ type DecisionState = {
   lastDecisionAt: number | null;
   recentSpawns: Array<{ timestamp: number; count: number }>;
   appliedDecisionIds: Set<string>;
+};
+
+type PersistedDecisionState = {
+  lastDecisionAt: number | null;
+  recentSpawns: Array<{ timestamp: number; count: number }>;
+  appliedDecisionIds: string[];
+};
+
+type PersistedMatchSession = Omit<MatchSession, "decisionState"> & {
+  decisionState: PersistedDecisionState;
+};
+
+type TraceContext = {
+  traceId: string;
+  requestId: string;
+  matchId?: string;
+  sessionId?: string;
 };
 
 const MatchStartSchema = z.object({
@@ -165,6 +188,12 @@ const CONFIG_RANGES = {
 };
 
 const MAX_SNAPSHOT_BUFFER = 120;
+const REHYDRATION_SNAPSHOT_LIMIT = 25;
+const REHYDRATION_DECISION_TAIL = 5;
+const TOKEN_SAFETY_FACTOR = 0.7;
+const DEFAULT_TOKEN_BUDGET = 4000;
+const STRATEGIC_SUMMARY_MAX_CHARS = 1200;
+const TOKEN_BUDGET_SNAPSHOT_LIMIT = 10;
 const DECISION_LIMITS = {
   maxSpawnPerDecision: 5,
   maxSpawnPerMinute: 15,
@@ -183,6 +212,120 @@ const DecisionProposalSchema = z.object({
 });
 
 const matchStore = new Map<string, MatchSession>();
+
+function getPersistDir(): string {
+  return process.env.REDVSBLUE_PERSIST_DIR || "/tmp/redvsblue-sessions";
+}
+
+function ensurePersistDir(): void {
+  fs.mkdirSync(getPersistDir(), { recursive: true });
+}
+
+export function serializeMatchSession(session: MatchSession): PersistedMatchSession {
+  return {
+    ...session,
+    decisionState: {
+      lastDecisionAt: session.decisionState.lastDecisionAt,
+      recentSpawns: session.decisionState.recentSpawns,
+      appliedDecisionIds: Array.from(session.decisionState.appliedDecisionIds),
+    },
+  };
+}
+
+function rebuildDecisionState(
+  decisionState: PersistedDecisionState | undefined,
+  decisionHistory: DecisionAuditRecord[]
+): DecisionState {
+  if (decisionState) {
+    return {
+      lastDecisionAt: decisionState.lastDecisionAt ?? null,
+      recentSpawns: decisionState.recentSpawns ?? [],
+      appliedDecisionIds: new Set(decisionState.appliedDecisionIds ?? []),
+    };
+  }
+
+  const appliedDecisionIds = new Set<string>();
+  const recentSpawns: Array<{ timestamp: number; count: number }> = [];
+  let lastDecisionAt: number | null = null;
+
+  for (const record of decisionHistory) {
+    if (record.status !== "accepted" || !record.validatedDecision) {
+      continue;
+    }
+    appliedDecisionIds.add(record.requestId);
+    lastDecisionAt = Math.max(lastDecisionAt ?? 0, record.timestamp);
+    recentSpawns.push({
+      timestamp: record.timestamp,
+      count: record.validatedDecision.params.count,
+    });
+  }
+
+  return { lastDecisionAt, recentSpawns, appliedDecisionIds };
+}
+
+export function deserializeMatchSession(raw: PersistedMatchSession): MatchSession {
+  return {
+    ...raw,
+    decisionState: rebuildDecisionState(raw.decisionState, raw.decisionHistory ?? []),
+    strategicSummary: raw.strategicSummary ?? null,
+    summaryUpdatedAt: raw.summaryUpdatedAt ?? null,
+    lastCompactionAt: raw.lastCompactionAt ?? null,
+  };
+}
+
+function loadPersistedSessions(): void {
+  ensurePersistDir();
+  const entries = fs.readdirSync(getPersistDir(), { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isFile() || !entry.name.endsWith(".json")) {
+      continue;
+    }
+    const filePath = path.join(getPersistDir(), entry.name);
+    try {
+      const contents = fs.readFileSync(filePath, "utf8");
+      const parsed = JSON.parse(contents) as PersistedMatchSession;
+      if (!parsed?.matchId || !parsed.sessionId) {
+        continue;
+      }
+      const session = deserializeMatchSession(parsed);
+      matchStore.set(session.matchId, session);
+    } catch (error) {
+      console.warn("[redvsblue] failed to load persisted session", {
+        filePath,
+        error: error instanceof Error ? error.message : "unknown error",
+      });
+    }
+  }
+}
+
+async function persistMatchSession(session: MatchSession): Promise<void> {
+  ensurePersistDir();
+  const filePath = path.join(getPersistDir(), `${session.matchId}.json`);
+  const payload = JSON.stringify(serializeMatchSession(session), null, 2);
+  try {
+    await fs.promises.writeFile(filePath, payload, "utf8");
+  } catch (error) {
+    console.warn("[redvsblue] failed to persist session", {
+      matchId: session.matchId,
+      sessionId: session.sessionId,
+      error: error instanceof Error ? error.message : "unknown error",
+    });
+  }
+}
+
+async function removePersistedSession(matchId: string): Promise<void> {
+  const filePath = path.join(getPersistDir(), `${matchId}.json`);
+  try {
+    await fs.promises.unlink(filePath);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      console.warn("[redvsblue] failed to remove persisted session", {
+        matchId,
+        error: error instanceof Error ? error.message : "unknown error",
+      });
+    }
+  }
+}
 
 function clampNumber(
   value: number | undefined,
@@ -252,6 +395,97 @@ function buildEffectiveConfig(
   };
 }
 
+export function estimateTokenCount(text: string): number {
+  return Math.ceil(text.length / 4);
+}
+
+function trimSummary(summary: string | null, maxChars: number): string | null {
+  if (!summary) {
+    return null;
+  }
+  if (summary.length <= maxChars) {
+    return summary;
+  }
+  return summary.slice(summary.length - maxChars);
+}
+
+export function buildStrategicSummary(snapshots: SnapshotPayload[]): string {
+  if (snapshots.length === 0) {
+    return "";
+  }
+  const first = snapshots[0];
+  const last = snapshots.at(-1) ?? first;
+  const deltaRed = last.counts.red - first.counts.red;
+  const deltaBlue = last.counts.blue - first.counts.blue;
+
+  const eventCounts = new Map<string, number>();
+  for (const snapshot of snapshots) {
+    for (const event of snapshot.recentMajorEvents) {
+      const key = event.type;
+      eventCounts.set(key, (eventCounts.get(key) ?? 0) + 1);
+    }
+  }
+  const eventSummary = Array.from(eventCounts.entries())
+    .map(([type, count]) => `${type}:${count}`)
+    .join(", ");
+
+  return [
+    `Summary over ${snapshots.length} snapshots.`,
+    `Red ${first.counts.red}→${last.counts.red} (Δ${deltaRed}).`,
+    `Blue ${first.counts.blue}→${last.counts.blue} (Δ${deltaBlue}).`,
+    eventSummary ? `Events: ${eventSummary}.` : "No major events recorded.",
+  ].join(" ");
+}
+
+function mergeStrategicSummary(previous: string | null, next: string): string {
+  const combined = [previous, next].filter(Boolean).join(" ");
+  return trimSummary(combined, STRATEGIC_SUMMARY_MAX_CHARS) ?? "";
+}
+
+export function compactSessionSnapshots(session: MatchSession): void {
+  const overflow = session.snapshots.length - REHYDRATION_SNAPSHOT_LIMIT;
+  if (overflow <= 0) {
+    return;
+  }
+  const summarized = session.snapshots.slice(0, overflow);
+  const newSummary = buildStrategicSummary(summarized);
+  session.strategicSummary = mergeStrategicSummary(session.strategicSummary, newSummary);
+  session.snapshots = session.snapshots.slice(overflow);
+  session.summaryUpdatedAt = Date.now();
+  session.lastCompactionAt = Date.now();
+}
+
+function getTokenBudget(): number {
+  const raw = process.env.REDVSBLUE_TOKEN_BUDGET;
+  if (!raw) {
+    return DEFAULT_TOKEN_BUDGET;
+  }
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_TOKEN_BUDGET;
+}
+
+export function enforceTokenBudget(session: MatchSession, snapshot: SnapshotPayload): void {
+  const tokenBudget = Math.floor(getTokenBudget() * TOKEN_SAFETY_FACTOR);
+  const previewPrompt = buildDecisionPrompt(session, snapshot, "budget-check");
+  if (estimateTokenCount(previewPrompt) <= tokenBudget) {
+    return;
+  }
+
+  const overflow = session.snapshots.length - TOKEN_BUDGET_SNAPSHOT_LIMIT;
+  if (overflow > 0) {
+    const summarized = session.snapshots.slice(0, overflow);
+    const newSummary = buildStrategicSummary(summarized);
+    session.strategicSummary = mergeStrategicSummary(session.strategicSummary, newSummary);
+    session.snapshots = session.snapshots.slice(overflow);
+  }
+
+  session.strategicSummary = trimSummary(
+    session.strategicSummary,
+    Math.floor(STRATEGIC_SUMMARY_MAX_CHARS / 2)
+  );
+  session.summaryUpdatedAt = Date.now();
+}
+
 function generateCommentary(session: MatchSession): string {
   const lastSnapshot = session.snapshots.at(-1);
   if (!lastSnapshot) {
@@ -272,12 +506,31 @@ function buildDecisionPrompt(session: MatchSession, snapshot: SnapshotPayload, d
   const blue = snapshot.counts.blue;
   const leader = red === blue ? "even" : red > blue ? "red" : "blue";
   const imbalance = Math.abs(red - blue);
+  const summary = session.strategicSummary;
+  const decisionTail = session.decisionHistory.slice(-REHYDRATION_DECISION_TAIL);
+  const decisionSummary =
+    decisionTail.length === 0
+      ? "No recent decisions."
+      : decisionTail
+          .map((record) => {
+            const detail =
+              record.validatedDecision?.params
+                ? `${record.validatedDecision.params.team}:${record.validatedDecision.params.count}`
+                : "n/a";
+            return `${record.status} ${record.requestId} (${detail})`;
+          })
+          .join("; ");
+
   return [
     "You are the Red vs Blue AI Director.",
     "Return ONLY valid JSON that matches the schema below.",
     "Schema:",
     '{ "requestId": "<string>", "type": "spawnShips", "params": { "team": "red|blue", "count": <1-5> }, "confidence": <0-1 optional>, "reason": "<short text optional>" }',
     `requestId must equal: ${decisionRequestId}`,
+    `Effective rules: ${JSON.stringify(session.effectiveRules)}.`,
+    `Effective config: ${JSON.stringify(session.effectiveConfig)}.`,
+    summary ? `Strategic summary: ${summary}` : "Strategic summary: (none yet).",
+    `Recent decisions: ${decisionSummary}`,
     `Snapshot summary: red=${red}, blue=${blue}, total=${snapshot.gameSummary.totalShips}.`,
     `Balance status: leader=${leader}, imbalance=${imbalance}.`,
     "Choose a team that needs help and spawn 1-5 ships.",
@@ -301,13 +554,25 @@ function parseDecisionProposal(output: string): { proposal?: DecisionProposal; e
   return { proposal: parsed.data };
 }
 
-function logDecisionAudit(record: DecisionAuditRecord): void {
+function logStructuredEvent(
+  level: "info" | "warn" | "error",
+  event: string,
+  context: TraceContext,
+  payload: Record<string, unknown> = {}
+): void {
+  console[level](`[redvsblue] ${event}`, {
+    ...context,
+    ...payload,
+  });
+}
+
+function logDecisionAudit(record: DecisionAuditRecord, context: TraceContext): void {
   if (record.status === "accepted") {
-    console.info("[redvsblue] decision accepted", record);
+    logStructuredEvent("info", "decision accepted", context, record);
   } else if (record.status === "invalid") {
-    console.warn("[redvsblue] decision invalid", record);
+    logStructuredEvent("warn", "decision invalid", context, record);
   } else {
-    console.warn("[redvsblue] decision rejected", record);
+    logStructuredEvent("warn", "decision rejected", context, record);
   }
 }
 
@@ -373,22 +638,12 @@ function validateDecision(
   return { validatedDecision };
 }
 
-function logValidationFailure(context: { requestId: string; matchId?: string; sessionId?: string }, issues: unknown): void {
-  console.warn("[redvsblue] validation failure", {
-    requestId: context.requestId,
-    matchId: context.matchId,
-    sessionId: context.sessionId,
-    issues,
-  });
+function logValidationFailure(context: TraceContext, issues: unknown): void {
+  logStructuredEvent("warn", "validation failure", context, { issues });
 }
 
-function logMatchFailure(context: { requestId: string; matchId?: string; sessionId?: string }, message: string): void {
-  console.warn("[redvsblue] request rejected", {
-    requestId: context.requestId,
-    matchId: context.matchId,
-    sessionId: context.sessionId,
-    message,
-  });
+function logMatchFailure(context: TraceContext, message: string): void {
+  logStructuredEvent("warn", "request rejected", context, { message });
 }
 
 function getCopilotServiceUrl(): string {
@@ -550,16 +805,24 @@ export function createApp(): express.Express {
   app.use(cors());
   app.use(express.json({ limit: "1mb" }));
 
+  loadPersistedSessions();
+
   app.get("/health", (_req, res) => {
     res.json({ ok: true, service: "backend" });
   });
 
-  app.post("/api/redvsblue/match/start", (req, res) => {
+  app.post("/api/redvsblue/match/start", async (req, res) => {
+    const traceId = randomUUID();
     const requestId = randomUUID();
     const parsed = MatchStartSchema.safeParse(req.body);
     if (!parsed.success) {
-      logValidationFailure({ requestId }, parsed.error.issues);
-      res.status(400).json({ error: "Invalid request", issues: parsed.error.issues, requestId });
+      logValidationFailure({ traceId, requestId }, parsed.error.issues);
+      res.status(400).json({
+        error: "Invalid request",
+        issues: parsed.error.issues,
+        requestId,
+        traceId,
+      });
       return;
     }
 
@@ -583,11 +846,15 @@ export function createApp(): express.Express {
         appliedDecisionIds: new Set(),
       },
       decisionHistory: [],
+      strategicSummary: null,
+      summaryUpdatedAt: null,
+      lastCompactionAt: null,
       createdAt: now,
       updatedAt: now,
     };
 
     matchStore.set(matchId, session);
+    await persistMatchSession(session);
 
     res.status(200).json({
       matchId,
@@ -597,29 +864,35 @@ export function createApp(): express.Express {
       effectiveConfig,
       warnings,
       requestId,
+      traceId,
     });
   });
 
   app.post("/api/redvsblue/match/:matchId/snapshot", async (req, res) => {
+    const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
     const session = matchStore.get(matchId);
 
     if (!session) {
-      logMatchFailure({ requestId, matchId }, "Unknown matchId");
-      res.status(404).json({ error: "Unknown matchId", requestId, matchId });
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
 
     const parsed = SnapshotSchema.safeParse(req.body);
     if (!parsed.success) {
-      logValidationFailure({ requestId, matchId, sessionId: session.sessionId }, parsed.error.issues);
+      logValidationFailure(
+        { traceId, requestId, matchId, sessionId: session.sessionId },
+        parsed.error.issues
+      );
       res.status(400).json({
         error: "Invalid request",
         issues: parsed.error.issues,
         requestId,
         matchId,
         sessionId: session.sessionId,
+        traceId,
       });
       return;
     }
@@ -629,6 +902,8 @@ export function createApp(): express.Express {
     if (session.snapshots.length > MAX_SNAPSHOT_BUFFER) {
       session.snapshots.splice(0, session.snapshots.length - MAX_SNAPSHOT_BUFFER);
     }
+    compactSessionSnapshots(session);
+    enforceTokenBudget(session, snapshotPayload);
     session.updatedAt = Date.now();
 
     let notificationText: string | undefined;
@@ -647,12 +922,22 @@ export function createApp(): express.Express {
           requestId: decisionRequestId,
           matchId,
           sessionId: session.sessionId,
+          traceId,
           status: "rejected",
           reason,
           timestamp,
         };
         session.decisionHistory.push(record);
-        logDecisionAudit(record);
+        logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+        logStructuredEvent("warn", "decision error", {
+          traceId,
+          requestId: decisionRequestId,
+          matchId,
+          sessionId: session.sessionId,
+        }, {
+          error: reason,
+          errorType: decisionResult.errorType ?? "unknown",
+        });
         decisionRejectedReason = reason;
       } else {
         const parsedDecision = parseDecisionProposal(decisionResult.output);
@@ -662,12 +947,19 @@ export function createApp(): express.Express {
             requestId: decisionRequestId,
             matchId,
             sessionId: session.sessionId,
+            traceId,
             status: "invalid",
             reason,
             timestamp,
           };
           session.decisionHistory.push(record);
-          logDecisionAudit(record);
+          logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+          logStructuredEvent("warn", "decision parse error", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { error: reason });
           decisionRejectedReason = reason;
         } else if (parsedDecision.proposal.requestId !== decisionRequestId) {
           const reason = "Decision requestId mismatch";
@@ -675,13 +967,20 @@ export function createApp(): express.Express {
             requestId: decisionRequestId,
             matchId,
             sessionId: session.sessionId,
+            traceId,
             status: "invalid",
             proposedDecision: parsedDecision.proposal,
             reason,
             timestamp,
           };
           session.decisionHistory.push(record);
-          logDecisionAudit(record);
+          logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+          logStructuredEvent("warn", "decision requestId mismatch", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { error: reason });
           decisionRejectedReason = reason;
         } else {
           const { validatedDecision: validated, rejectionReason } = validateDecision(
@@ -694,13 +993,14 @@ export function createApp(): express.Express {
               requestId: decisionRequestId,
               matchId,
               sessionId: session.sessionId,
+              traceId,
               status: "rejected",
               proposedDecision: parsedDecision.proposal,
               reason: rejectionReason ?? "Decision rejected by referee",
               timestamp,
             };
             session.decisionHistory.push(record);
-            logDecisionAudit(record);
+            logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
             decisionRejectedReason = record.reason;
           } else {
             validatedDecision = validated;
@@ -711,6 +1011,7 @@ export function createApp(): express.Express {
               requestId: decisionRequestId,
               matchId,
               sessionId: session.sessionId,
+              traceId,
               status: "accepted",
               proposedDecision: parsedDecision.proposal,
               validatedDecision: validated,
@@ -718,11 +1019,13 @@ export function createApp(): express.Express {
               timestamp,
             };
             session.decisionHistory.push(record);
-            logDecisionAudit(record);
+            logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
           }
         }
       }
     }
+
+    await persistMatchSession(session);
 
     res.status(200).json({
       ok: true,
@@ -730,6 +1033,7 @@ export function createApp(): express.Express {
       sessionId: session.sessionId,
       storedSnapshots: session.snapshots.length,
       requestId,
+      traceId,
       notificationText,
       validatedDecision,
       decisionRejectedReason,
@@ -737,25 +1041,30 @@ export function createApp(): express.Express {
   });
 
   app.post("/api/redvsblue/match/:matchId/ask", (req, res) => {
+    const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
     const session = matchStore.get(matchId);
 
     if (!session) {
-      logMatchFailure({ requestId, matchId }, "Unknown matchId");
-      res.status(404).json({ error: "Unknown matchId", requestId, matchId });
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
 
     const parsed = AskSchema.safeParse(req.body ?? {});
     if (!parsed.success) {
-      logValidationFailure({ requestId, matchId, sessionId: session.sessionId }, parsed.error.issues);
+      logValidationFailure(
+        { traceId, requestId, matchId, sessionId: session.sessionId },
+        parsed.error.issues
+      );
       res.status(400).json({
         error: "Invalid request",
         issues: parsed.error.issues,
         requestId,
         matchId,
         sessionId: session.sessionId,
+        traceId,
       });
       return;
     }
@@ -767,22 +1076,25 @@ export function createApp(): express.Express {
       sessionId: session.sessionId,
       commentary,
       requestId,
+      traceId,
     });
   });
 
-  app.post("/api/redvsblue/match/:matchId/end", (req, res) => {
+  app.post("/api/redvsblue/match/:matchId/end", async (req, res) => {
+    const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
     const session = matchStore.get(matchId);
     const sessionId = session?.sessionId;
     if (!session) {
-      logMatchFailure({ requestId, matchId }, "Unknown matchId");
-      res.status(404).json({ error: "Unknown matchId", requestId, matchId });
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
 
     matchStore.delete(matchId);
-    res.status(200).json({ ok: true, matchId, sessionId, requestId });
+    await removePersistedSession(matchId);
+    res.status(200).json({ ok: true, matchId, sessionId, requestId, traceId });
   });
 
   app.post("/api/chat", async (req, res) => {
