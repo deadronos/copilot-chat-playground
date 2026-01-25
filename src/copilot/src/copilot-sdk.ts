@@ -139,6 +139,30 @@ export class CopilotSDKService {
             messageId,
             contentLength: content.length,
           });
+
+        // Detect the provider-reported model and warn if it differs from requested model
+        } else if (event.type === "assistant.usage") {
+          const actualModel = event.data?.model as string | undefined;
+          if (actualModel) {
+            if (actualModel !== model) {
+              // Emit a warning with relevant metadata to aid debugging and telemetry
+              this.emitLog("warn", "sdk.model.mismatch", `Requested model '${model}' differs from actual model '${actualModel}'`, {
+                requestId,
+                sessionId: session.sessionId,
+                requestedModel: model,
+                actualModel,
+                providerCallId: event.data?.providerCallId,
+                usage: event.data,
+              });
+            } else {
+              // Optional: note explicit match for observability
+              this.emitLog("debug", "sdk.model.match", "Requested model matches actual model", {
+                requestId,
+                sessionId: session.sessionId,
+                model: actualModel,
+              });
+            }
+          }
         } else if (event.type === "session.idle") {
           this.emitLog("info", "sdk.session.idle", "Session idle (turn complete)", {
             requestId,

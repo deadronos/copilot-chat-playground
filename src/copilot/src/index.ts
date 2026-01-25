@@ -34,6 +34,7 @@ app.get("/health", (_req, res) => {
     ok: true,
     service: "copilot",
     mode: USE_SDK ? "sdk" : "cli",
+    defaultModel: process.env.COPILOT_DEFAULT_MODEL || "gpt-5-mini",
     tokenConfigured: tokenCheck.valid,
     binaryAvailable,
     candidates,
