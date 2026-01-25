@@ -95,7 +95,7 @@ export function validateDecision(
   }
 
   // Process optional overrides: if allowed by client, clamp to rule ranges and emit warnings when clamped
-  let appliedOverrides: Record<string, number> | undefined = undefined;
+  let appliedOverrides: NonNullable<ValidatedDecision["params"]["overrides"]> | undefined = undefined;
   if (allowOverrides && proposal.params.overrides) {
     appliedOverrides = {};
     const ranges = loadRedVsBlueConfig().config.ruleRanges;
@@ -141,7 +141,7 @@ export function validateDecision(
     params: {
       team: proposal.params.team,
       count: nextCount,
-      overrides: appliedOverrides as any | undefined,
+      overrides: appliedOverrides,
     },
     warnings,
   };

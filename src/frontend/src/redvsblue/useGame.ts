@@ -188,7 +188,7 @@ export function useGame(options: UseGameOptions): Controls {
     const engine = engineRef.current
     if (!engine) return
     // Pass through overrides when present
-    (engine as any).spawnShip(team, overrides)
+    engine.spawnShip(team, overrides)
     if (!worker) {
       useGameState.getState().setSnapshot(engine.getState())
     }

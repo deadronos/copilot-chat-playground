@@ -87,7 +87,7 @@ const RedVsBlue: React.FC = () => {
     }) => {
       if (decision.type !== "spawnShips") return;
       for (let i = 0; i < decision.params.count; i += 1) {
-        spawnShip(decision.params.team, decision.params.overrides as any | undefined);
+        spawnShip(decision.params.team, decision.params.overrides);
       }
       if (decision.warnings && decision.warnings.length > 0) {
         showToast(`AI Director warning: ${decision.warnings.join("; ")}`);
@@ -261,12 +261,20 @@ const RedVsBlue: React.FC = () => {
       const recentMajorEvents = allTelemetry
         .filter((e: TelemetryEvent) => majorTypes.has(e.type))
         .slice(-20)
-        .map((e: TelemetryEvent) => ({
-          type: e.type,
-          timestamp: e.timestamp,
-          team: (e.data as any)?.team,
-          summary: (e.data as any)?.summary,
-        }));
+        .map((e: TelemetryEvent) => {
+          const data =
+            e.data && typeof e.data === "object"
+              ? (e.data as { team?: unknown; summary?: unknown })
+              : undefined;
+          const team = data?.team === "red" || data?.team === "blue" ? data.team : undefined;
+          const summary = typeof data?.summary === "string" ? data.summary : undefined;
+          return {
+            type: e.type,
+            timestamp: e.timestamp,
+            team,
+            summary,
+          };
+        });
 
       body.snapshot = {
         timestamp: snapshot.timestamp,

@@ -43,8 +43,8 @@ export function updateEngineCore(
     };
 
     // Apply ship-specific thrust override if present
-    if ((ship as any).shipThrustOverride && typeof (ship as any).shipThrustOverride === "number") {
-      aiConfig.shipThrust = (ship as any).shipThrustOverride as number;
+    if (typeof ship.shipThrustOverride === "number") {
+      aiConfig.shipThrust = ship.shipThrustOverride;
     }
 
     ship.updateAI(
@@ -73,8 +73,8 @@ export function updateEngineCore(
       dist < tuning.fireDist
     ) {
       const bulletPos = ship.shoot();
-      const bulletSpeed = (ship as any).bulletSpeedOverride ?? config.bulletSpeed;
-      const bulletDamage = (ship as any).bulletDamageOverride ?? config.bulletDamage;
+      const bulletSpeed = ship.bulletSpeedOverride ?? config.bulletSpeed;
+      const bulletDamage = ship.bulletDamageOverride ?? config.bulletDamage;
       const bullet = new Bullet(
         nextEntityId("bullet"),
         bulletPos.x,

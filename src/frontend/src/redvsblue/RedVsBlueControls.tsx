@@ -18,6 +18,8 @@ const RedVsBlueControls: React.FC<RedVsBlueControlsProps> = ({
   onAskCopilot,
   autoDecisionsEnabled,
   onToggleAutoDecisions,
+  allowAIOverrides,
+  onToggleAllowAIOverrides,
 }) => (
   <div className="controls">
     <button className="btn-red" onClick={onSpawnRed}>

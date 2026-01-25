@@ -37,6 +37,7 @@ export type SnapshotPayload = {
     summary?: string;
   }>;
   requestDecision?: boolean;
+  requestOverrides?: boolean;
 };
 
 export type DecisionProposal = {

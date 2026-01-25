@@ -82,7 +82,7 @@ function parseJsonOutput(stdout: string): string[] {
     } else if (parsed.list && Array.isArray(parsed.list)) {
       return normalizeModels(parsed.list);
     }
-  } catch (e) {
+  } catch {
     // Not valid JSON, will fall back to other methods
   }
   
@@ -142,7 +142,7 @@ function getFallbackModels(): string[] {
     const modelPattern = /(?:gpt|claude|anthropic)-[a-z0-9][a-z0-9.-]*/gi;
     const matches = haystacks.flatMap((t) => t.match(modelPattern) ?? []);
     if (matches.length > 0) return normalizeModels(matches);
-  } catch (e) {
+  } catch {
     // Fall through to curated list
   }
   

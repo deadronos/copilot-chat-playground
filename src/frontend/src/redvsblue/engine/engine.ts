@@ -114,13 +114,13 @@ export class Engine {
 
     // Apply weapon/speed overrides to the ship instance
     if (typeof overrides?.bulletSpeed === "number") {
-      (ship as any).bulletSpeedOverride = overrides.bulletSpeed;
+      ship.bulletSpeedOverride = overrides.bulletSpeed;
     }
     if (typeof overrides?.bulletDamage === "number") {
-      (ship as any).bulletDamageOverride = overrides.bulletDamage;
+      ship.bulletDamageOverride = overrides.bulletDamage;
     }
     if (typeof overrides?.shipSpeed === "number") {
-      (ship as any).shipThrustOverride = overrides.shipSpeed;
+      ship.shipThrustOverride = overrides.shipSpeed;
     }
 
     this.ships.push(ship);

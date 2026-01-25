@@ -30,6 +30,7 @@ import {
 } from "./services/decision-referee.js";
 import type {
   DecisionAuditRecord,
+  SnapshotPayload,
   TraceContext,
   ValidatedDecision,
 } from "./services/redvsblue-types.js";
@@ -520,7 +521,7 @@ export function createApp(): express.Express {
 
           if (!decisionResult.success || !decisionResult.output) {
             const reason = decisionResult.error ?? "Decision request failed.";
-            const record = {
+            const record: DecisionAuditRecord = {
               requestId: decisionRequestId,
               matchId,
               sessionId: session.sessionId,
@@ -528,9 +529,9 @@ export function createApp(): express.Express {
               status: "rejected",
               reason,
               timestamp,
-            } as const;
+            };
             session.decisionHistory.push(record);
-            logDecisionAudit(record as any, {
+            logDecisionAudit(record, {
               traceId,
               requestId: decisionRequestId,
               matchId,
@@ -550,7 +551,7 @@ export function createApp(): express.Express {
             const { proposal, error: parseError } = parseDecisionProposal(decisionResult.output);
             if (!proposal || parseError) {
               const reason = parseError ?? "Invalid decision response";
-              const record = {
+              const record: DecisionAuditRecord = {
                 requestId: decisionRequestId,
                 matchId,
                 sessionId: session.sessionId,
@@ -558,9 +559,10 @@ export function createApp(): express.Express {
                 status: "invalid",
                 reason,
                 timestamp,
-              } as const;
+                ...(proposal ? { proposedDecision: proposal } : {}),
+              };
               session.decisionHistory.push(record);
-              logDecisionAudit(record as any, {
+              logDecisionAudit(record, {
                 traceId,
                 requestId: decisionRequestId,
                 matchId,
@@ -576,15 +578,16 @@ export function createApp(): express.Express {
               );
               if (validated) {
                 validatedDecision = validated;
-                const record = {
+                const record: DecisionAuditRecord = {
                   requestId: decisionRequestId,
                   matchId,
                   sessionId: session.sessionId,
                   traceId,
                   status: "accepted",
                   timestamp,
-                  details: { type: validated.type, params: validated.params, warnings: validated.warnings },
-                } as any;
+                  validatedDecision: validated,
+                  warnings: validated.warnings,
+                };
                 session.decisionHistory.push(record);
                 logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
 
@@ -594,7 +597,7 @@ export function createApp(): express.Express {
                     // spawn in the session simulation so commentary sees updated counts
                     // note: session is logical; the actual game engine runs in the client
                     // but we update counts in session snapshots by recording an artificial snapshot
-                    const fakeSnapshot = {
+                    const fakeSnapshot: SnapshotPayload = {
                       timestamp: Date.now(),
                       snapshotId: randomUUID(),
                       gameSummary: {
@@ -608,7 +611,7 @@ export function createApp(): express.Express {
                       },
                       recentMajorEvents: [],
                     };
-                    recordSnapshot(session, fakeSnapshot as any);
+                    recordSnapshot(session, fakeSnapshot);
                   }
                 }
               } else {
