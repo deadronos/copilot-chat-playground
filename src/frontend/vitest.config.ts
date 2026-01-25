@@ -1,12 +1,18 @@
+/* eslint-disable */
 import path from "path"
 import { defineConfig } from "vitest/config"
 
-const testsRoot = path.resolve(__dirname, "../../tests/frontend")
+const testsRoot = path.resolve(__dirname, "../../tests/frontend").replace(/\\/g, '/')
 
 export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // Ensure tests that live outside the package (tests/frontend/...) can resolve React and testing libs
+      react: path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
+      "react-dom/client": path.resolve(__dirname, "node_modules/react-dom/client"),
+      "@testing-library/react": path.resolve(__dirname, "node_modules/@testing-library/react"),
     },
   },
   test: {

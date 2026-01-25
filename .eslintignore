@@ -1,0 +1,8 @@
+# Ignore project config files that are not part of source lint targets
+src/backend/vitest.config.ts
+src/frontend/vite.config.ts
+src/frontend/vitest.config.ts
+
+# Also ignore workspace-local config names (when eslint runs from package dirs)
+vite.config.ts
+vitest.config.ts

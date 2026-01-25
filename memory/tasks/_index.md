@@ -9,3 +9,11 @@
 - TASK007 - Milestone E: Workspace Mount + Compose + Secrets - Completed ✅  (2026-01-24)
 - TASK008 - Docker service separation & caching - Done
 - TASK009 - Document & validate secrets-first pattern - Pending (2026-01-24)
+- TASK010 - Telemetry & Event Emitter (PR 004) - In Progress (2026-01-24)
+- TASK011 - RedVsBlue component refactor - Completed (2026-01-24)
+- TASK012 - RedVsBlue guidance docs - Completed (2026-01-24)
+- TASK013 - RedVsBlue AI Director (Phased Implementation) - Completed (2026-01-25)
+- TASK014 - RedVsBlue AI Director Phase 1 (Contracts + Commentary) - Completed (2026-01-25)
+- TASK015 - RedVsBlue AI Director Phase 2 (Decision Pipeline) - Completed (2026-01-25)
+- TASK016 - RedVsBlue AI Director Phase 3 (Auto-Decisions) - Completed (2026-01-25)
+- TASK017 - RedVsBlue AI Director Phase 4 (Resilience + Observability) - Completed (2026-01-25)

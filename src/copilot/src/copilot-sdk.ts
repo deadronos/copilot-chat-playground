@@ -1,4 +1,5 @@
 import { CopilotClient } from "@github/copilot-sdk";
+import type { SystemMessageConfig } from "@github/copilot-sdk";
 import type { EventBus } from "@copilot-playground/shared";
 import { validateToken } from "./copilot-cli.js";
 
@@ -52,7 +53,8 @@ export class CopilotSDKService {
   async chat(
     prompt: string,
     requestId?: string,
-    systemPrompt?: string
+    systemPrompt?: string,
+    systemMode?: 'append' | 'replace'
   ): Promise<CopilotSDKResponse> {
     // Validate token first
     const tokenCheck = validateToken();
@@ -81,10 +83,12 @@ export class CopilotSDKService {
       this.emitLog("info", "sdk.session.creating", "Creating Copilot session", { requestId });
 
       // Create a new session with streaming enabled
+      const systemMessage = systemPrompt ? ({ content: systemPrompt, mode: systemMode ?? 'append' } as SystemMessageConfig) : undefined;
+
       const session = await this.client.createSession({
         model: "gpt-4o",
         streaming: true,
-        ...(systemPrompt && { systemMessage: systemPrompt }),
+        ...(systemMessage && { systemMessage }),
       });
 
       this.emitLog("info", "sdk.session.created", "Copilot session created", {
