@@ -499,6 +499,7 @@ export function createApp(): express.Express {
       warnings?: string[];
     } | undefined;
     let decisionRejectedReason: string | undefined;
+    let didDecisionMutateSession = false;
 
     try {
       const body = parsed.data as { question?: string; snapshot?: unknown };
@@ -531,6 +532,7 @@ export function createApp(): express.Express {
               timestamp,
             };
             session.decisionHistory.push(record);
+            didDecisionMutateSession = true;
             logDecisionAudit(record, {
               traceId,
               requestId: decisionRequestId,
@@ -562,6 +564,7 @@ export function createApp(): express.Express {
                 ...(proposal ? { proposedDecision: proposal } : {}),
               };
               session.decisionHistory.push(record);
+              didDecisionMutateSession = true;
               logDecisionAudit(record, {
                 traceId,
                 requestId: decisionRequestId,
@@ -589,6 +592,7 @@ export function createApp(): express.Express {
                   warnings: validated.warnings,
                 };
                 session.decisionHistory.push(record);
+                didDecisionMutateSession = true;
                 logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
 
                 // apply immediate decision effect (spawn ships) to session simulation
@@ -612,6 +616,7 @@ export function createApp(): express.Express {
                       recentMajorEvents: [],
                     };
                     recordSnapshot(session, fakeSnapshot);
+                    didDecisionMutateSession = true;
                   }
                 }
               } else {
@@ -628,8 +633,16 @@ export function createApp(): express.Express {
       });
     }
 
+    if (didDecisionMutateSession) {
+      await persistMatchSession(session);
+    }
+
     // Re-generate commentary after any applied decision
     commentary = generateCommentary(session);
+    if (!commentary || commentary.trim().length === 0) {
+      commentary =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
 
     logStructuredEvent("info", "match.ask.response", {
       traceId,
