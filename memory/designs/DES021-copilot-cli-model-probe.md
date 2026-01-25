@@ -1,7 +1,8 @@
 # DES021 — Copilot CLI Model Probe & /models Endpoint 📡
 
-**Status:** Proposed
+**Status:** Implemented ✅
 **Created:** 2026-01-25
+**Updated:** 2026-01-25
 
 ## Overview
 

@@ -14,6 +14,7 @@
 - 2026-01-25: Scoped monolith refactor candidates (backend `app.ts`, frontend `chat-playground.tsx`, RedVsBlue `useGame.ts`).
 - 2026-01-25: Split backend services, ChatPlayground presentational components, and RedVsBlue engine core/entities; added deterministic and parity tests (TASK019).
  - 2026-01-25: Added CI coverage thresholds + router thinness guard and documented post-refactor module layout (TASK020); tests/builds passed.
+- 2026-01-25: Added Copilot CLI model probing + `GET /models` endpoint with caching, metrics, and unit tests (TASK022).
 
 **Monolith inventory (2026-01-25):**
 - `src/backend/src/app.ts` (~36KB): API routes + decision validation + streaming fallback logic.
