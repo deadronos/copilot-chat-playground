@@ -183,6 +183,24 @@ Content-Type: application/json
 - **503 Service Unavailable**: Missing token configuration
 - **500 Internal Server Error**: Copilot CLI spawn failure
 
+### Model Discovery
+
+```bash
+GET /models
+GET /models?refresh=true
+```
+
+Response:
+
+```json
+{
+  "source": "cli",
+  "models": ["gpt-4o", "gpt-5-mini"],
+  "cached": false,
+  "ttlExpiresAt": "2026-01-25T00:00:00.000Z"
+}
+```
+
 ## Error Handling
 
 The service provides clear, actionable error messages:
