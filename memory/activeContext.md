@@ -5,7 +5,8 @@
 - Continue Milestone F: switch to Copilot SDK (`TASK004`) — in progress.  
 - Continue Milestone C: end-to-end streaming tests and integration (`TASK006`) — in progress.
 - Begin monolith refactor Phase 1 (`TASK018`) — safe helper extraction + tests.
-- Execute monolith refactor Phase 2 (`TASK019`) — backend/frontend/engine module splits + tests (in progress).
+- Execute monolith refactor Phase 2 (`TASK019`) — backend/frontend/engine module splits + tests (completed 2026-01-25).
+- Defer Playwright E2E coverage to `TASK021` (pending).
 
 **Recent changes:**
 - 2026-01-23/24: Implemented workspace read-only mount, `WORKDIR /workspace`, Compose wiring, and dotenvx secrets-first documentation (see commits in repository history).

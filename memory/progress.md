@@ -9,7 +9,7 @@
 - Add automated tests for secrets handling and Compose startup (`TASK009`).
 - Add CI validation steps for SDK and Compose integration.
 - Execute monolith refactor Phase 1 (`TASK018`) and verify test coverage.
-- Finalize monolith refactor Phase 2 (`TASK019`) if Playwright E2E scope is approved.
+- Plan Playwright E2E implementation (`TASK021`) when ready.
 
 **Known issues:**
 - Read/write workspace mounts are deferred and require explicit opt-in.
