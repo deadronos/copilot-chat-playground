@@ -86,12 +86,28 @@ const AskSchema = z.object({
   question: z.string().min(1).max(500).optional(),
 });
 
-function logValidationFailure(context: TraceContext, issues: unknown): void {
-  logStructuredEvent("warn", "validation failure", context, { issues });
+function logValidationFailure(
+  context: TraceContext,
+  issues: unknown,
+  req?: express.Request
+): void {
+  logStructuredEvent("warn", "validation failure", context, {
+    issues,
+    method: req?.method,
+    path: req?.path,
+  });
 }
 
-function logMatchFailure(context: TraceContext, message: string): void {
-  logStructuredEvent("warn", "request rejected", context, { message });
+function logMatchFailure(
+  context: TraceContext,
+  message: string,
+  req?: express.Request
+): void {
+  logStructuredEvent("warn", "request rejected", context, {
+    message,
+    method: req?.method,
+    path: req?.path,
+  });
 }
 
 export function createApp(): express.Express {
@@ -110,7 +126,7 @@ export function createApp(): express.Express {
     const requestId = randomUUID();
     const parsed = MatchStartSchema.safeParse(req.body);
     if (!parsed.success) {
-      logValidationFailure({ traceId, requestId }, parsed.error.issues);
+      logValidationFailure({ traceId, requestId }, parsed.error.issues, req);
       res.status(400).json({
         error: "Invalid request",
         issues: parsed.error.issues,
@@ -155,7 +171,7 @@ export function createApp(): express.Express {
     const session = getMatchSession(matchId);
 
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
       res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
@@ -164,7 +180,8 @@ export function createApp(): express.Express {
     if (!parsed.success) {
       logValidationFailure(
         { traceId, requestId, matchId, sessionId: session.sessionId },
-        parsed.error.issues
+        parsed.error.issues,
+        req
       );
       res.status(400).json({
         error: "Invalid request",
@@ -183,6 +200,13 @@ export function createApp(): express.Express {
     let notificationText: string | undefined;
     let validatedDecision: ValidatedDecision | undefined;
     let decisionRejectedReason: string | undefined;
+
+    const baseCommentary = generateCommentary(session);
+    notificationText = baseCommentary;
+    if (!notificationText || notificationText.trim().length === 0) {
+      notificationText =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
 
     if (snapshotPayload.requestDecision) {
       const decisionRequestId = randomUUID();
@@ -295,9 +319,10 @@ export function createApp(): express.Express {
             decisionRejectedReason = record.reason;
           } else {
             validatedDecision = validated;
-            notificationText =
+            const decisionNote =
               parsedDecision.proposal.reason ??
               `AI Director suggests spawning ${validated.params.count} ${validated.params.team} ships.`;
+            notificationText = `${notificationText} ${decisionNote}`.trim();
             const record: DecisionAuditRecord = {
               requestId: decisionRequestId,
               matchId,
@@ -338,7 +363,7 @@ export function createApp(): express.Express {
     const session = getMatchSession(matchId);
 
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
       res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
@@ -347,7 +372,8 @@ export function createApp(): express.Express {
     if (!parsed.success) {
       logValidationFailure(
         { traceId, requestId, matchId, sessionId: session.sessionId },
-        parsed.error.issues
+        parsed.error.issues,
+        req
       );
       res.status(400).json({
         error: "Invalid request",
@@ -360,7 +386,11 @@ export function createApp(): express.Express {
       return;
     }
 
-    const commentary = generateCommentary(session);
+    let commentary = generateCommentary(session);
+    if (!commentary || commentary.trim().length === 0) {
+      commentary =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
 
     res.status(200).json({
       matchId,
@@ -378,7 +408,7 @@ export function createApp(): express.Express {
     const session = getMatchSession(matchId);
     const sessionId = session?.sessionId;
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
       res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
