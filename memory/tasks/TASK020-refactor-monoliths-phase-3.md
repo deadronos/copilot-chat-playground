@@ -1,8 +1,9 @@
 # TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails)
 
-**Status:** Pending  
+**Status:** In Progress  
 **Added:** 2026-01-25  
 **Updated:** 2026-01-25
+**Design:** DES020-refactor-monoliths-phase-3.md
 
 ## Original Request
 Finalize the refactor by documenting the new module layout, adding CI and coverage rules, and final cleanup.
@@ -13,15 +14,15 @@ Finalize the refactor by documenting the new module layout, adding CI and covera
 
 ## Implementation Plan (Checklist)
 - [ ] Documentation & design
-  - [ ] Add design doc(s) in `memory/designs/` describing new module boundaries and rationale.
-  - [ ] Link design docs in task files and reference in PR descriptions.
+  - [x] Add design doc(s) in `memory/designs/` describing new module boundaries and rationale.
+  - [x] Link design docs in task files and reference in PR descriptions.
 - [ ] CI guardrails
-  - [ ] Add coverage thresholds for modified packages (frontend/backend/copilot).
-  - [ ] Add lint rule or script to warn on oversized files / router logic in `app.ts`.
-  - [ ] Ensure CI fails when thresholds are violated.
+  - [x] Add coverage thresholds for modified packages (frontend/backend/copilot).
+  - [x] Add lint rule or script to warn on oversized files / router logic in `app.ts`.
+  - [x] Ensure CI fails when thresholds are violated.
 - [ ] Cleanup & polish
-  - [ ] Update README and relevant docs to reflect new module layout.
-  - [ ] Remove deprecated exports or unused files from the pre-refactor layout.
+  - [x] Update README and relevant docs to reflect new module layout.
+  - [x] Remove deprecated exports or unused files from the pre-refactor layout.
   - [ ] Verify no dead imports and run typecheck/tests.
 
 ## Acceptance Criteria
@@ -34,3 +35,7 @@ https://github.com/deadronos/copilot-chat-playground/issues/61
 ## Progress Log
 ### 2026-01-25
 - Task created and linked to Issue #61.
+### 2026-01-25
+- Added DES020 documenting module boundaries and guardrails.
+- Added CI coverage thresholds and router thinness guard, plus workflow wiring.
+- Updated README module layout notes and removed unused frontend example components.

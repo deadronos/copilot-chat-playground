@@ -23,6 +23,17 @@ Demo Video downscaled here:
 - `src/copilot` — **Copilot SDK** / Copilot CLI wrapper service (uses SDK by default)
 - `src/shared` — shared types/utilities (LogEvent, EventBus, NDJSON helper)
 
+## Module layout (post-refactor)
+
+- Backend routing stays thin in `src/backend/src/app.ts`; services live in `src/backend/src/services/*`.
+- ChatPlayground UI is split into a container (`src/frontend/src/components/chat-playground.tsx`) and presentational components (`src/frontend/src/components/chat-playground/*`).
+- RedVsBlue engine core + entities live under `src/frontend/src/redvsblue/engine/*`, with higher-level orchestration in `src/frontend/src/redvsblue/*`.
+
+## CI guardrails
+
+- Coverage thresholds are enforced per package (backend/frontend/copilot) via `vitest` coverage settings.
+- Router thinness is enforced by a simple line-count guard: `pnpm ci:guardrails` (see `scripts/ci/check-router-thin.mjs`).
+
 ## Getting started
 
 1. Enable pnpm via Corepack (recommended)

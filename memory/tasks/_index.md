@@ -19,5 +19,5 @@
 - TASK017 - RedVsBlue AI Director Phase 4 (Resilience + Observability) - Completed (2026-01-25)
 - TASK018 - Refactor: Monolithic files — Phase 1 (Discovery & safe splits) - Completed (2026-01-25)
 - TASK019 - Refactor: Monolithic files — Phase 2 (Break into modules & add tests) - Completed (2026-01-25)
-- TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails) - Pending (2026-01-25)
+- TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails) - In Progress (2026-01-25)
 - TASK021 - Playwright E2E Coverage (Deferred from Phase 2) - Pending (2026-01-25)
