@@ -11,7 +11,9 @@ const RedVsBlueStyles: React.FC = () => (
     .controls { pointer-events: auto; background: rgba(0,0,0,0.8); padding: 15px; display: flex; justify-content: center; gap: 15px; border-top: 1px solid #333; }
     button { background: #333; color: white; border: 1px solid #555; padding: 10px 20px; font-family: inherit; font-size: 16px; cursor: pointer; transition: 0.2s; }
     button:hover { background: #555; } button:active { transform: translateY(1px); }
-    .btn-red { border-bottom: 3px solid #ff4d4d; } .btn-blue { border-bottom: 3px solid #4d4dff; } .btn-reset { border-bottom: 3px solid white; }
+    .btn-red { border-bottom: 3px solid #ff4d4d; } .btn-blue { border-bottom: 3px solid #4d4dff; } .btn-reset { border-bottom: 3px solid white; } .btn-copilot { border-bottom: 3px solid #10b981; }
+    .rvb-toast { pointer-events: none; position: absolute; top: 70px; right: 20px; max-width: 320px; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(148, 163, 184, 0.35); padding: 12px 14px; border-radius: 12px; font-size: 14px; line-height: 1.4; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .rvb-toast strong { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #10b981; margin-bottom: 6px; }
   `}</style>
 )
 
