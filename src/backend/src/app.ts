@@ -4,6 +4,7 @@ import path from "node:path";
 import cors from "cors";
 import express from "express";
 import { z } from "zod";
+import { buildDecisionPrompt, clampNumber, estimateTokenCount } from "@copilot-playground/shared";
 
 // Mode types for safety toggles
 export type ChatMode = "explain-only" | "project-helper";
@@ -327,31 +328,6 @@ async function removePersistedSession(matchId: string): Promise<void> {
   }
 }
 
-function clampNumber(
-  value: number | undefined,
-  range: { min: number; max: number; default: number },
-  warnings: RuleWarning[],
-  field: string
-): number {
-  const requested = value ?? range.default;
-  let applied = requested;
-  if (requested < range.min) {
-    applied = range.min;
-  }
-  if (requested > range.max) {
-    applied = range.max;
-  }
-  if (applied !== requested) {
-    warnings.push({
-      field,
-      requested,
-      applied,
-      message: `${field} clamped to ${applied}`,
-    });
-  }
-  return applied;
-}
-
 function buildEffectiveRules(proposedRules: z.infer<typeof MatchStartSchema>["proposedRules"]): {
   effectiveRules: MatchRules;
   warnings: RuleWarning[];
@@ -393,10 +369,6 @@ function buildEffectiveConfig(
       "snapshotIntervalMs"
     ),
   };
-}
-
-export function estimateTokenCount(text: string): number {
-  return Math.ceil(text.length / 4);
 }
 
 function trimSummary(summary: string | null, maxChars: number): string | null {
@@ -466,7 +438,9 @@ function getTokenBudget(): number {
 
 export function enforceTokenBudget(session: MatchSession, snapshot: SnapshotPayload): void {
   const tokenBudget = Math.floor(getTokenBudget() * TOKEN_SAFETY_FACTOR);
-  const previewPrompt = buildDecisionPrompt(session, snapshot, "budget-check");
+  const previewPrompt = buildDecisionPrompt(session, snapshot, "budget-check", {
+    decisionTail: REHYDRATION_DECISION_TAIL,
+  });
   if (estimateTokenCount(previewPrompt) <= tokenBudget) {
     return;
   }
@@ -499,42 +473,6 @@ function generateCommentary(session: MatchSession): string {
   const trailing = red > blue ? "Blue" : "Red";
   const lead = Math.abs(red - blue);
   return `${leader} team leads by ${lead} ships. ${trailing} team needs a counter-attack.`;
-}
-
-function buildDecisionPrompt(session: MatchSession, snapshot: SnapshotPayload, decisionRequestId: string): string {
-  const red = snapshot.counts.red;
-  const blue = snapshot.counts.blue;
-  const leader = red === blue ? "even" : red > blue ? "red" : "blue";
-  const imbalance = Math.abs(red - blue);
-  const summary = session.strategicSummary;
-  const decisionTail = session.decisionHistory.slice(-REHYDRATION_DECISION_TAIL);
-  const decisionSummary =
-    decisionTail.length === 0
-      ? "No recent decisions."
-      : decisionTail
-          .map((record) => {
-            const detail =
-              record.validatedDecision?.params
-                ? `${record.validatedDecision.params.team}:${record.validatedDecision.params.count}`
-                : "n/a";
-            return `${record.status} ${record.requestId} (${detail})`;
-          })
-          .join("; ");
-
-  return [
-    "You are the Red vs Blue AI Director.",
-    "Return ONLY valid JSON that matches the schema below.",
-    "Schema:",
-    '{ "requestId": "<string>", "type": "spawnShips", "params": { "team": "red|blue", "count": <1-5> }, "confidence": <0-1 optional>, "reason": "<short text optional>" }',
-    `requestId must equal: ${decisionRequestId}`,
-    `Effective rules: ${JSON.stringify(session.effectiveRules)}.`,
-    `Effective config: ${JSON.stringify(session.effectiveConfig)}.`,
-    summary ? `Strategic summary: ${summary}` : "Strategic summary: (none yet).",
-    `Recent decisions: ${decisionSummary}`,
-    `Snapshot summary: red=${red}, blue=${blue}, total=${snapshot.gameSummary.totalShips}.`,
-    `Balance status: leader=${leader}, imbalance=${imbalance}.`,
-    "Choose a team that needs help and spawn 1-5 ships.",
-  ].join("\n");
 }
 
 function parseDecisionProposal(output: string): { proposal?: DecisionProposal; error?: string } {
@@ -576,7 +514,7 @@ function logDecisionAudit(record: DecisionAuditRecord, context: TraceContext): v
   }
 }
 
-function validateDecision(
+export function validateDecision(
   session: MatchSession,
   proposal: DecisionProposal,
   now: number
@@ -912,7 +850,9 @@ export function createApp(): express.Express {
 
     if (snapshotPayload.requestDecision) {
       const decisionRequestId = randomUUID();
-      const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId);
+      const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId, {
+        decisionTail: REHYDRATION_DECISION_TAIL,
+      });
       const decisionResult = await callCopilotService(prompt, "project-helper");
       const timestamp = Date.now();
 

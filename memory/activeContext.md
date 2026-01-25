@@ -4,14 +4,22 @@
 - Finalize Milestone E: Workspace mount + secrets (completed 2026-01-24).  
 - Continue Milestone F: switch to Copilot SDK (`TASK004`) — in progress.  
 - Continue Milestone C: end-to-end streaming tests and integration (`TASK006`) — in progress.
+- Begin monolith refactor Phase 1 (`TASK018`) — safe helper extraction + tests.
 
 **Recent changes:**
 - 2026-01-23/24: Implemented workspace read-only mount, `WORKDIR /workspace`, Compose wiring, and dotenvx secrets-first documentation (see commits in repository history).
+- 2026-01-25: Scoped monolith refactor candidates (backend `app.ts`, frontend `chat-playground.tsx`, RedVsBlue `useGame.ts`).
+
+**Monolith inventory (2026-01-25):**
+- `src/backend/src/app.ts` (~36KB): API routes + decision validation + streaming fallback logic.
+- `src/frontend/src/components/chat-playground.tsx` (~25KB): chat UI + streaming + backend probe.
+- `src/frontend/src/redvsblue/useGame.ts` (~13KB): engine lifecycle + canvas sizing + telemetry wiring.
 
 **Next steps:**
 1. Add a small follow-up to codify secrets guidance and add automated checks (create `DES009` and `TASK009`).
 2. Finish SDK migration work (complete `TASK004`) and add integration tests that exercise SDK mode in CI.
 3. Add automated integration tests for workspace mount visibility and dotenvx key handling.
+4. Continue `TASK018`: finalize helper extraction/tests and document changes.
 
 **Active decisions:**
 - Default to read-only workspace mounts and document opt-in for read/write in a future milestone.
