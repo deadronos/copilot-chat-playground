@@ -25,7 +25,7 @@ export type UseGameOptions = {
 type Controls = {
   start: () => void
   stop: () => void
-  spawnShip: (team: Team) => void
+  spawnShip: (team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>) => void
   reset: () => void
 }
 
@@ -184,10 +184,11 @@ export function useGame(options: UseGameOptions): Controls {
   }, [tick, worker])
 
   const spawnShip = useCallback(
-    (team: Team) => {
+    (team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>) => {
     const engine = engineRef.current
     if (!engine) return
-    engine.spawnShip(team)
+    // Pass through overrides when present
+    (engine as any).spawnShip(team, overrides)
     if (!worker) {
       useGameState.getState().setSnapshot(engine.getState())
     }

@@ -85,7 +85,7 @@ const RedVsBlue: React.FC = () => {
     }) => {
       if (decision.type !== "spawnShips") return;
       for (let i = 0; i < decision.params.count; i += 1) {
-        spawnShip(decision.params.team);
+        spawnShip(decision.params.team, decision.params.overrides as any | undefined);
       }
       if (decision.warnings && decision.warnings.length > 0) {
         showToast(`AI Director warning: ${decision.warnings.join("; ")}`);

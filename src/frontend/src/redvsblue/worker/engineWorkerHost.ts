@@ -21,6 +21,7 @@ export type EngineWorkerStep = {
 export type EngineWorkerSpawn = {
   type: "spawn";
   team: Team;
+  overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>;
 };
 
 export type EngineWorkerReset = { type: "reset" };
