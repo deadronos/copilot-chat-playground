@@ -64,6 +64,24 @@ const RedVsBlue: React.FC = () => {
     }, DEFAULT_UI_CONFIG.toastTimeoutMs);
   }, []);
 
+  const applyValidatedDecision = useCallback(
+    (decision: {
+      requestId: string;
+      type: "spawnShips";
+      params: { team: "red" | "blue"; count: number };
+      warnings?: string[];
+    }) => {
+      if (decision.type !== "spawnShips") return;
+      for (let i = 0; i < decision.params.count; i += 1) {
+        spawnShip(decision.params.team);
+      }
+      if (decision.warnings && decision.warnings.length > 0) {
+        showToast(`AI Director warning: ${decision.warnings.join("; ")}`);
+      }
+    },
+    [showToast, spawnShip]
+  );
+
   useEffect(() => {
     const unsubscribe = useGameState.subscribe(selectSnapshot, (snapshot) => {
       if (snapshot) {
@@ -144,18 +162,44 @@ const RedVsBlue: React.FC = () => {
         gameSummary: summary,
         counts: { red: redCount, blue: blueCount },
         recentMajorEvents: [],
+        requestDecision: true,
       };
-      void fetch(`/api/redvsblue/match/${matchId}/snapshot`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      void (async () => {
+        try {
+          const response = await fetch(`/api/redvsblue/match/${matchId}/snapshot`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          if (!response.ok) return;
+          const data = (await response.json()) as {
+            notificationText?: string;
+            validatedDecision?: {
+              requestId: string;
+              type: "spawnShips";
+              params: { team: "red" | "blue"; count: number };
+              warnings?: string[];
+            };
+            decisionRejectedReason?: string;
+          };
+          if (data.notificationText) {
+            showToast(data.notificationText);
+          }
+          if (data.validatedDecision) {
+            applyValidatedDecision(data.validatedDecision);
+          } else if (data.decisionRejectedReason) {
+            showToast(`AI Director rejected decision: ${data.decisionRejectedReason}`);
+          }
+        } catch {
+          // ignore snapshot errors
+        }
+      })();
     }, snapshotIntervalMs);
 
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [blueCount, redCount, sessionId, snapshotIntervalMs]);
+  }, [applyValidatedDecision, blueCount, redCount, sessionId, showToast, snapshotIntervalMs]);
 
   useEffect(() => {
     return () => {
