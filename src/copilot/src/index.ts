@@ -73,7 +73,7 @@ export function createApp(): express.Express {
 
       res.setHeader("Content-Type", "text/plain; version=0.0.4");
       res.send(lines.join("\n") + "\n");
-    } catch (err) {
+    } catch {
       res.setHeader("Content-Type", "text/plain; version=0.0.4");
       res.status(500).send("# HELP copilot_model_mismatch_total Number of model mismatches detected\n# TYPE copilot_model_mismatch_total counter\ncopilot_model_mismatch_total 0\n");
     }

@@ -294,16 +294,16 @@ export function enforceTokenBudget(session: MatchSession, snapshot: SnapshotPayl
 export function generateCommentary(session: MatchSession): string {
   const lastSnapshot = session.snapshots.at(-1);
   if (!lastSnapshot) {
-    return "The battle is underway. Spawn a few ships to get the action going.";
+    return "Red and Blue are warming up their engines—this battle is about to pop off!";
   }
   const { red, blue } = lastSnapshot.counts;
   if (red === blue) {
-    return `It's dead even: ${red} red ships vs ${blue} blue ships.`;
+    return `Red and Blue are dead even at ${red} each — sparks flying, lasers blazing!`;
   }
   const leader = red > blue ? "Red" : "Blue";
   const trailing = red > blue ? "Blue" : "Red";
   const lead = Math.abs(red - blue);
-  return `${leader} team leads by ${lead} ships. ${trailing} team needs a counter-attack.`;
+  return `${leader} team is ahead by ${lead} ships, but ${trailing} is revving up for a comeback. Red and Blue are both bringing the heat!`;
 }
 
 export function createMatchSession(options: {

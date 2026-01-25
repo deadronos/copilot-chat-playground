@@ -270,7 +270,7 @@ export interface Engine {
    * Red ships spawn on the left, blue ships on the right.
    * @param team - Team affiliation ("red" or "blue")
    */
-  spawnShip(team: Team): void;
+  spawnShip(team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>): void;
 
   /**
    * Reset the game to initial state with 4 ships (2 red, 2 blue).

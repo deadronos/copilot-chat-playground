@@ -112,8 +112,8 @@ export class EngineWorkerWrapper implements Engine {
     this.post({ type: "emit", event, data });
   }
 
-  spawnShip(team: Team): void {
-    this.post({ type: "spawn", team });
+  spawnShip(team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>): void {
+    this.post({ type: "spawn", team, overrides });
   }
 
   reset(): void {

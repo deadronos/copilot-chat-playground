@@ -37,6 +37,7 @@ export type SnapshotPayload = {
     summary?: string;
   }>;
   requestDecision?: boolean;
+  requestOverrides?: boolean;
 };
 
 export type DecisionProposal = {
@@ -45,6 +46,12 @@ export type DecisionProposal = {
   params: {
     team: Team;
     count: number;
+    overrides?: {
+      shipSpeed?: number;
+      bulletSpeed?: number;
+      bulletDamage?: number;
+      shipMaxHealth?: number;
+    };
   };
   confidence?: number;
   reason?: string;
@@ -56,6 +63,12 @@ export type ValidatedDecision = {
   params: {
     team: Team;
     count: number;
+    overrides?: {
+      shipSpeed?: number;
+      bulletSpeed?: number;
+      bulletDamage?: number;
+      shipMaxHealth?: number;
+    };
   };
   warnings: string[];
 };
