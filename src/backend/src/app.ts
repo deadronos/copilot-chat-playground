@@ -57,8 +57,51 @@ type MatchSession = {
   effectiveConfig: MatchConfig;
   warnings: RuleWarning[];
   snapshots: SnapshotPayload[];
+  decisionState: DecisionState;
+  decisionHistory: DecisionAuditRecord[];
   createdAt: number;
   updatedAt: number;
+};
+
+type Team = "red" | "blue";
+
+type DecisionProposal = {
+  requestId: string;
+  type: "spawnShips";
+  params: {
+    team: Team;
+    count: number;
+  };
+  confidence?: number;
+  reason?: string;
+};
+
+type ValidatedDecision = {
+  requestId: string;
+  type: "spawnShips";
+  params: {
+    team: Team;
+    count: number;
+  };
+  warnings: string[];
+};
+
+type DecisionAuditRecord = {
+  requestId: string;
+  matchId: string;
+  sessionId: string;
+  status: "accepted" | "rejected" | "invalid";
+  proposedDecision?: DecisionProposal;
+  validatedDecision?: ValidatedDecision;
+  reason?: string;
+  warnings?: string[];
+  timestamp: number;
+};
+
+type DecisionState = {
+  lastDecisionAt: number | null;
+  recentSpawns: Array<{ timestamp: number; count: number }>;
+  appliedDecisionIds: Set<string>;
 };
 
 const MatchStartSchema = z.object({
@@ -101,6 +144,7 @@ const SnapshotSchema = z.object({
       })
     )
     .max(50),
+  requestDecision: z.boolean().optional(),
 });
 
 const AskSchema = z.object({
@@ -121,6 +165,23 @@ const CONFIG_RANGES = {
 };
 
 const MAX_SNAPSHOT_BUFFER = 120;
+const DECISION_LIMITS = {
+  maxSpawnPerDecision: 5,
+  maxSpawnPerMinute: 15,
+  cooldownMs: 5_000,
+};
+
+const DecisionProposalSchema = z.object({
+  requestId: z.string().min(1),
+  type: z.literal("spawnShips"),
+  params: z.object({
+    team: z.enum(["red", "blue"]),
+    count: z.number().int().min(1).max(50),
+  }),
+  confidence: z.number().min(0).max(1).optional(),
+  reason: z.string().min(1).max(500).optional(),
+});
+
 const matchStore = new Map<string, MatchSession>();
 
 function clampNumber(
@@ -204,6 +265,112 @@ function generateCommentary(session: MatchSession): string {
   const trailing = red > blue ? "Blue" : "Red";
   const lead = Math.abs(red - blue);
   return `${leader} team leads by ${lead} ships. ${trailing} team needs a counter-attack.`;
+}
+
+function buildDecisionPrompt(session: MatchSession, snapshot: SnapshotPayload, decisionRequestId: string): string {
+  const red = snapshot.counts.red;
+  const blue = snapshot.counts.blue;
+  const leader = red === blue ? "even" : red > blue ? "red" : "blue";
+  const imbalance = Math.abs(red - blue);
+  return [
+    "You are the Red vs Blue AI Director.",
+    "Return ONLY valid JSON that matches the schema below.",
+    "Schema:",
+    '{ "requestId": "<string>", "type": "spawnShips", "params": { "team": "red|blue", "count": <1-5> }, "confidence": <0-1 optional>, "reason": "<short text optional>" }',
+    `requestId must equal: ${decisionRequestId}`,
+    `Snapshot summary: red=${red}, blue=${blue}, total=${snapshot.gameSummary.totalShips}.`,
+    `Balance status: leader=${leader}, imbalance=${imbalance}.`,
+    "Choose a team that needs help and spawn 1-5 ships.",
+  ].join("\n");
+}
+
+function parseDecisionProposal(output: string): { proposal?: DecisionProposal; error?: string } {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(output);
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error ? `Invalid JSON: ${error.message}` : "Invalid JSON response.",
+    };
+  }
+  const parsed = DecisionProposalSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { error: parsed.error.message };
+  }
+  return { proposal: parsed.data };
+}
+
+function logDecisionAudit(record: DecisionAuditRecord): void {
+  if (record.status === "accepted") {
+    console.info("[redvsblue] decision accepted", record);
+  } else if (record.status === "invalid") {
+    console.warn("[redvsblue] decision invalid", record);
+  } else {
+    console.warn("[redvsblue] decision rejected", record);
+  }
+}
+
+function validateDecision(
+  session: MatchSession,
+  proposal: DecisionProposal,
+  now: number
+): { validatedDecision?: ValidatedDecision; rejectionReason?: string } {
+  const state = session.decisionState;
+  if (state.appliedDecisionIds.has(proposal.requestId)) {
+    return { rejectionReason: "Duplicate decision requestId" };
+  }
+
+  if (state.lastDecisionAt && now - state.lastDecisionAt < DECISION_LIMITS.cooldownMs) {
+    return { rejectionReason: "Decision cooldown active" };
+  }
+
+  const recentSpawns = state.recentSpawns.filter(
+    (entry) => now - entry.timestamp < 60_000
+  );
+  const usedSpawnCount = recentSpawns.reduce((sum, entry) => sum + entry.count, 0);
+  let nextCount = proposal.params.count;
+  const warnings: string[] = [];
+
+  if (nextCount > DECISION_LIMITS.maxSpawnPerDecision) {
+    warnings.push(
+      `Clamped spawn count to ${DECISION_LIMITS.maxSpawnPerDecision} (max per decision)`
+    );
+    nextCount = DECISION_LIMITS.maxSpawnPerDecision;
+  }
+
+  const remainingAllowance = Math.max(
+    0,
+    DECISION_LIMITS.maxSpawnPerMinute - usedSpawnCount
+  );
+  if (remainingAllowance <= 0) {
+    return { rejectionReason: "Per-minute spawn budget exhausted" };
+  }
+  if (nextCount > remainingAllowance) {
+    warnings.push(`Clamped spawn count to ${remainingAllowance} (per-minute limit)`);
+    nextCount = remainingAllowance;
+  }
+
+  if (nextCount <= 0) {
+    return { rejectionReason: "No spawn allowance available" };
+  }
+
+  const validatedDecision: ValidatedDecision = {
+    requestId: proposal.requestId,
+    type: "spawnShips",
+    params: {
+      team: proposal.params.team,
+      count: nextCount,
+    },
+    warnings,
+  };
+
+  session.decisionState.recentSpawns = recentSpawns;
+  session.decisionState.lastDecisionAt = now;
+  session.decisionState.recentSpawns.push({ timestamp: now, count: nextCount });
+  session.decisionState.appliedDecisionIds.add(proposal.requestId);
+
+  return { validatedDecision };
 }
 
 function logValidationFailure(context: { requestId: string; matchId?: string; sessionId?: string }, issues: unknown): void {
@@ -410,6 +577,12 @@ export function createApp(): express.Express {
       effectiveConfig,
       warnings,
       snapshots: [],
+      decisionState: {
+        lastDecisionAt: null,
+        recentSpawns: [],
+        appliedDecisionIds: new Set(),
+      },
+      decisionHistory: [],
       createdAt: now,
       updatedAt: now,
     };
@@ -427,7 +600,7 @@ export function createApp(): express.Express {
     });
   });
 
-  app.post("/api/redvsblue/match/:matchId/snapshot", (req, res) => {
+  app.post("/api/redvsblue/match/:matchId/snapshot", async (req, res) => {
     const requestId = randomUUID();
     const matchId = req.params.matchId;
     const session = matchStore.get(matchId);
@@ -451,11 +624,105 @@ export function createApp(): express.Express {
       return;
     }
 
-    session.snapshots.push(parsed.data);
+    const snapshotPayload = parsed.data;
+    session.snapshots.push(snapshotPayload);
     if (session.snapshots.length > MAX_SNAPSHOT_BUFFER) {
       session.snapshots.splice(0, session.snapshots.length - MAX_SNAPSHOT_BUFFER);
     }
     session.updatedAt = Date.now();
+
+    let notificationText: string | undefined;
+    let validatedDecision: ValidatedDecision | undefined;
+    let decisionRejectedReason: string | undefined;
+
+    if (snapshotPayload.requestDecision) {
+      const decisionRequestId = randomUUID();
+      const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId);
+      const decisionResult = await callCopilotService(prompt, "project-helper");
+      const timestamp = Date.now();
+
+      if (!decisionResult.success || !decisionResult.output) {
+        const reason = decisionResult.error ?? "Decision request failed.";
+        const record: DecisionAuditRecord = {
+          requestId: decisionRequestId,
+          matchId,
+          sessionId: session.sessionId,
+          status: "rejected",
+          reason,
+          timestamp,
+        };
+        session.decisionHistory.push(record);
+        logDecisionAudit(record);
+        decisionRejectedReason = reason;
+      } else {
+        const parsedDecision = parseDecisionProposal(decisionResult.output);
+        if (!parsedDecision.proposal) {
+          const reason = parsedDecision.error ?? "Invalid decision payload";
+          const record: DecisionAuditRecord = {
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+            status: "invalid",
+            reason,
+            timestamp,
+          };
+          session.decisionHistory.push(record);
+          logDecisionAudit(record);
+          decisionRejectedReason = reason;
+        } else if (parsedDecision.proposal.requestId !== decisionRequestId) {
+          const reason = "Decision requestId mismatch";
+          const record: DecisionAuditRecord = {
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+            status: "invalid",
+            proposedDecision: parsedDecision.proposal,
+            reason,
+            timestamp,
+          };
+          session.decisionHistory.push(record);
+          logDecisionAudit(record);
+          decisionRejectedReason = reason;
+        } else {
+          const { validatedDecision: validated, rejectionReason } = validateDecision(
+            session,
+            parsedDecision.proposal,
+            timestamp
+          );
+          if (!validated) {
+            const record: DecisionAuditRecord = {
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+              status: "rejected",
+              proposedDecision: parsedDecision.proposal,
+              reason: rejectionReason ?? "Decision rejected by referee",
+              timestamp,
+            };
+            session.decisionHistory.push(record);
+            logDecisionAudit(record);
+            decisionRejectedReason = record.reason;
+          } else {
+            validatedDecision = validated;
+            notificationText =
+              parsedDecision.proposal.reason ??
+              `AI Director suggests spawning ${validated.params.count} ${validated.params.team} ships.`;
+            const record: DecisionAuditRecord = {
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+              status: "accepted",
+              proposedDecision: parsedDecision.proposal,
+              validatedDecision: validated,
+              warnings: validated.warnings,
+              timestamp,
+            };
+            session.decisionHistory.push(record);
+            logDecisionAudit(record);
+          }
+        }
+      }
+    }
 
     res.status(200).json({
       ok: true,
@@ -463,6 +730,9 @@ export function createApp(): express.Express {
       sessionId: session.sessionId,
       storedSnapshots: session.snapshots.length,
       requestId,
+      notificationText,
+      validatedDecision,
+      decisionRejectedReason,
     });
   });
 
