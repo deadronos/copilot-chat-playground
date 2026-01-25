@@ -19,7 +19,7 @@ export const DEFAULT_UI_CONFIG: UIConfig = {
   particleRenderSize: 2,
   defaultCanvasWidth: 800,
   defaultCanvasHeight: 600,
-  initialShipsPerTeam: 2,
+  initialShipsPerTeam: 25,
 }
 
 export default DEFAULT_UI_CONFIG

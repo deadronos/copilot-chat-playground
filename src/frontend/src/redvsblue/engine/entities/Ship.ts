@@ -27,6 +27,9 @@ export class Ship {
   cooldown: number;
   radius: number;
   id: string;
+  bulletSpeedOverride?: number;
+  bulletDamageOverride?: number;
+  shipThrustOverride?: number;
 
   constructor(
     id: string,

@@ -26,7 +26,7 @@ export function RedVsBluePanel({ isOpen, onOpenChange }: RedVsBluePanelProps) {
               <h2 className={cn("font-display text-2xl", isOpen ? "text-white" : "text-slate-900")}>RedVsBlue Simulation</h2>
               <p className={cn("mt-2 text-sm", isOpen ? "text-slate-300" : "text-slate-500")}>
                 {isOpen
-                  ? "Toggle \'Ask Copilot\' button to let the AI direct and commentate the battle."
+                  ? "Toggle 'Ask Copilot' button to let the AI direct and commentate the battle."
                   : "Load the RedVsBlue simulation to see AI in action directing a battle between red and blue ships."}
               </p>
             </div>
@@ -52,7 +52,7 @@ export function RedVsBluePanel({ isOpen, onOpenChange }: RedVsBluePanelProps) {
                 <div>
                   <p className="mb-2 text-sm text-slate-600">No simulation loaded</p>
                   <p className="text-xs text-slate-500">
-                    Click \"Load RedVsBlue simulation\" to start the battle.
+                    Click "Load RedVsBlue simulation" to start the battle.
                   </p>
                 </div>
                 <Button

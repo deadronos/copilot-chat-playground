@@ -30,6 +30,7 @@ import {
 } from "./services/decision-referee.js";
 import type {
   DecisionAuditRecord,
+  SnapshotPayload,
   TraceContext,
   ValidatedDecision,
 } from "./services/redvsblue-types.js";
@@ -80,18 +81,36 @@ const SnapshotSchema = z.object({
     )
     .max(50),
   requestDecision: z.boolean().optional(),
+  requestOverrides: z.boolean().optional(),
 });
 
 const AskSchema = z.object({
   question: z.string().min(1).max(500).optional(),
+  snapshot: SnapshotSchema.optional(),
 });
 
-function logValidationFailure(context: TraceContext, issues: unknown): void {
-  logStructuredEvent("warn", "validation failure", context, { issues });
+function logValidationFailure(
+  context: TraceContext,
+  issues: unknown,
+  req?: express.Request
+): void {
+  logStructuredEvent("warn", "validation failure", context, {
+    issues,
+    method: req?.method,
+    path: req?.path,
+  });
 }
 
-function logMatchFailure(context: TraceContext, message: string): void {
-  logStructuredEvent("warn", "request rejected", context, { message });
+function logMatchFailure(
+  context: TraceContext,
+  message: string,
+  req?: express.Request
+): void {
+  logStructuredEvent("warn", "request rejected", context, {
+    message,
+    method: req?.method,
+    path: req?.path,
+  });
 }
 
 export function createApp(): express.Express {
@@ -108,9 +127,13 @@ export function createApp(): express.Express {
   app.post("/api/redvsblue/match/start", async (req, res) => {
     const traceId = randomUUID();
     const requestId = randomUUID();
+    logStructuredEvent("info", "match.start.received", { traceId, requestId }, {
+      method: req.method,
+      path: req.path,
+    });
     const parsed = MatchStartSchema.safeParse(req.body);
     if (!parsed.success) {
-      logValidationFailure({ traceId, requestId }, parsed.error.issues);
+      logValidationFailure({ traceId, requestId }, parsed.error.issues, req);
       res.status(400).json({
         error: "Invalid request",
         issues: parsed.error.issues,
@@ -136,6 +159,13 @@ export function createApp(): express.Express {
     setMatchSession(matchId, session);
     await persistMatchSession(session);
 
+    logStructuredEvent("info", "match.start.success", { traceId, requestId, matchId, sessionId }, {
+      rulesVersion,
+      effectiveRules: session.effectiveRules,
+      effectiveConfig: session.effectiveConfig,
+      warnings: session.warnings,
+    });
+
     res.status(200).json({
       matchId,
       sessionId,
@@ -152,10 +182,14 @@ export function createApp(): express.Express {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.snapshot.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
 
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
       res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
@@ -164,7 +198,8 @@ export function createApp(): express.Express {
     if (!parsed.success) {
       logValidationFailure(
         { traceId, requestId, matchId, sessionId: session.sessionId },
-        parsed.error.issues
+        parsed.error.issues,
+        req
       );
       res.status(400).json({
         error: "Invalid request",
@@ -179,13 +214,35 @@ export function createApp(): express.Express {
 
     const snapshotPayload = parsed.data;
     recordSnapshot(session, snapshotPayload);
+    logStructuredEvent("info", "match.snapshot.recorded", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      storedSnapshots: session.snapshots.length,
+      requestDecision: snapshotPayload.requestDecision ?? false,
+    });
 
     let notificationText: string | undefined;
     let validatedDecision: ValidatedDecision | undefined;
     let decisionRejectedReason: string | undefined;
 
+    const baseCommentary = generateCommentary(session);
+    notificationText = baseCommentary;
+    if (!notificationText || notificationText.trim().length === 0) {
+      notificationText =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
+
     if (snapshotPayload.requestDecision) {
       const decisionRequestId = randomUUID();
+      logStructuredEvent("info", "match.decision.requested", {
+        traceId,
+        requestId: decisionRequestId,
+        matchId,
+        sessionId: session.sessionId,
+      });
       const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId, {
         decisionTail: REHYDRATION_DECISION_TAIL,
       });
@@ -220,6 +277,12 @@ export function createApp(): express.Express {
           }
         );
         decisionRejectedReason = reason;
+        logStructuredEvent("warn", "match.decision.rejected", {
+          traceId,
+          requestId: decisionRequestId,
+          matchId,
+          sessionId: session.sessionId,
+        }, { reason });
       } else {
         const parsedDecision = parseDecisionProposal(decisionResult.output);
         if (!parsedDecision.proposal) {
@@ -247,6 +310,12 @@ export function createApp(): express.Express {
             { error: reason }
           );
           decisionRejectedReason = reason;
+          logStructuredEvent("warn", "match.decision.invalid", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { reason });
         } else if (parsedDecision.proposal.requestId !== decisionRequestId) {
           const reason = "Decision requestId mismatch";
           const record: DecisionAuditRecord = {
@@ -273,11 +342,18 @@ export function createApp(): express.Express {
             { error: reason }
           );
           decisionRejectedReason = reason;
+          logStructuredEvent("warn", "match.decision.invalid", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          }, { reason });
         } else {
           const { validatedDecision: validated, rejectionReason } = validateDecision(
             session.decisionState,
             parsedDecision.proposal,
-            timestamp
+            timestamp,
+            Boolean(snapshotPayload?.requestOverrides)
           );
           if (!validated) {
             const record: DecisionAuditRecord = {
@@ -293,11 +369,18 @@ export function createApp(): express.Express {
             session.decisionHistory.push(record);
             logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
             decisionRejectedReason = record.reason;
+            logStructuredEvent("warn", "match.decision.rejected", {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            }, { reason: record.reason });
           } else {
             validatedDecision = validated;
-            notificationText =
+            const decisionNote =
               parsedDecision.proposal.reason ??
               `AI Director suggests spawning ${validated.params.count} ${validated.params.team} ships.`;
+            notificationText = `${notificationText} ${decisionNote}`.trim();
             const record: DecisionAuditRecord = {
               requestId: decisionRequestId,
               matchId,
@@ -311,12 +394,32 @@ export function createApp(): express.Express {
             };
             session.decisionHistory.push(record);
             logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+            logStructuredEvent("info", "match.decision.accepted", {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            }, {
+              team: validated.params.team,
+              count: validated.params.count,
+              warnings: validated.warnings,
+            });
           }
         }
       }
     }
 
     await persistMatchSession(session);
+    logStructuredEvent("info", "match.snapshot.response", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      notificationText,
+      decisionRejectedReason,
+      hasValidatedDecision: Boolean(validatedDecision),
+    });
 
     res.status(200).json({
       ok: true,
@@ -331,14 +434,18 @@ export function createApp(): express.Express {
     });
   });
 
-  app.post("/api/redvsblue/match/:matchId/ask", (req, res) => {
+  app.post("/api/redvsblue/match/:matchId/ask", async (req, res) => {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.ask.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
 
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
       res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
       return;
     }
@@ -347,7 +454,8 @@ export function createApp(): express.Express {
     if (!parsed.success) {
       logValidationFailure(
         { traceId, requestId, matchId, sessionId: session.sessionId },
-        parsed.error.issues
+        parsed.error.issues,
+        req
       );
       res.status(400).json({
         error: "Invalid request",
@@ -360,12 +468,198 @@ export function createApp(): express.Express {
       return;
     }
 
-    const commentary = generateCommentary(session);
+    // If the client provided a fresh snapshot with the ask request, record it so
+    // generateCommentary will reflect the latest counts.
+    const data = parsed.data as { question?: string; snapshot?: unknown };
+    if (data.snapshot) {
+      try {
+        // Validate and record snapshot payload
+        const validated = SnapshotSchema.parse(data.snapshot);
+        recordSnapshot(session, validated);
+        await persistMatchSession(session);
+      } catch (err) {
+        logStructuredEvent("warn", "ask.snapshot.record_failed", { traceId, requestId, matchId, sessionId: session.sessionId }, {
+          error: err instanceof Error ? err.message : String(err),
+        });
+      }
+    }
+
+    let commentary = generateCommentary(session);
+    if (!commentary || commentary.trim().length === 0) {
+      commentary =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
+
+    // If the snapshot requested a decision, run the same decision flow as snapshot
+    // endpoint and include the validatedDecision or rejection reason in the response.
+    let validatedDecision: {
+      requestId: string;
+      type: "spawnShips";
+      params: { team: "red" | "blue"; count: number };
+      warnings?: string[];
+    } | undefined;
+    let decisionRejectedReason: string | undefined;
+    let didDecisionMutateSession = false;
+
+    try {
+      const body = parsed.data as { question?: string; snapshot?: unknown };
+      if (body.snapshot) {
+        const snapshotPayload = SnapshotSchema.parse(body.snapshot);
+        if (snapshotPayload.requestDecision) {
+          const decisionRequestId = randomUUID();
+          logStructuredEvent("info", "match.decision.requested", {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          });
+
+          const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId, {
+            decisionTail: REHYDRATION_DECISION_TAIL,
+          });
+          const decisionResult = await callCopilotService(prompt, "project-helper");
+          const timestamp = Date.now();
+
+          if (!decisionResult.success || !decisionResult.output) {
+            const reason = decisionResult.error ?? "Decision request failed.";
+            const record: DecisionAuditRecord = {
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+              traceId,
+              status: "rejected",
+              reason,
+              timestamp,
+            };
+            session.decisionHistory.push(record);
+            didDecisionMutateSession = true;
+            logDecisionAudit(record, {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            });
+            logStructuredEvent("warn", "decision error", {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            }, {
+              error: reason,
+              errorType: decisionResult.errorType ?? "unknown",
+            });
+            decisionRejectedReason = reason;
+          } else {
+            const { proposal, error: parseError } = parseDecisionProposal(decisionResult.output);
+            if (!proposal || parseError) {
+              const reason = parseError ?? "Invalid decision response";
+              const record: DecisionAuditRecord = {
+                requestId: decisionRequestId,
+                matchId,
+                sessionId: session.sessionId,
+                traceId,
+                status: "invalid",
+                reason,
+                timestamp,
+                ...(proposal ? { proposedDecision: proposal } : {}),
+              };
+              session.decisionHistory.push(record);
+              didDecisionMutateSession = true;
+              logDecisionAudit(record, {
+                traceId,
+                requestId: decisionRequestId,
+                matchId,
+                sessionId: session.sessionId,
+              });
+              decisionRejectedReason = reason;
+            } else {
+              const { validatedDecision: validated, rejectionReason } = validateDecision(
+                session.decisionState,
+                proposal,
+                Date.now(),
+                Boolean(snapshotPayload.requestOverrides)
+              );
+              if (validated) {
+                validatedDecision = validated;
+                const record: DecisionAuditRecord = {
+                  requestId: decisionRequestId,
+                  matchId,
+                  sessionId: session.sessionId,
+                  traceId,
+                  status: "accepted",
+                  timestamp,
+                  validatedDecision: validated,
+                  warnings: validated.warnings,
+                };
+                session.decisionHistory.push(record);
+                didDecisionMutateSession = true;
+                logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+
+                // apply immediate decision effect (spawn ships) to session simulation
+                if (validated.type === "spawnShips") {
+                  for (let i = 0; i < validated.params.count; i += 1) {
+                    // spawn in the session simulation so commentary sees updated counts
+                    // note: session is logical; the actual game engine runs in the client
+                    // but we update counts in session snapshots by recording an artificial snapshot
+                    const fakeSnapshot: SnapshotPayload = {
+                      timestamp: Date.now(),
+                      snapshotId: randomUUID(),
+                      gameSummary: {
+                        redCount: validated.params.team === "red" ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count : (snapshotPayload?.counts?.red ?? 0),
+                        blueCount: validated.params.team === "blue" ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count : (snapshotPayload?.counts?.blue ?? 0),
+                        totalShips: (snapshotPayload?.counts?.red ?? 0) + (snapshotPayload?.counts?.blue ?? 0) + validated.params.count,
+                      },
+                      counts: {
+                        red: validated.params.team === "red" ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count : (snapshotPayload?.counts?.red ?? 0),
+                        blue: validated.params.team === "blue" ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count : (snapshotPayload?.counts?.blue ?? 0),
+                      },
+                      recentMajorEvents: [],
+                    };
+                    recordSnapshot(session, fakeSnapshot);
+                    didDecisionMutateSession = true;
+                  }
+                }
+              } else {
+                decisionRejectedReason = rejectionReason;
+              }
+            }
+          }
+        }
+      }
+    } catch (err) {
+      // swallow decision errors for ask: we already recorded snapshot and can still reply with commentary
+      logStructuredEvent("warn", "ask.decision.failed", { traceId, requestId, matchId, sessionId: session.sessionId }, {
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+
+    if (didDecisionMutateSession) {
+      await persistMatchSession(session);
+    }
+
+    // Re-generate commentary after any applied decision
+    commentary = generateCommentary(session);
+    if (!commentary || commentary.trim().length === 0) {
+      commentary =
+        "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
+    }
+
+    logStructuredEvent("info", "match.ask.response", {
+      traceId,
+      requestId,
+      matchId,
+      sessionId: session.sessionId,
+    }, {
+      commentaryLength: commentary.length,
+      hasValidatedDecision: Boolean(validatedDecision),
+    });
 
     res.status(200).json({
       matchId,
       sessionId: session.sessionId,
       commentary,
+      validatedDecision,
+      decisionRejectedReason,
       requestId,
       traceId,
     });
@@ -375,16 +669,23 @@ export function createApp(): express.Express {
     const traceId = randomUUID();
     const requestId = randomUUID();
     const matchId = req.params.matchId;
+    logStructuredEvent("info", "match.end.received", { traceId, requestId, matchId }, {
+      method: req.method,
+      path: req.path,
+    });
     const session = getMatchSession(matchId);
     const sessionId = session?.sessionId;
     if (!session) {
-      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
-      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+      logStructuredEvent("info", "match.end.noop", { traceId, requestId, matchId }, {
+        reason: "Unknown matchId",
+      });
+      res.status(204).send();
       return;
     }
 
     deleteMatchSession(matchId);
     await removePersistedSession(matchId);
+    logStructuredEvent("info", "match.end.success", { traceId, requestId, matchId, sessionId });
     res.status(200).json({ ok: true, matchId, sessionId, requestId, traceId });
   });
 
