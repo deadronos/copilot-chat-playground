@@ -1,187 +1,97 @@
+import { randomUUID } from "node:crypto";
 import cors from "cors";
 import express from "express";
 import { z } from "zod";
+import { buildDecisionPrompt } from "@copilot-playground/shared";
 
-// Mode types for safety toggles
-export type ChatMode = "explain-only" | "project-helper";
+import {
+  callCopilotService,
+  callCopilotServiceStream,
+  sendPlainTextError,
+  type ChatMode,
+} from "./services/copilot.js";
+import {
+  createMatchSession,
+  deleteMatchSession,
+  generateCommentary,
+  getMatchSession,
+  loadPersistedSessions,
+  persistMatchSession,
+  recordSnapshot,
+  removePersistedSession,
+  setMatchSession,
+  REHYDRATION_DECISION_TAIL,
+} from "./services/match-store.js";
+import {
+  logDecisionAudit,
+  logStructuredEvent,
+  parseDecisionProposal,
+  validateDecision,
+} from "./services/decision-referee.js";
+import type {
+  DecisionAuditRecord,
+  TraceContext,
+  ValidatedDecision,
+} from "./services/redvsblue-types.js";
 
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
   mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
 });
 
-type CopilotError = {
-  error?: string;
-  errorType?: string;
-};
+const MatchStartSchema = z.object({
+  matchId: z.string().min(1),
+  rulesVersion: z.string().min(1).default("v1"),
+  proposedRules: z
+    .object({
+      shipSpeed: z.number().finite().optional(),
+      bulletSpeed: z.number().finite().optional(),
+      bulletDamage: z.number().finite().optional(),
+      shipMaxHealth: z.number().finite().optional(),
+    })
+    .default({}),
+  clientConfig: z
+    .object({
+      snapshotIntervalMs: z.number().int().positive().finite().optional(),
+    })
+    .default({}),
+});
 
-type CopilotCallResult = {
-  success: boolean;
-  output?: string;
-  error?: string;
-  errorType?: string;
-};
+const SnapshotSchema = z.object({
+  timestamp: z.number().finite(),
+  snapshotId: z.string().min(1),
+  gameSummary: z.object({
+    redCount: z.number().int().min(0),
+    blueCount: z.number().int().min(0),
+    totalShips: z.number().int().min(0),
+  }),
+  counts: z.object({
+    red: z.number().int().min(0),
+    blue: z.number().int().min(0),
+  }),
+  recentMajorEvents: z
+    .array(
+      z.object({
+        type: z.string().min(1),
+        timestamp: z.number().finite(),
+        team: z.enum(["red", "blue"]).optional(),
+        summary: z.string().optional(),
+      })
+    )
+    .max(50),
+  requestDecision: z.boolean().optional(),
+});
 
-type CopilotStreamResult = {
-  success: boolean;
-  response?: Response;
-  error?: string;
-  errorType?: string;
-  status?: number;
-};
+const AskSchema = z.object({
+  question: z.string().min(1).max(500).optional(),
+});
 
-function getCopilotServiceUrl(): string {
-  return process.env.COPILOT_SERVICE_URL || "http://localhost:3210";
+function logValidationFailure(context: TraceContext, issues: unknown): void {
+  logStructuredEvent("warn", "validation failure", context, { issues });
 }
 
-/**
- * Calls the copilot service and returns the response (buffered)
- * Fallback for non-streaming mode.
- */
-async function callCopilotService(
-  prompt: string,
-  mode: ChatMode = "explain-only"
-): Promise<CopilotCallResult> {
-  try {
-    const response = await fetch(`${getCopilotServiceUrl()}/chat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt, mode }),
-    });
-
-    if (!response.ok) {
-      const errorData = (await response.json()) as CopilotError;
-      return {
-        success: false,
-        error: errorData.error || "Copilot service returned an error",
-        errorType: errorData.errorType,
-      };
-    }
-
-    const data = (await response.json()) as { output?: string };
-    return {
-      success: true,
-      output: data.output,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error:
-        error instanceof Error
-          ? `Failed to connect to copilot service: ${error.message}`
-          : "Failed to connect to copilot service",
-      errorType: "connection",
-    };
-  }
-}
-
-/**
- * Calls the copilot streaming endpoint and returns the response.
- */
-async function callCopilotServiceStream(
-  prompt: string,
-  mode: ChatMode,
-  signal: AbortSignal
-): Promise<CopilotStreamResult> {
-  try {
-    const response = await fetch(`${getCopilotServiceUrl()}/chat/stream`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "text/plain",
-      },
-      body: JSON.stringify({ prompt, mode }),
-      signal,
-    });
-
-    if (response.status === 404) {
-      return {
-        success: false,
-        error: "Streaming endpoint not available",
-        errorType: "stream_unavailable",
-        status: response.status,
-      };
-    }
-
-    if (!response.ok) {
-      let errorMessage = "Copilot service returned an error";
-      let errorType: string | undefined;
-
-      try {
-        const errorData = (await response.json()) as CopilotError;
-        errorMessage = errorData.error || errorMessage;
-        errorType = errorData.errorType;
-      } catch {
-        // Ignore JSON parsing errors for non-JSON responses
-      }
-
-      return {
-        success: false,
-        error: errorMessage,
-        errorType,
-        status: response.status,
-      };
-    }
-
-    if (!response.body) {
-      return {
-        success: false,
-        error: "Copilot stream was empty",
-        errorType: "stream_empty",
-        status: response.status,
-      };
-    }
-
-    return {
-      success: true,
-      response,
-    };
-  } catch (error) {
-    if (signal.aborted) {
-      return {
-        success: false,
-        error: "Request aborted",
-        errorType: "aborted",
-      };
-    }
-
-    return {
-      success: false,
-      error:
-        error instanceof Error
-          ? `Failed to connect to copilot service: ${error.message}`
-          : "Failed to connect to copilot service",
-      errorType: "connection",
-    };
-  }
-}
-
-function sendPlainTextError(
-  res: express.Response,
-  errorType: string | undefined,
-  errorMessage: string
-): void {
-  let userMessage = errorMessage;
-  let statusCode = 500;
-
-  if (errorType === "token_missing") {
-    userMessage =
-      "GitHub Copilot is not configured. Please set GH_TOKEN environment variable on the server.";
-    statusCode = 503;
-  } else if (errorType === "auth") {
-    userMessage =
-      "GitHub Copilot authentication failed. Please check your token permissions.";
-    statusCode = 401;
-  } else if (errorType === "connection") {
-    userMessage = "Could not connect to Copilot service. Please check if the service is running.";
-    statusCode = 503;
-  }
-
-  res.status(statusCode);
-  res.setHeader("Content-Type", "text/plain; charset=utf-8");
-  res.send(`Error: ${userMessage}`);
+function logMatchFailure(context: TraceContext, message: string): void {
+  logStructuredEvent("warn", "request rejected", context, { message });
 }
 
 export function createApp(): express.Express {
@@ -189,8 +99,293 @@ export function createApp(): express.Express {
   app.use(cors());
   app.use(express.json({ limit: "1mb" }));
 
+  loadPersistedSessions();
+
   app.get("/health", (_req, res) => {
     res.json({ ok: true, service: "backend" });
+  });
+
+  app.post("/api/redvsblue/match/start", async (req, res) => {
+    const traceId = randomUUID();
+    const requestId = randomUUID();
+    const parsed = MatchStartSchema.safeParse(req.body);
+    if (!parsed.success) {
+      logValidationFailure({ traceId, requestId }, parsed.error.issues);
+      res.status(400).json({
+        error: "Invalid request",
+        issues: parsed.error.issues,
+        requestId,
+        traceId,
+      });
+      return;
+    }
+
+    const { matchId, rulesVersion, proposedRules, clientConfig } = parsed.data;
+    const sessionId = randomUUID();
+
+    const now = Date.now();
+    const session = createMatchSession({
+      matchId,
+      sessionId,
+      rulesVersion,
+      proposedRules,
+      clientConfig,
+      now,
+    });
+
+    setMatchSession(matchId, session);
+    await persistMatchSession(session);
+
+    res.status(200).json({
+      matchId,
+      sessionId,
+      rulesVersion,
+      effectiveRules: session.effectiveRules,
+      effectiveConfig: session.effectiveConfig,
+      warnings: session.warnings,
+      requestId,
+      traceId,
+    });
+  });
+
+  app.post("/api/redvsblue/match/:matchId/snapshot", async (req, res) => {
+    const traceId = randomUUID();
+    const requestId = randomUUID();
+    const matchId = req.params.matchId;
+    const session = getMatchSession(matchId);
+
+    if (!session) {
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+      return;
+    }
+
+    const parsed = SnapshotSchema.safeParse(req.body);
+    if (!parsed.success) {
+      logValidationFailure(
+        { traceId, requestId, matchId, sessionId: session.sessionId },
+        parsed.error.issues
+      );
+      res.status(400).json({
+        error: "Invalid request",
+        issues: parsed.error.issues,
+        requestId,
+        matchId,
+        sessionId: session.sessionId,
+        traceId,
+      });
+      return;
+    }
+
+    const snapshotPayload = parsed.data;
+    recordSnapshot(session, snapshotPayload);
+
+    let notificationText: string | undefined;
+    let validatedDecision: ValidatedDecision | undefined;
+    let decisionRejectedReason: string | undefined;
+
+    if (snapshotPayload.requestDecision) {
+      const decisionRequestId = randomUUID();
+      const prompt = buildDecisionPrompt(session, snapshotPayload, decisionRequestId, {
+        decisionTail: REHYDRATION_DECISION_TAIL,
+      });
+      const decisionResult = await callCopilotService(prompt, "project-helper");
+      const timestamp = Date.now();
+
+      if (!decisionResult.success || !decisionResult.output) {
+        const reason = decisionResult.error ?? "Decision request failed.";
+        const record: DecisionAuditRecord = {
+          requestId: decisionRequestId,
+          matchId,
+          sessionId: session.sessionId,
+          traceId,
+          status: "rejected",
+          reason,
+          timestamp,
+        };
+        session.decisionHistory.push(record);
+        logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+        logStructuredEvent(
+          "warn",
+          "decision error",
+          {
+            traceId,
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+          },
+          {
+            error: reason,
+            errorType: decisionResult.errorType ?? "unknown",
+          }
+        );
+        decisionRejectedReason = reason;
+      } else {
+        const parsedDecision = parseDecisionProposal(decisionResult.output);
+        if (!parsedDecision.proposal) {
+          const reason = parsedDecision.error ?? "Invalid decision payload";
+          const record: DecisionAuditRecord = {
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+            traceId,
+            status: "invalid",
+            reason,
+            timestamp,
+          };
+          session.decisionHistory.push(record);
+          logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+          logStructuredEvent(
+            "warn",
+            "decision parse error",
+            {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            },
+            { error: reason }
+          );
+          decisionRejectedReason = reason;
+        } else if (parsedDecision.proposal.requestId !== decisionRequestId) {
+          const reason = "Decision requestId mismatch";
+          const record: DecisionAuditRecord = {
+            requestId: decisionRequestId,
+            matchId,
+            sessionId: session.sessionId,
+            traceId,
+            status: "invalid",
+            proposedDecision: parsedDecision.proposal,
+            reason,
+            timestamp,
+          };
+          session.decisionHistory.push(record);
+          logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+          logStructuredEvent(
+            "warn",
+            "decision requestId mismatch",
+            {
+              traceId,
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+            },
+            { error: reason }
+          );
+          decisionRejectedReason = reason;
+        } else {
+          const { validatedDecision: validated, rejectionReason } = validateDecision(
+            session.decisionState,
+            parsedDecision.proposal,
+            timestamp
+          );
+          if (!validated) {
+            const record: DecisionAuditRecord = {
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+              traceId,
+              status: "rejected",
+              proposedDecision: parsedDecision.proposal,
+              reason: rejectionReason ?? "Decision rejected by referee",
+              timestamp,
+            };
+            session.decisionHistory.push(record);
+            logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+            decisionRejectedReason = record.reason;
+          } else {
+            validatedDecision = validated;
+            notificationText =
+              parsedDecision.proposal.reason ??
+              `AI Director suggests spawning ${validated.params.count} ${validated.params.team} ships.`;
+            const record: DecisionAuditRecord = {
+              requestId: decisionRequestId,
+              matchId,
+              sessionId: session.sessionId,
+              traceId,
+              status: "accepted",
+              proposedDecision: parsedDecision.proposal,
+              validatedDecision: validated,
+              warnings: validated.warnings,
+              timestamp,
+            };
+            session.decisionHistory.push(record);
+            logDecisionAudit(record, { traceId, requestId: decisionRequestId, matchId, sessionId: session.sessionId });
+          }
+        }
+      }
+    }
+
+    await persistMatchSession(session);
+
+    res.status(200).json({
+      ok: true,
+      matchId,
+      sessionId: session.sessionId,
+      storedSnapshots: session.snapshots.length,
+      requestId,
+      traceId,
+      notificationText,
+      validatedDecision,
+      decisionRejectedReason,
+    });
+  });
+
+  app.post("/api/redvsblue/match/:matchId/ask", (req, res) => {
+    const traceId = randomUUID();
+    const requestId = randomUUID();
+    const matchId = req.params.matchId;
+    const session = getMatchSession(matchId);
+
+    if (!session) {
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+      return;
+    }
+
+    const parsed = AskSchema.safeParse(req.body ?? {});
+    if (!parsed.success) {
+      logValidationFailure(
+        { traceId, requestId, matchId, sessionId: session.sessionId },
+        parsed.error.issues
+      );
+      res.status(400).json({
+        error: "Invalid request",
+        issues: parsed.error.issues,
+        requestId,
+        matchId,
+        sessionId: session.sessionId,
+        traceId,
+      });
+      return;
+    }
+
+    const commentary = generateCommentary(session);
+
+    res.status(200).json({
+      matchId,
+      sessionId: session.sessionId,
+      commentary,
+      requestId,
+      traceId,
+    });
+  });
+
+  app.post("/api/redvsblue/match/:matchId/end", async (req, res) => {
+    const traceId = randomUUID();
+    const requestId = randomUUID();
+    const matchId = req.params.matchId;
+    const session = getMatchSession(matchId);
+    const sessionId = session?.sessionId;
+    if (!session) {
+      logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId");
+      res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+      return;
+    }
+
+    deleteMatchSession(matchId);
+    await removePersistedSession(matchId);
+    res.status(200).json({ ok: true, matchId, sessionId, requestId, traceId });
   });
 
   app.post("/api/chat", async (req, res) => {
@@ -219,7 +414,7 @@ export function createApp(): express.Express {
 
     const streamResult = await callCopilotServiceStream(
       prompt,
-      mode,
+      mode as ChatMode,
       abortController.signal
     );
 
@@ -239,7 +434,7 @@ export function createApp(): express.Express {
         req.off("aborted", handleAbort);
         res.off("close", handleClose);
 
-        const fallbackResult = await callCopilotService(prompt, mode);
+        const fallbackResult = await callCopilotService(prompt, mode as ChatMode);
         if (!fallbackResult.success) {
           sendPlainTextError(
             res,
@@ -297,7 +492,7 @@ export function createApp(): express.Express {
       return;
     }
 
-    const result = await callCopilotService(prompt, mode);
+    const result = await callCopilotService(prompt, mode as ChatMode);
 
     if (!result.success) {
       sendPlainTextError(res, result.errorType, result.error || "An error occurred");

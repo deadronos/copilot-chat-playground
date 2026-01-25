@@ -138,41 +138,45 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
     }
 
     // If we got an error indicating executable not found, try candidate binaries on disk
-    if (result.error && ("code" in result.error) && (result.error as any).code === "ENOENT") {
-      const candidates = getCopilotCandidatePaths().map((p) => ({ path: p, exists: fs.existsSync(p) }));
-      const available = candidates.filter((c) => c.exists).map((c) => c.path);
-      console.warn(
-        `[copilot] copilot binary not found when running '${attempt.cmd}'. Trying fallback. Candidates: ${candidates
-          .map((c) => `${c.path} (exists=${c.exists})`)
-          .join(", ")}. Found on disk: ${available.join(", ") || "none"}`
-      );
+    if (result.error && ("code" in result.error)) {
+      const errCode = (result.error as Error & { code?: string }).code;
+      if (errCode === "ENOENT") {
+        const candidates = getCopilotCandidatePaths().map((p) => ({ path: p, exists: fs.existsSync(p) }));
+        const available = candidates.filter((c) => c.exists).map((c) => c.path);
+        console.warn(
+          `[copilot] copilot binary not found when running '${attempt.cmd}'. Trying fallback. Candidates: ${candidates
+            .map((c) => `${c.path} (exists=${c.exists})`)
+            .join(", ")}. Found on disk: ${available.join(", ") || "none"}`
+        );
 
-      // Try spawning the first candidate that exists on disk directly (absolute path)
-      for (const c of available) {
-        tried.push(c);
-        const directResult = await spawnCommand(c, ["-p", prompt, "--silent"]);
-        if (directResult.success) {
-          return { success: true, output: directResult.stdout.trim() };
+        // Try spawning the first candidate that exists on disk directly (absolute path)
+        for (const c of available) {
+          tried.push(c);
+          const directResult = await spawnCommand(c, ["-p", prompt, "--silent"]);
+          if (directResult.success) {
+            return { success: true, output: directResult.stdout.trim() };
+          }
+
+          // If direct spawn failed due to ENOENT, try next
+          if (directResult.error && ("code" in directResult.error)) {
+            const drErrCode = (directResult.error as Error & { code?: string }).code;
+            if (drErrCode === "ENOENT") continue;
+          }
+
+          // If stderr indicates auth issues, return that
+          const stderrLower = directResult.stderr.toLowerCase();
+          if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
+            return {
+              success: false,
+              error: directResult.stderr.trim() || "Authentication error from Copilot CLI",
+              errorType: "auth",
+            };
+          }
         }
 
-        // If direct spawn failed due to ENOENT, try next
-        if (directResult.error && ("code" in directResult.error) && (directResult.error as any).code === "ENOENT") {
-          continue;
-        }
-
-        // If stderr indicates auth issues, return that
-        const stderrLower = directResult.stderr.toLowerCase();
-        if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
-          return {
-            success: false,
-            error: directResult.stderr.trim() || "Authentication error from Copilot CLI",
-            errorType: "auth",
-          };
-        }
+        // If none of the direct candidates worked, continue to next attempt (e.g., move from copilot->pnpm or finish)
+        continue; // try next attempt
       }
-
-      // If none of the direct candidates worked, continue to next attempt (e.g., move from copilot->pnpm or finish)
-      continue; // try next attempt
     }
 
     // If stderr indicates auth issues, return that

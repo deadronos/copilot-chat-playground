@@ -23,3 +23,15 @@ export function toNdjsonLine(event: LogEvent): string {
 }
 
 export { EventBus, createEventBus } from "./event-bus.js";
+export { applyCanvasSize } from "./lib/canvas.js";
+export type { CanvasSizeTarget } from "./lib/canvas.js";
+export { buildDecisionPrompt } from "./lib/decision-prompt.js";
+export type {
+  DecisionPromptOptions,
+  DecisionPromptRecord,
+  DecisionPromptSession,
+  DecisionPromptSnapshot,
+} from "./lib/decision-prompt.js";
+export { clampNumber } from "./lib/numbers.js";
+export type { ClampRange, ClampWarning } from "./lib/numbers.js";
+export { estimateTokenCount } from "./lib/text.js";
