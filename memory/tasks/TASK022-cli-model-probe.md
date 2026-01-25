@@ -1,6 +1,6 @@
 # [TASK022] — Implement Copilot CLI Model Probe (/models endpoint)
 
-**Status:** Not Started  
+**Status:** Completed ✅  
 **Added:** 2026-01-25  
 **Updated:** 2026-01-25
 
@@ -70,6 +70,9 @@ Implement DES021: add a best-effort probe of the local `copilot` CLI to discover
 ### 2026-01-25
 
 - Created spec DES021 and task file TASK022. Planned implementation and test strategy.
+- Implemented CLI model probing + caching and exposed `GET /models` with `?refresh=true`.
+- Added unit tests for probe parsing/caching and HTTP handler behavior.
+- Documented `/models` in `docs/library/copilot-sdk/README.md` and `src/copilot/README.md`.
 
 ## Acceptance Criteria
 
