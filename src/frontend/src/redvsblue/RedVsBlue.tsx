@@ -80,7 +80,7 @@ const RedVsBlue: React.FC = () => {
     (decision: {
       requestId: string;
       type: "spawnShips";
-      params: { team: "red" | "blue"; count: number };
+      params: { team: "red" | "blue"; count: number; overrides?: { shipSpeed?: number; bulletSpeed?: number; bulletDamage?: number; shipMaxHealth?: number } };
       warnings?: string[];
     }) => {
       if (decision.type !== "spawnShips") return;

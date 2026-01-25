@@ -151,7 +151,11 @@ describe("RedVsBlue Phase 1 API", () => {
     const copilot = await import("../../../src/backend/src/services/copilot.js");
     const spy = vi.spyOn(copilot, "callCopilotService").mockResolvedValue({
       success: true,
-      output: JSON.stringify({ requestId: "r1", type: "spawnShips", params: { team: "red", count: 2 } }),
+      output: JSON.stringify({
+        requestId: "r1",
+        type: "spawnShips",
+        params: { team: "red", count: 2, overrides: { bulletDamage: 999 } },
+      }),
     });
 
     const snapshot = {
