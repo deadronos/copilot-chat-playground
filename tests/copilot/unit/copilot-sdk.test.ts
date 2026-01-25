@@ -176,6 +176,12 @@ describe("CopilotSDKService", () => {
       expect(mismatch.meta.requestedModel).toBe('gpt-5-mini');
       expect(mismatch.meta.actualModel).toBe('claude-sonnet-4.5');
 
+      // Verify metrics counter incremented
+      const { getMetric, resetMetrics } = await import('../../../src/copilot/src/metrics.js');
+      expect(getMetric('model_mismatch_count')).toBeGreaterThanOrEqual(1);
+
+      // Clean up
+      resetMetrics();
       spy.mockRestore();
       emitSpy.mockRestore();
     });

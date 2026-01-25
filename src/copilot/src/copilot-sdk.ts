@@ -1,6 +1,7 @@
 import { CopilotClient } from "@github/copilot-sdk";
 import type { SystemMessageConfig } from "@github/copilot-sdk";
 import { getDefaultModel } from "./defaults.js";
+import { incrementMetric } from "./metrics.js";
 import type { EventBus } from "@copilot-playground/shared";
 import { validateToken } from "./copilot-cli.js";
 
@@ -147,6 +148,9 @@ export class CopilotSDKService {
           if (actualModel) {
             if (actualModel !== model) {
               // Emit a warning with relevant metadata to aid debugging and telemetry
+              // Increment runtime metric for model mismatches (useful for health/telemetry)
+              incrementMetric("model_mismatch_count");
+
               this.emitLog("warn", "sdk.model.mismatch", `Requested model '${model}' differs from actual model '${actualModel}'`, {
                 requestId,
                 sessionId: session.sessionId,
@@ -154,6 +158,7 @@ export class CopilotSDKService {
                 actualModel,
                 providerCallId: event.data?.providerCallId,
                 usage: event.data,
+                metrics: { model_mismatch_count: true },
               });
             } else {
               // Optional: note explicit match for observability
