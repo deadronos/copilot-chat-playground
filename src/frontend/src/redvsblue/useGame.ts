@@ -27,6 +27,14 @@ type Controls = {
   reset: () => void
 }
 
+type SetupKey = {
+  selectedRenderer: string
+  worker: boolean
+  workerTickHz?: number
+  workerSnapshotHz?: number
+  config: Omit<EngineConfig, "canvasWidth" | "canvasHeight">
+}
+
 function getCanvasSize(
   canvas: HTMLCanvasElement,
   container?: Element | null
@@ -60,6 +68,8 @@ export function useGame(options: UseGameOptions): Controls {
   const engineRef = useRef<(EngineAPI & Partial<Pick<EngineWorkerWrapper, "start" | "stop">>) | null>(null)
   const rendererRef = useRef<CanvasRenderer | null>(null)
   const offscreenCanvasRef = useRef<OffscreenCanvas | null>(null)
+  const setupRef = useRef<SetupKey | null>(null)
+  const isUnmountingRef = useRef(false)
   const rafIdRef = useRef<number | null>(null)
   const lastNowRef = useRef<number>(0)
 
@@ -93,6 +103,29 @@ export function useGame(options: UseGameOptions): Controls {
     useUIStore.getState().setRunning(false)
     useUIStore.getState().setFps(null)
   }, [worker])
+
+  const hardReset = useCallback(() => {
+    const engine = engineRef.current
+    if (engine) {
+      engine.destroy()
+    }
+    rendererRef.current?.destroy()
+    rendererRef.current = null
+    engineRef.current = null
+    offscreenCanvasRef.current = null
+    useGameState.getState().clear()
+  }, [])
+
+  const isSameSetup = (a: SetupKey | null, b: SetupKey): boolean => {
+    if (!a) return false
+    return (
+      a.selectedRenderer === b.selectedRenderer &&
+      a.worker === b.worker &&
+      a.workerTickHz === b.workerTickHz &&
+      a.workerSnapshotHz === b.workerSnapshotHz &&
+      a.config === b.config
+    )
+  }
 
   const tick = useCallback(
     (now: number) => {
@@ -183,6 +216,19 @@ export function useGame(options: UseGameOptions): Controls {
     const canvas = canvasRef.current
     if (!canvas) return
 
+    const nextSetup: SetupKey = {
+      selectedRenderer,
+      worker,
+      workerTickHz,
+      workerSnapshotHz,
+      config: defaultConfig,
+    }
+
+    if (!isSameSetup(setupRef.current, nextSetup)) {
+      hardReset()
+    }
+    setupRef.current = nextSetup
+
     const wantOffscreen = worker && selectedRenderer === "offscreen"
     const offscreenSupported =
       wantOffscreen &&
@@ -193,13 +239,15 @@ export function useGame(options: UseGameOptions): Controls {
 
     const container = containerRef?.current ?? null
 
-    const engine = worker
-      ? new EngineWorkerWrapper({ tickHz: workerTickHz, snapshotHz: workerSnapshotHz })
-      : createEngine()
+    const engine =
+      engineRef.current ??
+      (worker
+        ? new EngineWorkerWrapper({ tickHz: workerTickHz, snapshotHz: workerSnapshotHz })
+        : createEngine())
 
     engineRef.current = engine as any
 
-    const renderer = useOffscreen ? null : new CanvasRenderer()
+    const renderer = useOffscreen ? null : rendererRef.current ?? new CanvasRenderer()
     if (renderer) {
       renderer.init(canvas)
       rendererRef.current = renderer
@@ -337,17 +385,16 @@ export function useGame(options: UseGameOptions): Controls {
       renderer?.destroy()
       if (telemetryHandler) engine.off("telemetry", telemetryHandler)
       if (workerSnapshotHandler) engine.off("snapshot", workerSnapshotHandler)
-      engine.destroy()
-      rendererRef.current = null
-      engineRef.current = null
-      offscreenCanvasRef.current = null
-      useGameState.getState().clear()
+      if (isUnmountingRef.current) {
+        hardReset()
+      }
     }
   }, [
     autoStart,
     canvasRef,
     containerRef,
     defaultConfig,
+    hardReset,
     selectedRenderer,
     start,
     stop,
@@ -355,6 +402,12 @@ export function useGame(options: UseGameOptions): Controls {
     workerSnapshotHz,
     workerTickHz,
   ])
+
+  useEffect(() => {
+    return () => {
+      isUnmountingRef.current = true
+    }
+  }, [])
 
   return { start, stop, spawnShip, reset }
 }

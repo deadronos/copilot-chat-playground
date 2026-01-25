@@ -61,5 +61,5 @@ We also have notes for using the Copilot CLI in 'docs/library/copilot-cli/'. Thi
 If you feel something is missing or could be improved, consider proposing additional folders with structured notes in /docs/library folder.
 
 ## Agent Guidance
-See `/docs/agents` for additional agent guidance and playbooks. For example, `/docs/agents/testing` contains testing structure and scope hints.
+See `/docs/agents` for additional agent guidance and playbooks. For Red vs Blue specifics, prefer `/docs/agents/redvsblue` to learn component, engine, telemetry, and renderer patterns when in doubt. For testing guidance, see `/docs/agents/testing`.
 
