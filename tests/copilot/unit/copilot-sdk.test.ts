@@ -135,6 +135,56 @@ describe("CopilotSDKService", () => {
       spy.mockRestore()
       spy2.mockRestore()
     })
+
+    it("should log model mismatch when requested model differs from actual provider model", { timeout: 10000 }, async () => {
+      process.env.GH_TOKEN = "token"
+      process.env.COPILOT_DEFAULT_MODEL = "gpt-5-mini"
+
+      const eventBus = createEventBus();
+      const emitSpy = vi.spyOn(eventBus, 'emitLog');
+      const service = new CopilotSDKService(eventBus);
+
+      // Initialize client
+      await service.initialize();
+      const client = (service as any).client as any;
+
+      // Mock session that reports a different provider model via assistant.usage
+      const mockSession = {
+        sessionId: 'mismatch-session',
+        _handler: null as any,
+        on(h: (ev: any) => void) { this._handler = h },
+        async sendAndWait() {
+          if (this._handler) {
+            this._handler({ type: 'assistant.usage', data: { model: 'claude-sonnet-4.5', providerCallId: 'pc-1' } });
+            this._handler({ type: 'assistant.message', data: { content: 'hello' } });
+            this._handler({ type: 'session.idle', data: {} });
+          }
+          return { type: 'assistant.message', data: { content: 'hello' } };
+        },
+        async destroy() {}
+      };
+
+      const spy = vi.spyOn(client, 'createSession').mockImplementation(async (cfg: any) => mockSession as any);
+
+      const res = await service.chat('hello', 'req-mismatch');
+      expect(res.success).toBe(true);
+
+      const calls = (emitSpy as any).mock.calls.map((c: any[]) => c[0]);
+      const mismatch = calls.find((c: any) => c.event_type === 'sdk.model.mismatch');
+      expect(mismatch).toBeDefined();
+      expect(mismatch.level).toBe('warn');
+      expect(mismatch.meta.requestedModel).toBe('gpt-5-mini');
+      expect(mismatch.meta.actualModel).toBe('claude-sonnet-4.5');
+
+      // Verify metrics counter incremented
+      const { getMetric, resetMetrics } = await import('../../../src/copilot/src/metrics.js');
+      expect(getMetric('model_mismatch_count')).toBeGreaterThanOrEqual(1);
+
+      // Clean up
+      resetMetrics();
+      spy.mockRestore();
+      emitSpy.mockRestore();
+    });
   });
 
   describe("stop", () => {

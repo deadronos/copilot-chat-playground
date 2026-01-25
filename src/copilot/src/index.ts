@@ -5,6 +5,7 @@ import { z } from "zod";
 import fs from "node:fs";
 import { callCopilotCLI, validateToken, getCopilotCandidatePaths } from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
+import { getMetric } from "./metrics.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
 import { checkWorkspaceMount } from "./workspace-guard.js";
 
@@ -20,25 +21,55 @@ eventBus.onLog((event: LogEvent) => {
 const USE_SDK = process.env.USE_COPILOT_SDK !== "false";
 const sdkService = USE_SDK ? createCopilotSDKService(eventBus) : null;
 
-const app = express();
-app.use(express.json({ limit: "1mb" }));
+/**
+ * Create an Express app for the Copilot service. Exported for testing.
+ */
+export function createApp(): express.Express {
+  const app = express();
+  app.use(express.json({ limit: "1mb" }));
 
-app.get("/health", (_req, res) => {
-  // Include token validation status and binary candidates in health check
-  const tokenCheck = validateToken();
-  const candidatePaths = getCopilotCandidatePaths();
-  const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
-  const binaryAvailable = candidates.some((c) => c.exists);
+  app.get("/health", (_req, res) => {
+    // Include token validation status and binary candidates in health check
+    const tokenCheck = validateToken();
+    const candidatePaths = getCopilotCandidatePaths();
+    const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
+    const binaryAvailable = candidates.some((c) => c.exists);
 
-  res.json({
-    ok: true,
-    service: "copilot",
-    mode: USE_SDK ? "sdk" : "cli",
-    tokenConfigured: tokenCheck.valid,
-    binaryAvailable,
-    candidates,
+    res.json({
+      ok: true,
+      service: "copilot",
+      mode: USE_SDK ? "sdk" : "cli",
+      defaultModel: process.env.COPILOT_DEFAULT_MODEL || "gpt-5-mini",
+      tokenConfigured: tokenCheck.valid,
+      binaryAvailable,
+      candidates,
+    });
   });
-});
+
+  // Metrics endpoint (Prometheus format)
+  app.get("/metrics", (_req, res) => {
+    try {
+      const modelMismatch = getMetric("model_mismatch_count") || 0;
+
+      const lines = [
+        "# HELP copilot_model_mismatch_total Number of model mismatches detected",
+        "# TYPE copilot_model_mismatch_total counter",
+        `copilot_model_mismatch_total ${modelMismatch}`,
+      ];
+
+      res.setHeader("Content-Type", "text/plain; version=0.0.4");
+      res.send(lines.join("\n") + "\n");
+    } catch (err) {
+      res.setHeader("Content-Type", "text/plain; version=0.0.4");
+      res.status(500).send("# HELP copilot_model_mismatch_total Number of model mismatches detected\n# TYPE copilot_model_mismatch_total counter\ncopilot_model_mismatch_total 0\n");
+    }
+  });
+
+  return app;
+}
+
+// Create app and listen (kept for local dev / container)
+const app = createApp();
 
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
@@ -139,6 +170,9 @@ app.listen(port, async () => {
     }
   }
 });
+
+// Export default app for tests
+export default app;
 
 // Clean up on shutdown
 process.on("SIGINT", async () => {

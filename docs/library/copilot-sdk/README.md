@@ -27,6 +27,15 @@ They are written for the project layout in this repo:
 
 ## For *this* repo
 
+---
+
+### Default model and mismatch warning ⚠️
+
+- The Copilot package uses a centralized default model accessor (`getDefaultModel`) located at `src/copilot/src/defaults.ts`. It returns the value of `COPILOT_DEFAULT_MODEL` or `gpt-5-mini` if unset. To change the runtime default, set the `COPILOT_DEFAULT_MODEL` env var or update the centralized default.
+- At runtime the Copilot service may map an abstract requested model to an actual provider model. The SDK listens for provider usage events and emits a `sdk.model.mismatch` **warning** when the requested model differs from the provider-reported model. The warning includes `requestedModel`, `actualModel`, and `providerCallId` to help with debugging and tracing.
+
+## For *this* repo
+
 - Suggested 3-service architecture (frontend/backend/copilot) → [`09-playground-architecture.md`](./09-playground-architecture.md)
 - Logging + exporting logs in the UI → [`10-observability-logging.md`](./10-observability-logging.md)
 
