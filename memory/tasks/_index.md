@@ -22,3 +22,4 @@
 - TASK020 - Refactor: Monolithic files — Phase 3 (Cleanup, docs & CI guardrails) - Completed (2026-01-25)
 - TASK021 - Playwright E2E Coverage (Deferred from Phase 2) - Pending (2026-01-25)
 - TASK022 - Copilot CLI model probe (/models endpoint) - Completed ✅ (2026-01-25)
+- TASK023 - Shared RedVsBlue config (DES022) - Completed ✅ (2026-01-25)

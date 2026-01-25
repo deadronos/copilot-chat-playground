@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { loadRedVsBlueConfig } from "@copilot-playground/shared";
 
 import type {
   DecisionAuditRecord,
@@ -8,11 +9,8 @@ import type {
   ValidatedDecision,
 } from "./redvsblue-types.js";
 
-export const DECISION_LIMITS = {
-  maxSpawnPerDecision: 5,
-  maxSpawnPerMinute: 15,
-  cooldownMs: 5_000,
-};
+const { config: redVsBlueConfig } = loadRedVsBlueConfig();
+export const DECISION_LIMITS = redVsBlueConfig.decisionLimits;
 
 const DecisionProposalSchema = z.object({
   requestId: z.string().min(1),
