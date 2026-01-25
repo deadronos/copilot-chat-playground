@@ -11,6 +11,9 @@ Common commands:
 - `pnpm -F @copilot-playground/backend build` - Build backend
 - `pnpm -F <package-name> dev` - Run dev server for a package
 
+## Typescript
+Avoid using `any` type. Prefer strict typing and leverage TypeScript's type system for safety and clarity.
+
 ## AGENTS.md
 Also look at '.github/copilot-instructions.md' for overall instructions given to the AI agent.
 

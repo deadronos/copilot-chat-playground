@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react"
 import type { RefObject } from "react"
 
 import { createEngine } from "@/redvsblue/engine"
+import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index"
 import type { EngineConfig, GameState, Team } from "@/redvsblue/types"
 import { CanvasRenderer } from "@/redvsblue/renderer"
 import { selectSnapshot, useGameState } from "@/redvsblue/stores/gameState"
@@ -79,15 +80,15 @@ export function useGame(options: UseGameOptions): Controls {
 
   const defaultConfig = useMemo<Omit<EngineConfig, "canvasWidth" | "canvasHeight">>(
     () => ({
-      shipSpeed: 5,
-      bulletSpeed: 8,
-      bulletDamage: 10,
-      shipMaxHealth: 30,
-      enableTelemetry: true,
+      ...DEFAULT_ENGINE_CONFIG,
       ...config,
     }),
     [config]
   )
+
+  function hasStop(e: unknown): e is { stop: () => void } {
+    return !!e && typeof e === 'object' && 'stop' in e && typeof (e as { stop?: unknown }).stop === 'function'
+  }
 
   const stop = useCallback(() => {
     if (rafIdRef.current !== null) {
@@ -96,8 +97,8 @@ export function useGame(options: UseGameOptions): Controls {
     }
 
     const engine = engineRef.current
-    if (engine && worker && typeof (engine as any).stop === "function") {
-      ;(engine as any).stop()
+    if (engine && worker && hasStop(engine)) {
+      engine.stop()
     }
 
     useUIStore.getState().setRunning(false)
@@ -127,8 +128,7 @@ export function useGame(options: UseGameOptions): Controls {
     )
   }
 
-  const tick = useCallback(
-    (now: number) => {
+  const tick = useCallback(function tickHandler(now: number) {
     const engine = engineRef.current
     if (!engine) return
 
@@ -165,11 +165,9 @@ export function useGame(options: UseGameOptions): Controls {
     }
 
     if (!worker) {
-      rafIdRef.current = requestAnimationFrame(tick)
+      rafIdRef.current = requestAnimationFrame(tickHandler)
     }
-    },
-    [worker]
-  )
+  }, [worker])
 
   const start = useCallback(() => {
     if (useUIStore.getState().running) return
@@ -180,8 +178,11 @@ export function useGame(options: UseGameOptions): Controls {
     fpsFramesRef.current = 0
     if (worker) {
       const engine = engineRef.current
-      if (engine && typeof (engine as any).start === "function") {
-        ;(engine as any).start()
+      function hasStart(e: unknown): e is { start: () => void } {
+        return !!e && typeof e === 'object' && 'start' in e && typeof (e as { start?: unknown }).start === 'function'
+      }
+      if (engine && hasStart(engine)) {
+        engine.start()
       }
       return
     }
@@ -245,7 +246,7 @@ export function useGame(options: UseGameOptions): Controls {
         ? new EngineWorkerWrapper({ tickHz: workerTickHz, snapshotHz: workerSnapshotHz })
         : createEngine())
 
-    engineRef.current = engine as any
+    engineRef.current = engine as unknown as EngineAPI & Partial<Pick<EngineWorkerWrapper, "start" | "stop">>
 
     const renderer = useOffscreen ? null : rendererRef.current ?? new CanvasRenderer()
     if (renderer) {
@@ -270,26 +271,26 @@ export function useGame(options: UseGameOptions): Controls {
         // Transfer canvas control once and let the worker render.
         if (!offscreenCanvasRef.current) {
           try {
-            const offscreen = (canvas as any).transferControlToOffscreen() as OffscreenCanvas
+            const canvasWithTransfer = canvas as unknown as { transferControlToOffscreen?: () => OffscreenCanvas }
+            const offscreen = canvasWithTransfer.transferControlToOffscreen!()
             offscreenCanvasRef.current = offscreen
-            if (typeof (engine as any).setCanvas === "function") {
-              ;(engine as any).setCanvas(offscreen, canvas.width, canvas.height)
+            if (typeof (engine as unknown as { setCanvas?: unknown }).setCanvas === "function") {
+              ;(engine as unknown as { setCanvas: (c: OffscreenCanvas, w: number, h: number) => void }).setCanvas(offscreen, canvas.width, canvas.height)
             }
           } catch (err) {
             // Canvas already has a rendering context (cannot transfer). Fallback to main-thread renderer.
-            // eslint-disable-next-line no-console
             console.warn("OffscreenCanvas transfer failed; falling back to canvas renderer", err)
             useUIStore.getState().setSelectedRenderer("canvas")
             return
           }
-        } else if (typeof (engine as any).resizeCanvas === "function") {
-          ;(engine as any).resizeCanvas(canvas.width, canvas.height)
+        } else if (typeof (engine as unknown as { resizeCanvas?: unknown }).resizeCanvas === "function") {
+          ;(engine as unknown as { resizeCanvas: (w: number, h: number) => void }).resizeCanvas(canvas.width, canvas.height)
         }
       }
 
       // If we are currently running, stop worker loop before re-init
-      if (worker && useUIStore.getState().running && typeof (engine as any).stop === "function") {
-        ;(engine as any).stop()
+      if (worker && useUIStore.getState().running && hasStop(engine)) {
+        engine.stop()
       }
 
       engine.init({
@@ -318,7 +319,7 @@ export function useGame(options: UseGameOptions): Controls {
           useTelemetryStore.getState().pushTelemetry(evt)
         } catch (err) {
           // Defensive: ensure telemetry handler errors don't break engine loop
-          // eslint-disable-next-line no-console
+           
           console.error("telemetry handler error", err)
         }
       }
@@ -355,8 +356,11 @@ export function useGame(options: UseGameOptions): Controls {
         engine.on("snapshot", workerSnapshotHandler)
 
         // Resume if we were running
-        if (useUIStore.getState().running && typeof (engine as any).start === "function") {
-          ;(engine as any).start()
+        function hasStart(e: unknown): e is { start: () => void } {
+          return !!e && typeof e === 'object' && 'start' in e && typeof (e as { start?: unknown }).start === 'function'
+        }
+        if (useUIStore.getState().running && hasStart(engine)) {
+          engine.start()
         }
       }
     }

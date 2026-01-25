@@ -127,6 +127,9 @@ export interface GameState {
  * Configuration options for the game engine.
  * Passed to engine.init() to set up game parameters.
  */
+import type { EngineTuning } from "./config"
+import type { UIConfig } from "./config/ui"
+
 export interface EngineConfig {
   /** Canvas width in pixels */
   canvasWidth: number;
@@ -145,6 +148,12 @@ export interface EngineConfig {
 
   /** Optional seed for deterministic simulation runs */
   seed?: number;
+
+  /** Optional tuning overrides for fine-grained engine behavior */
+  tuning?: Partial<EngineTuning>;
+
+  /** Optional UI/subsystem overrides (stars, particles, etc.) */
+  ui?: Partial<UIConfig>;
 }
 
 /**

@@ -19,7 +19,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
   }
 
   componentDidCatch(error: unknown, info: unknown): void {
-    // eslint-disable-next-line no-console
+     
     console.error("ErrorBoundary caught", this.props.name ?? "component", error, info);
   }
 

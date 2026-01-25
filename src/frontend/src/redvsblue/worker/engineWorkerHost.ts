@@ -82,7 +82,10 @@ function clampHz(value: number | undefined, fallback: number): number {
 export function createEngineWorkerHost(options: EngineWorkerHostOptions): EngineWorkerHost {
   const postMessage = options.postMessage;
   const setIntervalFn = options.setIntervalFn ?? ((fn, ms) => setInterval(fn, ms));
-  const clearIntervalFn = options.clearIntervalFn ?? ((id) => clearInterval(id as any));
+  const clearIntervalFn = options.clearIntervalFn ?? ((id: unknown) => {
+    if (typeof id === 'number') clearInterval(id);
+    else (clearInterval as unknown as (id?: number) => void)(id as unknown as number);
+  });
 
   let engine: ReturnType<typeof createEngine> | null = null;
   let telemetryHandler: ((data: unknown) => void) | null = null;
