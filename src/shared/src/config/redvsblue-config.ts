@@ -90,13 +90,13 @@ export const DEFAULT_REDVSBLUE_RULE_RANGES: RuleRanges = {
 };
 
 export const DEFAULT_REDVSBLUE_CONFIG_RANGES: ConfigRanges = {
-  snapshotIntervalMs: { min: 5_000, max: 60_000, default: 30_000 },
+  snapshotIntervalMs: { min: 5_000, max: 60_000, default: 10_000 },
 };
 
 export const DEFAULT_REDVSBLUE_DECISION_LIMITS: DecisionLimits = {
-  maxSpawnPerDecision: 5,
-  maxSpawnPerMinute: 15,
-  cooldownMs: 5_000,
+  maxSpawnPerDecision: 25,
+  maxSpawnPerMinute: 100,
+  cooldownMs: 2_000,
 };
 
 export const DEFAULT_REDVSBLUE_CONFIG: RedVsBlueConfig = {
