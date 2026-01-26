@@ -2,7 +2,8 @@
 
 **Status:** Implemented
 **Date:** 2026-01-25
-**Updated:** 2026-01-25
+**Updated:** 2026-01-26
+**Change:** 2026-01-26 — Lowered snapshot default to 10,000ms (10s); increased decision spawn limits to allow up to 25 ships per decision and 100 per minute; decreased decision cooldown to 2,000ms. See Changelog and Tests & Validation sections for details.
 **Related:** DES012 (AI Director contracts), DES018 (monolith refactor)
 
 ## Overview
@@ -95,6 +96,7 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 ## Tests & Validation
 
 - Unit tests for `loadConfig()` (env present/absent/invalid) with mocked env.
+- 2026-01-26: Defaults updated (snapshotIntervalMs default → 10_000ms; decisionLimits: maxSpawnPerDecision → 25, maxSpawnPerMinute → 100, cooldownMs → 2_000). Unit tests and moved shared tests were executed and passed (moved tests now under `tests/shared` — 2 files, 9 tests).
 - Replace numeric literals used in tests with imported constants where appropriate. Add tests that assert behavior unchanged after extraction (e.g., clamping tests still pass).
 - Integration test: start server with env overrides and assert `effectiveRules` reflect overrides and Zod validation rejects out-of-bounds env values.
 

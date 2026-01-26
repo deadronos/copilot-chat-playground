@@ -5,6 +5,9 @@ import { defineConfig } from "vitest/config"
 const testsRoot = path
   .resolve(__dirname, "../../tests/backend")
   .replace(/\\/g, "/")
+const testsShared = path
+  .resolve(__dirname, "../../tests/shared")
+  .replace(/\\/g, "/")
 const sharedEntry = path
   .resolve(__dirname, "../shared/src/index.ts")
   .replace(/\\/g, "/")
@@ -20,6 +23,8 @@ export default defineConfig({
     include: [
       `${testsRoot}/**/*.test.{ts,tsx}`,
       `${testsRoot}/**/*.spec.{ts,tsx}`,
+      `${testsShared}/**/*.test.{ts,tsx}`,
+      `${testsShared}/**/*.spec.{ts,tsx}`,
     ],
     globals: true,
     passWithNoTests: true,
