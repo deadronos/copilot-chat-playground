@@ -1,7 +1,7 @@
-import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { execCommand } from "./lib/exec.js";
 
 export interface CopilotResponse {
   success: boolean;
@@ -89,49 +89,10 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
 
   const tried: string[] = [];
 
-  // Helper to spawn a command and capture output
-  const spawnCommand = (cmd: string, args: string[]) =>
-    new Promise<{ success: boolean; stdout: string; stderr: string; error?: Error | null }>((resolve) => {
-      let stdout = "";
-      let stderr = "";
-
-      const child = spawn(cmd, args, {
-        env: {
-          ...process.env,
-          GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
-        },
-      });
-
-      if (child.stdout) {
-        child.stdout.on("data", (chunk: Buffer) => {
-          stdout += chunk.toString();
-        });
-      }
-
-      if (child.stderr) {
-        child.stderr.on("data", (chunk: Buffer) => {
-          stderr += chunk.toString();
-        });
-      }
-
-      child.on("error", (error: Error & { code?: string }) => {
-        resolve({ success: false, stdout, stderr, error });
-      });
-
-      child.on("close", (code: number) => {
-        if (code === 0) {
-          resolve({ success: true, stdout, stderr, error: null });
-        } else {
-          const err = new Error(`Process exited with code ${code}`);
-          resolve({ success: false, stdout, stderr, error: err });
-        }
-      });
-    });
-
   for (const attempt of attempts) {
     tried.push(`${attempt.cmd} ${attempt.args.join(" ")}`);
 
-    const result = await spawnCommand(attempt.cmd, attempt.args);
+    const result = await execCommand(attempt.cmd, attempt.args, { maxOutputSize: Number.POSITIVE_INFINITY });
 
     if (result.success) {
       return { success: true, output: result.stdout.trim() };
@@ -150,9 +111,11 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
         );
 
         // Try spawning the first candidate that exists on disk directly (absolute path)
-        for (const c of available) {
-          tried.push(c);
-          const directResult = await spawnCommand(c, ["-p", prompt, "--silent"]);
+          for (const c of available) {
+            tried.push(c);
+            const directResult = await execCommand(c, ["-p", prompt, "--silent"], {
+              maxOutputSize: Number.POSITIVE_INFINITY,
+            });
           if (directResult.success) {
             return { success: true, output: directResult.stdout.trim() };
           }

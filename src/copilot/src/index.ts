@@ -5,8 +5,10 @@ import { z } from "zod";
 import fs from "node:fs";
 import { callCopilotCLI, validateToken, getCopilotCandidatePaths } from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
+import { getMetric, incrementMetric } from "./metrics.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
 import { checkWorkspaceMount } from "./workspace-guard.js";
+import { getCachedModels, clearModelsCache } from "./cli-models-probe.js";
 
 // Create EventBus for structured logging
 const eventBus = createEventBus();
@@ -20,25 +22,118 @@ eventBus.onLog((event: LogEvent) => {
 const USE_SDK = process.env.USE_COPILOT_SDK !== "false";
 const sdkService = USE_SDK ? createCopilotSDKService(eventBus) : null;
 
-const app = express();
-app.use(express.json({ limit: "1mb" }));
+/**
+ * Create an Express app for the Copilot service. Exported for testing.
+ */
+export function createApp(): express.Express {
+  // Ensure a clean in-memory cache per app instance (helps keep tests isolated).
+  clearModelsCache();
 
-app.get("/health", (_req, res) => {
-  // Include token validation status and binary candidates in health check
-  const tokenCheck = validateToken();
-  const candidatePaths = getCopilotCandidatePaths();
-  const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
-  const binaryAvailable = candidates.some((c) => c.exists);
+  const app = express();
+  app.use(express.json({ limit: "1mb" }));
 
-  res.json({
-    ok: true,
-    service: "copilot",
-    mode: USE_SDK ? "sdk" : "cli",
-    tokenConfigured: tokenCheck.valid,
-    binaryAvailable,
-    candidates,
+  app.get("/health", (_req, res) => {
+    // Include token validation status and binary candidates in health check
+    const tokenCheck = validateToken();
+    const candidatePaths = getCopilotCandidatePaths();
+    const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
+    const binaryAvailable = candidates.some((c) => c.exists);
+
+    res.json({
+      ok: true,
+      service: "copilot",
+      mode: USE_SDK ? "sdk" : "cli",
+      defaultModel: process.env.COPILOT_DEFAULT_MODEL || "gpt-5-mini",
+      tokenConfigured: tokenCheck.valid,
+      binaryAvailable,
+      candidates,
+    });
   });
-});
+
+  // Metrics endpoint (Prometheus format)
+  app.get("/metrics", (_req, res) => {
+    try {
+      const modelMismatch = getMetric("model_mismatch_count") || 0;
+      const modelProbeCount = getMetric("model_probe_count") || 0;
+      const modelProbeFailureCount = getMetric("model_probe_failure_count") || 0;
+
+      const lines = [
+        "# HELP copilot_model_mismatch_total Number of model mismatches detected",
+        "# TYPE copilot_model_mismatch_total counter",
+        `copilot_model_mismatch_total ${modelMismatch}`,
+        "",
+        "# HELP copilot_model_probe_total Number of model probe attempts",
+        "# TYPE copilot_model_probe_total counter",
+        `copilot_model_probe_total ${modelProbeCount}`,
+        "",
+        "# HELP copilot_model_probe_failure_total Number of model probe failures",
+        "# TYPE copilot_model_probe_failure_total counter",
+        `copilot_model_probe_failure_total ${modelProbeFailureCount}`,
+      ];
+
+      res.setHeader("Content-Type", "text/plain; version=0.0.4");
+      res.send(lines.join("\n") + "\n");
+    } catch {
+      res.setHeader("Content-Type", "text/plain; version=0.0.4");
+      res.status(500).send("# HELP copilot_model_mismatch_total Number of model mismatches detected\n# TYPE copilot_model_mismatch_total counter\ncopilot_model_mismatch_total 0\n");
+    }
+  });
+
+  // Models endpoint - probe Copilot CLI for available models
+  app.get("/models", async (req, res) => {
+    try {
+      const refresh = req.query.refresh === "true";
+      const result = await getCachedModels(eventBus, refresh);
+
+      // Emit log for successful probe
+      eventBus.emitLog({
+        timestamp: new Date().toISOString(),
+        level: "info",
+        component: "copilot",
+        event_type: "cli.models.probe.success",
+        message: `Model probe completed with source: ${result.source}`,
+        meta: {
+          source: result.source,
+          models: result.models,
+          count: result.models.length,
+          cached: result.cached,
+        },
+      });
+
+      res.json({
+        source: result.source,
+        models: result.models,
+        cached: result.cached,
+        ttlExpiresAt: result.ttlExpiresAt,
+        error: result.error,
+      });
+    } catch (err) {
+      // Increment failure metric
+      incrementMetric("model_probe_failure_count");
+
+      // Emit error log
+      eventBus.emitLog({
+        timestamp: new Date().toISOString(),
+        level: "error",
+        component: "copilot",
+        event_type: "cli.models.probe.error",
+        message: `Model probe failed: ${err instanceof Error ? err.message : String(err)}`,
+      });
+
+      res.status(500).json({
+        source: "error",
+        models: [],
+        cached: false,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+  });
+
+  return app;
+}
+
+// Create app and listen (kept for local dev / container)
+const app = createApp();
 
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
@@ -139,6 +234,9 @@ app.listen(port, async () => {
     }
   }
 });
+
+// Export default app for tests
+export default app;
 
 // Clean up on shutdown
 process.on("SIGINT", async () => {

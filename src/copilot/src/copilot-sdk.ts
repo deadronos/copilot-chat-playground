@@ -1,5 +1,7 @@
 import { CopilotClient } from "@github/copilot-sdk";
 import type { SystemMessageConfig } from "@github/copilot-sdk";
+import { getDefaultModel } from "./defaults.js";
+import { incrementMetric } from "./metrics.js";
 import type { EventBus } from "@copilot-playground/shared";
 import { validateToken } from "./copilot-cli.js";
 
@@ -85,8 +87,12 @@ export class CopilotSDKService {
       // Create a new session with streaming enabled
       const systemMessage = systemPrompt ? ({ content: systemPrompt, mode: systemMode ?? 'append' } as SystemMessageConfig) : undefined;
 
+      // Determine the effective model using a centralized accessor
+      const model = getDefaultModel();
+      this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
+
       const session = await this.client.createSession({
-        model: "gpt-4o",
+        model,
         streaming: true,
         ...(systemMessage && { systemMessage }),
       });
@@ -94,6 +100,7 @@ export class CopilotSDKService {
       this.emitLog("info", "sdk.session.created", "Copilot session created", {
         requestId,
         sessionId: session.sessionId,
+        model,
       });
 
       // Buffer to collect the full response
@@ -134,6 +141,34 @@ export class CopilotSDKService {
             messageId,
             contentLength: content.length,
           });
+
+        // Detect the provider-reported model and warn if it differs from requested model
+        } else if (event.type === "assistant.usage") {
+          const actualModel = event.data?.model as string | undefined;
+          if (actualModel) {
+            if (actualModel !== model) {
+              // Emit a warning with relevant metadata to aid debugging and telemetry
+              // Increment runtime metric for model mismatches (useful for health/telemetry)
+              incrementMetric("model_mismatch_count");
+
+              this.emitLog("warn", "sdk.model.mismatch", `Requested model '${model}' differs from actual model '${actualModel}'`, {
+                requestId,
+                sessionId: session.sessionId,
+                requestedModel: model,
+                actualModel,
+                providerCallId: event.data?.providerCallId,
+                usage: event.data,
+                metrics: { model_mismatch_count: true },
+              });
+            } else {
+              // Optional: note explicit match for observability
+              this.emitLog("debug", "sdk.model.match", "Requested model matches actual model", {
+                requestId,
+                sessionId: session.sessionId,
+                model: actualModel,
+              });
+            }
+          }
         } else if (event.type === "session.idle") {
           this.emitLog("info", "sdk.session.idle", "Session idle (turn complete)", {
             requestId,

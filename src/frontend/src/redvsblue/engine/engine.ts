@@ -88,7 +88,7 @@ export class Engine {
     this.tick = state.tick;
   }
 
-  spawnShip(team: Team): void {
+  spawnShip(team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>): void {
     if (!this.config) return;
 
     let x: number;
@@ -101,15 +101,28 @@ export class Engine {
     }
 
     const tuning = { ...DEFAULT_ENGINE_TUNING, ...(this.config?.tuning ?? {}) };
+    const maxHealth = overrides?.shipMaxHealth ?? this.config.shipMaxHealth;
     const ship = new Ship(
       this.nextEntityId("ship"),
       x,
       y,
       team,
-      this.config.shipMaxHealth,
+      maxHealth,
       this.rng,
       tuning.shipRadius
     );
+
+    // Apply weapon/speed overrides to the ship instance
+    if (typeof overrides?.bulletSpeed === "number") {
+      ship.bulletSpeedOverride = overrides.bulletSpeed;
+    }
+    if (typeof overrides?.bulletDamage === "number") {
+      ship.bulletDamageOverride = overrides.bulletDamage;
+    }
+    if (typeof overrides?.shipSpeed === "number") {
+      ship.shipThrustOverride = overrides.shipSpeed;
+    }
+
     this.ships.push(ship);
 
     this.emit("telemetry", {
@@ -125,11 +138,15 @@ export class Engine {
     this.particles = [];
     this.tick = 0;
 
-    // Spawn initial ships
-    this.spawnShip("red");
-    this.spawnShip("red");
-    this.spawnShip("blue");
-    this.spawnShip("blue");
+    // Spawn initial ships; honor UI config's per-team initial ships if present
+    const uiInitial = (this.config?.ui?.initialShipsPerTeam ?? DEFAULT_UI_CONFIG.initialShipsPerTeam) as number;
+    const perTeam = Number.isFinite(uiInitial) && uiInitial > 0 ? Math.max(0, Math.floor(uiInitial)) : DEFAULT_UI_CONFIG.initialShipsPerTeam;
+    for (let i = 0; i < perTeam; i++) {
+      this.spawnShip("red");
+    }
+    for (let i = 0; i < perTeam; i++) {
+      this.spawnShip("blue");
+    }
   }
 
   getState(): GameState {

@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest"
+import { DEFAULT_REDVSBLUE_DECISION_LIMITS } from "@copilot-playground/shared"
 import { validateDecision } from "../../../src/backend/src/services/decision-referee.js"
 import type { DecisionState } from "../../../src/backend/src/services/redvsblue-types.js"
 
@@ -39,7 +40,9 @@ describe("validateDecision", () => {
     }
 
     const result = validateDecision(decisionState, proposal, now)
-    expect(result.validatedDecision?.params.count).toBe(5)
+    expect(result.validatedDecision?.params.count).toBe(
+      DEFAULT_REDVSBLUE_DECISION_LIMITS.maxSpawnPerDecision
+    )
     expect(result.validatedDecision?.warnings.length).toBe(1)
   })
 
@@ -76,5 +79,39 @@ describe("validateDecision", () => {
     const result = validateDecision(decisionState, proposal, now)
     expect(result.validatedDecision).toBeUndefined()
     expect(result.rejectionReason).toBe("Per-minute spawn budget exhausted")
+  })
+
+  it("accepts numeric overrides and clamps them to rule ranges", () => {
+    const now = Date.now()
+    const decisionState = createDecisionState()
+
+    const proposal: Proposal = {
+      requestId: "override-1",
+      type: "spawnShips",
+      params: {
+        team: "red",
+        count: 1,
+        overrides: {
+          shipSpeed: 999,
+          bulletSpeed: 999,
+          bulletDamage: 999,
+          shipMaxHealth: 999,
+        },
+      },
+    }
+
+    const result = validateDecision(decisionState, proposal, now)
+    expect(result.validatedDecision).toBeDefined()
+    const applied = result.validatedDecision?.params.overrides
+    // Values should be clamped to configured maxima
+    expect(applied?.bulletDamage).toBeGreaterThanOrEqual(1)
+    expect(applied?.bulletDamage).toBeLessThanOrEqual(50)
+    expect(applied?.bulletSpeed).toBeGreaterThanOrEqual(2)
+    expect(applied?.bulletSpeed).toBeLessThanOrEqual(20)
+    expect(applied?.shipSpeed).toBeGreaterThanOrEqual(1)
+    expect(applied?.shipSpeed).toBeLessThanOrEqual(10)
+    expect(applied?.shipMaxHealth).toBeGreaterThanOrEqual(10)
+    expect(applied?.shipMaxHealth).toBeLessThanOrEqual(100)
+    expect(result.validatedDecision?.warnings.length).toBeGreaterThan(0)
   })
 })

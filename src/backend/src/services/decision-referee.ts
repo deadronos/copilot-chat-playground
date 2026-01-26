@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { loadRedVsBlueConfig } from "@copilot-playground/shared";
 
 import type {
   DecisionAuditRecord,
@@ -8,11 +9,8 @@ import type {
   ValidatedDecision,
 } from "./redvsblue-types.js";
 
-export const DECISION_LIMITS = {
-  maxSpawnPerDecision: 5,
-  maxSpawnPerMinute: 15,
-  cooldownMs: 5_000,
-};
+const { config: redVsBlueConfig } = loadRedVsBlueConfig();
+export const DECISION_LIMITS = redVsBlueConfig.decisionLimits;
 
 const DecisionProposalSchema = z.object({
   requestId: z.string().min(1),
@@ -20,6 +18,14 @@ const DecisionProposalSchema = z.object({
   params: z.object({
     team: z.enum(["red", "blue"]),
     count: z.number().int().min(1).max(50),
+    overrides: z
+      .object({
+        shipSpeed: z.number().finite().optional(),
+        bulletSpeed: z.number().finite().optional(),
+        bulletDamage: z.number().finite().optional(),
+        shipMaxHealth: z.number().finite().optional(),
+      })
+      .optional(),
   }),
   confidence: z.number().min(0).max(1).optional(),
   reason: z.string().min(1).max(500).optional(),
@@ -47,7 +53,8 @@ export function parseDecisionProposal(
 export function validateDecision(
   decisionState: DecisionState,
   proposal: DecisionProposal,
-  now: number
+  now: number,
+  allowOverrides: boolean = true
 ): { validatedDecision?: ValidatedDecision; rejectionReason?: string } {
   if (decisionState.appliedDecisionIds.has(proposal.requestId)) {
     return { rejectionReason: "Duplicate decision requestId" };
@@ -87,12 +94,54 @@ export function validateDecision(
     return { rejectionReason: "No spawn allowance available" };
   }
 
+  // Process optional overrides: if allowed by client, clamp to rule ranges and emit warnings when clamped
+  let appliedOverrides: NonNullable<ValidatedDecision["params"]["overrides"]> | undefined = undefined;
+  if (allowOverrides && proposal.params.overrides) {
+    appliedOverrides = {};
+    const ranges = loadRedVsBlueConfig().config.ruleRanges;
+    const clamp = (key: string, value: number, min: number, max: number) => {
+      if (value < min) return { applied: min, warned: true };
+      if (value > max) return { applied: max, warned: true };
+      return { applied: value, warned: false };
+    };
+
+    const { shipSpeed, bulletSpeed, bulletDamage, shipMaxHealth } = proposal.params.overrides;
+    if (typeof shipSpeed === "number") {
+      const cl = clamp("shipSpeed", shipSpeed, ranges.shipSpeed.min, ranges.shipSpeed.max);
+      appliedOverrides.shipSpeed = cl.applied;
+      if (cl.warned) warnings.push(`Clamped shipSpeed to ${cl.applied}`);
+    }
+    if (typeof bulletSpeed === "number") {
+      const cl = clamp("bulletSpeed", bulletSpeed, ranges.bulletSpeed.min, ranges.bulletSpeed.max);
+      appliedOverrides.bulletSpeed = cl.applied;
+      if (cl.warned) warnings.push(`Clamped bulletSpeed to ${cl.applied}`);
+    }
+    if (typeof bulletDamage === "number") {
+      const cl = clamp("bulletDamage", bulletDamage, ranges.bulletDamage.min, ranges.bulletDamage.max);
+      appliedOverrides.bulletDamage = cl.applied;
+      if (cl.warned) warnings.push(`Clamped bulletDamage to ${cl.applied}`);
+    }
+    if (typeof shipMaxHealth === "number") {
+      const cl = clamp("shipMaxHealth", shipMaxHealth, ranges.shipMaxHealth.min, ranges.shipMaxHealth.max);
+      appliedOverrides.shipMaxHealth = cl.applied;
+      if (cl.warned) warnings.push(`Clamped shipMaxHealth to ${cl.applied}`);
+    }
+
+    if (Object.keys(appliedOverrides).length === 0) {
+      appliedOverrides = undefined;
+    }
+  } else if (!allowOverrides && proposal.params.overrides) {
+    // Overrides were proposed but client requested overrides be ignored
+    warnings.push("AI override proposal ignored (client disabled overrides).");
+  }
+
   const validatedDecision: ValidatedDecision = {
     requestId: proposal.requestId,
     type: "spawnShips",
     params: {
       team: proposal.params.team,
       count: nextCount,
+      overrides: appliedOverrides,
     },
     warnings,
   };

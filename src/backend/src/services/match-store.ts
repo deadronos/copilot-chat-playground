@@ -1,6 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
-import { buildDecisionPrompt, clampNumber, estimateTokenCount } from "@copilot-playground/shared";
+import {
+  buildDecisionPrompt,
+  clampNumber,
+  estimateTokenCount,
+  loadRedVsBlueConfig,
+} from "@copilot-playground/shared";
 
 import type {
   MatchConfig,
@@ -17,16 +22,9 @@ type ClientConfigInput = {
   snapshotIntervalMs?: number;
 };
 
-const RULE_RANGES = {
-  shipSpeed: { min: 1, max: 10, default: 5 },
-  bulletSpeed: { min: 2, max: 20, default: 8 },
-  bulletDamage: { min: 1, max: 50, default: 10 },
-  shipMaxHealth: { min: 10, max: 100, default: 30 },
-};
-
-const CONFIG_RANGES = {
-  snapshotIntervalMs: { min: 5_000, max: 60_000, default: 30_000 },
-};
+const { config: redVsBlueConfig } = loadRedVsBlueConfig();
+const RULE_RANGES = redVsBlueConfig.ruleRanges;
+const CONFIG_RANGES = redVsBlueConfig.configRanges;
 
 const MAX_SNAPSHOT_BUFFER = 120;
 const REHYDRATION_SNAPSHOT_LIMIT = 25;
@@ -296,16 +294,16 @@ export function enforceTokenBudget(session: MatchSession, snapshot: SnapshotPayl
 export function generateCommentary(session: MatchSession): string {
   const lastSnapshot = session.snapshots.at(-1);
   if (!lastSnapshot) {
-    return "The battle is underway. Spawn a few ships to get the action going.";
+    return "Red and Blue are warming up their engines—this battle is about to pop off!";
   }
   const { red, blue } = lastSnapshot.counts;
   if (red === blue) {
-    return `It's dead even: ${red} red ships vs ${blue} blue ships.`;
+    return `Red and Blue are dead even at ${red} each — sparks flying, lasers blazing!`;
   }
   const leader = red > blue ? "Red" : "Blue";
   const trailing = red > blue ? "Blue" : "Red";
   const lead = Math.abs(red - blue);
-  return `${leader} team leads by ${lead} ships. ${trailing} team needs a counter-attack.`;
+  return `${leader} team is ahead by ${lead} ships, but ${trailing} is revving up for a comeback. Red and Blue are both bringing the heat!`;
 }
 
 export function createMatchSession(options: {

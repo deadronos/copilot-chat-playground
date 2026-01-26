@@ -29,6 +29,10 @@ Demo Video downscaled here:
 - ChatPlayground UI is split into a container (`src/frontend/src/components/chat-playground.tsx`) and presentational components (`src/frontend/src/components/chat-playground/*`).
 - RedVsBlue engine core + entities live under `src/frontend/src/redvsblue/engine/*`, with higher-level orchestration in `src/frontend/src/redvsblue/*`.
 
+## Easter egg: RedVsBlue
+
+There’s an “eastergg” in the playground: **RedVsBlue**, a mini game orchestrated and mediated by Copilot. It lives in the frontend and uses the backend’s RedVsBlue endpoints for match lifecycle, snapshots, and AI commentary.
+
 ## CI guardrails
 
 - Coverage thresholds are enforced per package (backend/frontend/copilot) via `vitest` coverage settings.

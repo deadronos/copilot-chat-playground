@@ -109,4 +109,107 @@ describe("RedVsBlue Phase 1 API", () => {
     const payload = await response.json();
     expect(payload.commentary).toBeTruthy();
   });
+
+  it("uses provided snapshot in ask request to generate commentary reflecting counts", async () => {    server = await startServer();
+    const baseUrl = getServerUrl(server);
+
+    await fetch(`${baseUrl}/api/redvsblue/match/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matchId: "match-4", rulesVersion: "v1" }),
+    });
+
+    const snapshot = {
+      timestamp: Date.now(),
+      snapshotId: "snap-ask-1",
+      gameSummary: { redCount: 3, blueCount: 1, totalShips: 4 },
+      counts: { red: 3, blue: 1 },
+      recentMajorEvents: [],
+    };
+
+    const response = await fetch(`${baseUrl}/api/redvsblue/match/match-4/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: "Status?", snapshot }),
+    });
+
+    expect(response.ok).toBe(true);
+    const body = await response.json();
+    expect(body.commentary).toContain("ahead by 2");
+  });
+
+  it("ask with snapshot.requestDecision true triggers decision flow and returns validatedDecision", async () => {
+    server = await startServer();
+    const baseUrl = getServerUrl(server);
+
+    await fetch(`${baseUrl}/api/redvsblue/match/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matchId: "match-5", rulesVersion: "v1" }),
+    });
+
+    const copilot = await import("../../../src/backend/src/services/copilot.js");
+    const spy = vi.spyOn(copilot, "callCopilotService").mockResolvedValue({
+      success: true,
+      output: JSON.stringify({
+        requestId: "r1",
+        type: "spawnShips",
+        params: { team: "red", count: 2, overrides: { bulletDamage: 999 } },
+      }),
+    });
+
+    const snapshot = {
+      timestamp: Date.now(),
+      snapshotId: "snap-ask-2",
+      gameSummary: { redCount: 1, blueCount: 1, totalShips: 2 },
+      counts: { red: 1, blue: 1 },
+      recentMajorEvents: [],
+      requestDecision: true,
+      requestOverrides: true,
+    };
+
+    // Also test that when requestOverrides is false, AI-proposed overrides are ignored
+    const snapshotNoOverrides = {
+      timestamp: Date.now(),
+      snapshotId: "snap-ask-3",
+      gameSummary: { redCount: 1, blueCount: 1, totalShips: 2 },
+      counts: { red: 1, blue: 1 },
+      recentMajorEvents: [],
+      requestDecision: true,
+      requestOverrides: false,
+    };
+    const response = await fetch(`${baseUrl}/api/redvsblue/match/match-5/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: "Make a move", snapshot }),
+    });
+
+    expect(response.ok).toBe(true);
+    const body = await response.json();
+    expect(body.validatedDecision).toBeTruthy();
+    expect(body.validatedDecision.type).toBe("spawnShips");
+    // Overrides should be present and clamped
+    expect(body.validatedDecision.params.overrides).toBeTruthy();
+    expect(body.validatedDecision.params.overrides.bulletDamage).toBeLessThanOrEqual(50);
+
+    // Now call ask with requestOverrides: false on a fresh match to avoid cooldown.
+    await fetch(`${baseUrl}/api/redvsblue/match/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ matchId: "match-6", rulesVersion: "v1" }),
+    });
+
+    const responseNoOv = await fetch(`${baseUrl}/api/redvsblue/match/match-6/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: "Make a move", snapshot: snapshotNoOverrides }),
+    });
+
+    expect(responseNoOv.ok).toBe(true);
+    const bodyNoOv = await responseNoOv.json();
+    expect(bodyNoOv.validatedDecision).toBeTruthy();
+    expect(bodyNoOv.validatedDecision.params.overrides).toBeUndefined();
+
+    spy.mockRestore();
+  });
 });

@@ -7,6 +7,9 @@ import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
 import { runPerfBench } from "@/redvsblue/bench/perfBench";
 import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index";
 import { useUIStore } from "@/redvsblue/stores/uiStore";
+import { DEFAULT_REDVSBLUE_CONFIG_VALUES } from "@copilot-playground/shared";
+import { useTelemetryStore } from "@/redvsblue/stores/telemetry";
+import type { TelemetryEvent } from "@/redvsblue/types";
 import RedVsBlueCanvas from "@/redvsblue/RedVsBlueCanvas";
 import RedVsBlueControls from "@/redvsblue/RedVsBlueControls";
 import RedVsBlueHud from "@/redvsblue/RedVsBlueHud";
@@ -47,6 +50,8 @@ const RedVsBlue: React.FC = () => {
   const [commentary, setCommentary] = useState<string | null>(null);
   const [snapshotIntervalMs, setSnapshotIntervalMs] = useState(DEFAULT_SNAPSHOT_INTERVAL_MS);
   const [autoDecisionsEnabled, setAutoDecisionsEnabled] = useState(false);
+  const [aiOverrideMessage, setAiOverrideMessage] = useState<string | null>(null);
+  const aiOverrideTimeoutRef = useRef<number | null>(null);
 
   const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
 
@@ -77,17 +82,29 @@ const RedVsBlue: React.FC = () => {
     (decision: {
       requestId: string;
       type: "spawnShips";
-      params: { team: "red" | "blue"; count: number };
+      params: { team: "red" | "blue"; count: number; overrides?: { shipSpeed?: number; bulletSpeed?: number; bulletDamage?: number; shipMaxHealth?: number } };
       warnings?: string[];
     }) => {
       if (decision.type !== "spawnShips") return;
       for (let i = 0; i < decision.params.count; i += 1) {
-        spawnShip(decision.params.team);
+        spawnShip(decision.params.team, decision.params.overrides);
       }
       if (decision.warnings && decision.warnings.length > 0) {
         showToast(`AI Director warning: ${decision.warnings.join("; ")}`);
       }
-    },
+      // If AI provided overrides, display them in the HUD briefly for player feedback
+      if (decision.params.overrides && Object.keys(decision.params.overrides).length > 0) {
+        const parts: string[] = [];
+        for (const [k, v] of Object.entries(decision.params.overrides)) {
+          if (v !== undefined && v !== null) parts.push(`${k}=${v}`);
+        }
+        const msg = `AI applied: ${parts.join(", ")}`;
+        setAiOverrideMessage(msg);
+        if (aiOverrideTimeoutRef.current) {
+          window.clearTimeout(aiOverrideTimeoutRef.current);
+        }
+        aiOverrideTimeoutRef.current = window.setTimeout(() => setAiOverrideMessage(null), 6000);
+      }    },
     [showToast, spawnShip]
   );
 
@@ -172,6 +189,7 @@ const RedVsBlue: React.FC = () => {
         counts: { red: redCount, blue: blueCount },
         recentMajorEvents: [],
         requestDecision: autoDecisionsEnabled,
+        requestOverrides: useUIStore.getState().allowAIOverrides,
       };
       void (async () => {
         try {
@@ -224,11 +242,56 @@ const RedVsBlue: React.FC = () => {
       return;
     }
     const matchId = matchIdRef.current;
+
+    // Build a snapshot payload if we have a recent snapshot available so the
+    // backend can generate commentary based on the freshest game state. Include
+    // recent major telemetry events and set requestDecision based on shared defaults.
+    const snapshot = latestSnapshotRef.current;
+    const body: Record<string, unknown> = { question: "Status update" };
+    if (snapshot) {
+      const summary = {
+        redCount,
+        blueCount,
+        totalShips: redCount + blueCount,
+      };
+
+      // Pull recent telemetry events and convert to the compact 'recentMajorEvents' shape
+      const allTelemetry = useTelemetryStore.getState().peek();
+      const majorTypes = new Set(["ship_destroyed", "ship_spawned", "explosion", "bullet_hit"]);
+      const recentMajorEvents = allTelemetry
+        .filter((e: TelemetryEvent) => majorTypes.has(e.type))
+        .slice(-20)
+        .map((e: TelemetryEvent) => {
+          const data =
+            e.data && typeof e.data === "object"
+              ? (e.data as { team?: unknown; summary?: unknown })
+              : undefined;
+          const team = data?.team === "red" || data?.team === "blue" ? data.team : undefined;
+          const summary = typeof data?.summary === "string" ? data.summary : undefined;
+          return {
+            type: e.type,
+            timestamp: e.timestamp,
+            team,
+            summary,
+          };
+        });
+
+      body.snapshot = {
+        timestamp: snapshot.timestamp,
+        snapshotId: createId(),
+        gameSummary: summary,
+        counts: { red: redCount, blue: blueCount },
+        recentMajorEvents,
+        requestDecision: DEFAULT_REDVSBLUE_CONFIG_VALUES.defaultAskRequestDecision,
+        requestOverrides: useUIStore.getState().allowAIOverrides,
+      };
+    }
+
     try {
       const response = await fetch(`/api/redvsblue/match/${matchId}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: "Status update" }),
+        body: JSON.stringify(body),
       });
       if (!response.ok) {
         const text = await response.text();
@@ -255,7 +318,7 @@ const RedVsBlue: React.FC = () => {
       <TelemetryConnectorReact />
 
       <div id="ui-layer">
-        <RedVsBlueHud redCount={redCount} blueCount={blueCount} />
+        <RedVsBlueHud redCount={redCount} blueCount={blueCount} aiOverrideMessage={aiOverrideMessage} />
         <RedVsBlueControls
           onSpawnRed={() => spawnShip("red")}
           onSpawnBlue={() => spawnShip("blue")}
@@ -263,6 +326,8 @@ const RedVsBlue: React.FC = () => {
           onAskCopilot={handleAskCopilot}
           autoDecisionsEnabled={autoDecisionsEnabled}
           onToggleAutoDecisions={handleAutoDecisionsToggle}
+          allowAIOverrides={useUIStore((s) => s.allowAIOverrides)}
+          onToggleAllowAIOverrides={(enabled: boolean) => useUIStore.getState().setAllowAIOverrides(enabled)}
         />
       </div>
       {commentary && (

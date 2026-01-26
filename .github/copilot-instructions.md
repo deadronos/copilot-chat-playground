@@ -2,6 +2,8 @@
 
 **Purpose:** Provide clear, actionable rules for the Copilot agent working in this repository so interactions, contributions, and automation remain consistent and safe.
 
+## Agent Skills
+- Encouraged to look for and use agent skills in .github/skills or other skills folder, consider multiple skills may be applicable and helpful.
 
 ## Core Behavior (short & precise)
 - Ask concise clarifying questions before making changes if requirements are ambiguous.
@@ -23,7 +25,7 @@
 - Include a brief changelog and acceptance steps.
 
 ## Tooling & Agents
-- Use repository subagents and skills when appropriate (e.g., `planning-subagent`, `implement-subagent`, `playwright-best-practices`).
+- Use repository agents and subagents and skills when appropriate (e.g., `planning-subagent`, `implement-subagent`, `playwright-best-practices`). Look for agents in `.github/agents/` and skills in `.github/skills/`.
 - Prefer isolated changes and small PRs. Ask for human review for policy, security, or architectural decisions.
 
 ## Security & Privacy

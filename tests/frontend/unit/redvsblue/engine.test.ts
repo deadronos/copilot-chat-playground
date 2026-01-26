@@ -12,6 +12,7 @@ import {
   type TelemetryEvent,
   type Engine,
 } from "@/redvsblue/engine";
+import { DEFAULT_UI_CONFIG } from "@/redvsblue/config/index";
 
 describe("RedVsBlue Engine Module", () => {
   describe("should export createEngine function", () => {
@@ -484,7 +485,7 @@ describe("RedVsBlue Engine Module", () => {
         engine.reset();
         const state = engine.getState();
 
-        expect(state.ships.length).toBe(4);
+        expect(state.ships.length).toBe(DEFAULT_UI_CONFIG.initialShipsPerTeam * 2);
         expect(state.bullets.length).toBe(0);
         expect(state.particles.length).toBe(0);
         state.ships.forEach((ship) => {
