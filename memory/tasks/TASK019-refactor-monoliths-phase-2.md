@@ -15,7 +15,7 @@ Split high-impact monoliths into modules and add comprehensive unit and integrat
 ## Implementation Plan (Checklist)
 - [x] Backend module split
   - [x] Create `backend/src/services/copilot.ts` and move Copilot client wiring (no behavior change).
-  - [x] Create `backend/src/services/match-store.ts` for match persistence/lookup logic.
+  - [x] Create `backend/src/services/redvsblue/session.ts` (plus helper modules) for match persistence/lookup logic.
   - [x] Create `backend/src/services/decision-referee.ts` for decision validation/selection.
   - [x] Update `backend/src/app.ts` to thin routing only (no heavy logic).
   - [x] Add unit tests per service (happy path + 1–2 edge cases).

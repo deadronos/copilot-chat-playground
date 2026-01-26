@@ -36,13 +36,13 @@ This reduces drift (UI vs server), centralizes change, and makes testing and run
 ## Design
 
 ### Location
-- New module in shared package: `packages/shared/src/config/redvsblue-config.ts` (or `src/redvsblue-config.ts` depending on monorepo layout). Export a typed `RedVsBlueConfig` and individual constants.
+- New module in shared package: `src/shared/src/config/redvsblue-config.ts`. Export a typed `RedVsBlueConfig` and individual constants.
 - Export both runtime getters and a `loadConfig()` helper that reads env overrides and returns the validated config.
 
 ### API (example)
 
 ```ts
-// packages/shared/src/config/redvsblue-config.ts
+// src/shared/src/config/redvsblue-config.ts
 import { z } from "zod";
 
 export const RuleRangeSchema = z.object({
@@ -76,7 +76,7 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 ```
 
 ### Runtime usage
-- Backend `match-store.ts` & `decision-referee.ts` import `loadConfig()` or direct constants from `@copilot-playground/shared` and use values for clamping and validation.
+- Backend `redvsblue/session.ts` + `redvsblue/rules.ts` and `decision-referee.ts` import `loadConfig()` or direct constants from `@copilot-playground/shared` and use values for clamping and validation.
 - Frontend `RedVsBlue.tsx` and UI defaults import values to populate proposed rules and UI ranges.
 
 ### Env overrides
@@ -125,8 +125,8 @@ JSON override:
 
 ## Tasks (implementation plan)
 
-1. Create `packages/shared/src/config/redvsblue-config.ts` with schema, defaults, `loadConfig()`.
-2. Add exports to `packages/shared/src/index.ts` (or equivalent) so backend and frontend can import.
+1. Create `src/shared/src/config/redvsblue-config.ts` with schema, defaults, `loadConfig()`.
+2. Add exports to `src/shared/src/index.ts` so backend and frontend can import.
 3. Update backend files:
    - Replace `RULE_RANGES`, `CONFIG_RANGES`, and `DEFAULT_TOKEN_BUDGET` references with imports.
    - Keep behavior identical; add tests to import constants.
@@ -140,7 +140,7 @@ JSON override:
 
 ## Acceptance Criteria
 
-- [x] `packages/shared` exposes a `redvsblue` config module with Zod schema and `loadConfig()`.
+- [x] `src/shared` exposes a `redvsblue` config module with Zod schema and `loadConfig()`.
 - [x] Backend and frontend import and use shared config values; tests updated.
 - [x] Env overrides work and are validated; invalid overrides return clear errors in tests.
 - [x] Design docs updated and include override guidance + decision note about default changes.

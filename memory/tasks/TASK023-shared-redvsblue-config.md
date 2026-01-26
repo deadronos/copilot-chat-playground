@@ -41,7 +41,7 @@ Extract RedVsBlue rule ranges, config ranges, and decision limits into a single,
 
 ## Notes / Known drift to resolve
 
-- Backend currently defines ranges/defaults in `src/backend/src/services/match-store.ts`.
+- Backend rules/config clamping now lives in `src/backend/src/services/redvsblue/rules.ts` and is orchestrated by `src/backend/src/services/redvsblue/session.ts`.
 - Frontend currently defines defaults in:
   - `src/frontend/src/redvsblue/config/defaults.ts`
   - `src/frontend/src/redvsblue/config/ui.ts`
@@ -82,7 +82,7 @@ Extract RedVsBlue rule ranges, config ranges, and decision limits into a single,
     - [x] Produce clear error strings suitable for tests/logging.
 
 - [x] **3) Backend integration (no-default behavior unchanged)**
-  - [x] Update `src/backend/src/services/match-store.ts`:
+  - [x] Update `src/backend/src/services/redvsblue/session.ts` + `src/backend/src/services/redvsblue/rules.ts`:
     - [x] Replace `RULE_RANGES`/`CONFIG_RANGES` with shared config values.
     - [x] Use shared defaults for `buildEffectiveRules()` and `buildEffectiveConfig()`.
     - [x] Load env overrides once at module init via `loadRedVsBlueConfig()`.
