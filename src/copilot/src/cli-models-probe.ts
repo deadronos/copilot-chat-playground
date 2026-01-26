@@ -1,10 +1,10 @@
-import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { getCopilotCandidatePaths } from "./copilot-cli.js";
 import { incrementMetric } from "./metrics.js";
 import type { EventBus } from "@copilot-playground/shared";
+import { execCommand } from "./lib/exec.js";
 
 /**
  * Result of probing the Copilot CLI for available models
@@ -160,72 +160,6 @@ function getFallbackModels(): string[] {
 /**
  * Spawn a command with timeout and output limits
  */
-async function spawnWithTimeout(
-  cmd: string,
-  args: string[],
-  timeoutMs: number = 5000,
-  maxOutputSize: number = 1024 * 1024 // 1MB
-): Promise<{ success: boolean; stdout: string; stderr: string; error?: Error | null }> {
-  return new Promise((resolve) => {
-    let stdout = "";
-    let stderr = "";
-    let timedOut = false;
-    
-    const child = spawn(cmd, args, {
-      env: {
-        ...process.env,
-        GH_TOKEN: process.env.GH_TOKEN || process.env.GITHUB_TOKEN,
-      },
-    });
-    
-    // Set timeout
-    const timeout = setTimeout(() => {
-      timedOut = true;
-      child.kill();
-      resolve({ 
-        success: false, 
-        stdout: "", 
-        stderr: "Command timed out",
-        error: new Error(`Command timed out after ${timeoutMs}ms`)
-      });
-    }, timeoutMs);
-    
-    if (child.stdout) {
-      child.stdout.on("data", (chunk: Buffer) => {
-        const chunkStr = chunk.toString();
-        // Limit output size to prevent memory issues
-        if (stdout.length + chunkStr.length <= maxOutputSize) {
-          stdout += chunkStr;
-        }
-      });
-    }
-    
-    if (child.stderr) {
-      child.stderr.on("data", (chunk: Buffer) => {
-        const chunkStr = chunk.toString();
-        if (stderr.length + chunkStr.length <= maxOutputSize) {
-          stderr += chunkStr;
-        }
-      });
-    }
-    
-    child.on("error", (error: Error & { code?: string }) => {
-      clearTimeout(timeout);
-      resolve({ success: false, stdout, stderr, error });
-    });
-    
-    child.on("close", (code: number) => {
-      clearTimeout(timeout);
-      if (!timedOut) {
-        if (code === 0) {
-          resolve({ success: true, stdout, stderr, error: null });
-        } else {
-          resolve({ success: false, stdout, stderr, error: new Error(`Process exited with code ${code}`) });
-        }
-      }
-    });
-  });
-}
 
 /**
  * Probe the Copilot CLI for available models
@@ -259,7 +193,7 @@ export async function probeCliModels(eventBus?: EventBus): Promise<ProbeResult> 
     
     for (const cmdToTry of candidatesToTry) {
       try {
-        const result = await spawnWithTimeout(cmdToTry, strategy.args);
+        const result = await execCommand(cmdToTry, strategy.args, { timeoutMs: 5000 });
         
         if (result.success) {
           // JSON strategy succeeded
