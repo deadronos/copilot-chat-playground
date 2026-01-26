@@ -1,7 +1,13 @@
 import { z } from "zod";
 
 export const MatchStartSchema = z.object({
-  matchId: z.string().min(1),
+  // matchId is later used as part of the persisted session filename. Restrict it to a
+  // filename-safe token (UUIDs and our browser fallback IDs are both compatible).
+  matchId: z
+    .string()
+    .min(1)
+    .max(128)
+    .regex(/^[A-Za-z0-9_-]+$/, "matchId must be a URL/filename-safe id"),
   rulesVersion: z.string().min(1).default("v1"),
   proposedRules: z
     .object({

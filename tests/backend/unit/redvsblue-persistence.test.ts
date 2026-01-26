@@ -90,6 +90,18 @@ describe("redvsblue persistence helpers", () => {
     expect(parsed.decisionState.appliedDecisionIds).toEqual([])
   })
 
+  it("refuses to persist sessions with unsafe match ids", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const session = createSession({ matchId: "../escape" })
+
+    await persistMatchSession(session)
+
+    expect(fsMocks.mkdirSync).not.toHaveBeenCalled()
+    expect(fsMocks.promises.writeFile).not.toHaveBeenCalled()
+    expect(warnSpy).toHaveBeenCalled()
+    warnSpy.mockRestore()
+  })
+
   it("loads persisted sessions and deserializes decision state", () => {
     const persisted: PersistedMatchSession = {
       ...createSession(),
@@ -115,6 +127,16 @@ describe("redvsblue persistence helpers", () => {
     await removePersistedSession("match-1")
 
     expect(warnSpy).not.toHaveBeenCalled()
+    warnSpy.mockRestore()
+  })
+
+  it("refuses to remove persisted sessions with unsafe match ids", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+    await removePersistedSession("../escape")
+
+    expect(fsMocks.promises.unlink).not.toHaveBeenCalled()
+    expect(warnSpy).toHaveBeenCalled()
     warnSpy.mockRestore()
   })
 })

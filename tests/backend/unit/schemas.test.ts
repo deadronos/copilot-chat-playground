@@ -26,6 +26,11 @@ describe("backend request schemas", () => {
     }
   });
 
+  it("rejects match start payloads with unsafe match ids", () => {
+    const parsed = MatchStartSchema.safeParse({ matchId: "../escape" });
+    expect(parsed.success).toBe(false);
+  });
+
   it("validates snapshot payloads", () => {
     const parsed = SnapshotSchema.safeParse({
       timestamp: Date.now(),

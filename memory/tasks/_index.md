@@ -27,3 +27,4 @@
 - TASK025 - Refactor backend: split `app.ts` into routes/controllers/schemas/logging - Completed ✅ (2026-01-26)
 - TASK026 - Extract engine & renderer responsibilities from `useGame` - Completed ✅ (2026-01-26)
 - TASK027 - Decompose `RedVsBlue.tsx` into match/session, AI director, and toast hooks - Completed ✅ (2026-01-26)
+- TASK028 - RedVsBlue matchId path hardening (persistence path traversal) - Completed ✅ (2026-01-26)
