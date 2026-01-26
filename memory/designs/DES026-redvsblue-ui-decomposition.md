@@ -1,6 +1,6 @@
 # DES026 - Frontend: Decompose `RedVsBlue.tsx` into hooks/controllers
 
-**Status:** Proposed
+**Status:** Implemented
 **Related tasks:** TASK027
 **Related issues:** #84
 
@@ -27,10 +27,10 @@
 
 ## Acceptance criteria
 
-- `RedVsBlue.tsx` reduced to markup + hook wiring (no imperative networking logic). 
+- `RedVsBlue.tsx` reduced to markup + hook wiring (no imperative networking logic).
 - Hook logic covered by unit tests and consistent UX preserved.
 
 
 ---
 
-*Created: 2026-01-26*
+Created: 2026-01-26

@@ -18,6 +18,7 @@
 - 2026-01-25: Added CI coverage thresholds + router thinness guard and documented post-refactor module layout (TASK020); tests/builds passed.
 - 2026-01-25: Added Copilot CLI model probing + `GET /models` endpoint with caching, metrics, and unit tests (TASK022).
 - 2026-01-26: Extracted RedVsBlue `useGame` responsibilities into engine/renderer/telemetry/fps managers with unit coverage (TASK026).
+- 2026-01-26: Decomposed `RedVsBlue.tsx` into match/session, AI director, and toast hooks with tests (TASK027).
 
 **Monolith inventory (2026-01-26):**
 
