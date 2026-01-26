@@ -28,6 +28,18 @@ import type {
 } from "../services/redvsblue-types.js";
 import { AskSchema, MatchStartSchema, SnapshotSchema } from "../schemas/match.js";
 
+// matchId is used as a key in the in-memory match store and (indirectly) as a persisted-session
+// identifier. Keep it constrained to a filename-safe token.
+const MATCH_ID_PARAM_RE = /^[A-Za-z0-9_-]{1,128}$/;
+
+function parseMatchIdParam(matchId: string | string[] | undefined): string | null {
+  const value = Array.isArray(matchId) ? matchId[0] : matchId;
+  if (!value || !MATCH_ID_PARAM_RE.test(value)) {
+    return null;
+  }
+  return value;
+}
+
 function resolveCommentary(baseCommentary: string | undefined): string {
   if (!baseCommentary || baseCommentary.trim().length === 0) {
     return "Match update: Red and Blue are still trading shots. Stay tuned for the next swing.";
@@ -98,7 +110,12 @@ export async function startMatch(req: Request, res: Response): Promise<void> {
 export async function submitSnapshot(req: Request, res: Response): Promise<void> {
   const traceId = randomUUID();
   const requestId = randomUUID();
-  const matchId = req.params.matchId;
+  const matchId = parseMatchIdParam(req.params.matchId);
+  if (!matchId) {
+    logValidationFailure({ traceId, requestId }, [{ path: ["params", "matchId"], message: "Invalid matchId" }], req);
+    res.status(400).json({ error: "Invalid matchId", requestId, traceId });
+    return;
+  }
   logStructuredEvent("info", "match.snapshot.received", { traceId, requestId, matchId }, {
     method: req.method,
     path: req.path,
@@ -377,7 +394,12 @@ export async function submitSnapshot(req: Request, res: Response): Promise<void>
 export async function askMatch(req: Request, res: Response): Promise<void> {
   const traceId = randomUUID();
   const requestId = randomUUID();
-  const matchId = req.params.matchId;
+  const matchId = parseMatchIdParam(req.params.matchId);
+  if (!matchId) {
+    logValidationFailure({ traceId, requestId }, [{ path: ["params", "matchId"], message: "Invalid matchId" }], req);
+    res.status(400).json({ error: "Invalid matchId", requestId, traceId });
+    return;
+  }
   logStructuredEvent("info", "match.ask.received", { traceId, requestId, matchId }, {
     method: req.method,
     path: req.path,
@@ -618,7 +640,12 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
 export async function endMatch(req: Request, res: Response): Promise<void> {
   const traceId = randomUUID();
   const requestId = randomUUID();
-  const matchId = req.params.matchId;
+  const matchId = parseMatchIdParam(req.params.matchId);
+  if (!matchId) {
+    logValidationFailure({ traceId, requestId }, [{ path: ["params", "matchId"], message: "Invalid matchId" }], req);
+    res.status(400).json({ error: "Invalid matchId", requestId, traceId });
+    return;
+  }
   logStructuredEvent("info", "match.end.received", { traceId, requestId, matchId }, {
     method: req.method,
     path: req.path,

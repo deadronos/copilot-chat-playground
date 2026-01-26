@@ -51,4 +51,5 @@ Small, localized hardening change; no standalone design doc created.
 
 - Tightened `MatchStartSchema.matchId` to a filename-safe regex.
 - Added persistence-layer path resolution helper to prevent path traversal and refuse unsafe ids.
+- Validated `:matchId` route params in match endpoints (snapshot/ask/end) and normalized param typing to satisfy backend `tsc`.
 - Added unit tests for schema rejection + persistence no-op behavior; ran `pnpm test` successfully.
