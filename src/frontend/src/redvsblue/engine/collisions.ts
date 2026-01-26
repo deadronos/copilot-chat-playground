@@ -1,7 +1,7 @@
 import type { EngineCoreState, EngineCoreContext } from "@/redvsblue/engine/core"
 import type { EngineTuning } from "@/redvsblue/config"
 import type { TelemetryEvent } from "@/redvsblue/types"
-import { Particle } from "@/redvsblue/engine/entities"
+import { createParticles, createDeathParticles } from "@/redvsblue/engine/particles"
 
 export function checkCollisions(
   state: EngineCoreState,
@@ -30,17 +30,13 @@ export function checkCollisions(
           data: { shipId: ship.id, bulletOwnerId: bullet.ownerId },
         } as TelemetryEvent)
 
-        // Create particles
-        for (let k = 0; k < tuning.hitParticles; k++) {
-          state.particles.push(new Particle(nextEntityId("particle"), bullet.x, bullet.y, ship.color, rng))
-        }
+        // Create particles using centralized factory
+        state.particles.push(...createParticles(tuning.hitParticles, bullet.x, bullet.y, ship.color, nextEntityId, rng))
 
         // Check if ship dies
         if (ship.health <= 0) {
-          for (let k = 0; k < tuning.deathParticles; k++) {
-            state.particles.push(new Particle(nextEntityId("particle"), ship.x, ship.y, "white", rng))
-            state.particles.push(new Particle(nextEntityId("particle"), ship.x, ship.y, ship.color, rng))
-          }
+          // Create death particles (white + ship color pairs)
+          state.particles.push(...createDeathParticles(tuning.deathParticles, ship.x, ship.y, ship.color, nextEntityId, rng))
 
           // Emit death event
           emit("telemetry", {

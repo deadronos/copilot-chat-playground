@@ -30,4 +30,4 @@
 - TASK028 - RedVsBlue matchId path hardening (persistence path traversal) - Completed ✅ (2026-01-26)
 - TASK029 - Refactor TelemetryConnector into smaller helpers - Completed ✅ (2026-01-26)
 - TASK030 - Extract match session API + snapshot builder - Completed ✅ (2026-01-26)
-- TASK031 - Extract engine core helpers (collisions, particles, AI config) - In Progress (2026-01-26)
+- TASK031 - Extract engine core helpers (collisions, particles, AI config) - Completed ✅ (2026-01-27)

@@ -1,8 +1,8 @@
 # TASK031 - Extract engine core helpers (collisions, particles, AI config)
 
-**Status:** In Progress  
+**Status:** Completed  
 **Added:** 2026-01-26  
-**Updated:** 2026-01-26
+**Updated:** 2026-01-27
 
 ## Original Request
 Break `engine/core.ts` into focused helpers: collision detection/resolution, particle factory, and AI-config builder to improve testability and reduce cognitive complexity.
@@ -32,4 +32,7 @@ Break `engine/core.ts` into focused helpers: collision detection/resolution, par
 ### 2026-01-26
 - Implemented `engine/collisions.ts` to isolate collision detection/resolution and added unit tests (hit, death, particle creation).
 - Implemented `engine/aiConfig.ts` to build per-ship AI config and added unit tests.
-- Next: extract `engine/particles.ts` particle factory and replace direct `new Particle(...)` usages; update docs and finalize refactor PR.
+- Implemented `engine/particles.ts` particle factory and added unit tests for creation and death-pair behaviors.
+- Replaced direct `new Particle(...)` usages in `collisions.ts` and `entities/Ship.ts` with factory calls and updated tests accordingly.
+- Updated `core.ts` to rely on extracted helpers and ran full frontend test suite (all tests pass locally).
+- Completed refactor and ready to open a PR with small, focused commits per helper.
