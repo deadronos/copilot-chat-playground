@@ -8,6 +8,8 @@
 
 The match-store file is currently handling persistence, serialization, rule enforcement, snapshot compaction, token budgeting, and session orchestration all in one place. Refactor it into smaller modules so each responsibility can be reasoned about and tested independently.
 
+**Note:** `match-store.ts` has been removed; references below describe the original plan and are kept for historical context.
+
 ## Thought Process
 
 - The file already imports helpers from shared config (clamp, estimateTokenCount, etc.), so we can split around the current thematic groupings: persistence/serialization vs. summary/token-budget vs. session orchestration.

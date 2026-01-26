@@ -37,7 +37,7 @@ This reduces drift (UI vs server), centralizes change, and makes testing and run
 
 ### Location
 - New module in shared package: `src/shared/src/config/redvsblue-config.ts`. Export a typed `RedVsBlueConfig` and individual constants.
-- Export both runtime getters and a `loadConfig()` helper that reads env overrides and returns the validated config.
+- Export both runtime getters and a `loadRedVsBlueConfig()` helper that reads env overrides and returns the validated config.
 
 ### API (example)
 
@@ -72,11 +72,11 @@ export type RedVsBlueConfig = z.infer<typeof RedVsBlueConfigSchema>;
 
 export const DEFAULT_REDVSBUE_CONFIG: RedVsBlueConfig = { /* defaults copied from current code */ };
 
-export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults, validate with Zod */ }
+export function loadRedVsBlueConfig(): RedVsBlueConfig { /* read env, merge into defaults, validate with Zod */ }
 ```
 
 ### Runtime usage
-- Backend `redvsblue/session.ts` + `redvsblue/rules.ts` and `decision-referee.ts` import `loadConfig()` or direct constants from `@copilot-playground/shared` and use values for clamping and validation.
+- Backend `redvsblue/session.ts` + `redvsblue/rules.ts` and `decision-referee.ts` import `loadRedVsBlueConfig()` or direct constants from `@copilot-playground/shared` and use values for clamping and validation.
 - Frontend `RedVsBlue.tsx` and UI defaults import values to populate proposed rules and UI ranges.
 
 ### Env overrides
@@ -95,7 +95,7 @@ export function loadConfig(): RedVsBlueConfig { /* read env, merge into defaults
 
 ## Tests & Validation
 
-- Unit tests for `loadConfig()` (env present/absent/invalid) with mocked env.
+- Unit tests for `loadRedVsBlueConfig()` (env present/absent/invalid) with mocked env.
 - 2026-01-26: Defaults updated (snapshotIntervalMs default → 10_000ms; decisionLimits: maxSpawnPerDecision → 25, maxSpawnPerMinute → 100, cooldownMs → 2_000). Unit tests and moved shared tests were executed and passed (moved tests now under `tests/shared` — 2 files, 9 tests).
 - Replace numeric literals used in tests with imported constants where appropriate. Add tests that assert behavior unchanged after extraction (e.g., clamping tests still pass).
 - Integration test: start server with env overrides and assert `effectiveRules` reflect overrides and Zod validation rejects out-of-bounds env values.
@@ -125,14 +125,14 @@ JSON override:
 
 ## Tasks (implementation plan)
 
-1. Create `src/shared/src/config/redvsblue-config.ts` with schema, defaults, `loadConfig()`.
+1. Create `src/shared/src/config/redvsblue-config.ts` with schema, defaults, `loadRedVsBlueConfig()`.
 2. Add exports to `src/shared/src/index.ts` so backend and frontend can import.
 3. Update backend files:
    - Replace `RULE_RANGES`, `CONFIG_RANGES`, and `DEFAULT_TOKEN_BUDGET` references with imports.
    - Keep behavior identical; add tests to import constants.
 4. Update `decision-referee.ts` to import `DECISION_LIMITS` from shared.
 5. Update frontend `RedVsBlue.tsx` to import defaults for proposed rules and `DEFAULT_UI_CONFIG` if relevant.
-6. Add unit & integration tests for `loadConfig()` and updated imports. Update existing tests to use constants instead of hard-coded numbers.
+6. Add unit & integration tests for `loadRedVsBlueConfig()` and updated imports. Update existing tests to use constants instead of hard-coded numbers.
 7. Update docs: `memory/designs/DES012`, `memory/designs/DES018`, and changelog entry.
 8. Open PR with changes and link to this design doc.
 
@@ -140,7 +140,7 @@ JSON override:
 
 ## Acceptance Criteria
 
-- [x] `src/shared` exposes a `redvsblue` config module with Zod schema and `loadConfig()`.
+- [x] `src/shared` exposes a `redvsblue` config module with Zod schema and `loadRedVsBlueConfig()`.
 - [x] Backend and frontend import and use shared config values; tests updated.
 - [x] Env overrides work and are validated; invalid overrides return clear errors in tests.
 - [x] Design docs updated and include override guidance + decision note about default changes.
