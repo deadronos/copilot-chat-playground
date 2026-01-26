@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 
-import type { GameState } from "@/redvsblue/types";
-import { selectBlueCount, selectRedCount, selectSnapshot, useGameState } from "@/redvsblue/stores/gameState";
+import { selectBlueCount, selectRedCount, useGameState } from "@/redvsblue/stores/gameState";
 import { useGame } from "@/redvsblue/useGame";
 import { TelemetryConnectorReact } from "@/redvsblue/TelemetryConnector";
 import { runPerfBench } from "@/redvsblue/bench/perfBench";
-import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index";
 import { useUIStore } from "@/redvsblue/stores/uiStore";
-import { DEFAULT_REDVSBLUE_CONFIG_VALUES } from "@copilot-playground/shared";
-import { useTelemetryStore } from "@/redvsblue/stores/telemetry";
-import type { TelemetryEvent } from "@/redvsblue/types";
+import { useAiDirector } from "@/redvsblue/useAiDirector";
+import { useMatchSession } from "@/redvsblue/useMatchSession";
+import { useToast } from "@/redvsblue/useToast";
 import RedVsBlueCanvas from "@/redvsblue/RedVsBlueCanvas";
 import RedVsBlueControls from "@/redvsblue/RedVsBlueControls";
 import RedVsBlueHud from "@/redvsblue/RedVsBlueHud";
@@ -23,288 +21,31 @@ if (initialRendererParam === "offscreen") {
   useUIStore.getState().setSelectedRenderer("offscreen");
 }
 
-import { DEFAULT_UI_CONFIG } from "@/redvsblue/config/index"
-
-const DEFAULT_SNAPSHOT_INTERVAL_MS = DEFAULT_UI_CONFIG.snapshotIntervalMs;
-
-const createId = (): string => {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-};
-
 const RedVsBlue: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const matchIdRef = useRef<string>(createId());
-  const latestSnapshotRef = useRef<GameState | null>(null);
-  const toastTimeoutRef = useRef<number | null>(null);
 
   const selectedRenderer = useUIStore((s) => s.selectedRenderer);
   const workerMode = initialWorkerMode;
 
   const redCount = useGameState(selectRedCount);
   const blueCount = useGameState(selectBlueCount);
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  const [commentary, setCommentary] = useState<string | null>(null);
-  const [snapshotIntervalMs, setSnapshotIntervalMs] = useState(DEFAULT_SNAPSHOT_INTERVAL_MS);
-  const [autoDecisionsEnabled, setAutoDecisionsEnabled] = useState(false);
-  const [aiOverrideMessage, setAiOverrideMessage] = useState<string | null>(null);
-  const aiOverrideTimeoutRef = useRef<number | null>(null);
 
   const { spawnShip, reset } = useGame({ canvasRef, containerRef, worker: workerMode });
+  const { toast, showToast } = useToast();
+  const { applyValidatedDecision, aiOverrideMessage } = useAiDirector({ spawnShip, onToast: showToast });
+  const { autoDecisionsEnabled, handleAutoDecisionsToggle, handleAskCopilot } = useMatchSession({
+    redCount,
+    blueCount,
+    onToast: showToast,
+    applyValidatedDecision,
+  });
 
   if (import.meta.env.DEV) {
     const g = globalThis as unknown as { __rvbBench?: unknown }
     g.__rvbBench = { runPerfBench }
   }
 
-  const showToast = useCallback((message: string) => {
-    setCommentary(message);
-    if (toastTimeoutRef.current) {
-      window.clearTimeout(toastTimeoutRef.current);
-    }
-    toastTimeoutRef.current = window.setTimeout(() => {
-      setCommentary(null);
-    }, DEFAULT_UI_CONFIG.toastTimeoutMs);
-  }, []);
-
-  const handleAutoDecisionsToggle = useCallback(
-    (enabled: boolean) => {
-      setAutoDecisionsEnabled(enabled);
-      showToast(enabled ? "Auto-decisions enabled." : "Auto-decisions disabled.");
-    },
-    [showToast]
-  );
-
-  const applyValidatedDecision = useCallback(
-    (decision: {
-      requestId: string;
-      type: "spawnShips";
-      params: { team: "red" | "blue"; count: number; overrides?: { shipSpeed?: number; bulletSpeed?: number; bulletDamage?: number; shipMaxHealth?: number } };
-      warnings?: string[];
-    }) => {
-      if (decision.type !== "spawnShips") return;
-      for (let i = 0; i < decision.params.count; i += 1) {
-        spawnShip(decision.params.team, decision.params.overrides);
-      }
-      if (decision.warnings && decision.warnings.length > 0) {
-        showToast(`AI Director warning: ${decision.warnings.join("; ")}`);
-      }
-      // If AI provided overrides, display them in the HUD briefly for player feedback
-      if (decision.params.overrides && Object.keys(decision.params.overrides).length > 0) {
-        const parts: string[] = [];
-        for (const [k, v] of Object.entries(decision.params.overrides)) {
-          if (v !== undefined && v !== null) parts.push(`${k}=${v}`);
-        }
-        const msg = `AI applied: ${parts.join(", ")}`;
-        setAiOverrideMessage(msg);
-        if (aiOverrideTimeoutRef.current) {
-          window.clearTimeout(aiOverrideTimeoutRef.current);
-        }
-        aiOverrideTimeoutRef.current = window.setTimeout(() => setAiOverrideMessage(null), 6000);
-      }    },
-    [showToast, spawnShip]
-  );
-
-  useEffect(() => {
-    const unsubscribe = useGameState.subscribe(selectSnapshot, (snapshot) => {
-      if (snapshot) {
-        latestSnapshotRef.current = snapshot;
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    const matchId = matchIdRef.current;
-    const startMatch = async () => {
-      try {
-        const response = await fetch("/api/redvsblue/match/start", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            matchId,
-            rulesVersion: "v1",
-            proposedRules: {
-              shipSpeed: DEFAULT_ENGINE_CONFIG.shipSpeed,
-              bulletSpeed: DEFAULT_ENGINE_CONFIG.bulletSpeed,
-              bulletDamage: DEFAULT_ENGINE_CONFIG.bulletDamage,
-              shipMaxHealth: DEFAULT_ENGINE_CONFIG.shipMaxHealth,
-            },
-            clientConfig: {
-              snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs,
-            },
-          }),
-        });
-        if (!response.ok) {
-          const text = await response.text();
-          throw new Error(text || "Failed to start match");
-        }
-        const data = (await response.json()) as {
-          sessionId: string;
-          effectiveConfig?: { snapshotIntervalMs?: number };
-        };
-        setSessionId(data.sessionId);
-        if (data.effectiveConfig?.snapshotIntervalMs) {
-          setSnapshotIntervalMs(data.effectiveConfig.snapshotIntervalMs);
-        }
-      } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Failed to start match. Try reloading.";
-        showToast(message);
-      }
-    };
-
-    void startMatch();
-
-    return () => {
-      void fetch(`/api/redvsblue/match/${matchId}/end`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      }).catch(() => undefined);
-    };
-  }, [showToast]);
-
-  useEffect(() => {
-    if (!sessionId) return;
-    const matchId = matchIdRef.current;
-    const intervalId = window.setInterval(() => {
-      const snapshot = latestSnapshotRef.current;
-      if (!snapshot) return;
-      const summary = {
-        redCount,
-        blueCount,
-        totalShips: redCount + blueCount,
-      };
-      const payload = {
-        timestamp: snapshot.timestamp,
-        snapshotId: createId(),
-        gameSummary: summary,
-        counts: { red: redCount, blue: blueCount },
-        recentMajorEvents: [],
-        requestDecision: autoDecisionsEnabled,
-        requestOverrides: useUIStore.getState().allowAIOverrides,
-      };
-      void (async () => {
-        try {
-          const response = await fetch(`/api/redvsblue/match/${matchId}/snapshot`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-          if (!response.ok) return;
-          const data = (await response.json()) as {
-            notificationText?: string;
-            validatedDecision?: {
-              requestId: string;
-              type: "spawnShips";
-              params: { team: "red" | "blue"; count: number };
-              warnings?: string[];
-            };
-            decisionRejectedReason?: string;
-          };
-          if (data.notificationText) {
-            showToast(data.notificationText);
-          }
-          if (data.validatedDecision) {
-            applyValidatedDecision(data.validatedDecision);
-          } else if (data.decisionRejectedReason) {
-            showToast(`AI Director rejected decision: ${data.decisionRejectedReason}`);
-          }
-        } catch {
-          // ignore snapshot errors
-        }
-      })();
-    }, snapshotIntervalMs);
-
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, redCount, sessionId, showToast, snapshotIntervalMs]);
-
-  useEffect(() => {
-    return () => {
-      if (toastTimeoutRef.current) {
-        window.clearTimeout(toastTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleAskCopilot = async () => {
-    if (!sessionId) {
-      showToast("Copilot director is not ready yet.");
-      return;
-    }
-    const matchId = matchIdRef.current;
-
-    // Build a snapshot payload if we have a recent snapshot available so the
-    // backend can generate commentary based on the freshest game state. Include
-    // recent major telemetry events and set requestDecision based on shared defaults.
-    const snapshot = latestSnapshotRef.current;
-    const body: Record<string, unknown> = { question: "Status update" };
-    if (snapshot) {
-      const summary = {
-        redCount,
-        blueCount,
-        totalShips: redCount + blueCount,
-      };
-
-      // Pull recent telemetry events and convert to the compact 'recentMajorEvents' shape
-      const allTelemetry = useTelemetryStore.getState().peek();
-      const majorTypes = new Set(["ship_destroyed", "ship_spawned", "explosion", "bullet_hit"]);
-      const recentMajorEvents = allTelemetry
-        .filter((e: TelemetryEvent) => majorTypes.has(e.type))
-        .slice(-20)
-        .map((e: TelemetryEvent) => {
-          const data =
-            e.data && typeof e.data === "object"
-              ? (e.data as { team?: unknown; summary?: unknown })
-              : undefined;
-          const team = data?.team === "red" || data?.team === "blue" ? data.team : undefined;
-          const summary = typeof data?.summary === "string" ? data.summary : undefined;
-          return {
-            type: e.type,
-            timestamp: e.timestamp,
-            team,
-            summary,
-          };
-        });
-
-      body.snapshot = {
-        timestamp: snapshot.timestamp,
-        snapshotId: createId(),
-        gameSummary: summary,
-        counts: { red: redCount, blue: blueCount },
-        recentMajorEvents,
-        requestDecision: DEFAULT_REDVSBLUE_CONFIG_VALUES.defaultAskRequestDecision,
-        requestOverrides: useUIStore.getState().allowAIOverrides,
-      };
-    }
-
-    try {
-      const response = await fetch(`/api/redvsblue/match/${matchId}/ask`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || "Failed to fetch commentary");
-      }
-      const data = (await response.json()) as { commentary?: string };
-      showToast(data.commentary ?? "Copilot is thinking about the match.");
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to reach Copilot director.";
-      showToast(message);
-    }
-  };
 
   return (
     <div
@@ -330,10 +71,10 @@ const RedVsBlue: React.FC = () => {
           onToggleAllowAIOverrides={(enabled: boolean) => useUIStore.getState().setAllowAIOverrides(enabled)}
         />
       </div>
-      {commentary && (
+      {toast && (
         <div className="rvb-toast" role="status" aria-live="polite">
           <strong>AI Director</strong>
-          <div>{commentary}</div>
+          <div>{toast}</div>
         </div>
       )}
     </div>

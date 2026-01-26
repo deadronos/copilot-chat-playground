@@ -7,6 +7,7 @@
 - Copilot service exposes `GET /models` with cached Copilot CLI advertised models (TASK022, 2026-01-25).
 - RedVsBlue match-store helpers are now split into focused modules with unit coverage (TASK024, 2026-01-26).
 - `useGame` responsibilities extracted into engine/renderer/telemetry/fps managers with tests (TASK026, 2026-01-26).
+- RedVsBlue UI logic decomposed into match/session, AI director, and toast hooks with tests (TASK027, 2026-01-26).
 - Full workspace test suite (`pnpm test`) passes after TASK024 updates (2026-01-26).
 
 **What's left / Next:**
