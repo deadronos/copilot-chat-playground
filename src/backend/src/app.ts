@@ -21,7 +21,7 @@ import {
   removePersistedSession,
   setMatchSession,
   REHYDRATION_DECISION_TAIL,
-} from "./services/match-store.js";
+} from "./services/redvsblue/session.js";
 import {
   logDecisionAudit,
   logStructuredEvent,

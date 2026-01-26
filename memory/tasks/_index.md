@@ -23,4 +23,4 @@
 - TASK021 - Playwright E2E Coverage (Deferred from Phase 2) - Pending (2026-01-25)
 - TASK022 - Copilot CLI model probe (/models endpoint) - Completed ✅ (2026-01-25)
 - TASK023 - Shared RedVsBlue config (DES022) - Completed ✅ (2026-01-25)
-- TASK024 - RedVsBlue match store split - Pending (2026-01-26)
+- TASK024 - RedVsBlue match store split - Completed ✅ (2026-01-26)

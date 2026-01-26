@@ -1,10 +1,6 @@
-import {
-  buildStrategicSummary,
-  compactSessionSnapshots,
-  deserializeMatchSession,
-  enforceTokenBudget,
-  serializeMatchSession,
-} from "../../src/backend/src/services/match-store.js"
+import { buildStrategicSummary, compactSessionSnapshots } from "../../src/backend/src/services/redvsblue/summary.js"
+import { deserializeMatchSession, serializeMatchSession } from "../../src/backend/src/services/redvsblue/serialization.js"
+import { enforceTokenBudget } from "../../src/backend/src/services/redvsblue/tokenBudget.js"
 import { DEFAULT_REDVSBLUE_CONFIG_VALUES, DEFAULT_REDVSBLUE_RULES } from "@copilot-playground/shared"
 
 type Session = Parameters<typeof compactSessionSnapshots>[0]
