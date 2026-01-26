@@ -25,7 +25,7 @@
 - Include a brief changelog and acceptance steps.
 
 ## Tooling & Agents
-- Use repository subagents and skills when appropriate (e.g., `planning-subagent`, `implement-subagent`, `playwright-best-practices`).
+- Use repository agents and subagents and skills when appropriate (e.g., `planning-subagent`, `implement-subagent`, `playwright-best-practices`). Look for agents in `.github/agents/` and skills in `.github/skills/`.
 - Prefer isolated changes and small PRs. Ask for human review for policy, security, or architectural decisions.
 
 ## Security & Privacy
