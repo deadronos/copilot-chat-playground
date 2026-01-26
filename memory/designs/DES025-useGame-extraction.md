@@ -1,6 +1,6 @@
 # DES025 - Frontend: Extract engine & renderer responsibilities from `useGame`
 
-**Status:** Proposed
+**Status:** Implemented
 **Related tasks:** TASK026
 **Related issues:** #83
 
@@ -36,4 +36,4 @@
 
 ---
 
-*Created: 2026-01-26*
+Created: 2026-01-26
