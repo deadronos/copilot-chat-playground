@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef } from "react"
 import type { RefObject } from "react"
 
-import { createEngine } from "@/redvsblue/engine"
 import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index"
 import type { EngineConfig, GameState, Team } from "@/redvsblue/types"
-import { CanvasRenderer } from "@/redvsblue/renderer"
 import { selectSnapshot, useGameState } from "@/redvsblue/stores/gameState"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
 import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
-import { EngineWorkerWrapper } from "@/redvsblue/worker/engineWorkerWrapper"
-import type { Engine as EngineAPI } from "@/redvsblue/types"
-import { applyCanvasSize } from "@copilot-playground/shared"
+import { createEngineManager, type EngineWithWorkerControls } from "@/redvsblue/engineManager"
+import { createRendererManager, type RendererManager } from "@/redvsblue/rendererManager"
+import { attachTelemetryForwarder } from "@/redvsblue/telemetryForwarder"
+import { useFps } from "@/redvsblue/useFps"
 
 export type UseGameOptions = {
   canvasRef: RefObject<HTMLCanvasElement | null>
@@ -37,16 +36,6 @@ type SetupKey = {
   config: Omit<EngineConfig, "canvasWidth" | "canvasHeight">
 }
 
-function getCanvasSize(
-  canvas: HTMLCanvasElement,
-  container?: Element | null
-): { width: number; height: number } {
-  const el = container ?? canvas.parentElement
-  const width = el instanceof HTMLElement ? el.clientWidth : canvas.clientWidth ?? 0
-  const height = el instanceof HTMLElement ? el.clientHeight : canvas.clientHeight ?? 0
-  return { width, height }
-}
-
 export function useGame(options: UseGameOptions): Controls {
   const {
     canvasRef,
@@ -60,17 +49,19 @@ export function useGame(options: UseGameOptions): Controls {
 
   const selectedRenderer = useUIStore((s) => s.selectedRenderer)
 
-  const engineRef = useRef<(EngineAPI & Partial<Pick<EngineWorkerWrapper, "start" | "stop">>) | null>(null)
-  const rendererRef = useRef<CanvasRenderer | null>(null)
-  const offscreenCanvasRef = useRef<OffscreenCanvas | null>(null)
+  const engineRef = useRef<EngineWithWorkerControls | null>(null)
+  const rendererManagerRef = useRef<RendererManager | null>(null)
   const setupRef = useRef<SetupKey | null>(null)
   const isUnmountingRef = useRef(false)
   const rafIdRef = useRef<number | null>(null)
   const lastNowRef = useRef<number>(0)
 
-  const fpsFramesRef = useRef<number>(0)
-  const fpsWindowStartRef = useRef<number>(0)
-  const fpsLastPublishRef = useRef<number>(0)
+  const engineManager = useMemo(
+    () => createEngineManager({ engineRef, worker, workerTickHz, workerSnapshotHz }),
+    [worker, workerSnapshotHz, workerTickHz]
+  )
+
+  const { reset: resetFps, recordFrame } = useFps()
 
   const defaultConfig = useMemo<Omit<EngineConfig, "canvasWidth" | "canvasHeight">>(
     () => ({
@@ -80,36 +71,24 @@ export function useGame(options: UseGameOptions): Controls {
     [config]
   )
 
-  function hasStop(e: unknown): e is { stop: () => void } {
-    return !!e && typeof e === 'object' && 'stop' in e && typeof (e as { stop?: unknown }).stop === 'function'
-  }
-
   const stop = useCallback(() => {
     if (rafIdRef.current !== null) {
       cancelAnimationFrame(rafIdRef.current)
       rafIdRef.current = null
     }
 
-    const engine = engineRef.current
-    if (engine && worker && hasStop(engine)) {
-      engine.stop()
-    }
+    engineManager.stopIfWorker()
 
     useUIStore.getState().setRunning(false)
     useUIStore.getState().setFps(null)
-  }, [worker])
+  }, [engineManager])
 
   const hardReset = useCallback(() => {
-    const engine = engineRef.current
-    if (engine) {
-      engine.destroy()
-    }
-    rendererRef.current?.destroy()
-    rendererRef.current = null
-    engineRef.current = null
-    offscreenCanvasRef.current = null
+    engineManager.destroyEngine()
+    rendererManagerRef.current?.reset()
+    rendererManagerRef.current = null
     useGameState.getState().clear()
-  }, [])
+  }, [engineManager])
 
   const isSameSetup = (a: SetupKey | null, b: SetupKey): boolean => {
     if (!a) return false
@@ -136,77 +115,44 @@ export function useGame(options: UseGameOptions): Controls {
     // In worker mode, the worker runs the loop and publishes snapshots.
     // In non-worker mode, we run the simulation on the main thread.
     if (!worker) {
-      engine.update(dtMs)
-      useGameState.getState().setSnapshot(engine.getState())
-    }
-
-    // FPS (publish at most 4x/sec)
-    if (fpsWindowStartRef.current === 0) {
-      fpsWindowStartRef.current = now
-      fpsLastPublishRef.current = now
-      fpsFramesRef.current = 0
-    }
-
-    fpsFramesRef.current++
-    const windowElapsed = now - fpsWindowStartRef.current
-    const publishElapsed = now - fpsLastPublishRef.current
-    if (windowElapsed >= 500 && publishElapsed >= 250) {
-      const fps = (fpsFramesRef.current * 1000) / windowElapsed
-      useUIStore.getState().setFps(Math.round(fps))
-      fpsWindowStartRef.current = now
-      fpsFramesRef.current = 0
-      fpsLastPublishRef.current = now
-    }
-
-    if (!worker) {
+      engineManager.updateEngine(dtMs, (snapshot) => {
+        useGameState.getState().setSnapshot(snapshot)
+      })
+      const fps = recordFrame(now)
+      if (fps !== null) {
+        useUIStore.getState().setFps(fps)
+      }
       rafIdRef.current = requestAnimationFrame(tickHandler)
     }
-  }, [worker])
+  }, [engineManager, recordFrame, worker])
 
   const start = useCallback(() => {
     if (useUIStore.getState().running) return
     if (!engineRef.current) return
     useUIStore.getState().setRunning(true)
     lastNowRef.current = performance.now()
-    fpsWindowStartRef.current = 0
-    fpsFramesRef.current = 0
+    resetFps()
     if (worker) {
-      const engine = engineRef.current
-      function hasStart(e: unknown): e is { start: () => void } {
-        return !!e && typeof e === 'object' && 'start' in e && typeof (e as { start?: unknown }).start === 'function'
-      }
-      if (engine && hasStart(engine)) {
-        engine.start()
-      }
+      engineManager.startIfWorker()
       return
     }
     rafIdRef.current = requestAnimationFrame(tick)
-  }, [tick, worker])
+  }, [engineManager, resetFps, tick, worker])
 
   const spawnShip = useCallback(
     (team: Team, overrides?: Partial<{ shipSpeed: number; bulletSpeed: number; bulletDamage: number; shipMaxHealth: number }>) => {
-    const engine = engineRef.current
-    if (!engine) return
-    // Pass through overrides when present
-    engine.spawnShip(team, overrides)
-    if (!worker) {
-      useGameState.getState().setSnapshot(engine.getState())
-    }
+      engineManager.spawnShip(team, overrides, (snapshot) => {
+        useGameState.getState().setSnapshot(snapshot)
+      })
     },
-    [worker]
+    [engineManager]
   )
 
-  const reset = useCallback(
-    () => {
-    const engine = engineRef.current
-    if (!engine) return
-    engine.reset()
-    if (!worker) {
-      useGameState.getState().setSnapshot(engine.getState())
-    }
-    },
-    [worker]
-  )
+  const reset = useCallback(() => {
+    engineManager.resetEngine((snapshot) => {
+      useGameState.getState().setSnapshot(snapshot)
+    })
+  }, [engineManager])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -224,166 +170,94 @@ export function useGame(options: UseGameOptions): Controls {
       hardReset()
     }
     setupRef.current = nextSetup
-
-    const wantOffscreen = worker && selectedRenderer === "offscreen"
-    const offscreenSupported =
-      wantOffscreen &&
-      typeof (canvas as unknown as { transferControlToOffscreen?: unknown }).transferControlToOffscreen === "function" &&
-      typeof OffscreenCanvas !== "undefined"
-
-    const useOffscreen = Boolean(offscreenSupported)
-
+    const engine = engineManager.ensureEngine()
     const container = containerRef?.current ?? null
 
-    const engine =
-      engineRef.current ??
-      (worker
-        ? new EngineWorkerWrapper({ tickHz: workerTickHz, snapshotHz: workerSnapshotHz })
-        : createEngine())
+    const rendererManager =
+      rendererManagerRef.current ??
+      createRendererManager({
+        canvas,
+        container,
+        engine,
+        worker,
+        selectedRenderer,
+        onFallbackToCanvas: () => {
+          useUIStore.getState().setSelectedRenderer("canvas")
+        },
+      })
 
-    engineRef.current = engine as unknown as EngineAPI & Partial<Pick<EngineWorkerWrapper, "start" | "stop">>
+    rendererManagerRef.current = rendererManager
+    rendererManager.initRenderer()
 
-    const renderer = useOffscreen ? null : rendererRef.current ?? new CanvasRenderer()
-    if (renderer) {
-      renderer.init(canvas)
-      rendererRef.current = renderer
-    }
-
-    // telemetry handler reference so we can unregister on cleanup
-    let telemetryHandler: ((data: unknown) => void) | null = null
-
-    // worker snapshot handler reference for cleanup
-    let workerSnapshotHandler: ((data: unknown) => void) | null = null
+    let telemetryCleanup: (() => void) | null = null
+    let workerSnapshotCleanup: (() => void) | null = null
 
     const configureEngine = () => {
-      const { width, height } = getCanvasSize(canvas, container)
-      applyCanvasSize(canvas, width, height)
+      const size = rendererManager.configureCanvas()
       lastNowRef.current = performance.now()
-      fpsWindowStartRef.current = 0
-      fpsFramesRef.current = 0
+      resetFps()
 
-      if (useOffscreen) {
-        // Transfer canvas control once and let the worker render.
-        if (!offscreenCanvasRef.current) {
-          try {
-            const canvasWithTransfer = canvas as unknown as { transferControlToOffscreen?: () => OffscreenCanvas }
-            const offscreen = canvasWithTransfer.transferControlToOffscreen!()
-            offscreenCanvasRef.current = offscreen
-            if (typeof (engine as unknown as { setCanvas?: unknown }).setCanvas === "function") {
-              ;(engine as unknown as { setCanvas: (c: OffscreenCanvas, w: number, h: number) => void }).setCanvas(offscreen, canvas.width, canvas.height)
-            }
-          } catch (err) {
-            // Canvas already has a rendering context (cannot transfer). Fallback to main-thread renderer.
-            console.warn("OffscreenCanvas transfer failed; falling back to canvas renderer", err)
-            useUIStore.getState().setSelectedRenderer("canvas")
-            return
-          }
-        } else if (typeof (engine as unknown as { resizeCanvas?: unknown }).resizeCanvas === "function") {
-          ;(engine as unknown as { resizeCanvas: (w: number, h: number) => void }).resizeCanvas(canvas.width, canvas.height)
-        }
+      if (!size) return
+
+      if (worker && useUIStore.getState().running) {
+        engineManager.stopIfWorker()
       }
 
-      // If we are currently running, stop worker loop before re-init
-      if (worker && useUIStore.getState().running && hasStop(engine)) {
-        engine.stop()
-      }
-
-      engine.init({
+      engineManager.initEngine({
         canvasWidth: canvas.width,
         canvasHeight: canvas.height,
         ...defaultConfig,
       })
 
       if (!worker) {
-        engine.reset()
-        useGameState.getState().setSnapshot(engine.getState())
+        engineManager.resetEngine((snapshot) => {
+          useGameState.getState().setSnapshot(snapshot)
+        })
       }
 
-      // Telemetry: forward engine telemetry events to telemetry store
-      // Respect both engine config (enableTelemetry) and UI toggle (telemetryEnabled)
-      // remove any previously-registered handler before adding a new one (prevent duplicate handlers)
-      if (telemetryHandler) engine.off("telemetry", telemetryHandler)
-
-      telemetryHandler = (data: unknown) => {
-        try {
-          const evt = data as import("./types").TelemetryEvent
-          const engineEnabled = defaultConfig.enableTelemetry ?? true
-          const uiEnabled = useUIStore.getState().telemetryEnabled ?? true
-          if (!engineEnabled || !uiEnabled) return
-          // push into telemetry store (stores handle id/timestamp enrichment)
+      telemetryCleanup?.()
+      telemetryCleanup = attachTelemetryForwarder({
+        engine,
+        config: defaultConfig,
+        getUiEnabled: () => useUIStore.getState().telemetryEnabled ?? true,
+        onTelemetry: (evt) => {
           useTelemetryStore.getState().pushTelemetry(evt)
-        } catch (err) {
-          // Defensive: ensure telemetry handler errors don't break engine loop
-           
-          console.error("telemetry handler error", err)
-        }
-      }
-
-      engine.on("telemetry", telemetryHandler)
+        },
+      })
 
       if (worker) {
-        // Subscribe to snapshots from the worker wrapper
-        if (workerSnapshotHandler) engine.off("snapshot", workerSnapshotHandler)
-        workerSnapshotHandler = (data: unknown) => {
-          const snapshot = data as GameState
+        workerSnapshotCleanup?.()
+        workerSnapshotCleanup = engineManager.onWorkerSnapshot((snapshot) => {
           useGameState.getState().setSnapshot(snapshot)
-
-          // FPS based on snapshot arrival (publish at most 4x/sec)
-          const now = performance.now()
-          if (fpsWindowStartRef.current === 0) {
-            fpsWindowStartRef.current = now
-            fpsLastPublishRef.current = now
-            fpsFramesRef.current = 0
+          const fps = recordFrame(performance.now())
+          if (fps !== null) {
+            useUIStore.getState().setFps(fps)
           }
+        })
 
-          fpsFramesRef.current++
-          const windowElapsed = now - fpsWindowStartRef.current
-          const publishElapsed = now - fpsLastPublishRef.current
-          if (windowElapsed >= 500 && publishElapsed >= 250) {
-            const fps = (fpsFramesRef.current * 1000) / windowElapsed
-            useUIStore.getState().setFps(Math.round(fps))
-            fpsWindowStartRef.current = now
-            fpsFramesRef.current = 0
-            fpsLastPublishRef.current = now
-          }
-        }
-
-        engine.on("snapshot", workerSnapshotHandler)
-
-        // Resume if we were running
-        function hasStart(e: unknown): e is { start: () => void } {
-          return !!e && typeof e === 'object' && 'start' in e && typeof (e as { start?: unknown }).start === 'function'
-        }
-        if (useUIStore.getState().running && hasStart(engine)) {
-          engine.start()
+        if (useUIStore.getState().running) {
+          engineManager.startIfWorker()
         }
       }
     }
 
     configureEngine()
 
-    const unsubscribe = renderer
-      ? useGameState.subscribe(selectSnapshot, (snapshot) => {
-          renderer.render(snapshot)
-        })
-      : () => {}
-
-    const resizeObserver = new ResizeObserver(() => {
+    const unsubscribe = rendererManager.subscribeToSnapshots(useGameState.subscribe, selectSnapshot)
+    const disconnectResize = rendererManager.observeResize(() => {
       // Re-init engine so world bounds match the canvas size (resets simulation).
       configureEngine()
     })
 
-    if (container) resizeObserver.observe(container)
-
     if (autoStart) start()
 
     return () => {
-      resizeObserver.disconnect()
+      disconnectResize()
       unsubscribe()
       stop()
-      renderer?.destroy()
-      if (telemetryHandler) engine.off("telemetry", telemetryHandler)
-      if (workerSnapshotHandler) engine.off("snapshot", workerSnapshotHandler)
+      rendererManager.destroyRenderer()
+      telemetryCleanup?.()
+      workerSnapshotCleanup?.()
       if (isUnmountingRef.current) {
         hardReset()
       }
@@ -393,7 +267,10 @@ export function useGame(options: UseGameOptions): Controls {
     canvasRef,
     containerRef,
     defaultConfig,
+    engineManager,
     hardReset,
+    recordFrame,
+    resetFps,
     selectedRenderer,
     start,
     stop,

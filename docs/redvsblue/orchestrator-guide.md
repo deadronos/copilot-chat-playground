@@ -28,7 +28,7 @@
   - Endpoints: `POST /api/redvsblue/match/start`, `POST /api/redvsblue/match/:matchId/snapshot`, `POST /api/redvsblue/match/:matchId/ask`, `POST /api/redvsblue/match/:matchId/end`.
   - Decision flow: build prompt → call Copilot (`callCopilotService` / `callCopilotServiceStream`) → parse JSON (`parseDecisionProposal`) → referee (`validateDecision`) → persist + return validated decision.
 - **Copilot service**: `src/copilot` (CLI wrapper or SDK). Backend uses `COPILOT_SERVICE_URL` (default `http://localhost:3210`).
-- **Match Store & Persistence**: `src/backend/src/services/match-store.ts` — session registry, snapshot buffer, strategic summaries, token-budget enforcement, persisted to `REDVSBLUE_PERSIST_DIR` (default `/tmp/redvsblue-sessions`).
+- **Match Store & Persistence**: `src/backend/src/services/redvsblue/session.ts` — session registry and orchestration. Persistence/serialization live in `src/backend/src/services/redvsblue/persistence.ts` and `src/backend/src/services/redvsblue/serialization.ts`; summary + token-budget logic live in `src/backend/src/services/redvsblue/summary.ts` and `src/backend/src/services/redvsblue/tokenBudget.ts`. Sessions persist to `REDVSBLUE_PERSIST_DIR` (default `/tmp/redvsblue-sessions`).
 - **Telemetry**: Frontend includes `TelemetryConnector` to stream telemetry to backend WebSocket.
 
 ---
@@ -271,7 +271,7 @@ Response: `200 OK` (session cleaned up and persisted file removed).
 
 - Design notes: `memory/designs/DES013-redvsblue-ai-director-phase2-decision-pipeline.md`
 - Tasks: `memory/tasks/_index.md` (search TASK013–TASK017)
-- Key source files: `src/backend/src/services/match-store.ts`, `src/backend/src/services/decision-referee.ts`, `src/backend/src/services/copilot.ts`, `src/frontend/src/redvsblue/RedVsBlue.tsx`.
+- Key source files: `src/backend/src/services/redvsblue/session.ts`, `src/backend/src/services/redvsblue/persistence.ts`, `src/backend/src/services/redvsblue/serialization.ts`, `src/backend/src/services/decision-referee.ts`, `src/backend/src/services/copilot.ts`, `src/frontend/src/redvsblue/RedVsBlue.tsx`.
 
 ---
 

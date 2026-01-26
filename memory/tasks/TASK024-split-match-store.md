@@ -1,12 +1,14 @@
 # TASK024 - Split `match-store.ts` into focused RedVsBlue modules
 
-**Status:** Pending  
+**Status:** Completed  
 **Added:** 2026-01-26  
 **Updated:** 2026-01-26
 
 ## Original Request
 
 The match-store file is currently handling persistence, serialization, rule enforcement, snapshot compaction, token budgeting, and session orchestration all in one place. Refactor it into smaller modules so each responsibility can be reasoned about and tested independently.
+
+**Note:** `match-store.ts` has been removed; references below describe the original plan and are kept for historical context.
 
 ## Thought Process
 
@@ -61,3 +63,24 @@ The match-store file is currently handling persistence, serialization, rule enfo
 - Captured the new design doc (DES023) that maps responsibilities to extracted modules.
 
 - Drafted this task to track the split and outline the required TDD steps.
+
+### 2026-01-26
+
+- Split match-store into redvsblue helper modules (rules, summary, tokenBudget, serialization, persistence, session) and updated backend imports.
+- Added targeted unit tests for the new helpers and updated existing phase-4 tests to import from the new modules.
+- Removed the legacy match-store implementation after updating app/session wiring.
+- Ran `pnpm test` after fixing helper test setup (vitest mock hoist) and decision validation expectations; all workspace tests passed.
+
+## Progress Tracking
+
+**Overall Status:** Completed — 100%
+
+### Subtasks
+
+| ID  | Description                                    | Status   | Updated    | Notes |
+| --- | ---------------------------------------------- | -------- | ---------- | ----- |
+| 1.1 | Extract rules/config helpers + tests           | Complete | 2026-01-26 |       |
+| 1.2 | Extract summary/token budget helpers + tests   | Complete | 2026-01-26 |       |
+| 1.3 | Extract serialization/persistence helpers      | Complete | 2026-01-26 |       |
+| 1.4 | Refactor session orchestration + update imports| Complete | 2026-01-26 |       |
+| 1.5 | Update/extend backend tests                    | Complete | 2026-01-26 |       |

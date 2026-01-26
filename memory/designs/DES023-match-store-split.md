@@ -1,6 +1,6 @@
 # DES023 — RedVsBlue Match Store Refactor
 
-**Objective**: Split `match-store.ts` into cohesive modules so persistence, serialization, decision helpers, and snapshot management each own a small, testable surface. This makes it easier to reason about token-budget adjustments, strategic summaries, and persistence in isolation, while minimizing cognitive load when updating RedVsBlue orchestration logic.
+**Objective**: Split the former `match-store.ts` into cohesive modules so persistence, serialization, decision helpers, and snapshot management each own a small, testable surface. This makes it easier to reason about token-budget adjustments, strategic summaries, and persistence in isolation, while minimizing cognitive load when updating RedVsBlue orchestration logic.
 
 ---
 

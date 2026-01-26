@@ -1,9 +1,8 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 import { DEFAULT_REDVSBLUE_DECISION_LIMITS } from "@copilot-playground/shared"
-import { validateDecision } from "../../../src/backend/src/services/decision-referee.js"
-import type { DecisionState } from "../../../src/backend/src/services/redvsblue-types.js"
+import type { DecisionProposal, DecisionState } from "../../../src/backend/src/services/redvsblue-types.js"
 
-type Proposal = Parameters<typeof validateDecision>[1]
+type Proposal = DecisionProposal
 
 function createDecisionState(): DecisionState {
   return {
@@ -14,7 +13,17 @@ function createDecisionState(): DecisionState {
 }
 
 describe("validateDecision", () => {
-  it("rejects duplicate decision ids", () => {
+  async function loadReferee() {
+    delete process.env.REDVSBLUE_CONFIG
+    delete process.env.REDVSBLUE_MAX_SPAWN_PER_DECISION
+    delete process.env.REDVSBLUE_MAX_SPAWN_PER_MINUTE
+    delete process.env.REDVSBLUE_DECISION_COOLDOWN_MS
+    await vi.resetModules()
+    return await import("../../../src/backend/src/services/decision-referee.js")
+  }
+
+  it("rejects duplicate decision ids", async () => {
+    const { validateDecision } = await loadReferee()
     const now = Date.now()
     const decisionState = createDecisionState()
     decisionState.appliedDecisionIds.add("dup")
@@ -30,13 +39,17 @@ describe("validateDecision", () => {
     expect(result.rejectionReason).toBe("Duplicate decision requestId")
   })
 
-  it("clamps count per decision and returns warnings", () => {
+  it("clamps count per decision and returns warnings", async () => {
+    const { validateDecision } = await loadReferee()
     const now = Date.now()
     const decisionState = createDecisionState()
     const proposal: Proposal = {
       requestId: "new",
       type: "spawnShips",
-      params: { team: "blue", count: 10 },
+      params: {
+        team: "blue",
+        count: DEFAULT_REDVSBLUE_DECISION_LIMITS.maxSpawnPerDecision + 5,
+      },
     }
 
     const result = validateDecision(decisionState, proposal, now)
@@ -46,7 +59,8 @@ describe("validateDecision", () => {
     expect(result.validatedDecision?.warnings.length).toBe(1)
   })
 
-  it("rejects decisions during cooldown", () => {
+  it("rejects decisions during cooldown", async () => {
+    const { validateDecision } = await loadReferee()
     const now = Date.now()
     const decisionState = createDecisionState()
     decisionState.lastDecisionAt = now - 1000
@@ -62,12 +76,15 @@ describe("validateDecision", () => {
     expect(result.rejectionReason).toBe("Decision cooldown active")
   })
 
-  it("rejects when per-minute spawn budget is exhausted", () => {
+  it("rejects when per-minute spawn budget is exhausted", async () => {
+    const { validateDecision } = await loadReferee()
     const now = Date.now()
     const decisionState = createDecisionState()
     decisionState.recentSpawns = [
-      { timestamp: now - 1000, count: 10 },
-      { timestamp: now - 2000, count: 5 },
+      {
+        timestamp: now - 1000,
+        count: DEFAULT_REDVSBLUE_DECISION_LIMITS.maxSpawnPerMinute,
+      },
     ]
 
     const proposal: Proposal = {
@@ -81,7 +98,8 @@ describe("validateDecision", () => {
     expect(result.rejectionReason).toBe("Per-minute spawn budget exhausted")
   })
 
-  it("accepts numeric overrides and clamps them to rule ranges", () => {
+  it("accepts numeric overrides and clamps them to rule ranges", async () => {
+    const { validateDecision } = await loadReferee()
     const now = Date.now()
     const decisionState = createDecisionState()
 
