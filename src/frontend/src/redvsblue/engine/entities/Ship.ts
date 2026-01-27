@@ -1,7 +1,8 @@
 import { DEFAULT_ENGINE_TUNING } from "@/redvsblue/config/index";
 import type { Team } from "@/redvsblue/types";
 import type { RNG } from "../rng";
-import { Particle } from "./Particle";
+import { createParticles } from "../particles";
+import type { Particle } from "./Particle";
 
 export type ShipAIConfig = {
   turnSpeed: number;
@@ -125,7 +126,7 @@ export class Ship {
         if (rng() > 0.5) {
           const px = this.x - Math.cos(this.angle) * 15;
           const py = this.y - Math.sin(this.angle) * 15;
-          particles.push(new Particle(createParticleId(), px, py, "orange", rng));
+          particles.push(...createParticles(1, px, py, "orange", createParticleId, rng));
         }
       }
 

@@ -36,6 +36,9 @@ export { serialize, cloneGameState } from "./serialize";
 import type { Engine as EngineInterface, EngineConfig } from "@/redvsblue/types";
 import { Engine } from "./engine";
 export { updateEngineCore } from "./core";
+export { checkCollisions } from "./collisions";
+export { createParticles, createDeathParticles } from "./particles";
+export { buildAiConfig } from "./aiConfig";
 
 /**
  * Factory function to create a new game engine instance.

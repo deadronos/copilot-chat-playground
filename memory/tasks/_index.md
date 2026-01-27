@@ -28,3 +28,6 @@
 - TASK026 - Extract engine & renderer responsibilities from `useGame` - Completed ✅ (2026-01-26)
 - TASK027 - Decompose `RedVsBlue.tsx` into match/session, AI director, and toast hooks - Completed ✅ (2026-01-26)
 - TASK028 - RedVsBlue matchId path hardening (persistence path traversal) - Completed ✅ (2026-01-26)
+- TASK029 - Refactor TelemetryConnector into smaller helpers - Completed ✅ (2026-01-26)
+- TASK030 - Extract match session API + snapshot builder - Completed ✅ (2026-01-26)
+- TASK031 - Extract engine core helpers (collisions, particles, AI config) - Completed ✅ (2026-01-27)

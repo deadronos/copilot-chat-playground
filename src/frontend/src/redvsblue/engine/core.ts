@@ -2,6 +2,8 @@ import { DEFAULT_ENGINE_TUNING } from "@/redvsblue/config/index";
 import type { EngineConfig, TelemetryEvent } from "@/redvsblue/types";
 import type { RNG } from "./rng";
 import { Bullet, Particle, Ship, type ShipAIConfig } from "./entities";
+import { checkCollisions } from "./collisions";
+import { buildAiConfig } from "./aiConfig";
 
 export type EngineCoreState = {
   ships: Ship[];
@@ -31,22 +33,7 @@ export function updateEngineCore(
 
   // Update ships
   for (const ship of state.ships) {
-    const aiConfig: ShipAIConfig = {
-      turnSpeed: tuning.turnSpeed,
-      shipThrust: tuning.shipThrust,
-      visionDist: tuning.visionDist,
-      aimTurnThreshold: tuning.aimTurnThreshold,
-      fireAimCloseThreshold: tuning.fireAimCloseThreshold,
-      fireAngleThreshold: tuning.fireAngleThreshold,
-      idleAngleIncrement: tuning.idleAngleIncrement,
-      idleDamping: tuning.idleDamping,
-    };
-
-    // Apply ship-specific thrust override if present
-    if (typeof ship.shipThrustOverride === "number") {
-      aiConfig.shipThrust = ship.shipThrustOverride;
-    }
-
+    const aiConfig = buildAiConfig(ship as any, tuning as any);
     ship.updateAI(
       state.ships,
       state.particles,
@@ -117,65 +104,4 @@ export function updateEngineCore(
   }
 
   checkCollisions(state, context, tuning);
-}
-
-function checkCollisions(
-  state: EngineCoreState,
-  context: EngineCoreContext,
-  tuning: typeof DEFAULT_ENGINE_TUNING
-): void {
-  const { emit, rng, nextEntityId } = context;
-
-  for (let i = state.bullets.length - 1; i >= 0; i--) {
-    const bullet = state.bullets[i];
-    if (!bullet.active) continue;
-
-    for (let j = state.ships.length - 1; j >= 0; j--) {
-      const ship = state.ships[j];
-      if (bullet.team === ship.team) continue;
-
-      const dist = Math.hypot(bullet.x - ship.x, bullet.y - ship.y);
-      if (dist < ship.radius + bullet.radius) {
-        ship.health -= bullet.damage;
-        bullet.active = false;
-
-        // Emit hit event
-        emit("telemetry", {
-          type: "bullet_hit",
-          timestamp: Date.now(),
-          data: { shipId: ship.id, bulletOwnerId: bullet.ownerId },
-        } as TelemetryEvent);
-
-        // Create particles
-        for (let k = 0; k < tuning.hitParticles; k++) {
-          state.particles.push(
-            new Particle(nextEntityId("particle"), bullet.x, bullet.y, ship.color, rng)
-          );
-        }
-
-        // Check if ship dies
-        if (ship.health <= 0) {
-          for (let k = 0; k < tuning.deathParticles; k++) {
-            state.particles.push(
-              new Particle(nextEntityId("particle"), ship.x, ship.y, "white", rng)
-            );
-            state.particles.push(
-              new Particle(nextEntityId("particle"), ship.x, ship.y, ship.color, rng)
-            );
-          }
-
-          // Emit death event
-          emit("telemetry", {
-            type: "ship_destroyed",
-            timestamp: Date.now(),
-            data: { shipId: ship.id, team: ship.team },
-          } as TelemetryEvent);
-
-          state.ships.splice(j, 1);
-        }
-
-        break;
-      }
-    }
-  }
 }
