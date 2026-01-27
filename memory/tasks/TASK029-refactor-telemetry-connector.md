@@ -24,6 +24,7 @@ Split `TelemetryConnector.ts` into smaller, testable modules (backoff, queue, ws
 `TelemetryConnectorCore` currently mixes connection management, backoff logic, buffer drain semantics, and unload behavior in a single class. Extracting small, pure helpers makes behaviors easier to test and reason about, reduces side effects, and enables reusing backoff/queue logic elsewhere.
 
 ## Implementation Plan
+
 1. Write tests to codify current behaviors for draining, backoff, reconnect, sendBeacon, and requeue semantics (red -> failing tests where needed).  
 2. Implement `telemetry/backoff.ts` with Backoff helper and unit tests.  
 3. Implement `telemetry/queue.ts` to manage buffer/peek/drain/requeue and unit tests.  
@@ -34,9 +35,12 @@ Split `TelemetryConnector.ts` into smaller, testable modules (backoff, queue, ws
 8. Create small, focused commits per step and open a PR with test evidence and a short migration/compatibility note.
 
 ## Progress Log
+
 ### 2026-01-26
+
 - Implemented test-first changes and helpers: `Backoff`, `TelemetryQueue`, `WSClient`, and `trySendBeacon` with unit tests.
 - Refactored `TelemetryConnectorCore` to compose new helpers, replacing direct store manipulation with the `TelemetryQueue` abstraction and `trySendBeacon` for unload flush.
 - Added/updated unit tests covering all extracted helpers and the `TelemetryConnectorCore` behaviors (send on open, requeue on failure, reconnect/backoff, sendBeacon semantics). All frontend tests pass locally.
 - Small follow-ups: added `_lastSentWs` with a `ws` getter to preserve test introspection expectations, fixed a race when client was cleared during onopen callback, and removed transient debug logging.
 - Next: propose a small PR with the extraction commits split by helper and a final PR that updates `TelemetryConnectorCore` and tests (ready).
+- PR opened: [#88](https://github.com/deadronos/copilot-chat-playground/pull/88)
