@@ -9,6 +9,15 @@ describe("Match API client", () => {
     expect(res.data?.sessionId).toBe("sess-1")
   })
 
+  it("startMatch sends X-Action header when provided", async () => {
+    const fakeFetch = async (_url: string, init?: RequestInit) => {
+      expect((init?.headers as any)?.["X-Action"] || (init?.headers as any)?.["x-action"]).toBe("refresh_match")
+      return { ok: true, json: async () => ({ sessionId: "sess-1" }) } as any
+    }
+    const res = await MatchApi.startMatch({ matchId: "m1" }, fakeFetch as any, { headers: { "X-Action": "refresh_match" } })
+    expect(res.ok).toBe(true)
+  })
+
   it("startMatch returns error on non-ok response", async () => {
     const fakeFetch = async () => ({ ok: false, text: async () => "oops" } as any)
     const res = await MatchApi.startMatch({ matchId: "m1" }, fakeFetch as any)

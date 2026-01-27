@@ -273,7 +273,16 @@ describe("useMatchSession", () => {
     })
 
     // start should have been called twice: initial start and re-start
-    expect(startCalls).toBeGreaterThanOrEqual(2)
+    const startCallsDetails = fetchMock.mock.calls.filter((call) => String(call[0]).endsWith("/start"))
+    expect(startCallsDetails.length).toBeGreaterThanOrEqual(2)
+
+    // Verify one of the subsequent start calls included the rejoin action header
+    const rejoinCall = startCallsDetails.slice(1).find((call) => {
+      const headers = (call?.[1] as RequestInit | undefined)?.headers as any
+      return !!(headers?.["X-Action"] || headers?.["x-action"])
+    })
+    expect(rejoinCall).toBeTruthy()
+
     expect(lastResult?.sessionId).toBe("session-4-rejoined")
     expect(onToast).toHaveBeenCalled()
   })

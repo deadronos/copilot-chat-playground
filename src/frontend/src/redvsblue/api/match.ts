@@ -2,11 +2,12 @@ export type StartMatchPayload = { matchId: string; rulesVersion?: string; propos
 
 export type MatchStartResult = { ok: true; data: { sessionId: string; effectiveConfig?: { snapshotIntervalMs?: number } } } | { ok: false; error: string; status?: number; body?: any }
 
-export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fetch = fetch): Promise<MatchStartResult> {
+export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fetch = fetch, options?: { headers?: Record<string, string> }): Promise<MatchStartResult> {
   try {
+    const headers = { "Content-Type": "application/json", ...(options?.headers ?? {}) }
     const res = await fetchFn(`/api/redvsblue/match/start`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify(payload),
     })
 

@@ -151,7 +151,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
   const restartAttemptsRef = useRef(0)
   const MAX_RESTARTS = 3
 
-  const startMatchInternal = useCallback(async (): Promise<boolean> => {
+  const startMatchInternal = useCallback(async (opts?: { action?: string }): Promise<boolean> => {
     const currentMatchId = matchIdRef.current
     try {
       const res = await MatchApi.startMatch(
@@ -166,7 +166,8 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
           },
           clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
         },
-        fetcher as any
+        fetcher as any,
+        opts?.action ? { headers: { "X-Action": opts.action } } : undefined
       )
 
       if (!res.ok) {
@@ -239,11 +240,11 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
                 onToast("Failed to rejoin match automatically. Please reload the page.")
                 return
               }
-              const ok = await startMatchInternal()
+              const ok = await startMatchInternal({ action: "refresh_match" })
               if (!ok) {
                 // schedule a retry with modest backoff
                 setTimeout(() => {
-                  void startMatchInternal()
+                  void startMatchInternal({ action: "refresh_match" })
                 }, 1000 * Math.min(5, restartAttemptsRef.current))
               }
             }

@@ -51,9 +51,11 @@ function resolveCommentary(baseCommentary: string | undefined): string {
 export async function startMatch(req: Request, res: Response): Promise<void> {
   const traceId = randomUUID();
   const requestId = randomUUID();
+  const action = (req.get && (req.get("x-action") || req.get("X-Action"))) ?? undefined;
   logStructuredEvent("info", "match.start.received", { traceId, requestId }, {
     method: req.method,
     path: req.path,
+    action,
   });
   const parsed = MatchStartSchema.safeParse(req.body);
   if (!parsed.success) {
@@ -83,6 +85,12 @@ export async function startMatch(req: Request, res: Response): Promise<void> {
   setMatchSession(matchId, session);
   await persistMatchSession(session);
 
+  if (action === "refresh_match") {
+    logStructuredEvent("info", "match.start.rejoin", { traceId, requestId, matchId, sessionId }, {
+      action,
+    });
+  }
+
   logStructuredEvent(
     "info",
     "match.start.success",
@@ -92,6 +100,7 @@ export async function startMatch(req: Request, res: Response): Promise<void> {
       effectiveRules: session.effectiveRules,
       effectiveConfig: session.effectiveConfig,
       warnings: session.warnings,
+      action,
     }
   );
 
