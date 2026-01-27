@@ -21,6 +21,7 @@ Reduce complexity in `useMatchSession.ts` by extracting network calls and snapsh
 `useMatchSession` mixes timers, fetch calls, and payload assembly. Extracting the API and payload builder will make the hook leaner and its networking behavior easier to test.
 
 ## Implementation Plan
+
 1. Add unit tests that capture current `handleAskCopilot` and snapshot sending behavior (red → tests).  
 2. Implement `redvsblue/api/match.ts` with `startMatch`, `sendSnapshot`, `ask`, `endMatch` functions and tests to mock fetch behavior.  
 3. Implement `redvsblue/snapshot/builder.ts` as a pure function to compose `MatchSnapshotPayload` and tests for telemetry normalization.  
@@ -28,7 +29,9 @@ Reduce complexity in `useMatchSession.ts` by extracting network calls and snapsh
 5. Update docs and add small PRs per step.
 
 ## Progress Log
+
 ### 2026-01-26
+
 - Implemented `match` API client (`startMatch`, `sendSnapshot`, `ask`, `endMatch`) with unit tests.
 - Implemented `snapshot/builder` pure function to compose `MatchSnapshotPayload` and tests covering telemetry normalization and flags.
 - Refactored `useMatchSession` to use the new client and builder; updated tests to use mocked fetch and ensure behavior remains unchanged. All relevant frontend tests pass locally.

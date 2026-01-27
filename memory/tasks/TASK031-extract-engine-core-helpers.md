@@ -21,6 +21,7 @@ Break `engine/core.ts` into focused helpers: collision detection/resolution, par
 `core.ts` bundles several responsibilities that are naturally separable. Extracting these concerns reduces iteration cost and enables focused unit tests to protect game logic.
 
 ## Implementation Plan
+
 1. Add unit tests that capture current collision and particle behaviors (red → tests covering hit, death, and particle counts).  
 2. Implement `engine/collisions.ts` and tests to mirror existing `checkCollisions` behavior.  
 3. Implement `engine/particles.ts` particle factory and tests that respect UI config merging.  
@@ -29,7 +30,9 @@ Break `engine/core.ts` into focused helpers: collision detection/resolution, par
 6. Add PR notes documenting why these extractions reduce risk and improve test coverage.
 
 ## Progress Log
+
 ### 2026-01-26
+
 - Implemented `engine/collisions.ts` to isolate collision detection/resolution and added unit tests (hit, death, particle creation).
 - Implemented `engine/aiConfig.ts` to build per-ship AI config and added unit tests.
 - Implemented `engine/particles.ts` particle factory and added unit tests for creation and death-pair behaviors.
