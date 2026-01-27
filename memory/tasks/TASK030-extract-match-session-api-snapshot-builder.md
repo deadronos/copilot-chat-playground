@@ -36,3 +36,4 @@ Reduce complexity in `useMatchSession.ts` by extracting network calls and snapsh
 - Implemented `snapshot/builder` pure function to compose `MatchSnapshotPayload` and tests covering telemetry normalization and flags.
 - Refactored `useMatchSession` to use the new client and builder; updated tests to use mocked fetch and ensure behavior remains unchanged. All relevant frontend tests pass locally.
 - Next: monitor for small integration tidy-ups and prepare PR with focused commits.
+- PR opened: [#88](https://github.com/deadronos/copilot-chat-playground/pull/88)

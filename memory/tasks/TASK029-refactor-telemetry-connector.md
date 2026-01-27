@@ -43,3 +43,4 @@ Split `TelemetryConnector.ts` into smaller, testable modules (backoff, queue, ws
 - Added/updated unit tests covering all extracted helpers and the `TelemetryConnectorCore` behaviors (send on open, requeue on failure, reconnect/backoff, sendBeacon semantics). All frontend tests pass locally.
 - Small follow-ups: added `_lastSentWs` with a `ws` getter to preserve test introspection expectations, fixed a race when client was cleared during onopen callback, and removed transient debug logging.
 - Next: propose a small PR with the extraction commits split by helper and a final PR that updates `TelemetryConnectorCore` and tests (ready).
+- PR opened: [#88](https://github.com/deadronos/copilot-chat-playground/pull/88)

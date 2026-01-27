@@ -39,3 +39,4 @@ Break `engine/core.ts` into focused helpers: collision detection/resolution, par
 - Replaced direct `new Particle(...)` usages in `collisions.ts` and `entities/Ship.ts` with factory calls and updated tests accordingly.
 - Updated `core.ts` to rely on extracted helpers and ran full frontend test suite (all tests pass locally).
 - Completed refactor and ready to open a PR with small, focused commits per helper.
+- PR opened: [#88](https://github.com/deadronos/copilot-chat-playground/pull/88)
