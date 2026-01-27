@@ -37,3 +37,11 @@ Reduce complexity in `useMatchSession.ts` by extracting network calls and snapsh
 - Refactored `useMatchSession` to use the new client and builder; updated tests to use mocked fetch and ensure behavior remains unchanged. All relevant frontend tests pass locally.
 - Next: monitor for small integration tidy-ups and prepare PR with focused commits.
 - PR opened: [#88](https://github.com/deadronos/copilot-chat-playground/pull/88)
+
+### 2026-01-27
+
+- **Added** structured error responses for `MATCH_NOT_FOUND` on `/match/:matchId/snapshot` and `/match/:matchId/ask` (backend).
+- **Updated** `redvsblue/api/match.ts` to parse JSON error responses and surface `status` and `body` to callers.
+- **Refactored** `useMatchSession` to detect `MATCH_NOT_FOUND` and attempt to re-start the match (with bounded retries and user-facing toasts).
+- **Added** server & client unit tests to verify structured 404 error payloads and client parsing + hook restart behavior.
+- All backend and frontend tests pass locally; this reduces silent snapshot failures when a session is gone and improves recovery UX.

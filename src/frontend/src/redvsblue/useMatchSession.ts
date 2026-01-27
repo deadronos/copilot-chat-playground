@@ -148,55 +148,64 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     }
   }, [])
 
+  const restartAttemptsRef = useRef(0)
+  const MAX_RESTARTS = 3
+
+  const startMatchInternal = useCallback(async (): Promise<boolean> => {
+    const currentMatchId = matchIdRef.current
+    try {
+      const res = await MatchApi.startMatch(
+        {
+          matchId: currentMatchId,
+          rulesVersion: "v1",
+          proposedRules: {
+            shipSpeed: DEFAULT_ENGINE_CONFIG.shipSpeed,
+            bulletSpeed: DEFAULT_ENGINE_CONFIG.bulletSpeed,
+            bulletDamage: DEFAULT_ENGINE_CONFIG.bulletDamage,
+            shipMaxHealth: DEFAULT_ENGINE_CONFIG.shipMaxHealth,
+          },
+          clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
+        },
+        fetcher as any
+      )
+
+      if (!res.ok) {
+        throw new Error(res.error || "Failed to start match")
+      }
+
+      const data = res.data
+      setSessionId(data.sessionId)
+      if (data.effectiveConfig?.snapshotIntervalMs) {
+        setSnapshotIntervalMs(data.effectiveConfig.snapshotIntervalMs)
+      }
+      // successful start -> reset attempts
+      restartAttemptsRef.current = 0
+      return true
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to start match. Try reloading."
+      onToast(message)
+      restartAttemptsRef.current += 1
+      return false
+    }
+  }, [fetcher, onToast])
+
   useEffect(() => {
     if (!autoStart) return
-    const currentMatchId = matchIdRef.current
     let active = true
-
-    const startMatch = async () => {
-      try {
-        const res = await MatchApi.startMatch(
-          {
-            matchId: currentMatchId,
-            rulesVersion: "v1",
-            proposedRules: {
-              shipSpeed: DEFAULT_ENGINE_CONFIG.shipSpeed,
-              bulletSpeed: DEFAULT_ENGINE_CONFIG.bulletSpeed,
-              bulletDamage: DEFAULT_ENGINE_CONFIG.bulletDamage,
-              shipMaxHealth: DEFAULT_ENGINE_CONFIG.shipMaxHealth,
-            },
-            clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
-          },
-          fetcher as any
-        )
-
-        if (!res.ok) {
-          throw new Error(res.error || "Failed to start match")
-        }
-
-        const data = res.data
-        if (!active) return
-        setSessionId(data.sessionId)
-        if (data.effectiveConfig?.snapshotIntervalMs) {
-          setSnapshotIntervalMs(data.effectiveConfig.snapshotIntervalMs)
-        }
-      } catch (error) {
-        if (!active) return
-        const message = error instanceof Error ? error.message : "Failed to start match. Try reloading."
-        onToast(message)
-      }
-    }
-
-    void startMatch()
+    void (async () => {
+      if (!active) return
+      await startMatchInternal()
+    })()
 
     return () => {
       active = false
+      const currentMatchId = matchIdRef.current
       void fetcher(`/api/redvsblue/match/${currentMatchId}/end`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       }).catch(() => undefined)
     }
-  }, [autoStart, fetcher, onToast])
+  }, [autoStart, fetcher, onToast, startMatchInternal])
 
   useEffect(() => {
     if (!sessionId) return
@@ -219,7 +228,27 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
       void (async () => {
         try {
           const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher as any)
-          if (!res.ok) return
+          if (!res.ok) {
+            // Detect server instructions for a match refresh
+            const body = (res as { body?: any }).body
+            const isMatchNotFound = res.status === 404 && (body?.errorCode === "MATCH_NOT_FOUND" || body?.actions?.includes("refresh_match") || body?.shouldRefresh)
+            if (isMatchNotFound) {
+              onToast("Match session lost. Attempting to rejoin...")
+              setSessionId(null)
+              if (restartAttemptsRef.current >= MAX_RESTARTS) {
+                onToast("Failed to rejoin match automatically. Please reload the page.")
+                return
+              }
+              const ok = await startMatchInternal()
+              if (!ok) {
+                // schedule a retry with modest backoff
+                setTimeout(() => {
+                  void startMatchInternal()
+                }, 1000 * Math.min(5, restartAttemptsRef.current))
+              }
+            }
+            return
+          }
           const data = res.data as MatchSnapshotResponse
           if (data.notificationText) {
             onToast(data.notificationText)

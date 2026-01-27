@@ -218,4 +218,63 @@ describe("useMatchSession", () => {
     expect(askPayload.snapshot.recentMajorEvents[0].team).toBe("red")
     expect(onToast).toHaveBeenCalledWith("Status: steady")
   })
+
+  it("restarts the match when server reports MATCH_NOT_FOUND", async () => {
+    vi.useFakeTimers()
+    const onToast = vi.fn()
+    const applyValidatedDecision = vi.fn()
+
+    let startCalls = 0
+    const fetchMock = vi.fn(async (input: RequestInfo) => {
+      const url = String(input)
+      if (url.endsWith("/start")) {
+        startCalls += 1
+        const id = startCalls === 1 ? "session-4" : "session-4-rejoined"
+        return mockResponse({ sessionId: id, effectiveConfig: { snapshotIntervalMs: 40 } })
+      }
+      if (url.includes("/snapshot")) {
+        return {
+          ok: false,
+          status: 404,
+          headers: { get: (name: string) => "application/json" },
+          json: async () => ({ error: "Unknown matchId", errorCode: "MATCH_NOT_FOUND", actions: ["refresh_match"] }),
+          text: async () => JSON.stringify({ error: "Unknown matchId" }),
+        } as any
+      }
+      return mockResponse({})
+    })
+
+    vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch)
+
+    let lastResult: UseMatchSessionResult | null = null
+    render(
+      <MatchHarness
+        onChange={(result) => { lastResult = result }}
+        options={{
+          redCount: 1,
+          blueCount: 1,
+          onToast,
+          applyValidatedDecision,
+          matchId: "match-4",
+          createId: () => "snapshot-4",
+        }}
+      />
+    )
+
+    await act(async () => {
+      await flush()
+    })
+
+    useGameState.getState().setSnapshot(baseSnapshot)
+
+    await act(async () => {
+      vi.advanceTimersByTime(40)
+      await flush()
+    })
+
+    // start should have been called twice: initial start and re-start
+    expect(startCalls).toBeGreaterThanOrEqual(2)
+    expect(lastResult?.sessionId).toBe("session-4-rejoined")
+    expect(onToast).toHaveBeenCalled()
+  })
 })

@@ -124,7 +124,16 @@ export async function submitSnapshot(req: Request, res: Response): Promise<void>
 
   if (!session) {
     logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
-    res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+    // Structured error so clients can take an action (eg. refresh/restart a match)
+    res.status(404).json({
+      error: "Unknown matchId",
+      errorCode: "MATCH_NOT_FOUND",
+      message: "Match not found",
+      matchId,
+      requestId,
+      traceId,
+      actions: ["refresh_match"],
+    });
     return;
   }
 
@@ -408,7 +417,16 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
 
   if (!session) {
     logMatchFailure({ traceId, requestId, matchId }, "Unknown matchId", req);
-    res.status(404).json({ error: "Unknown matchId", requestId, matchId, traceId });
+    // Structured error so clients can take an action (eg. refresh/restart a match)
+    res.status(404).json({
+      error: "Unknown matchId",
+      errorCode: "MATCH_NOT_FOUND",
+      message: "Match not found",
+      matchId,
+      requestId,
+      traceId,
+      actions: ["refresh_match"],
+    });
     return;
   }
 
