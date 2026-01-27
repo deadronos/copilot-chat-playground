@@ -154,6 +154,8 @@ export function validateDecision(
   return { validatedDecision };
 }
 
+import { recordEvent } from "./observability.js";
+
 export function logStructuredEvent(
   level: "info" | "warn" | "error",
   event: string,
@@ -164,6 +166,13 @@ export function logStructuredEvent(
     ...context,
     ...payload,
   });
+  try {
+    // record for in-process observability endpoints
+    recordEvent(level, event, context, payload);
+  } catch (err) {
+    // avoid crashing logging
+    console.error("observability.recordEvent failed", err instanceof Error ? err.message : String(err));
+  }
 }
 
 export function logDecisionAudit(record: DecisionAuditRecord, context: TraceContext): void {

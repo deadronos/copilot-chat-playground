@@ -21,7 +21,7 @@ Split backend, frontend, and engine monoliths into testable modules while preser
 ## Architecture
 ### Backend
 - `services/copilot.ts`: copilot service URL, buffered/streamed calls, error mapping helper.
-- `services/match-store.ts`: session types, persistence, rule/config clamping, snapshot compaction, token budget enforcement.
+- `services/redvsblue/session.ts`: session registry + orchestration; helpers in `services/redvsblue/{persistence,serialization,rules,summary,tokenBudget}.ts`.
 - `services/decision-referee.ts`: decision proposal parsing, validation limits, audit logging helpers.
 - `app.ts`: route wiring, request validation, and orchestration only.
 
@@ -34,8 +34,8 @@ Split backend, frontend, and engine monoliths into testable modules while preser
 - `engine/core.ts`: update loop steps (ships, bullets, particles, collisions) as pure-ish helpers called by `Engine`.
 
 ## Data Flow
-1. Client POST /api/redvsblue/match/start -> `match-store` builds session and persists.
-2. Client POST /api/redvsblue/match/:id/snapshot -> `match-store` updates snapshots and token budget.
+1. Client POST /api/redvsblue/match/start -> `redvsblue/session` builds session and persists via `redvsblue/persistence`.
+2. Client POST /api/redvsblue/match/:id/snapshot -> `redvsblue/session` updates snapshots, summary, and token budget via helpers.
 3. If decision requested -> `copilot` service call -> `decision-referee` parse/validate -> audit record -> response payload.
 4. Frontend container uses `useApiProbe` + `useStreamingChat`, renders presentational components with derived props.
 5. Engine core updates state deterministically when `seed` is set.
@@ -45,7 +45,7 @@ Split backend, frontend, and engine monoliths into testable modules while preser
   - `callCopilotService(prompt, mode): Promise<CopilotCallResult>`
   - `callCopilotServiceStream(prompt, mode, signal): Promise<CopilotStreamResult>`
   - `sendPlainTextError(res, errorType, errorMessage): void`
-- `services/match-store.ts`
+- `services/redvsblue/session.ts` + helpers
   - `createMatchSession(...)`, `getMatchSession(matchId)`, `persistMatchSession(session)`
   - `compactSessionSnapshots(session)`, `enforceTokenBudget(session, snapshot)`
 - `services/decision-referee.ts`
