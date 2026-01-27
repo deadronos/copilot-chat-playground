@@ -4,6 +4,8 @@ import { DEFAULT_ENGINE_CONFIG, DEFAULT_UI_CONFIG } from "@/redvsblue/config"
 import { selectSnapshot, useGameState } from "@/redvsblue/stores/gameState"
 import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
+import * as MatchApi from "@/redvsblue/api/match"
+import { buildSnapshotPayload } from "@/redvsblue/snapshot/builder"
 import type { GameState, TelemetryEvent, Team } from "@/redvsblue/types"
 import type { SpawnShipsDecision } from "@/redvsblue/useAiDirector"
 import { DEFAULT_REDVSBLUE_CONFIG_VALUES } from "@copilot-playground/shared"
@@ -153,10 +155,8 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
 
     const startMatch = async () => {
       try {
-        const response = await fetcher("/api/redvsblue/match/start", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const res = await MatchApi.startMatch(
+          {
             matchId: currentMatchId,
             rulesVersion: "v1",
             proposedRules: {
@@ -165,18 +165,16 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
               bulletDamage: DEFAULT_ENGINE_CONFIG.bulletDamage,
               shipMaxHealth: DEFAULT_ENGINE_CONFIG.shipMaxHealth,
             },
-            clientConfig: {
-              snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs,
-            },
-          }),
-        })
+            clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
+          },
+          fetcher as any
+        )
 
-        if (!response.ok) {
-          const text = await response.text()
-          throw new Error(text || "Failed to start match")
+        if (!res.ok) {
+          throw new Error(res.error || "Failed to start match")
         }
 
-        const data = (await response.json()) as MatchStartResponse
+        const data = res.data
         if (!active) return
         setSessionId(data.sessionId)
         if (data.effectiveConfig?.snapshotIntervalMs) {
@@ -207,27 +205,22 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
       const snapshot = latestSnapshotRef.current
       if (!snapshot) return
 
-      const payload: MatchSnapshotPayload = {
-        timestamp: snapshot.timestamp,
+      const telemetryEvents = useTelemetryStore.getState().peek().slice(-20)
+      const payload = buildSnapshotPayload({
+        snapshot,
         snapshotId: idFactory(),
-        gameSummary: buildSummary(redCount, blueCount),
-        counts: { red: redCount, blue: blueCount },
-        recentMajorEvents: [],
+        redCount,
+        blueCount,
+        telemetryEvents,
         requestDecision: autoDecisionsEnabled,
         requestOverrides: useUIStore.getState().allowAIOverrides,
-      }
+      })
 
       void (async () => {
         try {
-          const response = await fetcher(`/api/redvsblue/match/${currentMatchId}/snapshot`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          })
-
-          if (!response.ok) return
-
-          const data = (await response.json()) as MatchSnapshotResponse
+          const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher as any)
+          if (!res.ok) return
+          const data = res.data as MatchSnapshotResponse
           if (data.notificationText) {
             onToast(data.notificationText)
           }
@@ -277,18 +270,11 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     }
 
     try {
-      const response = await fetcher(`/api/redvsblue/match/${currentMatchId}/ask`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      })
-
-      if (!response.ok) {
-        const text = await response.text()
-        throw new Error(text || "Failed to fetch commentary")
+      const res = await MatchApi.ask(currentMatchId, body, fetcher as any)
+      if (!res.ok) {
+        throw new Error(res.error || "Failed to fetch commentary")
       }
-
-      const data = (await response.json()) as { commentary?: string }
+      const data = res.data as { commentary?: string }
       onToast(data.commentary ?? "Copilot is thinking about the match.")
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to reach Copilot director."
