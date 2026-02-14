@@ -13,6 +13,7 @@ import {
   getMatchSession,
   persistMatchSession,
   recordSnapshot,
+  recordSnapshots,
   removePersistedSession,
   setMatchSession,
   REHYDRATION_DECISION_TAIL,
@@ -585,8 +586,9 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
               });
 
               if (validated.type === "spawnShips") {
+                const fakeSnapshots: SnapshotPayload[] = [];
                 for (let i = 0; i < validated.params.count; i += 1) {
-                  const fakeSnapshot: SnapshotPayload = {
+                  fakeSnapshots.push({
                     timestamp: Date.now(),
                     snapshotId: randomUUID(),
                     gameSummary: {
@@ -614,8 +616,10 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
                           : (snapshotPayload?.counts?.blue ?? 0),
                     },
                     recentMajorEvents: [],
-                  };
-                  recordSnapshot(session, fakeSnapshot);
+                  });
+                }
+                if (fakeSnapshots.length > 0) {
+                  recordSnapshots(session, fakeSnapshots);
                   didDecisionMutateSession = true;
                 }
               }
