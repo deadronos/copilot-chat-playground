@@ -18,8 +18,11 @@ export function checkCollisions(
       const ship = state.ships[j]
       if (bullet.team === ship.team) continue
 
-      const dist = Math.hypot(bullet.x - ship.x, bullet.y - ship.y)
-      if (dist < ship.radius + bullet.radius) {
+      const dx = bullet.x - ship.x
+      const dy = bullet.y - ship.y
+      const distSq = dx * dx + dy * dy
+      const radiusSum = ship.radius + bullet.radius
+      if (distSq < radiusSum * radiusSum) {
         ship.health -= bullet.damage
         bullet.active = false
 

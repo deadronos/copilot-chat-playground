@@ -1,7 +1,7 @@
 import { DEFAULT_ENGINE_TUNING } from "@/redvsblue/config/index";
 import type { EngineConfig, TelemetryEvent } from "@/redvsblue/types";
 import type { RNG } from "./rng";
-import { Bullet, Particle, Ship } from "./entities";
+import { Bullet, Particle, Ship, type ShipAIConfig } from "./entities";
 import { checkCollisions } from "./collisions";
 import { buildAiConfig } from "./aiConfig";
 
@@ -33,7 +33,7 @@ export function updateEngineCore(
 
   // Update ships
   for (const ship of state.ships) {
-    const aiConfig = buildAiConfig(ship, tuning);
+    const aiConfig = buildAiConfig(ship as any, tuning as any);
     ship.updateAI(
       state.ships,
       state.particles,

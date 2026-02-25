@@ -11,7 +11,6 @@ export type ObservabilityEvent = {
 const MAX_EVENTS = 10_000;
 
 const events: ObservabilityEvent[] = [];
-let nextIndex = 0;
 
 export function recordEvent(
   level: ObservabilityEvent["level"],
@@ -26,25 +25,9 @@ export function recordEvent(
     context,
     payload,
   };
-
-  if (events.length < MAX_EVENTS) {
-    events.push(e);
-  } else {
-    events[nextIndex] = e;
-    nextIndex = (nextIndex + 1) % MAX_EVENTS;
-  }
-}
-
-function* getEventsReverse(): Generator<ObservabilityEvent> {
-  if (events.length < MAX_EVENTS) {
-    for (let i = events.length - 1; i >= 0; i--) {
-      yield events[i];
-    }
-  } else {
-    for (let i = 0; i < MAX_EVENTS; i++) {
-      const idx = (nextIndex - 1 - i + MAX_EVENTS) % MAX_EVENTS;
-      yield events[idx];
-    }
+  events.push(e);
+  if (events.length > MAX_EVENTS) {
+    events.splice(0, events.length - MAX_EVENTS);
   }
 }
 
@@ -54,29 +37,20 @@ export function getEvents(opts?: {
   limit?: number;
   level?: ObservabilityEvent["level"];
 }): ObservabilityEvent[] {
-  const sinceMs = opts?.sinceMs;
-  const since = typeof sinceMs === "number" && Number.isFinite(sinceMs) && sinceMs >= 0 ? Date.now() - sinceMs : 0;
-  const limit = typeof opts?.limit === "number" && Number.isFinite(opts.limit) && opts.limit > 0 ? Math.floor(opts.limit) : undefined;
-  const result: ObservabilityEvent[] = [];
-
-  for (const e of getEventsReverse()) {
-    if (e.timestamp < since) break;
-    if (opts?.event && e.event !== opts.event) continue;
-    if (opts?.level && e.level !== opts.level) continue;
-
-    result.push(e);
-    if (limit !== undefined && result.length >= limit) break;
-  }
-
-  return result;
+  const since = opts?.sinceMs ? Date.now() - opts.sinceMs : 0;
+  const filtered = events
+    .slice()
+    .reverse()
+    .filter((e) => e.timestamp >= since)
+    .filter((e) => (opts?.event ? e.event === opts.event : true))
+    .filter((e) => (opts?.level ? e.level === opts.level : true));
+  if (opts?.limit) return filtered.slice(0, opts.limit);
+  return filtered;
 }
 
 export function getCounts(opts: { event: string; sinceMs?: number; bucketMs?: number }): Array<{ ts: number; count: number }> {
-  const sinceMs = opts.sinceMs;
-  const since =
-    typeof sinceMs === "number" && Number.isFinite(sinceMs) && sinceMs >= 0 ? Date.now() - sinceMs : Date.now() - 60_000 * 60; // default last hour
-  const bucketMs =
-    typeof opts.bucketMs === "number" && Number.isFinite(opts.bucketMs) && opts.bucketMs > 0 ? opts.bucketMs : 60_000;
+  const since = opts?.sinceMs ? Date.now() - opts.sinceMs : Date.now() - 60_000 * 60; // default last hour
+  const bucketMs = opts.bucketMs ?? 60_000;
   const buckets = new Map<number, number>();
   for (const e of events) {
     if (e.event !== opts.event) continue;
@@ -100,5 +74,4 @@ export function getSummary(): Record<string, number> {
 
 export function clearEvents(): void {
   events.length = 0;
-  nextIndex = 0;
 }
