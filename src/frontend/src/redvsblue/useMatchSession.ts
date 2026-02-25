@@ -166,7 +166,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
           },
           clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
         },
-        fetcher as any,
+        fetcher,
         opts?.action ? { headers: { "X-Action": opts.action } } : undefined
       )
 
@@ -228,11 +228,18 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
 
       void (async () => {
         try {
-          const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher as any)
+          const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher)
           if (!res.ok) {
             // Detect server instructions for a match refresh
-            const body = (res as { body?: any }).body
-            const isMatchNotFound = res.status === 404 && (body?.errorCode === "MATCH_NOT_FOUND" || body?.actions?.includes("refresh_match") || body?.shouldRefresh)
+            const body = res.body as
+              | { errorCode?: unknown; actions?: unknown; shouldRefresh?: unknown }
+              | undefined
+            const hasRefreshAction =
+              Array.isArray(body?.actions) &&
+              body.actions.some((action) => action === "refresh_match")
+            const isMatchNotFound =
+              res.status === 404 &&
+              (body?.errorCode === "MATCH_NOT_FOUND" || hasRefreshAction || body?.shouldRefresh === true)
             if (isMatchNotFound) {
               onToast("Match session lost. Attempting to rejoin...")
               setSessionId(null)
@@ -300,7 +307,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     }
 
     try {
-      const res = await MatchApi.ask(currentMatchId, body, fetcher as any)
+      const res = await MatchApi.ask(currentMatchId, body, fetcher)
       if (!res.ok) {
         throw new Error(res.error || "Failed to fetch commentary")
       }
