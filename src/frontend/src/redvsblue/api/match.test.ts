@@ -3,24 +3,26 @@ import { sendSnapshot } from "./match"
 
 describe("Match API - sendSnapshot error parsing", () => {
   test("parses JSON error body and includes status and body", async () => {
-    const fakeFetch = async () => {
-      return {
+    const fakeFetch: typeof fetch = async () => {
+      const response = {
         ok: false,
         status: 404,
-        headers: { get: (name: string) => "application/json" },
+        headers: { get: () => "application/json" },
         json: async () => ({ error: "Unknown matchId", errorCode: "MATCH_NOT_FOUND", actions: ["refresh_match"] }),
         text: async () => JSON.stringify({ error: "Unknown matchId" }),
       }
+      return response as unknown as Response
     }
 
-    const res = await sendSnapshot("some-match", {}, fakeFetch as any)
+    const res = await sendSnapshot("some-match", {}, fakeFetch)
 
     expect(res.ok).toBe(false)
-    // @ts-ignore - status is optional on failure type
+    if (res.ok) {
+      throw new Error("Expected sendSnapshot failure result")
+    }
     expect(res.status).toBe(404)
-    // @ts-ignore
-    expect(res.body).toHaveProperty("errorCode", "MATCH_NOT_FOUND")
-    // @ts-ignore
-    expect(res.body.actions).toContain("refresh_match")
+    const body = res.body as { errorCode?: string; actions?: string[] } | undefined
+    expect(body).toHaveProperty("errorCode", "MATCH_NOT_FOUND")
+    expect(body?.actions).toContain("refresh_match")
   })
 })
