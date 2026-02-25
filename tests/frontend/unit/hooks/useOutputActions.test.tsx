@@ -89,4 +89,30 @@ describe("useOutputActions", () => {
     expect(createUrl).toHaveBeenCalled()
     expect(revokeUrl).toHaveBeenCalledWith("blob:mock")
   })
+
+  it("exports transcript text when provided", async () => {
+    const onChange = vi.fn()
+    const onClear = vi.fn()
+
+    if (!("createObjectURL" in URL)) {
+      Object.defineProperty(URL, "createObjectURL", {
+        value: () => "",
+        configurable: true,
+      })
+    }
+
+    const createUrl = vi.spyOn(URL, "createObjectURL").mockReturnValue("blob:mock")
+
+    render(<Harness output="Only latest" onClear={onClear} onChange={onChange} />)
+    const latest = () => onChange.mock.calls.at(-1)?.[0]
+
+    await act(async () => {
+      latest()?.onExport("User: Hi\nAssistant: Hello")
+    })
+
+    const blobArg = createUrl.mock.calls.at(-1)?.[0] as Blob
+    expect(blobArg).toBeInstanceOf(Blob)
+    await expect(blobArg.text()).resolves.toContain("User: Hi")
+  })
+
 })

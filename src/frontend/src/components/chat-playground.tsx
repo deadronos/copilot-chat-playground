@@ -1,25 +1,32 @@
-import * as React from "react";
-import { SparklesIcon, ShieldCheckIcon, WrenchIcon } from "lucide-react";
+import * as React from "react"
+import { SparklesIcon, ShieldCheckIcon, WrenchIcon } from "lucide-react"
 
-import { estimateTokenCount } from "@copilot-playground/shared";
-import { useApiProbe } from "@/hooks/useApiProbe";
-import { useStreamingChat, type ChatMode, type StreamStatus } from "@/hooks/useStreamingChat";
-import { useOutputActions } from "@/hooks/useOutputActions";
-import { PromptPanel, type ModeMeta } from "@/components/chat-playground/PromptPanel";
-import { SafetyFeatures } from "@/components/chat-playground/SafetyFeatures";
-import { StatusBadge, type StatusBadgeMeta } from "@/components/chat-playground/StatusBadge";
-import { StreamOutputPanel } from "@/components/chat-playground/StreamOutputPanel";
-import { RedVsBluePanel } from "@/components/chat-playground/RedVsBluePanel";
+import { estimateTokenCount } from "@copilot-playground/shared"
+import { useApiProbe } from "@/hooks/useApiProbe"
+import { useStreamingChat, type ChatMode, type StreamStatus } from "@/hooks/useStreamingChat"
+import { useOutputActions } from "@/hooks/useOutputActions"
+import { PromptPanel, type ModeMeta } from "@/components/chat-playground/PromptPanel"
+import { SafetyFeatures } from "@/components/chat-playground/SafetyFeatures"
+import { StatusBadge, type StatusBadgeMeta } from "@/components/chat-playground/StatusBadge"
+import { StreamOutputPanel } from "@/components/chat-playground/StreamOutputPanel"
+import { ObservabilityModelPanel } from "@/components/chat-playground/ObservabilityModelPanel"
+import { RedVsBluePanel } from "@/components/chat-playground/RedVsBluePanel"
+import {
+  readStoredChatSession,
+  writeStoredChatSession,
+  type ChatTimelineMessage,
+} from "@/lib/chatSessionStorage"
 
 // Runtime configuration: prefer VITE_API_URL if provided; otherwise fall back to proxy
-const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? undefined;
-const VITE_BACKEND_URL = (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? undefined;
-const DEFAULT_PROXY_API_BASE = "/api"; // proxied by Vite dev server
+const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? undefined
+const VITE_BACKEND_URL = (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? undefined
+const VITE_COPILOT_URL = (import.meta.env.VITE_COPILOT_URL as string | undefined) ?? undefined
+const DEFAULT_PROXY_API_BASE = "/api" // proxied by Vite dev server
 
 // Default API URL used before probing completes
 const DEFAULT_API_URL = VITE_API_URL
   ? `${VITE_API_URL.replace(/\/$/, "")}/chat`
-  : `${DEFAULT_PROXY_API_BASE}/chat`;
+  : `${DEFAULT_PROXY_API_BASE}/chat`
 
 const MODE_META: Record<ChatMode, ModeMeta> = {
   "explain-only": {
@@ -32,7 +39,7 @@ const MODE_META: Record<ChatMode, ModeMeta> = {
     description: "Full access. Can execute commands and interact with project files.",
     icon: WrenchIcon,
   },
-};
+}
 
 const STATUS_META: Record<StreamStatus, StatusBadgeMeta> = {
   empty: {
@@ -65,7 +72,7 @@ const STATUS_META: Record<StreamStatus, StatusBadgeMeta> = {
     dot: "bg-rose-500",
     ring: "ring-rose-200",
   },
-};
+}
 
 const outputPlaceholderByStatus: Record<StreamStatus, string> = {
   empty: "Type a prompt...",
@@ -73,31 +80,143 @@ const outputPlaceholderByStatus: Record<StreamStatus, string> = {
   streaming: "Streaming...",
   done: "Stream finished. Send another prompt to continue.",
   error: "Something went wrong while streaming.",
-};
+}
+
+function createMessageId(prefix: "u" | "a") {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+}
+
+function getTranscript(messages: ChatTimelineMessage[]) {
+  return messages
+    .map((message) => `${message.role === "user" ? "User" : "Assistant"}: ${message.content}`)
+    .join("\n\n")
+}
 
 export function ChatPlayground() {
-  const [prompt, setPrompt] = React.useState("");
-  const [mode, setMode] = React.useState<ChatMode>("explain-only");
-  const [isRedVsBlueOpen, setIsRedVsBlueOpen] = React.useState(false);
+  const [prompt, setPrompt] = React.useState("")
+  const [mode, setMode] = React.useState<ChatMode>("explain-only")
+  const [timeline, setTimeline] = React.useState<ChatTimelineMessage[]>([])
+  const [activeAssistantId, setActiveAssistantId] = React.useState<string | null>(null)
+  const [hasSavedSession, setHasSavedSession] = React.useState(false)
+  const [isRedVsBlueOpen, setIsRedVsBlueOpen] = React.useState(false)
 
   const { apiUrl, backendProbeInfo } = useApiProbe({
     defaultApiUrl: DEFAULT_API_URL,
     apiUrlOverride: VITE_API_URL,
     backendUrlOverride: VITE_BACKEND_URL,
-  });
-  const { output, status, error, isBusy, submit, clear } = useStreamingChat();
-  const { copied, onCopy, onExport, onClear } = useOutputActions({ output, onClear: clear });
+  })
+  const { output, status, error, isBusy, canRetry, submit, cancel, retry, clear } = useStreamingChat()
 
-  const statusMeta = STATUS_META[status];
-  const outputPlaceholder = output.length ? "" : outputPlaceholderByStatus[status];
+  React.useEffect(() => {
+    const storedSession = readStoredChatSession()
+    if (!storedSession) {
+      return
+    }
+
+    setTimeline(storedSession.timeline)
+    setMode(storedSession.mode)
+    setHasSavedSession(true)
+  }, [])
+
+  React.useEffect(() => {
+    if (!timeline.length) {
+      return
+    }
+
+    writeStoredChatSession({
+      version: 1,
+      mode,
+      timeline,
+    })
+    setHasSavedSession(true)
+  }, [mode, timeline])
+
+  React.useEffect(() => {
+    if (!activeAssistantId) {
+      return
+    }
+
+    setTimeline((prev) =>
+      prev.map((message) =>
+        message.id === activeAssistantId ? { ...message, content: output } : message
+      )
+    )
+  }, [activeAssistantId, output])
+
+  React.useEffect(() => {
+    if (activeAssistantId && (status === "done" || status === "error" || status === "empty")) {
+      setActiveAssistantId(null)
+    }
+  }, [activeAssistantId, status])
+
+  const lastAssistantOutput = React.useMemo(() => {
+    for (let i = timeline.length - 1; i >= 0; i -= 1) {
+      if (timeline[i].role === "assistant") {
+        return timeline[i].content
+      }
+    }
+    return ""
+  }, [timeline])
+
+  const displayOutput = activeAssistantId ? output : output || lastAssistantOutput
+  const transcript = React.useMemo(() => getTranscript(timeline), [timeline])
+
+  const { copied, onCopy, onExport, onClear } = useOutputActions({
+    output: displayOutput,
+    onClear: clear,
+  })
+
+  const statusMeta = STATUS_META[status]
+  const outputPlaceholder = displayOutput.length ? "" : outputPlaceholderByStatus[status]
 
   // Estimate token count (rough approximation: 1 token ≈ 4 characters)
-  const estimatedTokens = estimateTokenCount(output);
+  const estimatedTokens = estimateTokenCount(displayOutput)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await submit({ prompt, apiUrl, mode });
-  };
+    event.preventDefault()
+    const trimmedPrompt = prompt.trim()
+    if (!trimmedPrompt) {
+      return
+    }
+
+    const userId = createMessageId("u")
+    const assistantId = createMessageId("a")
+    setTimeline((prev) => [
+      ...prev,
+      { id: userId, role: "user", content: trimmedPrompt },
+      { id: assistantId, role: "assistant", content: "" },
+    ])
+    setPrompt("")
+    setActiveAssistantId(assistantId)
+
+    await submit({ prompt: trimmedPrompt, apiUrl, mode })
+  }
+
+  const handleNewChat = React.useCallback(() => {
+    setTimeline([])
+    setPrompt("")
+    setMode("explain-only")
+    setActiveAssistantId(null)
+    clear()
+  }, [clear])
+
+  const handleResumeLastChat = React.useCallback(() => {
+    const storedSession = readStoredChatSession()
+    if (!storedSession) {
+      return
+    }
+
+    setTimeline(storedSession.timeline)
+    setMode(storedSession.mode)
+    setPrompt("")
+    setActiveAssistantId(null)
+    clear()
+    setHasSavedSession(true)
+  }, [clear])
+
+  const handleExport = React.useCallback(() => {
+    onExport(transcript || displayOutput)
+  }, [displayOutput, onExport, transcript])
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#f8f1e7] text-slate-900">
@@ -141,25 +260,38 @@ export function ChatPlayground() {
               onModeChange={setMode}
               onPromptChange={setPrompt}
               onSubmit={handleSubmit}
+              onCancel={cancel}
             />
             <SafetyFeatures />
           </div>
 
           <StreamOutputPanel
-            output={output}
+            output={displayOutput}
             outputPlaceholder={outputPlaceholder}
             estimatedTokens={estimatedTokens}
+            timeline={timeline}
             status={status}
             error={error}
             copied={copied}
+            isBusy={isBusy}
+            canRetry={canRetry}
+            hasSavedSession={hasSavedSession}
+            onRetry={retry}
             onCopy={onCopy}
-            onExport={onExport}
+            onExport={handleExport}
             onClear={onClear}
+            onNewChat={handleNewChat}
+            onResumeLastChat={handleResumeLastChat}
           />
         </section>
+
+        <ObservabilityModelPanel
+          copilotBaseUrl={VITE_COPILOT_URL ?? "/copilot"}
+          backendBaseUrl={VITE_BACKEND_URL ?? ""}
+        />
 
         <RedVsBluePanel isOpen={isRedVsBlueOpen} onOpenChange={setIsRedVsBlueOpen} />
       </main>
     </div>
-  );
+  )
 }

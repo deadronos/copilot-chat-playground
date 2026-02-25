@@ -187,6 +187,79 @@ describe("CopilotSDKService", () => {
     });
   });
 
+
+  describe("chatStream", () => {
+    it("streams deltas and returns final output", { timeout: 10000 }, async () => {
+      process.env.GH_TOKEN = "token"
+      const service = new CopilotSDKService()
+
+      await service.initialize()
+      const client = (service as unknown as { client: { createSession: (cfg: unknown) => Promise<unknown> } }).client
+
+      const chunks: string[] = []
+      const mockSession = {
+        sessionId: "stream-session",
+        _handler: null as ((ev: { type: string; data: { content?: string; deltaContent?: string } }) => void) | null,
+        on(h: (ev: { type: string; data: { content?: string; deltaContent?: string } }) => void) {
+          this._handler = h
+        },
+        async sendAndWait() {
+          this._handler?.({ type: "assistant.message_delta", data: { deltaContent: "Hello " } })
+          this._handler?.({ type: "assistant.message_delta", data: { deltaContent: "world" } })
+          this._handler?.({ type: "assistant.message", data: { content: "Hello world" } })
+          this._handler?.({ type: "session.idle", data: {} })
+          return { type: "assistant.message", data: { content: "Hello world" } }
+        },
+        async destroy() {},
+      }
+
+      const spy = vi
+        .spyOn(client as { createSession: (cfg: unknown) => Promise<unknown> }, "createSession")
+        .mockImplementation(async () => mockSession)
+
+      const result = await service.chatStream("hello", (chunk) => chunks.push(chunk), "stream-req")
+
+      expect(result.success).toBe(true)
+      expect(result.output).toBe("Hello world")
+      expect(chunks.join("")).toBe("Hello world")
+      spy.mockRestore()
+    })
+
+    it("falls back to assistant.message when deltas are not emitted", { timeout: 10000 }, async () => {
+      process.env.GH_TOKEN = "token"
+      const service = new CopilotSDKService()
+
+      await service.initialize()
+      const client = (service as unknown as { client: { createSession: (cfg: unknown) => Promise<unknown> } }).client
+
+      const chunks: string[] = []
+      const mockSession = {
+        sessionId: "stream-session-final-only",
+        _handler: null as ((ev: { type: string; data: { content?: string; deltaContent?: string } }) => void) | null,
+        on(h: (ev: { type: string; data: { content?: string; deltaContent?: string } }) => void) {
+          this._handler = h
+        },
+        async sendAndWait() {
+          this._handler?.({ type: "assistant.message", data: { content: "Only final" } })
+          this._handler?.({ type: "session.idle", data: {} })
+          return { type: "assistant.message", data: { content: "Only final" } }
+        },
+        async destroy() {},
+      }
+
+      const spy = vi
+        .spyOn(client as { createSession: (cfg: unknown) => Promise<unknown> }, "createSession")
+        .mockImplementation(async () => mockSession)
+
+      const result = await service.chatStream("hello", (chunk) => chunks.push(chunk), "stream-req")
+
+      expect(result.success).toBe(true)
+      expect(result.output).toBe("Only final")
+      expect(chunks.join("")).toBe("Only final")
+      spy.mockRestore()
+    })
+  })
+
   describe("stop", () => {
     it("should not throw when stopping uninitialized service", async () => {
       const service = new CopilotSDKService();

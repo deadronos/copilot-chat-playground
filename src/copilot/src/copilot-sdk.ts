@@ -56,7 +56,7 @@ export class CopilotSDKService {
     prompt: string,
     requestId?: string,
     systemPrompt?: string,
-    systemMode?: 'append' | 'replace'
+    systemMode?: "append" | "replace"
   ): Promise<CopilotSDKResponse> {
     // Validate token first
     const tokenCheck = validateToken();
@@ -69,39 +69,7 @@ export class CopilotSDKService {
     }
 
     try {
-      // Initialize client if needed
-      if (!this.client) {
-        await this.initialize();
-      }
-
-      if (!this.client) {
-        return {
-          success: false,
-          error: "Failed to initialize Copilot SDK client",
-          errorType: "sdk",
-        };
-      }
-
-      this.emitLog("info", "sdk.session.creating", "Creating Copilot session", { requestId });
-
-      // Create a new session with streaming enabled
-      const systemMessage = systemPrompt ? ({ content: systemPrompt, mode: systemMode ?? 'append' } as SystemMessageConfig) : undefined;
-
-      // Determine the effective model using a centralized accessor
-      const model = getDefaultModel();
-      this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
-
-      const session = await this.client.createSession({
-        model,
-        streaming: true,
-        ...(systemMessage && { systemMessage }),
-      });
-
-      this.emitLog("info", "sdk.session.created", "Copilot session created", {
-        requestId,
-        sessionId: session.sessionId,
-        model,
-      });
+      const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
 
       // Buffer to collect the full response
       let fullResponse = "";
@@ -142,33 +110,9 @@ export class CopilotSDKService {
             contentLength: content.length,
           });
 
-        // Detect the provider-reported model and warn if it differs from requested model
+          // Detect the provider-reported model and warn if it differs from requested model
         } else if (event.type === "assistant.usage") {
-          const actualModel = event.data?.model as string | undefined;
-          if (actualModel) {
-            if (actualModel !== model) {
-              // Emit a warning with relevant metadata to aid debugging and telemetry
-              // Increment runtime metric for model mismatches (useful for health/telemetry)
-              incrementMetric("model_mismatch_count");
-
-              this.emitLog("warn", "sdk.model.mismatch", `Requested model '${model}' differs from actual model '${actualModel}'`, {
-                requestId,
-                sessionId: session.sessionId,
-                requestedModel: model,
-                actualModel,
-                providerCallId: event.data?.providerCallId,
-                usage: event.data,
-                metrics: { model_mismatch_count: true },
-              });
-            } else {
-              // Optional: note explicit match for observability
-              this.emitLog("debug", "sdk.model.match", "Requested model matches actual model", {
-                requestId,
-                sessionId: session.sessionId,
-                model: actualModel,
-              });
-            }
-          }
+          this.logModelUsage(model, requestId, session.sessionId, event.data);
         } else if (event.type === "session.idle") {
           this.emitLog("info", "sdk.session.idle", "Session idle (turn complete)", {
             requestId,
@@ -208,31 +152,91 @@ export class CopilotSDKService {
         output: fullResponse.trim(),
       };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      this.emitLog("error", "sdk.error", `SDK error: ${errorMessage}`, {
-        requestId,
-        error: errorMessage,
-      });
+      return this.mapError(error, requestId);
+    }
+  }
 
-      // Check if it's an auth error
-      const errorLower = errorMessage.toLowerCase();
-      if (
-        errorLower.includes("auth") ||
-        errorLower.includes("unauthorized") ||
-        errorLower.includes("token")
-      ) {
-        return {
-          success: false,
-          error: errorMessage,
-          errorType: "auth",
-        };
-      }
-
+  /**
+   * Send a prompt to Copilot and stream chunks as they arrive.
+   */
+  async chatStream(
+    prompt: string,
+    onChunk: (chunk: string) => void,
+    requestId?: string,
+    systemPrompt?: string,
+    systemMode?: "append" | "replace"
+  ): Promise<CopilotSDKResponse> {
+    const tokenCheck = validateToken();
+    if (!tokenCheck.valid) {
       return {
         success: false,
-        error: errorMessage,
-        errorType: "sdk",
+        error: tokenCheck.error,
+        errorType: "token_missing",
       };
+    }
+
+    try {
+      const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
+
+      let streamedResponse = "";
+      let finalResponse = "";
+
+      session.on((event) => {
+        if (event.type === "assistant.message_delta") {
+          const delta = event.data.deltaContent || "";
+          if (delta) {
+            streamedResponse += delta;
+            onChunk(delta);
+          }
+          return;
+        }
+
+        if (event.type === "assistant.message") {
+          finalResponse = event.data.content || "";
+          return;
+        }
+
+        if (event.type === "assistant.usage") {
+          this.logModelUsage(model, requestId, session.sessionId, event.data);
+        }
+      });
+
+      this.emitLog("info", "sdk.sending", "Sending prompt to Copilot", {
+        requestId,
+        sessionId: session.sessionId,
+        promptLength: prompt.length,
+      });
+
+      await session.sendAndWait({ prompt });
+
+      let output = streamedResponse;
+
+      if (finalResponse) {
+        if (finalResponse.startsWith(streamedResponse)) {
+          const remainder = finalResponse.slice(streamedResponse.length);
+          if (remainder) {
+            onChunk(remainder);
+          }
+        } else if (!streamedResponse) {
+          onChunk(finalResponse);
+        }
+        output = finalResponse;
+      }
+
+      await session.destroy();
+
+      this.emitLog("info", "sdk.complete", "Prompt completed", {
+        requestId,
+        sessionId: session.sessionId,
+        responseLength: output.length,
+      });
+
+      return {
+        success: true,
+        output: output.trim(),
+      };
+    } catch (error) {
+      return this.mapError(error, requestId);
     }
   }
 
@@ -245,6 +249,104 @@ export class CopilotSDKService {
       this.client = null;
       this.emitLog("info", "sdk.stopped", "Copilot SDK client stopped");
     }
+  }
+
+  private async createSession(
+    requestId?: string,
+    systemPrompt?: string,
+    systemMode?: "append" | "replace"
+  ): Promise<{ session: Awaited<ReturnType<CopilotClient["createSession"]>>; model: string }> {
+    if (!this.client) {
+      await this.initialize();
+    }
+
+    if (!this.client) {
+      throw new Error("Failed to initialize Copilot SDK client");
+    }
+
+    this.emitLog("info", "sdk.session.creating", "Creating Copilot session", { requestId });
+
+    const systemMessage = systemPrompt
+      ? ({ content: systemPrompt, mode: systemMode ?? "append" } as SystemMessageConfig)
+      : undefined;
+
+    const model = getDefaultModel();
+    this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
+
+    const session = await this.client.createSession({
+      model,
+      streaming: true,
+      ...(systemMessage && { systemMessage }),
+    });
+
+    this.emitLog("info", "sdk.session.created", "Copilot session created", {
+      requestId,
+      sessionId: session.sessionId,
+      model,
+    });
+
+    return { session, model };
+  }
+
+  private logModelUsage(
+    requestedModel: string,
+    requestId: string | undefined,
+    sessionId: string,
+    usageData: Record<string, unknown> | undefined
+  ): void {
+    const actualModel = usageData?.model as string | undefined;
+    if (!actualModel) {
+      return;
+    }
+
+    if (actualModel !== requestedModel) {
+      incrementMetric("model_mismatch_count");
+
+      this.emitLog(
+        "warn",
+        "sdk.model.mismatch",
+        `Requested model '${requestedModel}' differs from actual model '${actualModel}'`,
+        {
+          requestId,
+          sessionId,
+          requestedModel,
+          actualModel,
+          providerCallId: usageData?.providerCallId,
+          usage: usageData,
+          metrics: { model_mismatch_count: true },
+        }
+      );
+      return;
+    }
+
+    this.emitLog("debug", "sdk.model.match", "Requested model matches actual model", {
+      requestId,
+      sessionId,
+      model: actualModel,
+    });
+  }
+
+  private mapError(error: unknown, requestId?: string): CopilotSDKResponse {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    this.emitLog("error", "sdk.error", `SDK error: ${errorMessage}`, {
+      requestId,
+      error: errorMessage,
+    });
+
+    const errorLower = errorMessage.toLowerCase();
+    if (errorLower.includes("auth") || errorLower.includes("unauthorized") || errorLower.includes("token")) {
+      return {
+        success: false,
+        error: errorMessage,
+        errorType: "auth",
+      };
+    }
+
+    return {
+      success: false,
+      error: errorMessage,
+      errorType: "sdk",
+    };
   }
 
   /**

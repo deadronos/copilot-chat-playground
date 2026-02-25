@@ -1,6 +1,20 @@
 export type StartMatchPayload = { matchId: string; rulesVersion?: string; proposedRules?: Record<string, unknown>; clientConfig?: Record<string, unknown> }
 
-export type MatchStartResult = { ok: true; data: { sessionId: string; effectiveConfig?: { snapshotIntervalMs?: number } } } | { ok: false; error: string; status?: number; body?: any }
+type JsonObject = Record<string, unknown>
+type MatchStartData = { sessionId: string; effectiveConfig?: { snapshotIntervalMs?: number } }
+
+function getErrorMessage(body: unknown): string {
+  if (typeof body === "object" && body !== null) {
+    const maybeBody = body as JsonObject
+    if (typeof maybeBody.message === "string") return maybeBody.message
+    if (typeof maybeBody.error === "string") return maybeBody.error
+  }
+
+  return JSON.stringify(body)
+}
+
+export type ApiErrorResult = { ok: false; error: string; status?: number; body?: unknown }
+export type MatchStartResult = { ok: true; data: MatchStartData } | ApiErrorResult
 
 export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fetch = fetch, options?: { headers?: Record<string, string> }): Promise<MatchStartResult> {
   try {
@@ -15,20 +29,20 @@ export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fet
       const contentType = (res.headers?.get?.("content-type") || "").toLowerCase()
       if (contentType.includes("application/json")) {
         const body = await res.json()
-        return { ok: false, status: res.status, error: body?.message || body?.error || JSON.stringify(body), body }
+        return { ok: false, status: res.status, error: getErrorMessage(body), body }
       }
       const text = await res.text()
       return { ok: false, status: res.status, error: text || `Failed to start match (status ${res.status})` }
     }
 
-    const data = await res.json()
+    const data = await res.json() as MatchStartData
     return { ok: true, data }
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : String(err) }
   }
 }
 
-export type SendSnapshotResult = { ok: true; data: any } | { ok: false; error: string; status?: number; body?: any }
+export type SendSnapshotResult = { ok: true; data: unknown } | ApiErrorResult
 export async function sendSnapshot(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<SendSnapshotResult> {
   try {
     const res = await fetchFn(`/api/redvsblue/match/${matchId}/snapshot`, {
@@ -40,7 +54,7 @@ export async function sendSnapshot(matchId: string, payload: unknown, fetchFn: t
       const contentType = (res.headers?.get?.("content-type") || "").toLowerCase()
       if (contentType.includes("application/json")) {
         const body = await res.json()
-        return { ok: false, status: res.status, error: body?.message || body?.error || JSON.stringify(body), body }
+        return { ok: false, status: res.status, error: getErrorMessage(body), body }
       }
       const text = await res.text()
       return { ok: false, status: res.status, error: text || `Failed to send snapshot (status ${res.status})` }
@@ -52,8 +66,7 @@ export async function sendSnapshot(matchId: string, payload: unknown, fetchFn: t
   }
 }
 
-export type ApiErrorResult = { ok: false; error: string; status?: number; body?: any }
-export async function ask(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<{ ok: true; data: any } | ApiErrorResult> {
+export async function ask(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<{ ok: true; data: unknown } | ApiErrorResult> {
   try {
     const res = await fetchFn(`/api/redvsblue/match/${matchId}/ask`, {
       method: "POST",
@@ -64,7 +77,7 @@ export async function ask(matchId: string, payload: unknown, fetchFn: typeof fet
       const contentType = (res.headers?.get?.("content-type") || "").toLowerCase()
       if (contentType.includes("application/json")) {
         const body = await res.json()
-        return { ok: false, status: res.status, error: body?.message || body?.error || JSON.stringify(body), body }
+        return { ok: false, status: res.status, error: getErrorMessage(body), body }
       }
       const text = await res.text()
       return { ok: false, status: res.status, error: text || `Failed to ask (status ${res.status})` }
@@ -86,7 +99,7 @@ export async function endMatch(matchId: string, fetchFn: typeof fetch = fetch): 
       const contentType = (res.headers?.get?.("content-type") || "").toLowerCase()
       if (contentType.includes("application/json")) {
         const body = await res.json()
-        return { ok: false, status: res.status, error: body?.message || body?.error || JSON.stringify(body), body }
+        return { ok: false, status: res.status, error: getErrorMessage(body), body }
       }
       const text = await res.text()
       return { ok: false, status: res.status, error: text || `Failed to end match (status ${res.status})` }
