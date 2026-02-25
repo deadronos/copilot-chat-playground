@@ -67,4 +67,28 @@ describe("observability endpoints", () => {
     expect(typeof res.body.summary).toBe("object");
     expect(res.body.summary["match.start.success"]).toBeGreaterThanOrEqual(1);
   });
+
+  test("events endpoint rejects invalid numeric query params", async () => {
+    const app = createApp();
+
+    const badSince = await request(app).get("/api/observability/events?sinceMs=abc");
+    expect(badSince.status).toBe(400);
+    expect(badSince.body.error).toContain("sinceMs");
+
+    const badLimit = await request(app).get("/api/observability/events?limit=-1");
+    expect(badLimit.status).toBe(400);
+    expect(badLimit.body.error).toContain("limit");
+  });
+
+  test("metrics endpoint rejects invalid numeric query params", async () => {
+    const app = createApp();
+
+    const badBucket = await request(app).get("/api/observability/metrics?event=match.start.success&bucketMs=abc");
+    expect(badBucket.status).toBe(400);
+    expect(badBucket.body.error).toContain("bucketMs");
+
+    const badSince = await request(app).get("/api/observability/metrics?event=match.start.success&sinceMs=-5");
+    expect(badSince.status).toBe(400);
+    expect(badSince.body.error).toContain("sinceMs");
+  });
 });

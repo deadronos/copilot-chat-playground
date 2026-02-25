@@ -20,16 +20,15 @@ export class WSClient {
 
   connect(): void {
     if (!this.WebSocketCtor) throw new Error("No WebSocketCtor available")
-
     this.ws = new this.WebSocketCtor(this.url)
     this.ws.onopen = () => {
-      if (this.onopen) this.onopen()
+      this.onopen?.()
     }
     this.ws.onclose = () => {
-      if (this.onclose) this.onclose()
+      this.onclose?.()
     }
-    this.ws.onerror = (event) => {
-      if (this.onerror) this.onerror(event)
+    this.ws.onerror = (e) => {
+      this.onerror?.(e)
     }
   }
 

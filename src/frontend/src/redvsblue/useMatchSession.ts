@@ -88,17 +88,6 @@ const buildSummary = (redCount: number, blueCount: number) => ({
 
 const majorTelemetryTypes = new Set(["ship_destroyed", "ship_spawned", "explosion", "bullet_hit"])
 
-
-const readMatchRefreshBody = (value: unknown): { errorCode?: string; actions?: string[]; shouldRefresh?: boolean } => {
-  if (!value || typeof value !== "object") return {}
-  const record = value as Record<string, unknown>
-  return {
-    errorCode: typeof record.errorCode === "string" ? record.errorCode : undefined,
-    actions: Array.isArray(record.actions) ? record.actions.filter((item): item is string => typeof item === "string") : undefined,
-    shouldRefresh: typeof record.shouldRefresh === "boolean" ? record.shouldRefresh : undefined,
-  }
-}
-
 const normalizeMajorEvent = (event: TelemetryEvent) => {
   const data = event.data && typeof event.data === "object" ? event.data : undefined
   const typed = data as { team?: unknown; summary?: unknown } | undefined
@@ -204,7 +193,6 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
   useEffect(() => {
     if (!autoStart) return
     let active = true
-    const currentMatchId = matchIdRef.current
     void (async () => {
       if (!active) return
       await startMatchInternal()
@@ -212,6 +200,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
 
     return () => {
       active = false
+      const currentMatchId = matchIdRef.current
       void fetcher(`/api/redvsblue/match/${currentMatchId}/end`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -242,8 +231,15 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
           const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher)
           if (!res.ok) {
             // Detect server instructions for a match refresh
-            const body = readMatchRefreshBody(res.body)
-            const isMatchNotFound = res.status === 404 && (body.errorCode === "MATCH_NOT_FOUND" || body.actions?.includes("refresh_match") || body.shouldRefresh)
+            const body = res.body as
+              | { errorCode?: unknown; actions?: unknown; shouldRefresh?: unknown }
+              | undefined
+            const hasRefreshAction =
+              Array.isArray(body?.actions) &&
+              body.actions.some((action) => action === "refresh_match")
+            const isMatchNotFound =
+              res.status === 404 &&
+              (body?.errorCode === "MATCH_NOT_FOUND" || hasRefreshAction || body?.shouldRefresh === true)
             if (isMatchNotFound) {
               onToast("Match session lost. Attempting to rejoin...")
               setSessionId(null)
@@ -279,7 +275,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     return () => {
       window.clearInterval(intervalId)
     }
-  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, fetcher, idFactory, onToast, redCount, sessionId, snapshotIntervalMs, startMatchInternal])
+  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, fetcher, idFactory, onToast, redCount, sessionId, snapshotIntervalMs])
 
   const handleAskCopilot = useCallback(async () => {
     if (!sessionId) {

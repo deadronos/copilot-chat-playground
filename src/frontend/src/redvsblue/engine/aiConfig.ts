@@ -1,21 +1,20 @@
 import type { ShipAIConfig } from "./entities"
+import type { EngineTuning } from "@/redvsblue/config"
 
-type ShipWithAiOverrides = {
-  shipThrustOverride?: number
-}
+type ShipWithOverrides = { shipThrustOverride?: number }
+type AiTuning = Pick<
+  EngineTuning,
+  | "turnSpeed"
+  | "shipThrust"
+  | "visionDist"
+  | "aimTurnThreshold"
+  | "fireAimCloseThreshold"
+  | "fireAngleThreshold"
+  | "idleAngleIncrement"
+  | "idleDamping"
+>
 
-type AiTuningConfig = {
-  turnSpeed: number
-  shipThrust: number
-  visionDist: number
-  aimTurnThreshold: number
-  fireAimCloseThreshold: number
-  fireAngleThreshold: number
-  idleAngleIncrement: number
-  idleDamping: number
-}
-
-export function buildAiConfig(ship: ShipWithAiOverrides, tuning: AiTuningConfig): ShipAIConfig {
+export function buildAiConfig(ship: ShipWithOverrides, tuning: AiTuning): ShipAIConfig {
   const aiConfig: ShipAIConfig = {
     turnSpeed: tuning.turnSpeed,
     shipThrust: tuning.shipThrust,
