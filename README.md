@@ -67,6 +67,12 @@ The copilot service supports two modes:
 
 Set `USE_COPILOT_SDK=false` in your environment to use CLI mode.
 
+### Chat UX enhancements
+
+- End-to-end streaming supports cancel + retry controls in the main chat UI.
+- Conversation history is persisted locally so the latest session can be resumed after refresh.
+- An observability panel exposes Copilot health/models/metrics and backend observability summary from the frontend.
+
 ## Secrets & dotenvx
 
 For Docker/Compose usage with encrypted `.env` files, see the repo guidance in [`docs/library/dotenvx/README.md`](docs/library/dotenvx/README.md). It documents safe-by-default key handling, recommended secret injection patterns, and install options.

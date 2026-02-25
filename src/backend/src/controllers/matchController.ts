@@ -475,8 +475,6 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
     }
   }
 
-  let commentary = resolveCommentary(generateCommentary(session));
-
   let validatedDecision: {
     requestId: string;
     type: "spawnShips";
@@ -641,7 +639,7 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
     await persistMatchSession(session);
   }
 
-  commentary = resolveCommentary(generateCommentary(session));
+  const commentary = resolveCommentary(generateCommentary(session));
 
   logStructuredEvent("info", "match.ask.response", {
     traceId,

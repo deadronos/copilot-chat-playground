@@ -14,7 +14,10 @@ export type StreamingChatState = {
   status: StreamStatus
   error: string | null
   isBusy: boolean
+  canRetry: boolean
   submit: (args: StreamingSubmitArgs) => Promise<void>
+  cancel: () => void
+  retry: () => Promise<void>
   clear: () => void
 }
 
@@ -31,9 +34,19 @@ export function useStreamingChat(): StreamingChatState {
   const [status, setStatus] = React.useState<StreamStatus>("empty")
   const [error, setError] = React.useState<string | null>(null)
 
+  const abortControllerRef = React.useRef<AbortController | null>(null)
+  const lastRequestRef = React.useRef<StreamingSubmitArgs | null>(null)
+
   const isBusy = status === "waiting" || status === "streaming"
+  const canRetry = !isBusy && lastRequestRef.current !== null
+
+  const cancel = React.useCallback(() => {
+    abortControllerRef.current?.abort()
+  }, [])
 
   const clear = React.useCallback(() => {
+    abortControllerRef.current?.abort()
+    abortControllerRef.current = null
     setOutput("")
     setError(null)
     setStatus("empty")
@@ -46,6 +59,10 @@ export function useStreamingChat(): StreamingChatState {
         return
       }
 
+      const abortController = new AbortController()
+      abortControllerRef.current = abortController
+      lastRequestRef.current = { prompt: trimmed, apiUrl, mode }
+
       setError(null)
       setOutput("")
       setStatus("waiting")
@@ -55,6 +72,7 @@ export function useStreamingChat(): StreamingChatState {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: trimmed, mode }),
+          signal: abortController.signal,
         })
 
         if (!response.ok || !response.body) {
@@ -117,6 +135,12 @@ export function useStreamingChat(): StreamingChatState {
 
         setStatus("done")
       } catch (caught) {
+        if (abortController.signal.aborted) {
+          setError(null)
+          setStatus("done")
+          return
+        }
+
         const message = caught instanceof Error ? caught.message : "Streaming failed."
         const looksLikeNetworkError = NETWORK_FAILURE_PATTERNS.some((r) => r.test(message))
 
@@ -129,10 +153,29 @@ export function useStreamingChat(): StreamingChatState {
         }
 
         setStatus("error")
+      } finally {
+        if (abortControllerRef.current === abortController) {
+          abortControllerRef.current = null
+        }
       }
     },
     [isBusy]
   )
 
-  return { output, status, error, isBusy, submit, clear }
+  const retry = React.useCallback(async () => {
+    if (isBusy || !lastRequestRef.current) {
+      return
+    }
+
+    await submit(lastRequestRef.current)
+  }, [isBusy, submit])
+
+  React.useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort()
+      abortControllerRef.current = null
+    }
+  }, [])
+
+  return { output, status, error, isBusy, canRetry, submit, cancel, retry, clear }
 }

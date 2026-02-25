@@ -3,29 +3,44 @@ import { CheckIcon, CopyIcon, DownloadIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import type { StreamStatus } from "@/hooks/useStreamingChat";
+import type { ChatTimelineMessage } from "@/lib/chatSessionStorage";
 
 type StreamOutputPanelProps = {
   output: string;
   outputPlaceholder: string;
   estimatedTokens: number;
+  timeline: ChatTimelineMessage[];
   status: StreamStatus;
   error: string | null;
   copied: boolean;
+  isBusy: boolean;
+  canRetry: boolean;
+  hasSavedSession: boolean;
+  onRetry: () => void;
   onCopy: () => void;
   onExport: () => void;
   onClear: () => void;
+  onNewChat: () => void;
+  onResumeLastChat: () => void;
 };
 
 export function StreamOutputPanel({
   output,
   outputPlaceholder,
   estimatedTokens,
+  timeline = [],
   status,
   error,
   copied,
+  isBusy,
+  canRetry,
+  hasSavedSession = false,
+  onRetry,
   onCopy,
   onExport,
   onClear,
+  onNewChat,
+  onResumeLastChat,
 }: StreamOutputPanelProps) {
   return (
     <div className="rounded-3xl border border-slate-900/10 bg-white/85 p-6 shadow-[0_30px_80px_-60px_rgba(15,23,42,0.8)] backdrop-blur-sm">
@@ -48,7 +63,47 @@ export function StreamOutputPanel({
         </div>
       </div>
 
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          onClick={onNewChat}
+          className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+        >
+          New chat
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={!hasSavedSession}
+          onClick={onResumeLastChat}
+          className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+        >
+          Resume last chat
+        </Button>
+      </div>
+
       <div className="mt-6 space-y-4">
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold text-slate-700">Conversation timeline</h3>
+          <div className="max-h-52 space-y-2 overflow-y-auto rounded-2xl border border-slate-900/10 bg-white/80 p-3">
+            {timeline.length === 0 ? (
+              <p className="text-xs text-slate-500">No messages yet.</p>
+            ) : (
+              timeline.map((message) => (
+                <div key={message.id} className="rounded-xl border border-slate-900/10 bg-white px-3 py-2">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    {message.role === "user" ? "User" : "Assistant"}
+                  </p>
+                  <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{message.content || "…"}</p>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
         <Textarea
           value={output}
           placeholder={outputPlaceholder}
@@ -56,13 +111,24 @@ export function StreamOutputPanel({
           className="min-h-[320px] rounded-2xl border-slate-900/15 bg-white/90 font-mono text-sm leading-relaxed shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)]"
         />
 
-        {output.length > 0 && (
+        {(output.length > 0 || canRetry) && (
           <div className="flex flex-wrap gap-2">
             <Button
               type="button"
               size="sm"
               variant="outline"
+              onClick={onRetry}
+              disabled={isBusy || !canRetry}
+              className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
+            >
+              Retry
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
               onClick={onCopy}
+              disabled={!output.length}
               className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
             >
               {copied ? (
@@ -82,6 +148,7 @@ export function StreamOutputPanel({
               size="sm"
               variant="outline"
               onClick={onExport}
+              disabled={!output.length}
               className="rounded-xl border-slate-900/15 bg-white/90 hover:bg-white"
             >
               <DownloadIcon className="mr-2 size-4" />
