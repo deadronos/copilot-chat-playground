@@ -586,33 +586,29 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
 
               if (validated.type === "spawnShips") {
                 const fakeSnapshots: SnapshotPayload[] = [];
+                const baseRedCount = snapshotPayload?.counts?.red ?? 0;
+                const baseBlueCount = snapshotPayload?.counts?.blue ?? 0;
                 for (let i = 0; i < validated.params.count; i += 1) {
+                  const spawnedCount = i + 1;
+                  const redCount =
+                    validated.params.team === "red"
+                      ? baseRedCount + spawnedCount
+                      : baseRedCount;
+                  const blueCount =
+                    validated.params.team === "blue"
+                      ? baseBlueCount + spawnedCount
+                      : baseBlueCount;
                   fakeSnapshots.push({
                     timestamp: Date.now(),
                     snapshotId: randomUUID(),
                     gameSummary: {
-                      redCount:
-                        validated.params.team === "red"
-                          ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count
-                          : (snapshotPayload?.counts?.red ?? 0),
-                      blueCount:
-                        validated.params.team === "blue"
-                          ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count
-                          : (snapshotPayload?.counts?.blue ?? 0),
-                      totalShips:
-                        (snapshotPayload?.counts?.red ?? 0) +
-                        (snapshotPayload?.counts?.blue ?? 0) +
-                        validated.params.count,
+                      redCount,
+                      blueCount,
+                      totalShips: redCount + blueCount,
                     },
                     counts: {
-                      red:
-                        validated.params.team === "red"
-                          ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count
-                          : (snapshotPayload?.counts?.red ?? 0),
-                      blue:
-                        validated.params.team === "blue"
-                          ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count
-                          : (snapshotPayload?.counts?.blue ?? 0),
+                      red: redCount,
+                      blue: blueCount,
                     },
                     recentMajorEvents: [],
                   });
