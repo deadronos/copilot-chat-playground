@@ -6,12 +6,22 @@ export function createObservabilityRouter(): express.Router {
 
   router.get("/api/observability/events", (req, res) => {
     const { event, sinceMs, limit, level } = req.query;
+    const parsedSince = typeof sinceMs === "string" ? Number(sinceMs) : undefined;
+    if (parsedSince !== undefined && (!Number.isFinite(parsedSince) || parsedSince < 0)) {
+      res.status(400).json({ error: "sinceMs must be a non-negative number" });
+      return;
+    }
+    const parsedLimit = typeof limit === "string" ? Number(limit) : undefined;
+    if (parsedLimit !== undefined && (!Number.isFinite(parsedLimit) || parsedLimit <= 0)) {
+      res.status(400).json({ error: "limit must be a positive number" });
+      return;
+    }
     const parsedLevel: ObservabilityEvent["level"] | undefined =
       level === "info" || level === "warn" || level === "error" ? level : undefined;
     const parsed = {
       event: typeof event === "string" ? event : undefined,
-      sinceMs: typeof sinceMs === "string" ? Number(sinceMs) : undefined,
-      limit: typeof limit === "string" ? Number(limit) : undefined,
+      sinceMs: parsedSince,
+      limit: parsedLimit,
       level: parsedLevel,
     };
     const events = getEvents(parsed);
@@ -25,7 +35,15 @@ export function createObservabilityRouter(): express.Router {
       return;
     }
     const since = typeof sinceMs === "string" ? Number(sinceMs) : undefined;
+    if (since !== undefined && (!Number.isFinite(since) || since < 0)) {
+      res.status(400).json({ error: "sinceMs must be a non-negative number" });
+      return;
+    }
     const bucket = typeof bucketMs === "string" ? Number(bucketMs) : undefined;
+    if (bucket !== undefined && (!Number.isFinite(bucket) || bucket <= 0)) {
+      res.status(400).json({ error: "bucketMs must be a positive number" });
+      return;
+    }
     const buckets = getCounts({ event, sinceMs: since, bucketMs: bucket });
     res.json({ ok: true, event, buckets });
   });
