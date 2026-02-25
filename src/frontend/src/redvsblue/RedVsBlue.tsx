@@ -16,15 +16,9 @@ import RedVsBlueStyles from "@/redvsblue/RedVsBlueStyles";
 const params: URLSearchParams | null = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
 const initialWorkerMode = params?.get("rvbWorker") === "1";
 const initialRendererParam = params?.get("rvbRenderer");
-type BenchGlobal = typeof globalThis & {
-  __rvbBench?: { runPerfBench: typeof runPerfBench };
-};
 
 if (initialRendererParam === "offscreen") {
   useUIStore.getState().setSelectedRenderer("offscreen");
-}
-if (import.meta.env.DEV) {
-  (globalThis as BenchGlobal).__rvbBench = { runPerfBench };
 }
 
 const RedVsBlue: React.FC = () => {
@@ -46,6 +40,12 @@ const RedVsBlue: React.FC = () => {
     onToast: showToast,
     applyValidatedDecision,
   });
+
+  if (import.meta.env.DEV) {
+    const g = globalThis as unknown as { __rvbBench?: unknown }
+    g.__rvbBench = { runPerfBench }
+  }
+
 
   return (
     <div

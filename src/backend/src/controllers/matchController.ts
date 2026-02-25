@@ -13,7 +13,6 @@ import {
   getMatchSession,
   persistMatchSession,
   recordSnapshot,
-  recordSnapshots,
   removePersistedSession,
   setMatchSession,
   REHYDRATION_DECISION_TAIL,
@@ -476,6 +475,7 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
     }
   }
 
+  let commentary = resolveCommentary(generateCommentary(session));
 
   let validatedDecision: {
     requestId: string;
@@ -585,36 +585,37 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
               });
 
               if (validated.type === "spawnShips") {
-                const fakeSnapshots: SnapshotPayload[] = [];
-                const baseRedCount = snapshotPayload?.counts?.red ?? 0;
-                const baseBlueCount = snapshotPayload?.counts?.blue ?? 0;
                 for (let i = 0; i < validated.params.count; i += 1) {
-                  const spawnedCount = i + 1;
-                  const redCount =
-                    validated.params.team === "red"
-                      ? baseRedCount + spawnedCount
-                      : baseRedCount;
-                  const blueCount =
-                    validated.params.team === "blue"
-                      ? baseBlueCount + spawnedCount
-                      : baseBlueCount;
-                  fakeSnapshots.push({
+                  const fakeSnapshot: SnapshotPayload = {
                     timestamp: Date.now(),
                     snapshotId: randomUUID(),
                     gameSummary: {
-                      redCount,
-                      blueCount,
-                      totalShips: redCount + blueCount,
+                      redCount:
+                        validated.params.team === "red"
+                          ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count
+                          : (snapshotPayload?.counts?.red ?? 0),
+                      blueCount:
+                        validated.params.team === "blue"
+                          ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count
+                          : (snapshotPayload?.counts?.blue ?? 0),
+                      totalShips:
+                        (snapshotPayload?.counts?.red ?? 0) +
+                        (snapshotPayload?.counts?.blue ?? 0) +
+                        validated.params.count,
                     },
                     counts: {
-                      red: redCount,
-                      blue: blueCount,
+                      red:
+                        validated.params.team === "red"
+                          ? (snapshotPayload?.counts?.red ?? 0) + validated.params.count
+                          : (snapshotPayload?.counts?.red ?? 0),
+                      blue:
+                        validated.params.team === "blue"
+                          ? (snapshotPayload?.counts?.blue ?? 0) + validated.params.count
+                          : (snapshotPayload?.counts?.blue ?? 0),
                     },
                     recentMajorEvents: [],
-                  });
-                }
-                if (fakeSnapshots.length > 0) {
-                  recordSnapshots(session, fakeSnapshots);
+                  };
+                  recordSnapshot(session, fakeSnapshot);
                   didDecisionMutateSession = true;
                 }
               }
@@ -640,7 +641,7 @@ export async function askMatch(req: Request, res: Response): Promise<void> {
     await persistMatchSession(session);
   }
 
-  const commentary = resolveCommentary(generateCommentary(session));
+  commentary = resolveCommentary(generateCommentary(session));
 
   logStructuredEvent("info", "match.ask.response", {
     traceId,

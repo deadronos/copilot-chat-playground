@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react"
 import type { RefObject } from "react"
 
 import { DEFAULT_ENGINE_CONFIG } from "@/redvsblue/config/index"
-import type { EngineConfig, Team } from "@/redvsblue/types"
+import type { EngineConfig, GameState, Team } from "@/redvsblue/types"
 import { selectSnapshot, useGameState } from "@/redvsblue/stores/gameState"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
 import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
