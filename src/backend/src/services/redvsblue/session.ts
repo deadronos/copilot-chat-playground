@@ -87,12 +87,22 @@ export function createMatchSession(options: {
 }
 
 export function recordSnapshot(session: MatchSession, snapshotPayload: SnapshotPayload): void {
-  session.snapshots.push(snapshotPayload);
+  recordSnapshots(session, [snapshotPayload]);
+}
+
+export function recordSnapshots(session: MatchSession, snapshotPayloads: SnapshotPayload[]): void {
+  if (snapshotPayloads.length === 0) {
+    return;
+  }
+
+  session.snapshots.push(...snapshotPayloads);
+
   if (session.snapshots.length > MAX_SNAPSHOT_BUFFER) {
     session.snapshots.splice(0, session.snapshots.length - MAX_SNAPSHOT_BUFFER);
   }
+
   compactSessionSnapshots(session);
-  enforceTokenBudget(session, snapshotPayload);
+  enforceTokenBudget(session, snapshotPayloads[snapshotPayloads.length - 1]);
   session.updatedAt = Date.now();
 }
 
