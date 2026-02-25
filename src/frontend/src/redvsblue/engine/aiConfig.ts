@@ -1,6 +1,21 @@
 import type { ShipAIConfig } from "./entities"
 
-export function buildAiConfig(ship: any, tuning: any): ShipAIConfig {
+type ShipWithAiOverrides = {
+  shipThrustOverride?: number
+}
+
+type AiTuningConfig = {
+  turnSpeed: number
+  shipThrust: number
+  visionDist: number
+  aimTurnThreshold: number
+  fireAimCloseThreshold: number
+  fireAngleThreshold: number
+  idleAngleIncrement: number
+  idleDamping: number
+}
+
+export function buildAiConfig(ship: ShipWithAiOverrides, tuning: AiTuningConfig): ShipAIConfig {
   const aiConfig: ShipAIConfig = {
     turnSpeed: tuning.turnSpeed,
     shipThrust: tuning.shipThrust,

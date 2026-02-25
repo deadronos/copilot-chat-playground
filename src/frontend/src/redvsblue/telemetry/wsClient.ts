@@ -20,20 +20,16 @@ export class WSClient {
 
   connect(): void {
     if (!this.WebSocketCtor) throw new Error("No WebSocketCtor available")
-    try {
-      this.ws = new this.WebSocketCtor(this.url)
-      this.ws.onopen = () => {
-        this.onopen && this.onopen()
-      }
-      this.ws.onclose = () => {
-        this.onclose && this.onclose()
-      }
-      this.ws.onerror = (e) => {
-        this.onerror && this.onerror(e)
-      }
-    } catch (err) {
-      // rethrow to allow callers to handle spawn/connect failure
-      throw err
+
+    this.ws = new this.WebSocketCtor(this.url)
+    this.ws.onopen = () => {
+      if (this.onopen) this.onopen()
+    }
+    this.ws.onclose = () => {
+      if (this.onclose) this.onclose()
+    }
+    this.ws.onerror = (event) => {
+      if (this.onerror) this.onerror(event)
     }
   }
 
@@ -48,7 +44,7 @@ export class WSClient {
     if (!this.ws) return
     try {
       this.ws.close()
-    } catch (e) {
+    } catch {
       // swallow errors during close
     }
     this.ws = null

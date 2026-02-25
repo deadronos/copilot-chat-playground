@@ -1,6 +1,10 @@
 export type StartMatchPayload = { matchId: string; rulesVersion?: string; proposedRules?: Record<string, unknown>; clientConfig?: Record<string, unknown> }
 
-export type MatchStartResult = { ok: true; data: { sessionId: string; effectiveConfig?: { snapshotIntervalMs?: number } } } | { ok: false; error: string; status?: number; body?: any }
+type ApiErrorBody = unknown
+
+export type MatchStartResult =
+  | { ok: true; data: { sessionId: string; effectiveConfig?: { snapshotIntervalMs?: number } } }
+  | { ok: false; error: string; status?: number; body?: ApiErrorBody }
 
 export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fetch = fetch, options?: { headers?: Record<string, string> }): Promise<MatchStartResult> {
   try {
@@ -28,7 +32,7 @@ export async function startMatch(payload: StartMatchPayload, fetchFn: typeof fet
   }
 }
 
-export type SendSnapshotResult = { ok: true; data: any } | { ok: false; error: string; status?: number; body?: any }
+export type SendSnapshotResult = { ok: true; data: unknown } | { ok: false; error: string; status?: number; body?: ApiErrorBody }
 export async function sendSnapshot(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<SendSnapshotResult> {
   try {
     const res = await fetchFn(`/api/redvsblue/match/${matchId}/snapshot`, {
@@ -52,8 +56,8 @@ export async function sendSnapshot(matchId: string, payload: unknown, fetchFn: t
   }
 }
 
-export type ApiErrorResult = { ok: false; error: string; status?: number; body?: any }
-export async function ask(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<{ ok: true; data: any } | ApiErrorResult> {
+export type ApiErrorResult = { ok: false; error: string; status?: number; body?: ApiErrorBody }
+export async function ask(matchId: string, payload: unknown, fetchFn: typeof fetch = fetch): Promise<{ ok: true; data: unknown } | ApiErrorResult> {
   try {
     const res = await fetchFn(`/api/redvsblue/match/${matchId}/ask`, {
       method: "POST",

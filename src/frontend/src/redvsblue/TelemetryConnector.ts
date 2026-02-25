@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { useTelemetryStore } from "@/redvsblue/stores/telemetry"
 import { useUIStore } from "@/redvsblue/stores/uiStore"
 import { Backoff } from "@/redvsblue/telemetry/backoff"
 import { WSClient } from "@/redvsblue/telemetry/wsClient"
@@ -117,7 +116,7 @@ export class TelemetryConnectorCore {
 
         this.backoff.reset()
         // mirror underlying ws for tests and introspection; guard against races where client may have been cleared
-        this._ws = this.client ? ((this.client as any).ws ?? null) : null
+        this._ws = this.client?.ws ?? null
         this.tryDrain()
       }
 
@@ -125,7 +124,7 @@ export class TelemetryConnectorCore {
         this.scheduleReconnect()
       }
 
-      this.client.onerror = (err) => {
+      this.client.onerror = () => {
         // ensure reconnection
         if (this.client) {
           try { this.client.close() } catch (e) { console.warn("error closing websocket", e) }
@@ -136,7 +135,7 @@ export class TelemetryConnectorCore {
 
       this.client.connect()
       // if the ctor created the socket synchronously, mirror it immediately
-      this._ws = (this.client as any).ws ?? this._ws
+      this._ws = this.client.ws ?? this._ws
     } catch (err) {
       console.warn("telemetry websocket connect failed", err)
       this.scheduleReconnect()
@@ -154,7 +153,7 @@ export class TelemetryConnectorCore {
     try {
       this.client.send(JSON.stringify(batch))
       // Track the ws that successfully sent so tests inspecting `ws` see it
-      this._lastSentWs = (this.client as any).ws ?? this._ws
+      this._lastSentWs = this.client.ws ?? this._ws
     } catch (err) {
       console.warn("telemetry send failed", err)
       TelemetryQueue.requeueAtHead(batch)

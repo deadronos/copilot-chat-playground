@@ -1,5 +1,11 @@
 import express from "express";
 import { getEvents, getCounts, getSummary } from "../services/observability.js";
+import type { ObservabilityEvent } from "../services/observability.js";
+
+function parseLevel(value: unknown): ObservabilityEvent["level"] | undefined {
+  if (value === "info" || value === "warn" || value === "error") return value;
+  return undefined;
+}
 
 export function createObservabilityRouter(): express.Router {
   const router = express.Router();
@@ -10,9 +16,9 @@ export function createObservabilityRouter(): express.Router {
       event: typeof event === "string" ? event : undefined,
       sinceMs: typeof sinceMs === "string" ? Number(sinceMs) : undefined,
       limit: typeof limit === "string" ? Number(limit) : undefined,
-      level: typeof level === "string" && (level === "info" || level === "warn" || level === "error") ? (level as any) : undefined,
+      level: parseLevel(level),
     };
-    const events = getEvents(parsed as any);
+    const events = getEvents(parsed);
     res.json({ ok: true, events });
   });
 
