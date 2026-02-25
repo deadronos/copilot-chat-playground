@@ -54,7 +54,9 @@ export function getEvents(opts?: {
   limit?: number;
   level?: ObservabilityEvent["level"];
 }): ObservabilityEvent[] {
-  const since = opts?.sinceMs ? Date.now() - opts.sinceMs : 0;
+  const sinceMs = opts?.sinceMs;
+  const since = typeof sinceMs === "number" && Number.isFinite(sinceMs) && sinceMs >= 0 ? Date.now() - sinceMs : 0;
+  const limit = typeof opts?.limit === "number" && Number.isFinite(opts.limit) && opts.limit > 0 ? Math.floor(opts.limit) : undefined;
   const result: ObservabilityEvent[] = [];
 
   for (const e of getEventsReverse()) {
@@ -63,15 +65,18 @@ export function getEvents(opts?: {
     if (opts?.level && e.level !== opts.level) continue;
 
     result.push(e);
-    if (opts?.limit && result.length >= opts.limit) break;
+    if (limit !== undefined && result.length >= limit) break;
   }
 
   return result;
 }
 
 export function getCounts(opts: { event: string; sinceMs?: number; bucketMs?: number }): Array<{ ts: number; count: number }> {
-  const since = opts?.sinceMs ? Date.now() - opts.sinceMs : Date.now() - 60_000 * 60; // default last hour
-  const bucketMs = opts.bucketMs ?? 60_000;
+  const sinceMs = opts.sinceMs;
+  const since =
+    typeof sinceMs === "number" && Number.isFinite(sinceMs) && sinceMs >= 0 ? Date.now() - sinceMs : Date.now() - 60_000 * 60; // default last hour
+  const bucketMs =
+    typeof opts.bucketMs === "number" && Number.isFinite(opts.bucketMs) && opts.bucketMs > 0 ? opts.bucketMs : 60_000;
   const buckets = new Map<number, number>();
   for (const e of events) {
     if (e.event !== opts.event) continue;

@@ -72,6 +72,15 @@ describe("observability service", () => {
     expect(getEvents({ limit: 2 })[1].event).toBe("event-2");
   });
 
+  it("ignores non-positive limits", () => {
+    const context = { traceId: "1", spanId: "1" } as any;
+    recordEvent("info", "event-1", context);
+    recordEvent("info", "event-2", context);
+    recordEvent("info", "event-3", context);
+
+    expect(getEvents({ limit: -1 })).toHaveLength(3);
+  });
+
   it("filters by sinceMs", () => {
     const context = { traceId: "1", spanId: "1" } as any;
     const now = Date.now();
@@ -96,6 +105,16 @@ describe("observability service", () => {
 
     const counts = getCounts({ event: "event-1" });
     expect(counts.length).toBeGreaterThan(0);
+    expect(counts[0].count).toBe(1);
+  });
+
+  it("getCounts falls back when bucketMs is invalid", () => {
+    const context = { traceId: "1", spanId: "1" } as any;
+    recordEvent("info", "event-1", context);
+
+    const counts = getCounts({ event: "event-1", bucketMs: Number.NaN });
+    expect(counts.length).toBeGreaterThan(0);
+    expect(Number.isFinite(counts[0].ts)).toBe(true);
     expect(counts[0].count).toBe(1);
   });
 
