@@ -69,8 +69,8 @@ importers:
         specifier: ^1.52.0
         version: 1.52.0
       '@github/copilot':
-        specifier: ^0.0.394
-        version: 0.0.394
+        specifier: ^0.0.423
+        version: 0.0.423
       '@github/copilot-sdk':
         specifier: ^0.1.17
         version: 0.1.17
@@ -253,6 +253,10 @@ packages:
 
   '@babel/code-frame@7.28.6':
     resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/code-frame@7.29.0':
+    resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/compat-data@7.28.6':
@@ -690,8 +694,8 @@ packages:
     os: [darwin]
     hasBin: true
 
-  '@github/copilot-darwin-arm64@0.0.394':
-    resolution: {integrity: sha512-qDmDFiFaYFW45UhxylN2JyQRLVGLCpkr5UmgbfH5e0aksf+69qytK/MwpD2Cq12KdTjyGMEorlADkSu5eftELA==}
+  '@github/copilot-darwin-arm64@0.0.423':
+    resolution: {integrity: sha512-WcHNhDO/Law0T0njmGMmGPOh54Oynk8B/QuMkKfXA2yTh/rkLX72r++xnwF1gcswUdFleMt5v0LTLVDfb+1sCw==}
     cpu: [arm64]
     os: [darwin]
     hasBin: true
@@ -702,8 +706,8 @@ packages:
     os: [darwin]
     hasBin: true
 
-  '@github/copilot-darwin-x64@0.0.394':
-    resolution: {integrity: sha512-iN4YwSVFxhASiBjLk46f+AzRTNHCvYcmyTKBASxieMIhnDxznYmpo+haFKPCv2lCsEWU8s5LARCnXxxx8J1wKA==}
+  '@github/copilot-darwin-x64@0.0.423':
+    resolution: {integrity: sha512-SQSs9hGei8gJ4S8lZssmnQQ4yJ6ZaE8Tou5j4XW4BUR4tYBAykS+5VbgYadsbf/aAhaGqJ/jdMO03xNH/wzw9Q==}
     cpu: [x64]
     os: [darwin]
     hasBin: true
@@ -714,8 +718,8 @@ packages:
     os: [linux]
     hasBin: true
 
-  '@github/copilot-linux-arm64@0.0.394':
-    resolution: {integrity: sha512-9NeGvmO2tGztuneXZfYAyW3fDk6Pdl6Ffg8MAUaevA/p0awvA+ti/Vh0ZSTcI81nDTjkzONvrcIcjYAN7x0oSg==}
+  '@github/copilot-linux-arm64@0.0.423':
+    resolution: {integrity: sha512-I8dHUYSrJdq/5JzyJ4jQU1CnuD+Gt8i1hBubPdLej4/UbwUX4neiGIWlDCH5GNzHFIBFxpjp5/yQLWn1xal1yw==}
     cpu: [arm64]
     os: [linux]
     hasBin: true
@@ -726,8 +730,8 @@ packages:
     os: [linux]
     hasBin: true
 
-  '@github/copilot-linux-x64@0.0.394':
-    resolution: {integrity: sha512-toahsYQORrP/TPSBQ7sxj4/fJg3YUrD0ksCj/Z4y2vT6EwrE9iC2BspKgQRa4CBoCqxYDNB2blc+mQ1UuzPOxg==}
+  '@github/copilot-linux-x64@0.0.423':
+    resolution: {integrity: sha512-BW+cfsH89fbxXaeFWt0LQihipfGHezdxIn3ue1CzWnNvBZU/hFQTp9YaP5ROjTJJ4VZYKZE+9QWsRfSsD+rJ/A==}
     cpu: [x64]
     os: [linux]
     hasBin: true
@@ -742,8 +746,8 @@ packages:
     os: [win32]
     hasBin: true
 
-  '@github/copilot-win32-arm64@0.0.394':
-    resolution: {integrity: sha512-R7XBP3l+oeDuBrP0KD80ZBEMsZoxAW8QO2MNsDUV8eVrNJnp6KtGHoA+iCsKYKNOD6wHA/q5qm/jR+gpsz46Aw==}
+  '@github/copilot-win32-arm64@0.0.423':
+    resolution: {integrity: sha512-FfZ7LcmVKcGHkeCzhynZ6Ua8CcUebgonoXPqlkZ/AiqczThoNkPu5W+bpGSen+eY9Yw4c4WY+22q33/94yLsOg==}
     cpu: [arm64]
     os: [win32]
     hasBin: true
@@ -754,8 +758,8 @@ packages:
     os: [win32]
     hasBin: true
 
-  '@github/copilot-win32-x64@0.0.394':
-    resolution: {integrity: sha512-/XYV8srP+pMXbf9Gc3wr58zCzBZvsdA3X4poSvr2uU8yCZ6E4pD0agFaZ1c/CikANJi8nb0Id3kulhEhePz/3A==}
+  '@github/copilot-win32-x64@0.0.423':
+    resolution: {integrity: sha512-ClLfpdhxhsaFe30c42/kpt4OYwGLKRtOHEfCNXx5YA4W6LLGooJ06U8EpBY6mRK/7++q3XKuSFO5VUlpeoa94A==}
     cpu: [x64]
     os: [win32]
     hasBin: true
@@ -764,8 +768,8 @@ packages:
     resolution: {integrity: sha512-XCHMCd8fu7g9WAp+ZepXBF1ud8vdfxDG4ajstGJqHfbdz0RxQktB35R5s/vKizpYXSZogFqwjxl41qX8DypY6g==}
     hasBin: true
 
-  '@github/copilot@0.0.394':
-    resolution: {integrity: sha512-koSiaHvVwjgppgh+puxf6dgsR8ql/WST1scS5bjzMsJFfWk7f4xtEXla7TCQfSGoZkCmCsr2Tis27v5TpssiCg==}
+  '@github/copilot@0.0.423':
+    resolution: {integrity: sha512-etAdhJqdKwp8JM1og2rmSGBwFVMfap4CkbCyQSKjge3LCywWgcsUXrM5WQ1FGfw6a3QyfI/uoTlP9b8mqmfj0A==}
     hasBin: true
 
   '@hono/node-server@1.19.9':
@@ -4052,6 +4056,12 @@ snapshots:
       js-tokens: 4.0.0
       picocolors: 1.1.1
 
+  '@babel/code-frame@7.29.0':
+    dependencies:
+      '@babel/helper-validator-identifier': 7.28.5
+      js-tokens: 4.0.0
+      picocolors: 1.1.1
+
   '@babel/compat-data@7.28.6': {}
 
   '@babel/core@7.28.6':
@@ -4459,25 +4469,25 @@ snapshots:
   '@github/copilot-darwin-arm64@0.0.389':
     optional: true
 
-  '@github/copilot-darwin-arm64@0.0.394':
+  '@github/copilot-darwin-arm64@0.0.423':
     optional: true
 
   '@github/copilot-darwin-x64@0.0.389':
     optional: true
 
-  '@github/copilot-darwin-x64@0.0.394':
+  '@github/copilot-darwin-x64@0.0.423':
     optional: true
 
   '@github/copilot-linux-arm64@0.0.389':
     optional: true
 
-  '@github/copilot-linux-arm64@0.0.394':
+  '@github/copilot-linux-arm64@0.0.423':
     optional: true
 
   '@github/copilot-linux-x64@0.0.389':
     optional: true
 
-  '@github/copilot-linux-x64@0.0.394':
+  '@github/copilot-linux-x64@0.0.423':
     optional: true
 
   '@github/copilot-sdk@0.1.17':
@@ -4489,13 +4499,13 @@ snapshots:
   '@github/copilot-win32-arm64@0.0.389':
     optional: true
 
-  '@github/copilot-win32-arm64@0.0.394':
+  '@github/copilot-win32-arm64@0.0.423':
     optional: true
 
   '@github/copilot-win32-x64@0.0.389':
     optional: true
 
-  '@github/copilot-win32-x64@0.0.394':
+  '@github/copilot-win32-x64@0.0.423':
     optional: true
 
   '@github/copilot@0.0.389':
@@ -4507,14 +4517,14 @@ snapshots:
       '@github/copilot-win32-arm64': 0.0.389
       '@github/copilot-win32-x64': 0.0.389
 
-  '@github/copilot@0.0.394':
+  '@github/copilot@0.0.423':
     optionalDependencies:
-      '@github/copilot-darwin-arm64': 0.0.394
-      '@github/copilot-darwin-x64': 0.0.394
-      '@github/copilot-linux-arm64': 0.0.394
-      '@github/copilot-linux-x64': 0.0.394
-      '@github/copilot-win32-arm64': 0.0.394
-      '@github/copilot-win32-x64': 0.0.394
+      '@github/copilot-darwin-arm64': 0.0.423
+      '@github/copilot-darwin-x64': 0.0.423
+      '@github/copilot-linux-arm64': 0.0.423
+      '@github/copilot-linux-x64': 0.0.423
+      '@github/copilot-win32-arm64': 0.0.423
+      '@github/copilot-win32-x64': 0.0.423
 
   '@hono/node-server@1.19.9(hono@4.11.5)':
     dependencies:
@@ -5548,7 +5558,7 @@ snapshots:
 
   '@testing-library/dom@10.4.1':
     dependencies:
-      '@babel/code-frame': 7.28.6
+      '@babel/code-frame': 7.29.0
       '@babel/runtime': 7.28.6
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
