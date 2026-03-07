@@ -1,9 +1,11 @@
 import { describe, it } from "vitest"
-import { CanvasRenderer } from "./CanvasRenderer"
-import { Bullet } from "../types"
+import { CanvasRenderer } from "../../../../../src/frontend/src/redvsblue/renderer/CanvasRenderer"
+import { Bullet } from "../../../../../src/frontend/src/redvsblue/types"
 
 describe("CanvasRenderer Benchmark", () => {
-  it("measures drawBullets performance", () => {
+  // Skipping by default because a mocked context doesn't measure real canvas API performance
+  // and will only spam CI logs. Run locally to measure pure JS overhead.
+  it.skip("measures drawBullets performance", () => {
     const renderer = new CanvasRenderer()
 
     const mockCtx = {

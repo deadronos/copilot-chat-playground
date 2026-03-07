@@ -82,35 +82,33 @@ export class CanvasRenderer implements Renderer {
   private drawBullets(ctx: CanvasRenderingContext2D, bullets: Bullet[]): void {
     if (bullets.length === 0) return
 
-    // Red team bullets
-    let started = false
-    for (const bullet of bullets) {
-      if (bullet.team === "red") {
-        if (!started) {
-          ctx.fillStyle = "#ffcccc"
-          ctx.beginPath()
-          started = true
-        }
-        ctx.moveTo(bullet.position.x + CanvasRenderer.BULLET_RADIUS, bullet.position.y)
-        ctx.arc(bullet.position.x, bullet.position.y, CanvasRenderer.BULLET_RADIUS, 0, Math.PI * 2)
-      }
-    }
-    if (started) ctx.fill()
+    const redBullets: Bullet[] = []
+    const blueBullets: Bullet[] = []
 
-    // Blue team bullets
-    started = false
     for (const bullet of bullets) {
-      if (bullet.team === "blue") {
-        if (!started) {
-          ctx.fillStyle = "#ccccff"
-          ctx.beginPath()
-          started = true
-        }
+      if (bullet.team === "red") redBullets.push(bullet)
+      else if (bullet.team === "blue") blueBullets.push(bullet)
+    }
+
+    if (redBullets.length > 0) {
+      ctx.fillStyle = "#ffcccc"
+      ctx.beginPath()
+      for (const bullet of redBullets) {
         ctx.moveTo(bullet.position.x + CanvasRenderer.BULLET_RADIUS, bullet.position.y)
         ctx.arc(bullet.position.x, bullet.position.y, CanvasRenderer.BULLET_RADIUS, 0, Math.PI * 2)
       }
+      ctx.fill()
     }
-    if (started) ctx.fill()
+
+    if (blueBullets.length > 0) {
+      ctx.fillStyle = "#ccccff"
+      ctx.beginPath()
+      for (const bullet of blueBullets) {
+        ctx.moveTo(bullet.position.x + CanvasRenderer.BULLET_RADIUS, bullet.position.y)
+        ctx.arc(bullet.position.x, bullet.position.y, CanvasRenderer.BULLET_RADIUS, 0, Math.PI * 2)
+      }
+      ctx.fill()
+    }
   }
 
   private drawParticles(ctx: CanvasRenderingContext2D, particles: Particle[]): void {
