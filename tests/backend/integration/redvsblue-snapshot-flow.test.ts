@@ -11,7 +11,7 @@ function getServerUrl(serverInstance: Server): string {
 }
 
 async function startServer(): Promise<Server> {
-  const app = createApp()
+  const app = await createApp()
   return new Promise((resolve) => {
     const created = createServer(app)
     created.listen(0, () => resolve(created))
