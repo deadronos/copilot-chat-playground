@@ -32,11 +32,20 @@ export function createApp(): express.Express {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
 
-  app.get("/health", (_req, res) => {
+  app.get("/health", async (_req, res) => {
     // Include token validation status and binary candidates in health check
     const tokenCheck = validateToken();
     const candidatePaths = getCopilotCandidatePaths();
-    const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
+    const candidates = await Promise.all(
+      candidatePaths.map(async (p) => {
+        try {
+          await fs.promises.access(p);
+          return { path: p, exists: true };
+        } catch {
+          return { path: p, exists: false };
+        }
+      })
+    );
     const binaryAvailable = candidates.some((c) => c.exists);
 
     res.json({
