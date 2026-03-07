@@ -29,7 +29,7 @@ describe("callCopilotCLI fallback behavior", () => {
     // Second call: pnpm -> emit stdout 'OK output' and close 0
 
     // Ensure no candidate binaries are detected on disk so we exercise pnpm fallback
-    vi.spyOn(require("node:fs"), "existsSync").mockReturnValue(false);
+    vi.spyOn(require("node:fs").promises, "access").mockRejectedValue(new Error("ENOENT"));
 
     (spawn as unknown as vi.Mock).mockImplementation((cmd: string) => {
       if (cmd === "copilot") {

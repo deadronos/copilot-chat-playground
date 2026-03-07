@@ -1,5 +1,5 @@
 import request from "supertest";
-import { describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { createApp } from "../app";
 import * as observability from "../services/observability";
 
