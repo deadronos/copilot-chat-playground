@@ -42,7 +42,7 @@ async function setupServers(): Promise<ServerHandles> {
 
   process.env.COPILOT_SERVICE_URL = getServerUrl(copilotServer)
 
-  const app = createApp()
+  const app = await createApp()
   const backendServer = app.listen(0)
 
   return { copilotServer, backendServer, previousCopilotUrl }

@@ -22,8 +22,8 @@ export function deleteMatchSession(matchId: string): void {
   matchStore.delete(matchId);
 }
 
-export function loadPersistedSessions(): void {
-  const sessions = loadSessionsFromDisk();
+export async function loadPersistedSessions(): Promise<void> {
+  const sessions = await loadSessionsFromDisk();
   for (const session of sessions) {
     matchStore.set(session.matchId, session);
   }

@@ -10,8 +10,8 @@ function getPersistDir(): string {
   return process.env.REDVSBLUE_PERSIST_DIR || "/tmp/redvsblue-sessions";
 }
 
-function ensurePersistDir(): void {
-  fs.mkdirSync(getPersistDir(), { recursive: true });
+async function ensurePersistDir(): Promise<void> {
+  await fs.promises.mkdir(getPersistDir(), { recursive: true });
 }
 
 function resolvePersistedSessionPath(matchId: string): string | null {
@@ -32,37 +32,50 @@ function resolvePersistedSessionPath(matchId: string): string | null {
   return resolved;
 }
 
-export function loadPersistedSessions(): MatchSession[] {
-  ensurePersistDir();
-  const sessions: MatchSession[] = [];
+export async function loadPersistedSessions(): Promise<MatchSession[]> {
+  await ensurePersistDir();
   const persistDir = path.resolve(getPersistDir());
-  const entries = fs.readdirSync(persistDir, { withFileTypes: true });
-  for (const entry of entries) {
-    if (!entry.isFile() || !entry.name.endsWith(".json")) {
-      continue;
-    }
+  const entries = await fs.promises.readdir(persistDir, { withFileTypes: true });
 
-    const filePath = path.resolve(persistDir, entry.name);
-    const base = persistDir.endsWith(path.sep) ? persistDir : `${persistDir}${path.sep}`;
-    if (!filePath.startsWith(base)) {
-      // Should not happen with readdirSync, but guard against surprises like odd path handling.
-      continue;
-    }
-    try {
-      const contents = fs.readFileSync(filePath, "utf8");
-      const parsed = JSON.parse(contents) as PersistedMatchSession;
-      if (!parsed?.matchId || !parsed.sessionId) {
-        continue;
+  const results: (MatchSession | null)[] = [];
+  const CONCURRENCY_LIMIT = 50;
+
+  for (let i = 0; i < entries.length; i += CONCURRENCY_LIMIT) {
+    const chunk = entries.slice(i, i + CONCURRENCY_LIMIT);
+    
+    const chunkPromises = chunk.map(async (entry) => {
+      if (!entry.isFile() || !entry.name.endsWith(".json")) {
+        return null;
       }
-      sessions.push(deserializeMatchSession(parsed));
-    } catch (error) {
-      console.warn("[redvsblue] failed to load persisted session", {
-        filePath,
-        error: error instanceof Error ? error.message : "unknown error",
-      });
-    }
+
+      const filePath = path.resolve(persistDir, entry.name);
+      const base = persistDir.endsWith(path.sep) ? persistDir : `${persistDir}${path.sep}`;
+      if (!filePath.startsWith(base)) {
+        // Should not happen with readdir, but guard against surprises like odd path handling.
+        return null;
+      }
+
+      try {
+        const contents = await fs.promises.readFile(filePath, "utf8");
+        const parsed = JSON.parse(contents) as PersistedMatchSession;
+        if (!parsed?.matchId || !parsed.sessionId) {
+          return null;
+        }
+        return deserializeMatchSession(parsed);
+      } catch (error) {
+        console.warn("[redvsblue] failed to load persisted session", {
+          filePath,
+          error: error instanceof Error ? error.message : "unknown error",
+        });
+        return null;
+      }
+    });
+
+    const chunkResults = await Promise.all(chunkPromises);
+    results.push(...chunkResults);
   }
-  return sessions;
+
+  return results.filter((session): session is MatchSession => session !== null);
 }
 
 export async function persistMatchSession(session: MatchSession): Promise<void> {
@@ -75,7 +88,7 @@ export async function persistMatchSession(session: MatchSession): Promise<void> 
     return;
   }
 
-  ensurePersistDir();
+  await ensurePersistDir();
   const payload = JSON.stringify(serializeMatchSession(session), null, 2);
   try {
     await fs.promises.writeFile(filePath, payload, "utf8");
