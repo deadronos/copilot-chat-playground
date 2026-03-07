@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import express from "express";
 import { z } from "zod";
 import fs from "node:fs";
-import { callCopilotCLI, validateToken, getCopilotCandidatePaths } from "./copilot-cli.js";
+import { callCopilotCLI, validateToken, getCopilotCandidatePaths, getAvailableCopilotCandidatePaths } from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
 import { getMetric, incrementMetric } from "./metrics.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
@@ -32,11 +32,11 @@ export function createApp(): express.Express {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
 
-  app.get("/health", (_req, res) => {
+  app.get("/health", async (_req, res) => {
     // Include token validation status and binary candidates in health check
     const tokenCheck = validateToken();
     const candidatePaths = getCopilotCandidatePaths();
-    const candidates = candidatePaths.map((p) => ({ path: p, exists: fs.existsSync(p) }));
+    const candidates = await getAvailableCopilotCandidatePaths();
     const binaryAvailable = candidates.some((c) => c.exists);
 
     res.json({
