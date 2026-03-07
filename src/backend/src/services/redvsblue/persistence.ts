@@ -37,35 +37,44 @@ export async function loadPersistedSessions(): Promise<MatchSession[]> {
   const persistDir = path.resolve(getPersistDir());
   const entries = await fs.promises.readdir(persistDir, { withFileTypes: true });
 
-  const loadingPromises = entries.map(async (entry) => {
-    if (!entry.isFile() || !entry.name.endsWith(".json")) {
-      return null;
-    }
+  const results: (MatchSession | null)[] = [];
+  const CONCURRENCY_LIMIT = 50;
 
-    const filePath = path.resolve(persistDir, entry.name);
-    const base = persistDir.endsWith(path.sep) ? persistDir : `${persistDir}${path.sep}`;
-    if (!filePath.startsWith(base)) {
-      // Should not happen with readdir, but guard against surprises like odd path handling.
-      return null;
-    }
-
-    try {
-      const contents = await fs.promises.readFile(filePath, "utf8");
-      const parsed = JSON.parse(contents) as PersistedMatchSession;
-      if (!parsed?.matchId || !parsed.sessionId) {
+  for (let i = 0; i < entries.length; i += CONCURRENCY_LIMIT) {
+    const chunk = entries.slice(i, i + CONCURRENCY_LIMIT);
+    
+    const chunkPromises = chunk.map(async (entry) => {
+      if (!entry.isFile() || !entry.name.endsWith(".json")) {
         return null;
       }
-      return deserializeMatchSession(parsed);
-    } catch (error) {
-      console.warn("[redvsblue] failed to load persisted session", {
-        filePath,
-        error: error instanceof Error ? error.message : "unknown error",
-      });
-      return null;
-    }
-  });
 
-  const results = await Promise.all(loadingPromises);
+      const filePath = path.resolve(persistDir, entry.name);
+      const base = persistDir.endsWith(path.sep) ? persistDir : `${persistDir}${path.sep}`;
+      if (!filePath.startsWith(base)) {
+        // Should not happen with readdir, but guard against surprises like odd path handling.
+        return null;
+      }
+
+      try {
+        const contents = await fs.promises.readFile(filePath, "utf8");
+        const parsed = JSON.parse(contents) as PersistedMatchSession;
+        if (!parsed?.matchId || !parsed.sessionId) {
+          return null;
+        }
+        return deserializeMatchSession(parsed);
+      } catch (error) {
+        console.warn("[redvsblue] failed to load persisted session", {
+          filePath,
+          error: error instanceof Error ? error.message : "unknown error",
+        });
+        return null;
+      }
+    });
+
+    const chunkResults = await Promise.all(chunkPromises);
+    results.push(...chunkResults);
+  }
+
   return results.filter((session): session is MatchSession => session !== null);
 }
 
