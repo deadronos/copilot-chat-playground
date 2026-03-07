@@ -2,6 +2,7 @@ import type { Bullet, GameState, Particle, Ship, Star } from "@/redvsblue/types"
 import type { Renderer } from "./types"
 
 export class CanvasRenderer implements Renderer {
+  private static readonly BULLET_RADIUS = 3
   private canvas: HTMLCanvasElement | null = null
   private ctx: CanvasRenderingContext2D | null = null
 
@@ -79,12 +80,37 @@ export class CanvasRenderer implements Renderer {
   }
 
   private drawBullets(ctx: CanvasRenderingContext2D, bullets: Bullet[]): void {
+    if (bullets.length === 0) return
+
+    // Red team bullets
+    let started = false
     for (const bullet of bullets) {
-      ctx.fillStyle = bullet.team === "red" ? "#ffcccc" : "#ccccff"
-      ctx.beginPath()
-      ctx.arc(bullet.position.x, bullet.position.y, 3, 0, Math.PI * 2)
-      ctx.fill()
+      if (bullet.team === "red") {
+        if (!started) {
+          ctx.fillStyle = "#ffcccc"
+          ctx.beginPath()
+          started = true
+        }
+        ctx.moveTo(bullet.position.x + CanvasRenderer.BULLET_RADIUS, bullet.position.y)
+        ctx.arc(bullet.position.x, bullet.position.y, CanvasRenderer.BULLET_RADIUS, 0, Math.PI * 2)
+      }
     }
+    if (started) ctx.fill()
+
+    // Blue team bullets
+    started = false
+    for (const bullet of bullets) {
+      if (bullet.team === "blue") {
+        if (!started) {
+          ctx.fillStyle = "#ccccff"
+          ctx.beginPath()
+          started = true
+        }
+        ctx.moveTo(bullet.position.x + CanvasRenderer.BULLET_RADIUS, bullet.position.y)
+        ctx.arc(bullet.position.x, bullet.position.y, CanvasRenderer.BULLET_RADIUS, 0, Math.PI * 2)
+      }
+    }
+    if (started) ctx.fill()
   }
 
   private drawParticles(ctx: CanvasRenderingContext2D, particles: Particle[]): void {
