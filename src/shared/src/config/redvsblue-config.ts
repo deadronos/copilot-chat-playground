@@ -157,9 +157,12 @@ function getEnvSource(envOverride?: EnvSource): EnvSource {
   if (envOverride) {
     return envOverride;
   }
-  if (typeof process !== "undefined" && process.env) {
-    return process.env as EnvSource;
+
+  const globalProcess = (globalThis as { process?: { env?: EnvSource } }).process;
+  if (globalProcess?.env) {
+    return globalProcess.env;
   }
+
   return {};
 }
 

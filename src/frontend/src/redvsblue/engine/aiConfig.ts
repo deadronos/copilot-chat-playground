@@ -1,6 +1,22 @@
 import type { ShipAIConfig } from "./entities"
 
-export function buildAiConfig(ship: any, tuning: any): ShipAIConfig {
+type AiConfigTuning = Pick<
+  ShipAIConfig,
+  | "turnSpeed"
+  | "shipThrust"
+  | "visionDist"
+  | "aimTurnThreshold"
+  | "fireAimCloseThreshold"
+  | "fireAngleThreshold"
+  | "idleAngleIncrement"
+  | "idleDamping"
+>
+
+type ShipThrustOverrideCarrier = {
+  shipThrustOverride?: number
+}
+
+export function buildAiConfig(ship: ShipThrustOverrideCarrier | null | undefined, tuning: AiConfigTuning): ShipAIConfig {
   const aiConfig: ShipAIConfig = {
     turnSpeed: tuning.turnSpeed,
     shipThrust: tuning.shipThrust,

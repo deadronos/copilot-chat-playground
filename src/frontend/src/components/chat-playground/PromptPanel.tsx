@@ -30,6 +30,7 @@ type PromptPanelProps = {
   onModeChange: (mode: ChatMode) => void;
   onPromptChange: (next: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onCancel: () => void;
 };
 
 export function PromptPanel({
@@ -44,6 +45,7 @@ export function PromptPanel({
   onModeChange,
   onPromptChange,
   onSubmit,
+  onCancel,
 }: PromptPanelProps) {
   return (
     <div className="rounded-3xl border border-slate-900/10 bg-white/80 p-6 shadow-[0_25px_70px_-50px_rgba(15,23,42,0.8)] backdrop-blur-sm">
@@ -114,16 +116,29 @@ export function PromptPanel({
           />
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Button
-            type="submit"
-            size="lg"
-            disabled={!prompt.trim() || isBusy}
-            className="rounded-2xl bg-slate-900 text-white shadow-[0_16px_32px_-18px_rgba(15,23,42,0.7)] hover:bg-slate-800"
-          >
-            {isBusy && status === "waiting" && "Connecting..."}
-            {isBusy && status === "streaming" && "Streaming..."}
-            {!isBusy && "Send prompt"}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              type="submit"
+              size="lg"
+              disabled={!prompt.trim() || isBusy}
+              className="rounded-2xl bg-slate-900 text-white shadow-[0_16px_32px_-18px_rgba(15,23,42,0.7)] hover:bg-slate-800"
+            >
+              {isBusy && status === "waiting" && "Connecting..."}
+              {isBusy && status === "streaming" && "Streaming..."}
+              {!isBusy && "Send prompt"}
+            </Button>
+            {isBusy && (
+              <Button
+                type="button"
+                size="lg"
+                variant="outline"
+                onClick={onCancel}
+                className="rounded-2xl border-slate-900/15 bg-white/90 hover:bg-white"
+              >
+                Cancel
+              </Button>
+            )}
+          </div>
           <div className="text-xs text-slate-500">{statusHelper}</div>
         </div>
       </form>
