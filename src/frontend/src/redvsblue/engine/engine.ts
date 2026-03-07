@@ -150,45 +150,16 @@ export class Engine {
   }
 
   getState(): GameState {
+    const thrustThreshold =
+      this.config?.tuning?.isThrustingThreshold ?? DEFAULT_ENGINE_TUNING.isThrustingThreshold;
+    const ui = { ...DEFAULT_UI_CONFIG, ...(this.config?.ui ?? {}) };
+    const pSize = ui.particleRenderSize;
+    const pLifetime = ui.particleLifetimeMs;
+
     const snapshot: GameState = {
-      ships: this.ships.map((s) => ({
-        id: s.id,
-        team: s.team,
-        position: { x: s.x, y: s.y },
-        velocity: { x: s.vx, y: s.vy },
-        angle: s.angle,
-        health: s.health,
-        maxHealth: s.maxHealth,
-        isThrusting:
-          Math.abs(s.vx) >
-            (this.config?.tuning?.isThrustingThreshold ??
-              DEFAULT_ENGINE_TUNING.isThrustingThreshold) ||
-          Math.abs(s.vy) >
-            (this.config?.tuning?.isThrustingThreshold ??
-              DEFAULT_ENGINE_TUNING.isThrustingThreshold),
-        isFiring: s.cooldown === 0,
-      })),
-      bullets: this.bullets.map((b) => ({
-        id: b.id,
-        team: b.team,
-        position: { x: b.x, y: b.y },
-        velocity: { x: b.vx, y: b.vy },
-        angle: b.angle,
-        damage: b.damage,
-        ownerId: b.ownerId,
-      })),
-      particles: this.particles.map((p) => {
-        const ui = { ...DEFAULT_UI_CONFIG, ...(this.config?.ui ?? {}) };
-        return {
-          id: p.id,
-          position: { x: p.x, y: p.y },
-          velocity: { x: p.vx, y: p.vy },
-          color: p.color,
-          size: ui.particleRenderSize,
-          lifetime: ui.particleLifetimeMs,
-          age: (1 - p.life) * ui.particleLifetimeMs,
-        };
-      }),
+      ships: this.ships.map((s) => s.syncState(thrustThreshold)),
+      bullets: this.bullets.map((b) => b.syncState()),
+      particles: this.particles.map((p) => p.syncState(pSize, pLifetime)),
       stars: this.stars,
       timestamp: Date.now(),
     };
