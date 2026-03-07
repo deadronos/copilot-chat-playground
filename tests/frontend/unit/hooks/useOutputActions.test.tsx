@@ -112,7 +112,15 @@ describe("useOutputActions", () => {
 
     const blobArg = createUrl.mock.calls.at(-1)?.[0] as Blob
     expect(blobArg).toBeInstanceOf(Blob)
-    await expect(blobArg.text()).resolves.toContain("User: Hi")
+
+    // Read blob content using FileReader for better compatibility
+    const text = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result as string)
+      reader.onerror = reject
+      reader.readAsText(blobArg)
+    })
+    expect(text).toContain("User: Hi")
   })
 
 })
