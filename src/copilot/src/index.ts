@@ -1,4 +1,9 @@
-import "dotenv/config"; // loads .env for local development. TODO: revisit .env handling for Docker builds (inject envs into container at runtime)
+/**
+ * Load environment variables.
+ * In local development, we use `dotenvx run` via package.json scripts to load .env files.
+ * In Docker/Production, environment variables are injected at runtime (e.g., via Docker Secrets
+ * or orchestrator environment variables). See src/copilot/entrypoint.sh for details.
+ */
 import crypto from "node:crypto";
 import express from "express";
 import { z } from "zod";
