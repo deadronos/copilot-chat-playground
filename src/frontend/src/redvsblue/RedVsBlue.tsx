@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { selectBlueCount, selectRedCount, useGameState } from "@/redvsblue/stores/gameState";
 import { useGame } from "@/redvsblue/useGame";
@@ -41,11 +41,12 @@ const RedVsBlue: React.FC = () => {
     applyValidatedDecision,
   });
 
-  if (import.meta.env.DEV) {
-    const g = globalThis as unknown as { __rvbBench?: unknown }
-    g.__rvbBench = { runPerfBench }
-  }
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
 
+    const g = globalThis as { __rvbBench?: unknown };
+    g.__rvbBench = { runPerfBench };
+  }, []);
 
   return (
     <div

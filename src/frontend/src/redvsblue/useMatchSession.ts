@@ -88,6 +88,27 @@ const buildSummary = (redCount: number, blueCount: number) => ({
 
 const majorTelemetryTypes = new Set(["ship_destroyed", "ship_spawned", "explosion", "bullet_hit"])
 
+const toRecord = (value: unknown): Record<string, unknown> | undefined => {
+  if (typeof value === "object" && value !== null) {
+    return value as Record<string, unknown>
+  }
+  return undefined
+}
+
+const shouldRefreshMatch = (status: number | undefined, body: unknown): boolean => {
+  if (status !== 404) return false
+  const bodyRecord = toRecord(body)
+  const actions = bodyRecord?.actions
+  const hasRefreshAction =
+    Array.isArray(actions) && actions.some((action) => action === "refresh_match")
+
+  return (
+    bodyRecord?.errorCode === "MATCH_NOT_FOUND" ||
+    hasRefreshAction ||
+    bodyRecord?.shouldRefresh === true
+  )
+}
+
 const normalizeMajorEvent = (event: TelemetryEvent) => {
   const data = event.data && typeof event.data === "object" ? event.data : undefined
   const typed = data as { team?: unknown; summary?: unknown } | undefined
@@ -166,7 +187,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
           },
           clientConfig: { snapshotIntervalMs: DEFAULT_UI_CONFIG.snapshotIntervalMs },
         },
-        fetcher as any,
+        fetcher,
         opts?.action ? { headers: { "X-Action": opts.action } } : undefined
       )
 
@@ -228,11 +249,10 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
 
       void (async () => {
         try {
-          const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher as any)
+          const res = await MatchApi.sendSnapshot(currentMatchId, payload, fetcher)
           if (!res.ok) {
             // Detect server instructions for a match refresh
-            const body = (res as { body?: any }).body
-            const isMatchNotFound = res.status === 404 && (body?.errorCode === "MATCH_NOT_FOUND" || body?.actions?.includes("refresh_match") || body?.shouldRefresh)
+            const isMatchNotFound = shouldRefreshMatch(res.status, res.body)
             if (isMatchNotFound) {
               onToast("Match session lost. Attempting to rejoin...")
               setSessionId(null)
@@ -300,7 +320,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     }
 
     try {
-      const res = await MatchApi.ask(currentMatchId, body, fetcher as any)
+      const res = await MatchApi.ask(currentMatchId, body, fetcher)
       if (!res.ok) {
         throw new Error(res.error || "Failed to fetch commentary")
       }

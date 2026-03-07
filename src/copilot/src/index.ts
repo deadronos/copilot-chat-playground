@@ -140,6 +140,26 @@ const ChatRequestSchema = z.object({
   mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
 });
 
+function getSystemPrompt(mode: "explain-only" | "project-helper"): string {
+  if (mode === "explain-only") {
+    return "You are in explain-only mode. Focus on explaining concepts and answering questions. Do not execute commands or make changes to files.";
+  }
+
+  return "You are in project-helper mode. You can help with code, execute commands, and interact with the project files.";
+}
+
+function getStatusCode(errorType: string | undefined): number {
+  if (errorType === "token_missing") {
+    return 503;
+  }
+
+  if (errorType === "auth") {
+    return 401;
+  }
+
+  return 500;
+}
+
 app.post("/chat", async (req, res) => {
   const parsed = ChatRequestSchema.safeParse(req.body);
   if (!parsed.success) {
@@ -149,47 +169,113 @@ app.post("/chat", async (req, res) => {
 
   const { prompt, mode } = parsed.data;
   const requestId = crypto.randomUUID();
+  const systemPrompt = getSystemPrompt(mode);
 
-  // Apply mode-specific system messages or constraints
-  let systemPrompt = "";
-  if (mode === "explain-only") {
-    systemPrompt =
-      "You are in explain-only mode. Focus on explaining concepts and answering questions. Do not execute commands or make changes to files.";
-  } else if (mode === "project-helper") {
-    systemPrompt =
-      "You are in project-helper mode. You can help with code, execute commands, and interact with the project files.";
-  }
-
-  // Use SDK if enabled, otherwise fall back to CLI
-  let result;
-  if (USE_SDK && sdkService) {
-    result = await sdkService.chat(prompt, requestId, systemPrompt);
-  } else {
-    result = await callCopilotCLI(prompt);
-  }
+  const result = USE_SDK && sdkService
+    ? await sdkService.chat(prompt, requestId, systemPrompt)
+    : await callCopilotCLI(prompt);
 
   if (!result.success) {
-    // Map error types to appropriate HTTP status codes
-    let statusCode = 500;
-    if (result.errorType === "token_missing") {
-      statusCode = 503; // Service Unavailable
-    } else if (result.errorType === "auth") {
-      statusCode = 401; // Unauthorized
-    } else if (result.errorType === "spawn" || result.errorType === "sdk") {
-      statusCode = 500; // Internal Server Error
-    }
-
-    res.status(statusCode).json({
+    res.status(getStatusCode(result.errorType)).json({
       error: result.error,
       errorType: result.errorType,
     });
     return;
   }
 
-  // Return successful response
   res.status(200).json({
     output: result.output,
   });
+});
+
+app.post("/chat/stream", async (req, res) => {
+  const parsed = ChatRequestSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({ error: "Invalid request", issues: parsed.error.issues });
+    return;
+  }
+
+  const { prompt, mode } = parsed.data;
+  const requestId = crypto.randomUUID();
+  const systemPrompt = getSystemPrompt(mode);
+
+  let streamStarted = false;
+  const startStream = () => {
+    if (streamStarted) {
+      return;
+    }
+
+    streamStarted = true;
+    res.status(200);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache, no-transform");
+    res.setHeader("X-Accel-Buffering", "no");
+
+    if (typeof res.flushHeaders === "function") {
+      res.flushHeaders();
+    }
+  };
+
+  if (USE_SDK && sdkService) {
+    const result = await sdkService.chatStream(
+      prompt,
+      (chunk) => {
+        if (!chunk || res.writableEnded) {
+          return;
+        }
+
+        startStream();
+        res.write(chunk);
+      },
+      requestId,
+      systemPrompt
+    );
+
+    if (!result.success) {
+      if (!streamStarted) {
+        res.status(getStatusCode(result.errorType)).json({
+          error: result.error,
+          errorType: result.errorType,
+        });
+      }
+      if (!res.writableEnded) {
+        res.end();
+      }
+      return;
+    }
+
+    if (!streamStarted) {
+      startStream();
+      if (result.output) {
+        res.write(result.output);
+      }
+    }
+
+    res.end();
+    return;
+  }
+
+  const cliResult = await callCopilotCLI(prompt);
+  if (!cliResult.success) {
+    res.status(getStatusCode(cliResult.errorType)).json({
+      error: cliResult.error,
+      errorType: cliResult.errorType,
+    });
+    return;
+  }
+
+  const output = cliResult.output || "";
+  startStream();
+
+  const chunkSize = 256;
+  for (let i = 0; i < output.length; i += chunkSize) {
+    if (res.writableEnded) {
+      break;
+    }
+    res.write(output.slice(i, i + chunkSize));
+  }
+
+  res.end();
 });
 
 const port = Number(process.env.PORT ?? 3210);

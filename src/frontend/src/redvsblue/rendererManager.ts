@@ -93,7 +93,7 @@ export function createRendererManager(options: RendererManagerOptions): Renderer
           if (hasSetCanvas(engine)) {
             engine.setCanvas(offscreen, canvas.width, canvas.height)
           }
-        } catch (err) {
+        } catch {
           onFallbackToCanvas?.()
           return null
         }
