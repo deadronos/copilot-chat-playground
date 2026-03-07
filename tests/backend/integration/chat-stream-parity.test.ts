@@ -48,7 +48,7 @@ async function setupServers(streamPayload: string): Promise<ServerHandles> {
   await new Promise<void>((resolve) => copilotServer.listen(0, resolve));
 
   process.env.COPILOT_SERVICE_URL = getServerUrl(copilotServer);
-  const app = createApp();
+  const app = await createApp();
   const backendServer = app.listen(0);
 
   return {
