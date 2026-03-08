@@ -44,12 +44,14 @@ function getCacheTTL(): number {
  * Normalize and deduplicate model IDs
  */
 function normalizeModels(models: string[]): string[] {
-  return Array.from(new Set(
-    models
-      .map((m) => m.trim())
-      .filter((m) => m.length > 0)
-      .map((m) => m.replace(/[(),]/g, "").trim())
-  )).sort();
+  const set = new Set<string>();
+  for (const m of models) {
+    const trimmed = m.trim();
+    if (trimmed.length > 0) {
+      set.add(trimmed.replace(/[(),]/g, "").trim());
+    }
+  }
+  return Array.from(set).sort();
 }
 
 /**
