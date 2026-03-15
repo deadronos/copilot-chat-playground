@@ -34,7 +34,7 @@ export function updateEngineCore(
   // Update ships
   for (const ship of state.ships) {
     const aiConfig = buildAiConfig(ship, tuning);
-    ship.updateAI(
+    const { enemy, dist } = ship.updateAI(
       state.ships,
       state.particles,
       config.canvasWidth,
@@ -46,12 +46,6 @@ export function updateEngineCore(
     ship.update(config.canvasWidth, config.canvasHeight, tuning.friction);
 
     // Check if ship should shoot
-    const { enemy, dist } = ship.getNearestEnemy(
-      state.ships,
-      config.canvasWidth,
-      config.canvasHeight,
-      tuning.visionDist
-    );
     if (
       enemy &&
       Math.abs(Math.atan2(enemy.y - ship.y, enemy.x - ship.x) - ship.angle) <

@@ -120,7 +120,7 @@ export class Ship {
     config: ShipAIConfig,
     rng: RNG,
     createParticleId: () => string
-  ): void {
+  ): { enemy: Ship | null; dist: number } {
     const aimTurnThreshold = config.aimTurnThreshold ?? 0.05;
     const fireAimCloseThreshold = config.fireAimCloseThreshold ?? 1.0;
     const fireAngleThreshold = config.fireAngleThreshold ?? 0.2;
@@ -171,6 +171,8 @@ export class Ship {
       this.vx *= idleDamping;
       this.vy *= idleDamping;
     }
+
+    return { enemy, dist };
   }
 
   update(width: number, height: number, friction: number): void {
