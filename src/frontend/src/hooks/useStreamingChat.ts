@@ -7,6 +7,8 @@ export type StreamingSubmitArgs = {
   prompt: string
   apiUrl: string
   mode: ChatMode
+  sessionId?: string
+  messages?: Array<{ role: "user" | "assistant"; content: string }>
 }
 
 export type StreamingChatState = {
@@ -53,7 +55,7 @@ export function useStreamingChat(): StreamingChatState {
   }, [])
 
   const submit = React.useCallback(
-    async ({ prompt, apiUrl, mode }: StreamingSubmitArgs) => {
+    async ({ prompt, apiUrl, mode, sessionId, messages }: StreamingSubmitArgs) => {
       const trimmed = prompt.trim()
       if (!trimmed || isBusy) {
         return
@@ -61,7 +63,7 @@ export function useStreamingChat(): StreamingChatState {
 
       const abortController = new AbortController()
       abortControllerRef.current = abortController
-      lastRequestRef.current = { prompt: trimmed, apiUrl, mode }
+      lastRequestRef.current = { prompt: trimmed, apiUrl, mode, sessionId, messages }
 
       setError(null)
       setOutput("")
@@ -71,7 +73,7 @@ export function useStreamingChat(): StreamingChatState {
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: trimmed, mode }),
+          body: JSON.stringify({ prompt: trimmed, mode, sessionId, messages }),
           signal: abortController.signal,
         })
 

@@ -43,6 +43,7 @@ describe("chatSessionStorage", () => {
     const session: PersistedChatSession = {
       version: 1,
       mode: "explain-only",
+      sessionId: "test-session-id",
       timeline: [
         { id: "u-1", role: "user", content: "Hi" },
         { id: "a-1", role: "assistant", content: "Hello" },
@@ -60,5 +61,18 @@ describe("chatSessionStorage", () => {
     storage.setItem(CHAT_SESSION_STORAGE_KEY, "not-json")
 
     expect(readStoredChatSession(storage)).toBeNull()
+  })
+
+  it("allows session without sessionId for backward compatibility", () => {
+    const oldSession = {
+      version: 1,
+      mode: "explain-only",
+      timeline: [
+        { id: "u-1", role: "user", content: "Hi" },
+        { id: "a-1", role: "assistant", content: "Hello" },
+      ],
+    }
+    storage.setItem(CHAT_SESSION_STORAGE_KEY, JSON.stringify(oldSession))
+    expect(readStoredChatSession(storage)).toEqual(oldSession)
   })
 })

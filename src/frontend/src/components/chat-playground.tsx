@@ -95,6 +95,7 @@ function getTranscript(messages: ChatTimelineMessage[]) {
 export function ChatPlayground() {
   const [prompt, setPrompt] = React.useState("")
   const [mode, setMode] = React.useState<ChatMode>("explain-only")
+  const [sessionId, setSessionId] = React.useState<string | undefined>(undefined)
   const [timeline, setTimeline] = React.useState<ChatTimelineMessage[]>([])
   const [activeAssistantId, setActiveAssistantId] = React.useState<string | null>(null)
   const [hasSavedSession, setHasSavedSession] = React.useState(false)
@@ -118,11 +119,13 @@ export function ChatPlayground() {
   React.useEffect(() => {
     const storedSession = readStoredChatSession()
     if (!storedSession) {
+      setSessionId(crypto.randomUUID())
       return
     }
 
     setTimeline(storedSession.timeline)
     setMode(storedSession.mode)
+    setSessionId(storedSession.sessionId || crypto.randomUUID())
     setHasSavedSession(true)
   }, [])
 
@@ -134,10 +137,11 @@ export function ChatPlayground() {
     writeStoredChatSession({
       version: 1,
       mode,
+      sessionId,
       timeline,
     })
     setHasSavedSession(true)
-  }, [mode, timeline])
+  }, [mode, timeline, sessionId])
 
   React.useEffect(() => {
     if (!activeAssistantId) {
@@ -197,13 +201,18 @@ export function ChatPlayground() {
     setPrompt("")
     setActiveAssistantId(assistantId)
 
-    await submit({ prompt: trimmedPrompt, apiUrl, mode })
+    const messagesHistory = timeline
+      .filter((m) => m.content.length > 0)
+      .map((m) => ({ role: m.role, content: m.content }))
+
+    await submit({ prompt: trimmedPrompt, apiUrl, mode, sessionId, messages: messagesHistory })
   }
 
   const handleNewChat = React.useCallback(() => {
     setTimeline([])
     setPrompt("")
     setMode("explain-only")
+    setSessionId(crypto.randomUUID())
     setActiveAssistantId(null)
     clear()
   }, [clear])
@@ -216,6 +225,7 @@ export function ChatPlayground() {
 
     setTimeline(storedSession.timeline)
     setMode(storedSession.mode)
+    setSessionId(storedSession.sessionId || crypto.randomUUID())
     setPrompt("")
     setActiveAssistantId(null)
     clear()

@@ -11,6 +11,7 @@ export type ChatTimelineMessage = {
 export type PersistedChatSession = {
   version: 1
   mode: ChatMode
+  sessionId?: string
   timeline: ChatTimelineMessage[]
 }
 
@@ -34,6 +35,7 @@ function isPersistedChatSession(value: unknown): value is PersistedChatSession {
   return (
     session.version === 1 &&
     isChatMode(session.mode) &&
+    (typeof session.sessionId === "string" || session.sessionId === undefined) &&
     Array.isArray(session.timeline) &&
     session.timeline.every(isTimelineMessage)
   )
