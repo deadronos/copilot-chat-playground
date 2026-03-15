@@ -1,5 +1,7 @@
 # Milestones Report (generated 2026-01-23)
 
+> Historical snapshot: this report reflects repository status on 2026-01-23. Streaming and chat session context were implemented later; for the current backend flow see `src/backend/src/controllers/chatController.ts`, `memory/designs/DES006-milestone-c-streaming.md`, and `memory/designs/DES027-chat-session-context-hardening.md`.
+
 **Summary:** Milestone F (Copilot SDK migration) is implemented, tested, and documented. The project has strong coverage for Milestones A/B/D/F. The remaining open work is Milestone C (end-to-end streaming from Copilot → backend → frontend) and Milestone E (workspace access / mounting). See mapped issues and recommended next steps below. ✅⚠️
 
 ---
@@ -24,14 +26,14 @@
 
 - Milestone B — Real Copilot (non-streaming)
   - Status: **Done** ✅
-  - Evidence: `src/backend/src/index.ts` calls `COPILOT_SERVICE_URL` and buffers response; `src/copilot` service responds to `/chat` (buffered), unit/integration tests present.
+  - Historical evidence: `src/backend/src/index.ts` called `COPILOT_SERVICE_URL` and buffered response; `src/copilot` service responded to `/chat` (buffered), unit/integration tests present.
 
 - Milestone C — End-to-end streaming (real stdout streaming)
   - Status: **Partially done / OPEN** ⚠️
   - Current state:
     - Frontend: streaming UI implemented (appends chunks). See `chat-playground.tsx`.
     - Copilot service: SDK-based implementation (`@github/copilot-sdk`) provides structured streaming internally (DES004/TASK004).
-    - Backend: still performs buffered calls (awaits full result and returns plain text). See `src/backend/src/index.ts`.
+    - Backend at report time: still performed buffered calls (awaited full result and returned plain text). See `src/backend/src/index.ts`.
   - Missing acceptance criteria:
     - Backend proxying of streaming chunks (chunked responses or SSE to browser)
     - Abort support (frontend AbortController → backend and copilot service handling)
@@ -95,7 +97,7 @@
 - `memory/tasks/TASK004-milestone-f-sdk-migration.md` — Milestone F task file (progress + checklist)
 - `MIGRATION_SUMMARY.md` — migration notes
 - `src/frontend/src/components/chat-playground.tsx` — streaming UI and mode selector
-- `src/backend/src/index.ts` — current buffered `/api/chat` implementation
+- `src/backend/src/controllers/chatController.ts` — current streaming `/api/chat` implementation with buffered fallback and contextual prompt support
 - Open issues: [#4 — Milestone C](https://github.com/deadronos/copilot-chat-playground/issues/4), [#2 — Milestone E](https://github.com/deadronos/copilot-chat-playground/issues/2)
 
 ---

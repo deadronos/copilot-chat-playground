@@ -274,8 +274,8 @@ Existing status badge enhanced with mode-aware messaging:
 
 ### Frontend State Management
 - Simple useState for mode (no global state needed)
-- Mode persists during session but resets on page reload
-- Could add localStorage persistence in future
+- Mode and the latest chat timeline now persist locally and can be resumed after refresh (implemented later via `DES027`)
+- Storage access is treated as best-effort; blocked/unavailable `localStorage` degrades gracefully instead of breaking the UI
 
 ### Token Estimation
 - Current: Simple division (length / 4)
@@ -290,7 +290,7 @@ Existing status badge enhanced with mode-aware messaging:
 
 ## Future Enhancements
 
-1. **Mode Persistence**: Save last-used mode in localStorage
+1. **Multi-session Persistence**: Save more than one resumable chat session instead of only the latest session
 2. **Mode History**: Track mode usage per session
 3. **Advanced Modes**: Add more specialized modes (code-review, debug-only)
 4. **Token Budgets**: Set per-mode token limits

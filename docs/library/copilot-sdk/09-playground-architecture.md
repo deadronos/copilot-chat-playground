@@ -3,7 +3,7 @@
 This repo is structured as:
 
 - `src/frontend`: chat UI
-- `src/backend`: HTTP API gateway + SSE/WebSocket streaming to UI
+- `src/backend`: HTTP API gateway that validates requests and streams `text/plain` chat responses to the UI
 - `src/copilot`: Copilot SDK integration + Copilot CLI runtime
 
 ## Why split backend vs copilot?
@@ -17,13 +17,14 @@ Separation makes it easier to:
 
 ## Suggested data flow
 
-1. Frontend sends `POST /api/chat` to backend with `{ prompt, session_id? }`
-2. Backend forwards to copilot service and opens an SSE stream back to frontend
-3. Copilot service:
-   - creates/resumes a Copilot session
+1. Frontend sends `POST /api/chat` to backend with `{ prompt, mode, sessionId?, messages? }`
+2. Backend validates the payload and, when history is present, converts it into a context-enriched prompt for the next turn
+3. Backend forwards the request to the copilot service and streams plain-text chunks back to the frontend fetch reader
+4. Copilot service:
+   - creates a fresh Copilot SDK session for the request
    - subscribes to SDK events
-   - emits normalized events to backend
-4. Backend forwards those events to frontend and persists them (optional)
+   - emits text deltas/final output while logging normalized observability events internally
+5. If the upstream streaming endpoint is unavailable, backend falls back to the buffered copilot endpoint and still returns plain text to the frontend
 
 ## Keep interfaces stable
 
@@ -34,6 +35,8 @@ Then you can swap implementations:
 - Milestone F: switch to Copilot SDK events
 
 …and the UI doesn’t need to change much.
+
+In the current implementation, `/api/chat` remains stable in a backwards-compatible way: `prompt` + `mode` still work, and `sessionId` / `messages` were added as optional context fields for resumed conversations.
 
 ## Sources
 
