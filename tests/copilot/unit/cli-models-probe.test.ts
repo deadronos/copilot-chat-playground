@@ -371,5 +371,33 @@ describe("CLI Models Probe", () => {
       expect(result.models).toContain("gpt-3-5-turbo");
       expect(result.models.length).toBe(2); // Should be deduplicated
     });
+
+    it("should filter out strings that become empty after stripping punctuation", async () => {
+      // Mock spawn to return models that become empty
+      const mockSpawn = vi.mocked(spawn);
+      const mockChild = {
+        stdout: {
+          on: vi.fn((event, callback) => {
+            if (event === "data") {
+              callback(Buffer.from('{"models": ["gpt-4", "( )", " , "]}'));
+            }
+          }),
+        },
+        stderr: {
+          on: vi.fn(),
+        },
+        on: vi.fn((event, callback) => {
+          if (event === "close") {
+            callback(0);
+          }
+        }),
+      };
+
+      mockSpawn.mockReturnValue(mockChild as any);
+
+      const result = await probeCliModels();
+
+      expect(result.models).toEqual(["gpt-4"]);
+    });
   });
 });

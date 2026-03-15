@@ -27,12 +27,7 @@ export type BuildSnapshotArgs = {
 
 export function buildSnapshotPayload(args: BuildSnapshotArgs) {
   const { snapshotId, redCount, blueCount, telemetryEvents, requestDecision, requestOverrides } = args
-  const majorEvents = (telemetryEvents ?? []).reduce((acc, e) => {
-    if (majorTelemetryTypes.has(e.type)) {
-      acc.push(normalizeMajorEvent(e))
-    }
-    return acc
-  }, [] as ReturnType<typeof normalizeMajorEvent>[])
+  const majorEvents = (telemetryEvents ?? []).filter((e) => majorTelemetryTypes.has(e.type)).map(normalizeMajorEvent)
 
   return {
     timestamp: snapshotId ? Date.now() : Date.now(),
