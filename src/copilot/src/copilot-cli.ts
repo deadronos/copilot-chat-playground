@@ -68,6 +68,23 @@ export function getCopilotCandidatePaths(): string[] {
 }
 
 /**
+ * Returns an array of objects indicating which candidate paths exist on disk
+ */
+export async function getAvailableCopilotCandidatePaths(): Promise<{ path: string; exists: boolean }[]> {
+  const candidates = getCopilotCandidatePaths();
+  return Promise.all(
+    candidates.map(async (p) => {
+      try {
+        await fs.promises.access(p);
+        return { path: p, exists: true };
+      } catch {
+        return { path: p, exists: false };
+      }
+    })
+  );
+}
+
+/**
  * Calls the Copilot CLI with a prompt and returns buffered output
  * Attempts 'copilot' first, then falls back to 'pnpm exec -- copilot ...'
  */
@@ -102,7 +119,7 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
     if (result.error && ("code" in result.error)) {
       const errCode = (result.error as Error & { code?: string }).code;
       if (errCode === "ENOENT") {
-        const candidates = getCopilotCandidatePaths().map((p) => ({ path: p, exists: fs.existsSync(p) }));
+        const candidates = await getAvailableCopilotCandidatePaths();
         const available = candidates.filter((c) => c.exists).map((c) => c.path);
         console.warn(
           `[copilot] copilot binary not found when running '${attempt.cmd}'. Trying fallback. Candidates: ${candidates

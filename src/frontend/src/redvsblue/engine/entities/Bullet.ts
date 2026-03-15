@@ -1,4 +1,4 @@
-import type { Team } from "@/redvsblue/types";
+import type { Team, Bullet as BulletState } from "@/redvsblue/types";
 
 export class Bullet {
   x: number;
@@ -14,6 +14,7 @@ export class Bullet {
   ownerId: string;
   angle: number;
   damage: number;
+  private _state: BulletState;
 
   constructor(
     id: string,
@@ -40,6 +41,29 @@ export class Bullet {
     this.active = true;
     this.ownerId = ownerId;
     this.damage = bulletDamage;
+
+    this._state = {
+      id: this.id,
+      team: this.team,
+      position: { x: this.x, y: this.y },
+      velocity: { x: this.vx, y: this.vy },
+      angle: this.angle,
+      damage: this.damage,
+      ownerId: this.ownerId,
+    };
+  }
+
+  get state(): BulletState {
+    return this._state;
+  }
+
+  syncState(): BulletState {
+    this._state.position.x = this.x;
+    this._state.position.y = this.y;
+    this._state.velocity.x = this.vx;
+    this._state.velocity.y = this.vy;
+    this._state.angle = this.angle;
+    return this._state;
   }
 
   update(width: number, height: number): void {

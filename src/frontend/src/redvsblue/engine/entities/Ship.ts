@@ -1,5 +1,5 @@
 import { DEFAULT_ENGINE_TUNING } from "@/redvsblue/config/index";
-import type { Team } from "@/redvsblue/types";
+import type { Team, Ship as ShipState } from "@/redvsblue/types";
 import type { RNG } from "../rng";
 import { createParticles } from "../particles";
 import type { Particle } from "./Particle";
@@ -31,6 +31,7 @@ export class Ship {
   bulletSpeedOverride?: number;
   bulletDamageOverride?: number;
   shipThrustOverride?: number;
+  private _state: ShipState;
 
   constructor(
     id: string,
@@ -53,6 +54,36 @@ export class Ship {
     this.maxHealth = maxHealth;
     this.cooldown = rng() * DEFAULT_ENGINE_TUNING.cooldownRandom;
     this.radius = shipRadius;
+
+    this._state = {
+      id: this.id,
+      team: this.team,
+      position: { x: this.x, y: this.y },
+      velocity: { x: this.vx, y: this.vy },
+      angle: this.angle,
+      health: this.health,
+      maxHealth: this.maxHealth,
+      isThrusting: false,
+      isFiring: false,
+    };
+  }
+
+  get state(): ShipState {
+    return this._state;
+  }
+
+  syncState(thrustThreshold: number): ShipState {
+    this._state.position.x = this.x;
+    this._state.position.y = this.y;
+    this._state.velocity.x = this.vx;
+    this._state.velocity.y = this.vy;
+    this._state.angle = this.angle;
+    this._state.health = this.health;
+    this._state.maxHealth = this.maxHealth;
+    this._state.isThrusting =
+      Math.abs(this.vx) > thrustThreshold || Math.abs(this.vy) > thrustThreshold;
+    this._state.isFiring = this.cooldown === 0;
+    return this._state;
   }
 
   getNearestEnemy(

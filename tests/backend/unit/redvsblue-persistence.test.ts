@@ -5,6 +5,9 @@ const fsMocks = vi.hoisted(() => ({
   promises: {
     writeFile: vi.fn(),
     unlink: vi.fn(),
+    mkdir: vi.fn(),
+    readdir: vi.fn(),
+    readFile: vi.fn(),
   },
   readdirSync: vi.fn(),
   readFileSync: vi.fn(),
@@ -63,6 +66,9 @@ describe("redvsblue persistence helpers", () => {
     process.env.REDVSBLUE_PERSIST_DIR = "/tmp/redvsblue-tests"
     fsMocks.promises.writeFile.mockReset()
     fsMocks.promises.unlink.mockReset()
+    fsMocks.promises.mkdir.mockReset()
+    fsMocks.promises.readdir.mockReset()
+    fsMocks.promises.readFile.mockReset()
     fsMocks.readdirSync.mockReset()
     fsMocks.readFileSync.mockReset()
     fsMocks.mkdirSync.mockReset()
@@ -77,12 +83,13 @@ describe("redvsblue persistence helpers", () => {
   })
 
   it("persists sessions as JSON", async () => {
+    fsMocks.promises.mkdir.mockResolvedValue(undefined)
     fsMocks.promises.writeFile.mockResolvedValue(undefined)
     const session = createSession()
 
     await persistMatchSession(session)
 
-    expect(fsMocks.mkdirSync).toHaveBeenCalledWith("/tmp/redvsblue-tests", { recursive: true })
+    expect(fsMocks.promises.mkdir).toHaveBeenCalledWith("/tmp/redvsblue-tests", { recursive: true })
     expect(fsMocks.promises.writeFile).toHaveBeenCalled()
     const [, payload] = fsMocks.promises.writeFile.mock.calls[0]
     const parsed = JSON.parse(payload) as PersistedMatchSession
@@ -102,19 +109,20 @@ describe("redvsblue persistence helpers", () => {
     warnSpy.mockRestore()
   })
 
-  it("loads persisted sessions and deserializes decision state", () => {
+  it("loads persisted sessions and deserializes decision state", async () => {
     const persisted: PersistedMatchSession = {
       ...createSession(),
       decisionState: { lastDecisionAt: null, recentSpawns: [], appliedDecisionIds: ["a"] },
     }
 
-    fsMocks.readdirSync.mockReturnValue([
+    fsMocks.promises.mkdir.mockResolvedValue(undefined)
+    fsMocks.promises.readdir.mockResolvedValue([
       { name: "match-1.json", isFile: () => true },
       { name: "ignore.txt", isFile: () => true },
     ])
-    fsMocks.readFileSync.mockReturnValue(JSON.stringify(persisted))
+    fsMocks.promises.readFile.mockResolvedValue(JSON.stringify(persisted))
 
-    const sessions = loadPersistedSessions()
+    const sessions = await loadPersistedSessions()
 
     expect(sessions).toHaveLength(1)
     expect(sessions[0].decisionState.appliedDecisionIds.has("a")).toBe(true)
