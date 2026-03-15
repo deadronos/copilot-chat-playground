@@ -266,4 +266,37 @@ describe("CopilotSDKService", () => {
       await expect(service.stop()).resolves.toBeUndefined();
     });
   });
+
+  describe("cancellation", () => {
+    it("should call session.abort when signal is aborted", async () => {
+      process.env.GH_TOKEN = "token";
+      const service = new CopilotSDKService();
+      await service.initialize();
+      const client = (service as any).client;
+
+      const mockSession = {
+        sessionId: "cancel-session",
+        on: vi.fn(),
+        sendAndWait: vi.fn(async () => {
+          // Simulate some work
+          await new Promise((resolve) => setTimeout(resolve, 50));
+          return { type: "assistant.message", data: { content: "ok" } };
+        }),
+        abort: vi.fn(async () => {}),
+        destroy: vi.fn(async () => {}),
+      };
+
+      vi.spyOn(client, "createSession").mockImplementation(async () => mockSession as any);
+
+      const controller = new AbortController();
+      const chatPromise = service.chat("hello", "req-cancel", undefined, undefined, controller.signal);
+
+      // Abort after a small delay
+      setTimeout(() => controller.abort(), 10);
+
+      const result = await chatPromise;
+      expect(mockSession.abort).toHaveBeenCalled();
+      expect(result.success).toBe(true); // SDK usually returns success even if aborted, depends on how it's handled in the service
+    });
+  });
 });

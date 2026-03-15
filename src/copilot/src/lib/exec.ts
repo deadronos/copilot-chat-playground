@@ -6,6 +6,8 @@ export interface ExecOptions {
   cwd?: string;
   env?: NodeJS.ProcessEnv;
   signal?: AbortSignal;
+  onStdout?: (chunk: string) => void;
+  onStderr?: (chunk: string) => void;
 }
 
 export interface ExecResult {
@@ -60,6 +62,13 @@ export async function execCommand(cmd: string, args: string[], options: ExecOpti
 
     const appendChunk = (target: "stdout" | "stderr", chunk: Buffer) => {
       const chunkStr = chunk.toString();
+
+      if (target === "stdout" && options.onStdout) {
+        options.onStdout(chunkStr);
+      } else if (target === "stderr" && options.onStderr) {
+        options.onStderr(chunkStr);
+      }
+
       const current = target === "stdout" ? stdout : stderr;
       if (limit !== undefined && current.length >= limit) {
         return;

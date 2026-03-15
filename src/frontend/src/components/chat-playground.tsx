@@ -107,6 +107,14 @@ export function ChatPlayground() {
   })
   const { output, status, error, isBusy, canRetry, submit, cancel, retry, clear } = useStreamingChat()
 
+  const handleRetry = React.useCallback(async () => {
+    const lastAssistantMessage = [...timeline].reverse().find((m) => m.role === "assistant")
+    if (lastAssistantMessage) {
+      setActiveAssistantId(lastAssistantMessage.id)
+    }
+    await retry()
+  }, [retry, timeline])
+
   React.useEffect(() => {
     const storedSession = readStoredChatSession()
     if (!storedSession) {
@@ -276,7 +284,7 @@ export function ChatPlayground() {
             isBusy={isBusy}
             canRetry={canRetry}
             hasSavedSession={hasSavedSession}
-            onRetry={retry}
+            onRetry={handleRetry}
             onCopy={onCopy}
             onExport={handleExport}
             onClear={onClear}

@@ -169,9 +169,17 @@ app.post("/chat", async (req, res) => {
   const requestId = crypto.randomUUID();
   const systemPrompt = getSystemPrompt(mode);
 
-  const result = USE_SDK && sdkService
-    ? await sdkService.chat(prompt, requestId, systemPrompt)
-    : await callCopilotCLI(prompt);
+  const abortController = new AbortController();
+  req.on("close", () => {
+    if (!res.writableEnded) {
+      abortController.abort();
+    }
+  });
+
+  const result =
+    USE_SDK && sdkService
+      ? await sdkService.chat(prompt, requestId, systemPrompt, undefined, abortController.signal)
+      : await callCopilotCLI(prompt, abortController.signal);
 
   if (!result.success) {
     res.status(getStatusCode(result.errorType)).json({
@@ -196,6 +204,13 @@ app.post("/chat/stream", async (req, res) => {
   const { prompt, mode } = parsed.data;
   const requestId = crypto.randomUUID();
   const systemPrompt = getSystemPrompt(mode);
+
+  const abortController = new AbortController();
+  req.on("close", () => {
+    if (!res.writableEnded) {
+      abortController.abort();
+    }
+  });
 
   let streamStarted = false;
   const startStream = () => {
@@ -226,7 +241,9 @@ app.post("/chat/stream", async (req, res) => {
         res.write(chunk);
       },
       requestId,
-      systemPrompt
+      systemPrompt,
+      undefined,
+      abortController.signal
     );
 
     if (!result.success) {
@@ -253,24 +270,38 @@ app.post("/chat/stream", async (req, res) => {
     return;
   }
 
-  const cliResult = await callCopilotCLI(prompt);
+  // CLI path
+  const cliResult = await callCopilotCLIStream(
+    prompt,
+    (chunk) => {
+      if (!chunk || res.writableEnded) {
+        return;
+      }
+
+      startStream();
+      res.write(chunk);
+    },
+    abortController.signal
+  );
+
   if (!cliResult.success) {
-    res.status(getStatusCode(cliResult.errorType)).json({
-      error: cliResult.error,
-      errorType: cliResult.errorType,
-    });
+    if (!streamStarted) {
+      res.status(getStatusCode(cliResult.errorType)).json({
+        error: cliResult.error,
+        errorType: cliResult.errorType,
+      });
+    }
+    if (!res.writableEnded) {
+      res.end();
+    }
     return;
   }
 
-  const output = cliResult.output || "";
-  startStream();
-
-  const chunkSize = 256;
-  for (let i = 0; i < output.length; i += chunkSize) {
-    if (res.writableEnded) {
-      break;
+  if (!streamStarted) {
+    startStream();
+    if (cliResult.output) {
+      res.write(cliResult.output);
     }
-    res.write(output.slice(i, i + chunkSize));
   }
 
   res.end();
