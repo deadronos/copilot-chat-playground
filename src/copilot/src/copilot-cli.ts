@@ -88,7 +88,29 @@ export async function getAvailableCopilotCandidatePaths(): Promise<{ path: strin
  * Calls the Copilot CLI with a prompt and returns buffered output
  * Attempts 'copilot' first, then falls back to 'pnpm exec -- copilot ...'
  */
-export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
+export async function callCopilotCLI(prompt: string, signal?: AbortSignal): Promise<CopilotResponse> {
+  return callCopilotCLIInternal(prompt, undefined, signal);
+}
+
+/**
+ * Calls the Copilot CLI with a prompt and streams output via onChunk callback.
+ */
+export async function callCopilotCLIStream(
+  prompt: string,
+  onChunk: (chunk: string) => void,
+  signal?: AbortSignal
+): Promise<CopilotResponse> {
+  return callCopilotCLIInternal(prompt, onChunk, signal);
+}
+
+/**
+ * Internal helper to call Copilot CLI with optional streaming and cancellation support.
+ */
+async function callCopilotCLIInternal(
+  prompt: string,
+  onChunk?: (chunk: string) => void,
+  signal?: AbortSignal
+): Promise<CopilotResponse> {
   // Validate token first
   const tokenCheck = validateToken();
   if (!tokenCheck.valid) {
@@ -109,14 +131,27 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
   for (const attempt of attempts) {
     tried.push(`${attempt.cmd} ${attempt.args.join(" ")}`);
 
-    const result = await execCommand(attempt.cmd, attempt.args, { maxOutputSize: Number.POSITIVE_INFINITY });
+    const result = await execCommand(attempt.cmd, attempt.args, {
+      maxOutputSize: Number.POSITIVE_INFINITY,
+      signal,
+      onStdout: onChunk,
+    });
 
     if (result.success) {
       return { success: true, output: result.stdout.trim() };
     }
 
+    // If request was aborted, stop trying
+    if (signal?.aborted) {
+      return {
+        success: false,
+        error: "Request aborted",
+        errorType: "unknown",
+      };
+    }
+
     // If we got an error indicating executable not found, try candidate binaries on disk
-    if (result.error && ("code" in result.error)) {
+    if (result.error && "code" in result.error) {
       const errCode = (result.error as Error & { code?: string }).code;
       if (errCode === "ENOENT") {
         const candidates = await getAvailableCopilotCandidatePaths();
@@ -128,24 +163,39 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
         );
 
         // Try spawning the first candidate that exists on disk directly (absolute path)
-          for (const c of available) {
-            tried.push(c);
-            const directResult = await execCommand(c, ["-p", prompt, "--silent"], {
-              maxOutputSize: Number.POSITIVE_INFINITY,
-            });
+        for (const c of available) {
+          tried.push(c);
+          const directResult = await execCommand(c, ["-p", prompt, "--silent"], {
+            maxOutputSize: Number.POSITIVE_INFINITY,
+            signal,
+            onStdout: onChunk,
+          });
           if (directResult.success) {
             return { success: true, output: directResult.stdout.trim() };
           }
 
+          if (signal?.aborted) {
+            return {
+              success: false,
+              error: "Request aborted",
+              errorType: "unknown",
+            };
+          }
+
           // If direct spawn failed due to ENOENT, try next
-          if (directResult.error && ("code" in directResult.error)) {
+          if (directResult.error && "code" in directResult.error) {
             const drErrCode = (directResult.error as Error & { code?: string }).code;
             if (drErrCode === "ENOENT") continue;
           }
 
           // If stderr indicates auth issues, return that
           const stderrLower = directResult.stderr.toLowerCase();
-          if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
+          if (
+            stderrLower.includes("auth") ||
+            stderrLower.includes("unauthorized") ||
+            stderrLower.includes("invalid token") ||
+            stderrLower.includes("403")
+          ) {
             return {
               success: false,
               error: directResult.stderr.trim() || "Authentication error from Copilot CLI",
@@ -161,7 +211,12 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
 
     // If stderr indicates auth issues, return that
     const stderrLower = result.stderr.toLowerCase();
-    if (stderrLower.includes("auth") || stderrLower.includes("unauthorized") || stderrLower.includes("invalid token") || stderrLower.includes("403")) {
+    if (
+      stderrLower.includes("auth") ||
+      stderrLower.includes("unauthorized") ||
+      stderrLower.includes("invalid token") ||
+      stderrLower.includes("403")
+    ) {
       return {
         success: false,
         error: result.stderr.trim() || "Authentication error from Copilot CLI",
@@ -174,7 +229,9 @@ export async function callCopilotCLI(prompt: string): Promise<CopilotResponse> {
 
   return {
     success: false,
-    error: `Failed to spawn copilot CLI via tried commands: ${tried.join(" | ")}. Is @github/copilot installed? Checked candidates: ${getCopilotCandidatePaths().join(", ")}`,
+    error: `Failed to spawn copilot CLI via tried commands: ${tried.join(
+      " | "
+    )}. Is @github/copilot installed? Checked candidates: ${getCopilotCandidatePaths().join(", ")}`,
     errorType: "spawn",
   };
 }

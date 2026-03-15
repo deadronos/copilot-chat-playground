@@ -56,7 +56,8 @@ export class CopilotSDKService {
     prompt: string,
     requestId?: string,
     systemPrompt?: string,
-    systemMode?: "append" | "replace"
+    systemMode?: "append" | "replace",
+    signal?: AbortSignal
   ): Promise<CopilotSDKResponse> {
     // Validate token first
     const tokenCheck = validateToken();
@@ -70,6 +71,16 @@ export class CopilotSDKService {
 
     try {
       const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
+
+      if (signal) {
+        if (signal.aborted) {
+          await session.destroy();
+          return { success: false, error: "Request aborted", errorType: "unknown" };
+        }
+        signal.addEventListener("abort", () => {
+          session.abort().catch(() => {});
+        });
+      }
 
       // Buffer to collect the full response
       let fullResponse = "";
@@ -164,7 +175,8 @@ export class CopilotSDKService {
     onChunk: (chunk: string) => void,
     requestId?: string,
     systemPrompt?: string,
-    systemMode?: "append" | "replace"
+    systemMode?: "append" | "replace",
+    signal?: AbortSignal
   ): Promise<CopilotSDKResponse> {
     const tokenCheck = validateToken();
     if (!tokenCheck.valid) {
@@ -177,6 +189,16 @@ export class CopilotSDKService {
 
     try {
       const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
+
+      if (signal) {
+        if (signal.aborted) {
+          await session.destroy();
+          return { success: false, error: "Request aborted", errorType: "unknown" };
+        }
+        signal.addEventListener("abort", () => {
+          session.abort().catch(() => {});
+        });
+      }
 
       let streamedResponse = "";
       let finalResponse = "";
