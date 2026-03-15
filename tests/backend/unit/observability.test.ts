@@ -1,9 +1,15 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { recordEvent, getEvents, clearEvents } from '../../../src/backend/src/services/observability.js';
 
 describe('observability service', () => {
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2025, 0, 1, 0, 0, 0));
     clearEvents();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should record and retrieve events', () => {
@@ -51,19 +57,15 @@ describe('observability service', () => {
   });
 
   it('should filter by sinceMs', () => {
-    const now = Date.now();
-    // This is a bit tricky since recordEvent uses Date.now()
-    // We can't easily mock Date.now() in the service without more work
-    // But we can record one, wait a bit, and check.
+    // Use fake timers to make the time window deterministic.
     recordEvent('info', 'old', { traceId: 'old' });
+    vi.advanceTimersByTime(1000);
+    recordEvent('info', 'new', { traceId: 'new' });
 
-    // To avoid flaky tests with small time differences, we can just check it works
-    const events = getEvents({ sinceMs: 10000 }); // within last 10s
-    expect(events.map(e => e.event)).toContain('old');
+    const events = getEvents({ sinceMs: 500 });
+    expect(events.map((e) => e.event)).toEqual(['new']);
 
-    const noEvents = getEvents({ sinceMs: -10000 }); // "since 10s in the future" - effectively should be empty if it's strictly >
-    // Wait, sinceMs: -10000 means since = Date.now() - (-10000) = Date.now() + 10000.
-    // e.timestamp >= Date.now() + 10000 should be false.
+    const noEvents = getEvents({ sinceMs: -1000 });
     expect(noEvents).toHaveLength(0);
   });
 });

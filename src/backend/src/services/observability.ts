@@ -43,7 +43,9 @@ export function getEvents(opts?: {
 
   for (let i = events.length - 1; i >= 0; i--) {
     const e = events[i];
-    if (e.timestamp < since) continue;
+    // Events are stored in chronological order, so once we hit a timestamp older than
+    // the cutoff we can stop scanning.
+    if (e.timestamp < since) break;
     if (opts?.event && e.event !== opts.event) continue;
     if (opts?.level && e.level !== opts.level) continue;
 
