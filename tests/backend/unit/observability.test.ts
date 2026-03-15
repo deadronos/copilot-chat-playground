@@ -71,6 +71,7 @@ describe("observability service", () => {
   });
 
   it("filters by sinceMs", () => {
+    // Use fake timers to make the time window deterministic.
     recordEvent("info", "old", { traceId: "old" });
     vi.advanceTimersByTime(1000);
     recordEvent("info", "new", { traceId: "new" });
