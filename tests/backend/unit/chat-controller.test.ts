@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Request, Response } from "express";
 
 vi.mock("../../../src/backend/src/services/copilot.js", () => ({
@@ -37,6 +37,10 @@ function createResponse(): Response {
 }
 
 describe("chatController", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("returns 400 for invalid payload", async () => {
     const req = createRequest({ invalid: true });
     const res = createResponse();
@@ -65,5 +69,37 @@ describe("chatController", () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith("Buffered");
+  });
+
+  it("passes session history context to Copilot calls", async () => {
+    const req = createRequest({
+      prompt: "What changed?",
+      mode: "project-helper",
+      sessionId: "session-123",
+      messages: [
+        { role: "user", content: "Hello" },
+        { role: "assistant", content: "Hi there" },
+      ],
+    });
+    const res = createResponse();
+
+    vi.mocked(callCopilotServiceStream).mockResolvedValue({
+      success: false,
+      errorType: "stream_unavailable",
+      error: "no stream",
+    });
+    vi.mocked(callCopilotService).mockResolvedValue({
+      success: true,
+      output: "Buffered",
+    });
+
+    await handleChat(req, res);
+
+    const streamPrompt = vi.mocked(callCopilotServiceStream).mock.calls[0]?.[0];
+    expect(streamPrompt).toContain("Session ID: session-123");
+    expect(streamPrompt).toContain("User: Hello");
+    expect(streamPrompt).toContain("Assistant: Hi there");
+    expect(streamPrompt).toContain("User (latest): What changed?");
+    expect(vi.mocked(callCopilotService).mock.calls[0]?.[0]).toBe(streamPrompt);
   });
 });

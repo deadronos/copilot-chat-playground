@@ -12,6 +12,7 @@ import { StreamOutputPanel } from "@/components/chat-playground/StreamOutputPane
 import { ObservabilityModelPanel } from "@/components/chat-playground/ObservabilityModelPanel"
 import { RedVsBluePanel } from "@/components/chat-playground/RedVsBluePanel"
 import {
+  buildConversationMessages,
   readStoredChatSession,
   writeStoredChatSession,
   type ChatTimelineMessage,
@@ -134,13 +135,13 @@ export function ChatPlayground() {
       return
     }
 
-    writeStoredChatSession({
+    const didPersist = writeStoredChatSession({
       version: 1,
       mode,
       sessionId,
       timeline,
     })
-    setHasSavedSession(true)
+    setHasSavedSession(didPersist)
   }, [mode, timeline, sessionId])
 
   React.useEffect(() => {
@@ -191,6 +192,8 @@ export function ChatPlayground() {
       return
     }
 
+    const messagesHistory = buildConversationMessages(timeline, trimmedPrompt)
+
     const userId = createMessageId("u")
     const assistantId = createMessageId("a")
     setTimeline((prev) => [
@@ -200,10 +203,6 @@ export function ChatPlayground() {
     ])
     setPrompt("")
     setActiveAssistantId(assistantId)
-
-    const messagesHistory = timeline
-      .filter((m) => m.content.length > 0)
-      .map((m) => ({ role: m.role, content: m.content }))
 
     await submit({ prompt: trimmedPrompt, apiUrl, mode, sessionId, messages: messagesHistory })
   }

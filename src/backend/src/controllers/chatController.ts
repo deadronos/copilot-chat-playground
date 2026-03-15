@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 
 import { ChatRequestSchema } from "../schemas/chat.js";
+import { buildPromptWithConversationContext } from "../services/chat-context.js";
 import {
   callCopilotService,
   callCopilotServiceStream,
@@ -15,7 +16,12 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { prompt, mode } = parsed.data;
+  const { prompt, mode, sessionId, messages } = parsed.data;
+  const promptWithContext = buildPromptWithConversationContext({
+    prompt,
+    sessionId,
+    messages,
+  });
 
   if (mode === "explain-only") {
     console.log(`[backend] Mode: ${mode} - applying explain-only guardrails`);
@@ -33,7 +39,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
   res.on("close", handleClose);
 
   const streamResult = await callCopilotServiceStream(
-    prompt,
+    promptWithContext,
     mode as ChatMode,
     abortController.signal
   );
@@ -54,7 +60,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
       req.off("aborted", handleAbort);
       res.off("close", handleClose);
 
-      const fallbackResult = await callCopilotService(prompt, mode as ChatMode);
+      const fallbackResult = await callCopilotService(promptWithContext, mode as ChatMode);
       if (!fallbackResult.success) {
         sendPlainTextError(
           res,
@@ -112,7 +118,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const result = await callCopilotService(prompt, mode as ChatMode);
+  const result = await callCopilotService(promptWithContext, mode as ChatMode);
 
   if (!result.success) {
     sendPlainTextError(res, result.errorType, result.error || "An error occurred");

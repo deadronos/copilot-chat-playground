@@ -159,6 +159,8 @@ describe("useStreamingChat", () => {
         prompt: "Hello",
         apiUrl: "/api/chat",
         mode: "project-helper",
+        sessionId: "session-123",
+        messages: [{ role: "user", content: "Earlier context" }],
       })
     })
 
@@ -170,7 +172,12 @@ describe("useStreamingChat", () => {
     const secondCall = fetchMock.mock.calls[1]
     expect(secondCall[0]).toBe("/api/chat")
     expect(secondCall[1]?.body).toBe(
-      JSON.stringify({ prompt: "Hello", mode: "project-helper" })
+      JSON.stringify({
+        prompt: "Hello",
+        mode: "project-helper",
+        sessionId: "session-123",
+        messages: [{ role: "user", content: "Earlier context" }],
+      })
     )
     expect(latest()?.output).toBe("second")
   })

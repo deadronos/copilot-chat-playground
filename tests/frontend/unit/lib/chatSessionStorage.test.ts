@@ -2,6 +2,7 @@ import { describe, it, expect, afterEach } from "vitest"
 
 import {
   CHAT_SESSION_STORAGE_KEY,
+  buildConversationMessages,
   readStoredChatSession,
   writeStoredChatSession,
   type PersistedChatSession,
@@ -50,7 +51,7 @@ describe("chatSessionStorage", () => {
       ],
     }
 
-    writeStoredChatSession(session, storage)
+    expect(writeStoredChatSession(session, storage)).toBe(true)
 
     const storedRaw = storage.getItem(CHAT_SESSION_STORAGE_KEY)
     expect(storedRaw).toBeTruthy()
@@ -74,5 +75,43 @@ describe("chatSessionStorage", () => {
     }
     storage.setItem(CHAT_SESSION_STORAGE_KEY, JSON.stringify(oldSession))
     expect(readStoredChatSession(storage)).toEqual(oldSession)
+  })
+
+  it("builds conversation messages including the current prompt", () => {
+    expect(
+      buildConversationMessages(
+        [
+          { id: "u-1", role: "user", content: "Hi" },
+          { id: "a-1", role: "assistant", content: "Hello" },
+          { id: "a-2", role: "assistant", content: "" },
+        ],
+        "  What changed?  "
+      )
+    ).toEqual([
+      { role: "user", content: "Hi" },
+      { role: "assistant", content: "Hello" },
+      { role: "user", content: "What changed?" },
+    ])
+  })
+
+  it("returns false when storage writes fail", () => {
+    const failingStorage = {
+      ...storage,
+      setItem() {
+        throw new Error("blocked")
+      },
+    } as Storage
+
+    expect(
+      writeStoredChatSession(
+        {
+          version: 1,
+          mode: "explain-only",
+          sessionId: "test-session-id",
+          timeline: [],
+        },
+        failingStorage
+      )
+    ).toBe(false)
   })
 })
