@@ -67,6 +67,10 @@ The copilot service supports two modes:
 
 Set `USE_COPILOT_SDK=false` in your environment to use CLI mode.
 
+#### Patch required: `vscode-jsonrpc/node` import
+
+Newer `@github/copilot-sdk` versions import `vscode-jsonrpc/node`, which is not provided by `vscode-jsonrpc` by default. This repo includes a small `pnpm patch` that adds a `node` entry point to `vscode-jsonrpc` so the SDK can run correctly. When running `pnpm install`, the patch is applied automatically.
+
 ### Chat UX enhancements
 
 - End-to-end streaming supports cancel + retry controls in the main chat UI.
@@ -140,23 +144,3 @@ docker compose exec copilot sh -c 'grep /workspace /proc/mounts || mount | grep 
 ```
 
 See `docs/milestone-e-workspace-mount.md` for additional checks and safety guidance.
-
-## Getting started
-
-1. Enable pnpm via Corepack (recommended)
-
-   - `corepack enable`
-
-2. Install deps
-
-   - `pnpm install`
-
-3. Run everything in dev
-
-   - `pnpm dev`
-
-### Run just one service
-
-- `pnpm dev:frontend`
-- `pnpm dev:backend`
-- `pnpm dev:copilot`

@@ -1,4 +1,4 @@
-import { CopilotClient } from "@github/copilot-sdk";
+import { CopilotClient, approveAll } from "@github/copilot-sdk";
 import type { SystemMessageConfig } from "@github/copilot-sdk";
 import { getDefaultModel } from "./defaults.js";
 import { incrementMetric } from "./metrics.js";
@@ -277,6 +277,7 @@ export class CopilotSDKService {
       model,
       streaming: true,
       ...(systemMessage && { systemMessage }),
+      onPermissionRequest: approveAll,
     });
 
     this.emitLog("info", "sdk.session.created", "Copilot session created", {

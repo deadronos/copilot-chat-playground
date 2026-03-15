@@ -7,3 +7,5 @@ packages:
 onlyBuiltDependencies:
   - esbuild
   - msw
+patchedDependencies:
+  vscode-jsonrpc: patches/vscode-jsonrpc.patch

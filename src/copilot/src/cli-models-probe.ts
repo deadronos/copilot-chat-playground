@@ -47,9 +47,12 @@ function normalizeModels(models: string[]): string[] {
   const set = new Set<string>();
   for (const m of models) {
     const trimmed = m.trim();
-    if (trimmed.length > 0) {
-      set.add(trimmed.replace(/[(),]/g, "").trim());
-    }
+    if (!trimmed) continue;
+
+    const cleaned = trimmed.replace(/[(),]/g, "").trim();
+    if (!cleaned) continue;
+
+    set.add(cleaned);
   }
   return Array.from(set).sort();
 }

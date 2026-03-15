@@ -219,9 +219,11 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
       await startMatchInternal()
     })()
 
+    // Capture ref values to avoid stale closure issues in cleanup
+    const currentMatchId = matchIdRef.current
+
     return () => {
       active = false
-      const currentMatchId = matchIdRef.current
       void fetcher(`/api/redvsblue/match/${currentMatchId}/end`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -288,7 +290,7 @@ export function useMatchSession(options: UseMatchSessionOptions): UseMatchSessio
     return () => {
       window.clearInterval(intervalId)
     }
-  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, fetcher, idFactory, onToast, redCount, sessionId, snapshotIntervalMs])
+  }, [applyValidatedDecision, autoDecisionsEnabled, blueCount, fetcher, idFactory, onToast, redCount, sessionId, snapshotIntervalMs, startMatchInternal])
 
   const handleAskCopilot = useCallback(async () => {
     if (!sessionId) {

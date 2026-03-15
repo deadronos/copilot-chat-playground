@@ -1,0 +1,7 @@
+diff --git a/node b/node
+new file mode 100644
+index 0000000000000000000000000000000000000000..4fd3b5bb9031c8547264b84034eb06307eb6357c
+--- /dev/null
++++ b/node
+@@ -0,0 +1 @@
++export * from "./node.js";
