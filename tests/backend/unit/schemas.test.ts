@@ -17,6 +17,32 @@ describe("backend request schemas", () => {
     expect(parsed.success).toBe(false);
   });
 
+  it("accepts chat session context", () => {
+    const parsed = ChatRequestSchema.safeParse({
+      prompt: "Hello",
+      sessionId: "session-123",
+      messages: [
+        { role: "user", content: "Hi" },
+        { role: "assistant", content: "Hello there" },
+      ],
+    });
+
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.sessionId).toBe("session-123");
+      expect(parsed.data.messages).toHaveLength(2);
+    }
+  });
+
+  it("rejects empty chat history message content", () => {
+    const parsed = ChatRequestSchema.safeParse({
+      prompt: "Hello",
+      messages: [{ role: "user", content: "   " }],
+    });
+
+    expect(parsed.success).toBe(false);
+  });
+
   it("accepts match start payloads with defaults", () => {
     const parsed = MatchStartSchema.safeParse({ matchId: "match-1" });
     expect(parsed.success).toBe(true);

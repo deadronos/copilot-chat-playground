@@ -2,7 +2,7 @@
 
 **Status:** Draft
 **Created:** 2026-01-23
-**Updated:** 2026-01-23
+**Updated:** 2026-03-15
 
 ## Overview
 
@@ -29,23 +29,24 @@ Copilot service /chat/stream (text/plain stream)
 
 ## Data Flow
 
-1. Frontend sends `POST /api/chat` with JSON `{ prompt, mode }`.
+1. Frontend sends `POST /api/chat` with JSON `{ prompt, mode, sessionId?, messages? }`.
 2. Backend attempts `POST {COPILOT_SERVICE_URL}/chat/stream` and begins streaming response chunks to the client.
 3. If streaming endpoint is unavailable (e.g., 404), backend falls back to buffered `/chat` and returns the output as plain text.
-4. Client receives chunked text and appends in real-time.
+4. When session history is supplied, backend folds the optional `sessionId` + `messages` into a context-enriched prompt before calling the copilot service.
+5. Client receives chunked text and appends in real-time.
 
 ## Interfaces
 
 ### Backend → Copilot (Streaming)
 
 - **Request**: `POST /chat/stream`
-- **Body**: `{ prompt: string, mode: "explain-only" | "project-helper" }`
+- **Body**: `{ prompt: string, mode: "explain-only" | "project-helper" }` where `prompt` may already include backend-prepared conversation context
 - **Response**: `text/plain` streamed chunks
 
 ### Backend → Copilot (Fallback)
 
 - **Request**: `POST /chat`
-- **Body**: `{ prompt: string, mode: "explain-only" | "project-helper" }`
+- **Body**: `{ prompt: string, mode: "explain-only" | "project-helper" }` where `prompt` may already include backend-prepared conversation context
 - **Response**: JSON `{ output: string }`
 
 ## Error Handling
@@ -53,6 +54,7 @@ Copilot service /chat/stream (text/plain stream)
 | Scenario | Expected Behavior | Status Code |
 | --- | --- | --- |
 | Missing/invalid prompt | Reject request | 400 |
+| Invalid `messages` / `sessionId` payload | Reject request | 400 |
 | Copilot token missing | Plain-text error | 503 |
 | Copilot auth failed | Plain-text error | 401 |
 | Copilot stream unavailable | Fallback to buffered | 200 |
@@ -73,4 +75,4 @@ Copilot service /chat/stream (text/plain stream)
 
 - Streaming endpoint on copilot service is expected to emit `text/plain` chunks.
 - Frontend already consumes streaming via `ReadableStream`.
-- This design keeps `/api/chat` stable; no frontend API changes required.
+- This design keeps `/api/chat` stable; additive optional session-context fields were introduced later without breaking existing callers.

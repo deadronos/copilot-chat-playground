@@ -19,13 +19,13 @@ Demo Video downscaled here:
 ## Packages
 
 - `src/frontend` — Vite + React + shadcn/ui UI
-- `src/backend` — Node.js API (streaming bridge; scaffold)
+- `src/backend` — Node.js API gateway for streaming chat, request validation, and RedVsBlue orchestration
 - `src/copilot` — **Copilot SDK** / Copilot CLI wrapper service (uses SDK by default)
 - `src/shared` — shared types/utilities (LogEvent, EventBus, NDJSON helper)
 
 ## Module layout (post-refactor)
 
-- Backend routing stays thin in `src/backend/src/app.ts`; services live in `src/backend/src/services/*`.
+- Backend routing stays thin in `src/backend/src/app.ts`; controllers validate/stream in `src/backend/src/controllers/*`, and reusable helpers (including chat-context shaping) live in `src/backend/src/services/*`.
 - ChatPlayground UI is split into a container (`src/frontend/src/components/chat-playground.tsx`) and presentational components (`src/frontend/src/components/chat-playground/*`).
 - RedVsBlue engine core + entities live under `src/frontend/src/redvsblue/engine/*`, with higher-level orchestration in `src/frontend/src/redvsblue/*`.
 
@@ -74,7 +74,8 @@ Newer `@github/copilot-sdk` versions import `vscode-jsonrpc/node`, which is not 
 ### Chat UX enhancements
 
 - End-to-end streaming supports cancel + retry controls in the main chat UI.
-- Conversation history is persisted locally so the latest session can be resumed after refresh.
+- Conversation history is persisted locally so the latest session can be resumed after refresh; storage failures degrade gracefully instead of breaking the UI.
+- Follow-up turns send optional `sessionId` + prior `messages` to the backend, which folds that history into the contextual prompt used for the next Copilot request.
 - An observability panel exposes Copilot health/models/metrics and backend observability summary from the frontend.
 
 ## Secrets & dotenvx

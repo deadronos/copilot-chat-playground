@@ -12,6 +12,7 @@ import { StreamOutputPanel } from "@/components/chat-playground/StreamOutputPane
 import { ObservabilityModelPanel } from "@/components/chat-playground/ObservabilityModelPanel"
 import { RedVsBluePanel } from "@/components/chat-playground/RedVsBluePanel"
 import {
+  buildConversationMessages,
   readStoredChatSession,
   writeStoredChatSession,
   type ChatTimelineMessage,
@@ -95,6 +96,7 @@ function getTranscript(messages: ChatTimelineMessage[]) {
 export function ChatPlayground() {
   const [prompt, setPrompt] = React.useState("")
   const [mode, setMode] = React.useState<ChatMode>("explain-only")
+  const [sessionId, setSessionId] = React.useState<string | undefined>(undefined)
   const [timeline, setTimeline] = React.useState<ChatTimelineMessage[]>([])
   const [activeAssistantId, setActiveAssistantId] = React.useState<string | null>(null)
   const [hasSavedSession, setHasSavedSession] = React.useState(false)
@@ -118,11 +120,13 @@ export function ChatPlayground() {
   React.useEffect(() => {
     const storedSession = readStoredChatSession()
     if (!storedSession) {
+      setSessionId(crypto.randomUUID())
       return
     }
 
     setTimeline(storedSession.timeline)
     setMode(storedSession.mode)
+    setSessionId(storedSession.sessionId || crypto.randomUUID())
     setHasSavedSession(true)
   }, [])
 
@@ -131,13 +135,14 @@ export function ChatPlayground() {
       return
     }
 
-    writeStoredChatSession({
+    const didPersist = writeStoredChatSession({
       version: 1,
       mode,
+      sessionId,
       timeline,
     })
-    setHasSavedSession(true)
-  }, [mode, timeline])
+    setHasSavedSession(didPersist)
+  }, [mode, timeline, sessionId])
 
   React.useEffect(() => {
     if (!activeAssistantId) {
@@ -187,6 +192,8 @@ export function ChatPlayground() {
       return
     }
 
+    const messagesHistory = buildConversationMessages(timeline, trimmedPrompt)
+
     const userId = createMessageId("u")
     const assistantId = createMessageId("a")
     setTimeline((prev) => [
@@ -197,13 +204,14 @@ export function ChatPlayground() {
     setPrompt("")
     setActiveAssistantId(assistantId)
 
-    await submit({ prompt: trimmedPrompt, apiUrl, mode })
+    await submit({ prompt: trimmedPrompt, apiUrl, mode, sessionId, messages: messagesHistory })
   }
 
   const handleNewChat = React.useCallback(() => {
     setTimeline([])
     setPrompt("")
     setMode("explain-only")
+    setSessionId(crypto.randomUUID())
     setActiveAssistantId(null)
     clear()
   }, [clear])
@@ -216,6 +224,7 @@ export function ChatPlayground() {
 
     setTimeline(storedSession.timeline)
     setMode(storedSession.mode)
+    setSessionId(storedSession.sessionId || crypto.randomUUID())
     setPrompt("")
     setActiveAssistantId(null)
     clear()
