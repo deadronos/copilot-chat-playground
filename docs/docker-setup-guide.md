@@ -155,5 +155,3 @@ RUN corepack enable && pnpm install --frozen-lockfile --prod
 - Repo root README: `README.md`
 
 ---
-
-If you want, I can add a short `docker` section to `README.md` linking this guide and add a small verification script or CI check for secrets. ✨

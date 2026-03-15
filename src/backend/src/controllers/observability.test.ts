@@ -9,7 +9,7 @@ describe("observability endpoints", () => {
   });
 
   test("records events when match start is called and exposes events endpoint", async () => {
-    const app = createApp();
+    const app = await createApp();
     // Start a match to generate structured events
     const startRes = await request(app)
       .post("/api/redvsblue/match/start")
@@ -25,7 +25,7 @@ describe("observability endpoints", () => {
   });
 
   test("match.start.rejoin emitted when X-Action header set and metrics count works", async () => {
-    const app = createApp();
+    const app = await createApp();
 
     const spy = vi.spyOn(observability, "recordEvent");
 
@@ -50,7 +50,7 @@ describe("observability endpoints", () => {
   });
 
   test("summary endpoint returns counts", async () => {
-    const app = createApp();
+    const app = await createApp();
 
     // create a couple events
     await request(app)

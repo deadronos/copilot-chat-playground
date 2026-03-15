@@ -5,7 +5,7 @@ import * as logging from "../lib/logging";
 
 describe("matchController - unknown match", () => {
   test("POST /api/redvsblue/match/:id/snapshot returns structured 404", async () => {
-    const app = createApp();
+    const app = await createApp();
     const res = await request(app)
       .post("/api/redvsblue/match/unknown123/snapshot")
       .send({
@@ -27,7 +27,7 @@ describe("matchController - unknown match", () => {
   });
 
   test("POST /api/redvsblue/match/:id/ask returns structured 404", async () => {
-    const app = createApp();
+    const app = await createApp();
     const res = await request(app)
       .post("/api/redvsblue/match/unknown123/ask")
       .send({ question: "status" })
@@ -42,7 +42,7 @@ describe("matchController - unknown match", () => {
 
   test("POST /api/redvsblue/match/start logs rejoin action when X-Action header present", async () => {
     const spy = vi.spyOn(logging, "logStructuredEvent");
-    const app = createApp();
+    const app = await createApp();
     const res = await request(app)
       .post("/api/redvsblue/match/start")
       .set("X-Action", "refresh_match")

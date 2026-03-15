@@ -2,8 +2,7 @@ import "dotenv/config"; // loads .env for local development. TODO: revisit .env 
 import crypto from "node:crypto";
 import express from "express";
 import { z } from "zod";
-import fs from "node:fs";
-import { callCopilotCLI, validateToken, getCopilotCandidatePaths, getAvailableCopilotCandidatePaths } from "./copilot-cli.js";
+import { callCopilotCLI, validateToken, getAvailableCopilotCandidatePaths } from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
 import { getMetric, incrementMetric } from "./metrics.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
@@ -35,7 +34,6 @@ export function createApp(): express.Express {
   app.get("/health", async (_req, res) => {
     // Include token validation status and binary candidates in health check
     const tokenCheck = validateToken();
-    const candidatePaths = getCopilotCandidatePaths();
     const candidates = await getAvailableCopilotCandidatePaths();
     const binaryAvailable = candidates.some((c) => c.exists);
 
