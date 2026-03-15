@@ -38,14 +38,19 @@ export function getEvents(opts?: {
   level?: ObservabilityEvent["level"];
 }): ObservabilityEvent[] {
   const since = opts?.sinceMs ? Date.now() - opts.sinceMs : 0;
-  const filtered = events
-    .slice()
-    .reverse()
-    .filter((e) => e.timestamp >= since)
-    .filter((e) => (opts?.event ? e.event === opts.event : true))
-    .filter((e) => (opts?.level ? e.level === opts.level : true));
-  if (opts?.limit) return filtered.slice(0, opts.limit);
-  return filtered;
+  const result: ObservabilityEvent[] = [];
+  const limit = opts?.limit;
+
+  for (let i = events.length - 1; i >= 0; i--) {
+    const e = events[i];
+    if (e.timestamp < since) continue;
+    if (opts?.event && e.event !== opts.event) continue;
+    if (opts?.level && e.level !== opts.level) continue;
+
+    result.push(e);
+    if (limit && result.length >= limit) break;
+  }
+  return result;
 }
 
 export function getCounts(opts: { event: string; sinceMs?: number; bucketMs?: number }): Array<{ ts: number; count: number }> {
