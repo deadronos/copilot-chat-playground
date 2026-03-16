@@ -16,7 +16,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const { prompt, mode, sessionId, messages } = parsed.data;
+  const { prompt, mode, model, sessionId, messages } = parsed.data;
   const promptWithContext = buildPromptWithConversationContext({
     prompt,
     sessionId,
@@ -41,7 +41,8 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
   const streamResult = await callCopilotServiceStream(
     promptWithContext,
     mode as ChatMode,
-    abortController.signal
+    abortController.signal,
+    model
   );
 
   if (streamResult.success && streamResult.response) {
@@ -60,7 +61,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
       req.off("aborted", handleAbort);
       res.off("close", handleClose);
 
-      const fallbackResult = await callCopilotService(promptWithContext, mode as ChatMode);
+      const fallbackResult = await callCopilotService(promptWithContext, mode as ChatMode, model);
       if (!fallbackResult.success) {
         sendPlainTextError(
           res,
@@ -118,7 +119,7 @@ export async function handleChat(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  const result = await callCopilotService(promptWithContext, mode as ChatMode);
+  const result = await callCopilotService(promptWithContext, mode as ChatMode, model);
 
   if (!result.success) {
     sendPlainTextError(res, result.errorType, result.error || "An error occurred");

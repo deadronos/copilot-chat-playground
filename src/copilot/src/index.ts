@@ -2,7 +2,12 @@ import "dotenv/config"; // loads .env for local development. TODO: revisit .env 
 import crypto from "node:crypto";
 import express from "express";
 import { z } from "zod";
-import { callCopilotCLI, validateToken, getAvailableCopilotCandidatePaths } from "./copilot-cli.js";
+import {
+  callCopilotCLI,
+  callCopilotCLIStream,
+  validateToken,
+  getAvailableCopilotCandidatePaths,
+} from "./copilot-cli.js";
 import { createCopilotSDKService } from "./copilot-sdk.js";
 import { getMetric, incrementMetric } from "./metrics.js";
 import { createEventBus, type LogEvent } from "@copilot-playground/shared";
@@ -136,6 +141,7 @@ const app = createApp();
 const ChatRequestSchema = z.object({
   prompt: z.string().min(1).max(20_000),
   mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
+  model: z.string().trim().min(1).max(120).optional(),
 });
 
 function getSystemPrompt(mode: "explain-only" | "project-helper"): string {
@@ -165,7 +171,7 @@ app.post("/chat", async (req, res) => {
     return;
   }
 
-  const { prompt, mode } = parsed.data;
+  const { prompt, mode, model } = parsed.data;
   const requestId = crypto.randomUUID();
   const systemPrompt = getSystemPrompt(mode);
 
@@ -178,8 +184,8 @@ app.post("/chat", async (req, res) => {
 
   const result =
     USE_SDK && sdkService
-      ? await sdkService.chat(prompt, requestId, systemPrompt, undefined, abortController.signal)
-      : await callCopilotCLI(prompt, abortController.signal);
+      ? await sdkService.chat(prompt, requestId, systemPrompt, undefined, abortController.signal, model)
+      : await callCopilotCLI(prompt, { signal: abortController.signal, model });
 
   if (!result.success) {
     res.status(getStatusCode(result.errorType)).json({
@@ -201,7 +207,7 @@ app.post("/chat/stream", async (req, res) => {
     return;
   }
 
-  const { prompt, mode } = parsed.data;
+  const { prompt, mode, model } = parsed.data;
   const requestId = crypto.randomUUID();
   const systemPrompt = getSystemPrompt(mode);
 
@@ -243,7 +249,8 @@ app.post("/chat/stream", async (req, res) => {
       requestId,
       systemPrompt,
       undefined,
-      abortController.signal
+      abortController.signal,
+      model
     );
 
     if (!result.success) {
@@ -281,7 +288,7 @@ app.post("/chat/stream", async (req, res) => {
       startStream();
       res.write(chunk);
     },
-    abortController.signal
+    { signal: abortController.signal, model }
   );
 
   if (!cliResult.success) {

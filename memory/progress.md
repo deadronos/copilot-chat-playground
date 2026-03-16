@@ -12,6 +12,7 @@
 - Engine core helpers: extracted `engine/collisions`, `engine/particles`, and `engine/aiConfig` with focused unit tests; updated `core.ts` to delegate to these helpers (TASK031, Completed 2026-01-27).
 - RedVsBlue UI logic decomposed into match/session, AI director, and toast hooks with tests (TASK027, 2026-01-26).
 - Full workspace test suite (`pnpm test`) passes after TASK024 updates (2026-01-26).
+- Observability panel now supports explicit model overrides with local persistence, model-probe force refresh, and backend event clearing; chat requests forward the selected model through frontend, backend, and Copilot SDK/CLI layers (TASK034, Completed 2026-03-16).
 
 **What's left / Next:**
 
@@ -21,6 +22,7 @@
 - Execute monolith refactor Phase 1 (`TASK018`) and verify test coverage.
 - Monolith refactor Phase 3 (`TASK020`) completed with docs, CI guardrails, and validation runs.
 - Plan Playwright E2E implementation (`TASK021`) when ready.
+- Consider exposing the selected model more prominently in transcript/history UI if operator debugging requires it.
 
 **Known issues:**
 

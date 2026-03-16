@@ -19,6 +19,7 @@
 - 2026-01-25: Added Copilot CLI model probing + `GET /models` endpoint with caching, metrics, and unit tests (TASK022).
 - 2026-01-26: Extracted RedVsBlue `useGame` responsibilities into engine/renderer/telemetry/fps managers with unit coverage (TASK026).
 - 2026-01-26: Decomposed `RedVsBlue.tsx` into match/session, AI director, and toast hooks with tests (TASK027).
+- 2026-03-16: Added observability model selection controls with local persistence, force-refresh probing, clear-events endpoint/control, and end-to-end model override plumbing across frontend/backend/copilot layers (TASK034).
 
 **Monolith inventory (2026-01-26):**
 
@@ -34,6 +35,7 @@
 4. Clarify Playwright E2E timing (TASK019 acceptance vs docs/agents/testing).
 5. Continue `TASK018`: finalize helper extraction/tests and document changes.
 6. Plan next CI validation work for guardrails (coverage + router) in a PR.
+7. Consider a follow-up to surface the active model in streamed output/history for easier debugging if users switch models frequently.
 
 **Active decisions:**
 

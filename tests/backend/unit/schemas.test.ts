@@ -20,6 +20,7 @@ describe("backend request schemas", () => {
   it("accepts chat session context", () => {
     const parsed = ChatRequestSchema.safeParse({
       prompt: "Hello",
+      model: "gpt-5",
       sessionId: "session-123",
       messages: [
         { role: "user", content: "Hi" },
@@ -29,6 +30,7 @@ describe("backend request schemas", () => {
 
     expect(parsed.success).toBe(true);
     if (parsed.success) {
+      expect(parsed.data.model).toBe("gpt-5");
       expect(parsed.data.sessionId).toBe("session-123");
       expect(parsed.data.messages).toHaveLength(2);
     }

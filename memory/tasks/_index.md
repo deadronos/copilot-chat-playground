@@ -33,3 +33,4 @@
 - TASK031 - Extract engine core helpers (collisions, particles, AI config) - Completed ✅ (2026-01-27)
 - TASK032 - Chat session context hardening - Completed ✅ (2026-03-15)
 - TASK033 - Documentation alignment for chat session context - Completed ✅ (2026-03-15)
+- TASK034 - Observability model selection & controls - Completed ✅ (2026-03-16)

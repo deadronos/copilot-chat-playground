@@ -67,4 +67,20 @@ describe("observability endpoints", () => {
     expect(typeof res.body.summary).toBe("object");
     expect(res.body.summary["match.start.success"]).toBeGreaterThanOrEqual(1);
   });
+
+  test("delete events endpoint clears stored observability events", async () => {
+    const app = await createApp();
+
+    await request(app)
+      .post("/api/redvsblue/match/start")
+      .send({ matchId: "obs-match-4", rulesVersion: "v1", proposedRules: {}, clientConfig: {} });
+
+    const clearRes = await request(app).delete("/api/observability/events");
+    expect(clearRes.status).toBe(200);
+    expect(clearRes.body.ok).toBe(true);
+
+    const summaryRes = await request(app).get("/api/observability/summary");
+    expect(summaryRes.status).toBe(200);
+    expect(summaryRes.body.summary).toEqual({});
+  });
 });

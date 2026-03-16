@@ -1,6 +1,13 @@
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type CopilotHealth = {
   mode?: "sdk" | "cli" | string;
@@ -23,7 +30,11 @@ type BackendSummaryResponse = {
 type ObservabilityModelPanelProps = {
   copilotBaseUrl?: string;
   backendBaseUrl?: string;
+  selectedModel?: string;
+  onSelectedModelChange?: (model: string | undefined) => void;
 };
+
+const DEFAULT_MODEL_SELECTION = "__default_model__";
 
 function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/$/, "");
@@ -76,6 +87,8 @@ async function fetchText(url: string, label: string): Promise<string> {
 export function ObservabilityModelPanel({
   copilotBaseUrl = "/copilot",
   backendBaseUrl = "",
+  selectedModel,
+  onSelectedModelChange,
 }: ObservabilityModelPanelProps) {
   const [health, setHealth] = React.useState<CopilotHealth | null>(null);
   const [models, setModels] = React.useState<CopilotModels | null>(null);
@@ -83,11 +96,13 @@ export function ObservabilityModelPanel({
   const [summary, setSummary] = React.useState<Record<string, number>>({});
   const [errors, setErrors] = React.useState<string[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isClearingEvents, setIsClearingEvents] = React.useState(false);
   const [lastUpdatedAt, setLastUpdatedAt] = React.useState<number | null>(null);
 
-  const refreshDiagnostics = React.useCallback(async () => {
+  const refreshDiagnostics = React.useCallback(async (options?: { forceRefreshModels?: boolean }) => {
     const copilotBase = normalizeBaseUrl(copilotBaseUrl);
     const backendBase = normalizeBaseUrl(backendBaseUrl);
+    const modelsUrl = `${copilotBase}/models${options?.forceRefreshModels ? "?refresh=true" : ""}`;
 
     setIsLoading(true);
     setErrors([]);
@@ -97,7 +112,7 @@ export function ObservabilityModelPanel({
     const [healthResult, modelsResult, metricsResult, summaryResult] =
       await Promise.allSettled([
         fetchJson<CopilotHealth>(`${copilotBase}/health`, "Copilot /health"),
-        fetchJson<CopilotModels>(`${copilotBase}/models`, "Copilot /models"),
+        fetchJson<CopilotModels>(modelsUrl, "Copilot /models"),
         fetchText(`${copilotBase}/metrics`, "Copilot /metrics"),
         fetchJson<BackendSummaryResponse>(
           `${backendBase}/api/observability/summary`,
@@ -150,6 +165,32 @@ export function ObservabilityModelPanel({
     setIsLoading(false);
   }, [backendBaseUrl, copilotBaseUrl]);
 
+  const clearEvents = React.useCallback(async () => {
+    const backendBase = normalizeBaseUrl(backendBaseUrl);
+
+    setIsClearingEvents(true);
+    setErrors([]);
+
+    try {
+      const response = await fetch(`${backendBase}/api/observability/events`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Failed to clear backend events: ${response.status} ${body}`.trim());
+      }
+
+      await refreshDiagnostics();
+    } catch (error) {
+      setErrors([
+        error instanceof Error ? error.message : "Failed to clear backend events.",
+      ]);
+    } finally {
+      setIsClearingEvents(false);
+    }
+  }, [backendBaseUrl, refreshDiagnostics]);
+
   React.useEffect(() => {
     void refreshDiagnostics();
   }, [refreshDiagnostics]);
@@ -157,6 +198,13 @@ export function ObservabilityModelPanel({
   const topSummaryEntries = Object.entries(summary)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
+
+  const advertisedModels = React.useMemo(() => {
+    const nextModels = models?.models ?? [];
+    return Array.from(new Set(nextModels));
+  }, [models?.models]);
+
+  const selectedValue = selectedModel ?? DEFAULT_MODEL_SELECTION;
 
   const keyMetricEntries = Object.entries(metrics)
     .filter(([key]) => key.startsWith("copilot_model_"))
@@ -173,14 +221,32 @@ export function ObservabilityModelPanel({
             Monitor Copilot mode, model source/cache, and runtime counters.
           </p>
         </div>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => void refreshDiagnostics()}
-          disabled={isLoading}
-        >
-          {isLoading ? "Refreshing…" : "Refresh"}
-        </Button>
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void refreshDiagnostics()}
+            disabled={isLoading || isClearingEvents}
+          >
+            {isLoading ? "Refreshing…" : "Refresh"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void refreshDiagnostics({ forceRefreshModels: true })}
+            disabled={isLoading || isClearingEvents}
+          >
+            Force Refresh
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void clearEvents()}
+            disabled={isLoading || isClearingEvents}
+          >
+            {isClearingEvents ? "Clearing…" : "Clear Events"}
+          </Button>
+        </div>
       </div>
 
       {isLoading && (
@@ -196,6 +262,47 @@ export function ObservabilityModelPanel({
       )}
 
       <div className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
+        <div className="rounded-2xl border border-slate-900/10 bg-white p-4 sm:col-span-2">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <h3 className="font-medium text-slate-900">Model override</h3>
+              <p className="mt-2 text-slate-600">
+                Choose a concrete model for new chat requests or fall back to the service default.
+              </p>
+            </div>
+            <div className="w-full lg:max-w-sm">
+              <label className="mb-2 block text-xs font-medium uppercase tracking-[0.24em] text-slate-500">
+                Model
+              </label>
+              <Select
+                value={selectedValue}
+                onValueChange={(value) =>
+                  onSelectedModelChange?.(
+                    value === DEFAULT_MODEL_SELECTION ? undefined : value
+                  )
+                }
+              >
+                <SelectTrigger className="h-11 w-full rounded-2xl border border-slate-900/15 bg-white/90 px-4 text-left shadow-[inset_0_0_0_1px_rgba(255,255,255,0.6)] hover:bg-white/95">
+                  <SelectValue placeholder="Use service default" />
+                </SelectTrigger>
+                <SelectContent className="rounded-2xl border border-slate-900/15 bg-white shadow-[0_10px_40px_-20px_rgba(15,23,42,0.6)]">
+                  <SelectItem value={DEFAULT_MODEL_SELECTION}>
+                    Use service default{health?.defaultModel ? ` (${health.defaultModel})` : ""}
+                  </SelectItem>
+                  {advertisedModels.map((model) => (
+                    <SelectItem key={model} value={model}>
+                      {model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-slate-500">
+            Active selection: {selectedModel ?? `service default${health?.defaultModel ? ` (${health.defaultModel})` : ""}`}
+          </p>
+        </div>
+
         <div className="rounded-2xl border border-slate-900/10 bg-white p-4">
           <h3 className="font-medium text-slate-900">Copilot /health</h3>
           <p className="mt-2 text-slate-600">

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  clearEvents,
   getEvents,
   getCounts,
   getSummary,
@@ -44,6 +45,11 @@ export function createObservabilityRouter(): express.Router {
   router.get("/api/observability/summary", (_req, res) => {
     const summary = getSummary();
     res.json({ ok: true, summary });
+  });
+
+  router.delete("/api/observability/events", (_req, res) => {
+    clearEvents();
+    res.json({ ok: true });
   });
 
   return router;

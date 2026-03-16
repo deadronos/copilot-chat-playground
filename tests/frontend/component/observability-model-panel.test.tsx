@@ -5,9 +5,12 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { ObservabilityModelPanel } from "@/components/chat-playground/ObservabilityModelPanel";
 
 describe("ObservabilityModelPanel", () => {
+  const onSelectedModelChange = vi.fn();
+
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
+    onSelectedModelChange.mockReset();
   });
 
   it("fetches and renders diagnostics from copilot and backend endpoints", async () => {
@@ -74,6 +77,8 @@ describe("ObservabilityModelPanel", () => {
       <ObservabilityModelPanel
         copilotBaseUrl="http://copilot.local"
         backendBaseUrl="http://backend.local"
+        selectedModel={undefined}
+        onSelectedModelChange={onSelectedModelChange}
       />,
     );
 
@@ -90,18 +95,35 @@ describe("ObservabilityModelPanel", () => {
     expect(screen.getByText(/Models:\s*gpt-5-mini, gpt-5/)).toBeTruthy();
     expect(screen.getByText("copilot_model_probe_total: 4")).toBeTruthy();
     expect(screen.getByText("match.start: 3")).toBeTruthy();
+    expect(screen.getByText(/Active selection: service default \(gpt-5-mini\)/)).toBeTruthy();
 
     expect(fetchMock).toHaveBeenCalledTimes(4);
   });
 
-  it("supports manual refresh and renders endpoint errors", async () => {
+  it("supports manual refresh, force refresh, and clearing events", async () => {
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
 
+      if (url.endsWith("/models?refresh=true")) {
+        return new Response(
+          JSON.stringify({
+            source: "cli",
+            models: ["gpt-5", "claude-sonnet-4.5"],
+            cached: false,
+          }),
+          { status: 200 },
+        );
+      }
+
       if (url.endsWith("/models")) {
-        return new Response(JSON.stringify({ error: "probe unavailable" }), {
-          status: 500,
-        });
+        return new Response(
+          JSON.stringify({
+            source: "cli",
+            models: ["gpt-5-mini"],
+            cached: true,
+          }),
+          { status: 200 },
+        );
       }
 
       if (url.endsWith("/metrics")) {
@@ -122,9 +144,13 @@ describe("ObservabilityModelPanel", () => {
       }
 
       if (url.endsWith("/api/observability/summary")) {
-        return new Response(JSON.stringify({ ok: true, summary: {} }), {
+        return new Response(JSON.stringify({ ok: true, summary: { "match.start": 1 } }), {
           status: 200,
         });
+      }
+
+      if (url.endsWith("/api/observability/events")) {
+        return new Response(JSON.stringify({ ok: true }), { status: 200 });
       }
 
       return new Response("not found", { status: 404 });
@@ -136,18 +162,36 @@ describe("ObservabilityModelPanel", () => {
       <ObservabilityModelPanel
         copilotBaseUrl="http://copilot.local"
         backendBaseUrl="http://backend.local"
+        selectedModel="gpt-5-mini"
+        onSelectedModelChange={onSelectedModelChange}
       />,
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Failed to load Copilot \/models/)).toBeTruthy();
+      expect(screen.getByText(/Active selection: gpt-5-mini/)).toBeTruthy();
     });
 
-    const refreshButton = screen.getByRole("button", { name: /refresh/i });
+    const refreshButton = screen.getByRole("button", { name: /^Refresh$/i });
     fireEvent.click(refreshButton);
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledTimes(8);
+    });
+
+    const forceRefreshButton = screen.getByRole("button", { name: /force refresh/i });
+    fireEvent.click(forceRefreshButton);
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith("http://copilot.local/models?refresh=true");
+    });
+
+    const clearEventsButton = screen.getByRole("button", { name: /clear events/i });
+    fireEvent.click(clearEventsButton);
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith("http://backend.local/api/observability/events", {
+        method: "DELETE",
+      });
     });
   });
 });
