@@ -75,6 +75,7 @@ describe("chatController", () => {
     const req = createRequest({
       prompt: "What changed?",
       mode: "project-helper",
+      model: "gpt-5",
       sessionId: "session-123",
       messages: [
         { role: "user", content: "Hello" },
@@ -100,6 +101,8 @@ describe("chatController", () => {
     expect(streamPrompt).toContain("User: Hello");
     expect(streamPrompt).toContain("Assistant: Hi there");
     expect(streamPrompt).toContain("User (latest): What changed?");
+    expect(vi.mocked(callCopilotServiceStream).mock.calls[0]?.[3]).toBe("gpt-5");
     expect(vi.mocked(callCopilotService).mock.calls[0]?.[0]).toBe(streamPrompt);
+    expect(vi.mocked(callCopilotService).mock.calls[0]?.[2]).toBe("gpt-5");
   });
 });

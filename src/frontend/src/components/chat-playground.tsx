@@ -17,6 +17,10 @@ import {
   writeStoredChatSession,
   type ChatTimelineMessage,
 } from "@/lib/chatSessionStorage"
+import {
+  readStoredSelectedModel,
+  writeStoredSelectedModel,
+} from "@/lib/modelSelectionStorage"
 
 // Runtime configuration: prefer VITE_API_URL if provided; otherwise fall back to proxy
 const VITE_API_URL = (import.meta.env.VITE_API_URL as string | undefined) ?? undefined
@@ -96,6 +100,9 @@ function getTranscript(messages: ChatTimelineMessage[]) {
 export function ChatPlayground() {
   const [prompt, setPrompt] = React.useState("")
   const [mode, setMode] = React.useState<ChatMode>("explain-only")
+  const [selectedModel, setSelectedModel] = React.useState<string | undefined>(() =>
+    readStoredSelectedModel()
+  )
   const [sessionId, setSessionId] = React.useState<string | undefined>(undefined)
   const [timeline, setTimeline] = React.useState<ChatTimelineMessage[]>([])
   const [activeAssistantId, setActiveAssistantId] = React.useState<string | null>(null)
@@ -143,6 +150,10 @@ export function ChatPlayground() {
     })
     setHasSavedSession(didPersist)
   }, [mode, timeline, sessionId])
+
+  React.useEffect(() => {
+    writeStoredSelectedModel(selectedModel)
+  }, [selectedModel])
 
   React.useEffect(() => {
     if (!activeAssistantId) {
@@ -204,7 +215,14 @@ export function ChatPlayground() {
     setPrompt("")
     setActiveAssistantId(assistantId)
 
-    await submit({ prompt: trimmedPrompt, apiUrl, mode, sessionId, messages: messagesHistory })
+    await submit({
+      prompt: trimmedPrompt,
+      apiUrl,
+      mode,
+      model: selectedModel,
+      sessionId,
+      messages: messagesHistory,
+    })
   }
 
   const handleNewChat = React.useCallback(() => {
@@ -305,6 +323,8 @@ export function ChatPlayground() {
         <ObservabilityModelPanel
           copilotBaseUrl={VITE_COPILOT_URL ?? "/copilot"}
           backendBaseUrl={VITE_BACKEND_URL ?? ""}
+          selectedModel={selectedModel}
+          onSelectedModelChange={setSelectedModel}
         />
 
         <RedVsBluePanel isOpen={isRedVsBlueOpen} onOpenChange={setIsRedVsBlueOpen} />

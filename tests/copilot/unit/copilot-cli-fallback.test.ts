@@ -65,10 +65,12 @@ describe("callCopilotCLI fallback behavior", () => {
       throw new Error("unexpected spawn call");
     });
 
-    const res = await callCopilotCLI("hello world");
+    const res = await callCopilotCLI("hello world", { model: "gpt-5" });
 
     expect(res.success).toBe(true);
     expect(res.output).toContain("OK output");
+    expect((spawn as unknown as vi.Mock).mock.calls[0][1]).toContain("--model");
+    expect((spawn as unknown as vi.Mock).mock.calls[0][1]).toContain("gpt-5");
   });
 
   it("returns spawn error when both attempts fail", async () => {

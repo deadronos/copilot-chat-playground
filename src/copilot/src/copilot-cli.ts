@@ -10,6 +10,38 @@ export interface CopilotResponse {
   errorType?: "auth" | "token_missing" | "spawn" | "unknown";
 }
 
+export type CopilotCLIOptions = {
+  model?: string;
+  signal?: AbortSignal;
+};
+
+function isAbortSignalLike(value: unknown): value is AbortSignal {
+  return Boolean(
+    value &&
+      typeof value === "object" &&
+      "aborted" in value &&
+      typeof (value as { addEventListener?: unknown }).addEventListener === "function"
+  );
+}
+
+function normalizeCliOptions(
+  modelOrSignal?: AbortSignal | CopilotCLIOptions,
+  signal?: AbortSignal
+): CopilotCLIOptions {
+  if (isAbortSignalLike(modelOrSignal)) {
+    return { signal: modelOrSignal };
+  }
+
+  return {
+    model: modelOrSignal?.model,
+    signal: modelOrSignal?.signal ?? signal,
+  };
+}
+
+function buildPromptArgs(prompt: string, model?: string): string[] {
+  return model ? ["-p", prompt, "--silent", "--model", model] : ["-p", prompt, "--silent"];
+}
+
 /**
  * Validates that GH_TOKEN is present in the environment
  */
@@ -88,8 +120,12 @@ export async function getAvailableCopilotCandidatePaths(): Promise<{ path: strin
  * Calls the Copilot CLI with a prompt and returns buffered output
  * Attempts 'copilot' first, then falls back to 'pnpm exec -- copilot ...'
  */
-export async function callCopilotCLI(prompt: string, signal?: AbortSignal): Promise<CopilotResponse> {
-  return callCopilotCLIInternal(prompt, undefined, signal);
+export async function callCopilotCLI(
+  prompt: string,
+  modelOrSignal?: AbortSignal | CopilotCLIOptions,
+  signal?: AbortSignal
+): Promise<CopilotResponse> {
+  return callCopilotCLIInternal(prompt, undefined, normalizeCliOptions(modelOrSignal, signal));
 }
 
 /**
@@ -98,9 +134,10 @@ export async function callCopilotCLI(prompt: string, signal?: AbortSignal): Prom
 export async function callCopilotCLIStream(
   prompt: string,
   onChunk: (chunk: string) => void,
+  modelOrSignal?: AbortSignal | CopilotCLIOptions,
   signal?: AbortSignal
 ): Promise<CopilotResponse> {
-  return callCopilotCLIInternal(prompt, onChunk, signal);
+  return callCopilotCLIInternal(prompt, onChunk, normalizeCliOptions(modelOrSignal, signal));
 }
 
 /**
@@ -109,7 +146,7 @@ export async function callCopilotCLIStream(
 async function callCopilotCLIInternal(
   prompt: string,
   onChunk?: (chunk: string) => void,
-  signal?: AbortSignal
+  options: CopilotCLIOptions = {}
 ): Promise<CopilotResponse> {
   // Validate token first
   const tokenCheck = validateToken();
@@ -122,8 +159,8 @@ async function callCopilotCLIInternal(
   }
 
   const attempts = [
-    { cmd: "copilot", args: ["-p", prompt, "--silent"] },
-    { cmd: "pnpm", args: ["exec", "--", "copilot", "-p", prompt, "--silent"] },
+    { cmd: "copilot", args: buildPromptArgs(prompt, options.model) },
+    { cmd: "pnpm", args: ["exec", "--", "copilot", ...buildPromptArgs(prompt, options.model)] },
   ];
 
   const tried: string[] = [];
@@ -133,7 +170,7 @@ async function callCopilotCLIInternal(
 
     const result = await execCommand(attempt.cmd, attempt.args, {
       maxOutputSize: Number.POSITIVE_INFINITY,
-      signal,
+      signal: options.signal,
       onStdout: onChunk,
     });
 
@@ -142,7 +179,7 @@ async function callCopilotCLIInternal(
     }
 
     // If request was aborted, stop trying
-    if (signal?.aborted) {
+    if (options.signal?.aborted) {
       return {
         success: false,
         error: "Request aborted",
@@ -165,16 +202,16 @@ async function callCopilotCLIInternal(
         // Try spawning the first candidate that exists on disk directly (absolute path)
         for (const c of available) {
           tried.push(c);
-          const directResult = await execCommand(c, ["-p", prompt, "--silent"], {
+          const directResult = await execCommand(c, buildPromptArgs(prompt, options.model), {
             maxOutputSize: Number.POSITIVE_INFINITY,
-            signal,
+            signal: options.signal,
             onStdout: onChunk,
           });
           if (directResult.success) {
             return { success: true, output: directResult.stdout.trim() };
           }
 
-          if (signal?.aborted) {
+          if (options.signal?.aborted) {
             return {
               success: false,
               error: "Request aborted",

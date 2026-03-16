@@ -136,6 +136,31 @@ describe("CopilotSDKService", () => {
       spy2.mockRestore()
     })
 
+    it("should use an explicit requested model when provided", { timeout: 10000 }, async () => {
+      process.env.GH_TOKEN = "token"
+      process.env.COPILOT_DEFAULT_MODEL = "gpt-5-mini"
+
+      const service = new CopilotSDKService()
+      await service.initialize()
+      const client = (service as any).client as any
+
+      const mockSession = {
+        sessionId: "model-session",
+        on: (_h: (ev: any) => void) => {},
+        sendAndWait: async () => ({ type: "assistant.message", data: { content: "ok" } }),
+        destroy: async () => {},
+      }
+
+      const spy = vi.spyOn(client, "createSession").mockImplementation(async (cfg: any) => mockSession as any)
+
+      const res = await service.chat("hello", "req-model", undefined, undefined, undefined, "gpt-5")
+      expect(res.success).toBe(true)
+      expect(spy).toHaveBeenCalled()
+      expect(spy.mock.calls[0][0].model).toBe("gpt-5")
+
+      spy.mockRestore()
+    })
+
     it("should log model mismatch when requested model differs from actual provider model", { timeout: 10000 }, async () => {
       process.env.GH_TOKEN = "token"
       process.env.COPILOT_DEFAULT_MODEL = "gpt-5-mini"
@@ -256,6 +281,40 @@ describe("CopilotSDKService", () => {
       expect(result.success).toBe(true)
       expect(result.output).toBe("Only final")
       expect(chunks.join("")).toBe("Only final")
+      spy.mockRestore()
+    })
+
+    it("passes the requested model through chatStream", { timeout: 10000 }, async () => {
+      process.env.GH_TOKEN = "token"
+      const service = new CopilotSDKService()
+
+      await service.initialize()
+      const client = (service as unknown as { client: { createSession: (cfg: unknown) => Promise<unknown> } }).client
+
+      const mockSession = {
+        sessionId: "stream-model-session",
+        on: (_h: (ev: any) => void) => {},
+        sendAndWait: async () => ({ type: "assistant.message", data: { content: "Only final" } }),
+        destroy: async () => {},
+      }
+
+      const spy = vi
+        .spyOn(client as { createSession: (cfg: unknown) => Promise<unknown> }, "createSession")
+        .mockImplementation(async () => mockSession)
+
+      const result = await service.chatStream(
+        "hello",
+        () => {},
+        "stream-req",
+        undefined,
+        undefined,
+        undefined,
+        "claude-sonnet-4.5"
+      )
+
+      expect(result.success).toBe(true)
+      expect(spy).toHaveBeenCalled()
+      expect(spy.mock.calls[0][0]).toMatchObject({ model: "claude-sonnet-4.5" })
       spy.mockRestore()
     })
   })

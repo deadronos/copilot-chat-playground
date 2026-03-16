@@ -181,4 +181,39 @@ describe("useStreamingChat", () => {
     )
     expect(latest()?.output).toBe("second")
   })
+
+  it("includes the selected model in chat requests when provided", async () => {
+    const onChange = vi.fn()
+    const encoder = new TextEncoder()
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      headers: new Headers(),
+      body: new ReadableStream({
+        start(controller) {
+          controller.enqueue(encoder.encode("ok"))
+          controller.close()
+        },
+      }),
+    } as Response)
+
+    vi.stubGlobal("fetch", fetchMock as unknown as typeof fetch)
+
+    render(<Harness onChange={onChange} />)
+    const latest = () => onChange.mock.calls.at(-1)?.[0]
+
+    await act(async () => {
+      await latest()?.submit({
+        prompt: "Hello",
+        apiUrl: "/api/chat",
+        mode: "project-helper",
+        model: "gpt-5",
+      })
+    })
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock.mock.calls[0]?.[1]?.body).toBe(
+      JSON.stringify({ prompt: "Hello", mode: "project-helper", model: "gpt-5" })
+    )
+  })
 })

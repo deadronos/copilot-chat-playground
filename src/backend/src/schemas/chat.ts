@@ -8,6 +8,7 @@ export const ChatMessageSchema = z.object({
 export const ChatRequestSchema = z.object({
   prompt: z.string().trim().min(1).max(20_000),
   mode: z.enum(["explain-only", "project-helper"]).default("explain-only"),
+  model: z.string().trim().min(1).max(120).optional(),
   sessionId: z.string().trim().min(1).max(200).optional(),
   messages: z.array(ChatMessageSchema).max(200).optional(),
 });

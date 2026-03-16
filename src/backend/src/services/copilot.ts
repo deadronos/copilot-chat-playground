@@ -26,13 +26,26 @@ function getCopilotServiceUrl(): string {
   return process.env.COPILOT_SERVICE_URL || "http://localhost:3210";
 }
 
+function buildCopilotRequestBody(
+  prompt: string,
+  mode: ChatMode,
+  model?: string
+): { prompt: string; mode: ChatMode; model?: string } {
+  return {
+    prompt,
+    mode,
+    ...(model ? { model } : {}),
+  };
+}
+
 /**
  * Calls the copilot service and returns the response (buffered)
  * Fallback for non-streaming mode.
  */
 export async function callCopilotService(
   prompt: string,
-  mode: ChatMode = "explain-only"
+  mode: ChatMode = "explain-only",
+  model?: string
 ): Promise<CopilotCallResult> {
   try {
     const response = await fetch(`${getCopilotServiceUrl()}/chat`, {
@@ -40,7 +53,7 @@ export async function callCopilotService(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt, mode }),
+      body: JSON.stringify(buildCopilotRequestBody(prompt, mode, model)),
     });
 
     if (!response.ok) {
@@ -75,7 +88,8 @@ export async function callCopilotService(
 export async function callCopilotServiceStream(
   prompt: string,
   mode: ChatMode,
-  signal: AbortSignal
+  signal: AbortSignal,
+  model?: string
 ): Promise<CopilotStreamResult> {
   try {
     const response = await fetch(`${getCopilotServiceUrl()}/chat/stream`, {
@@ -84,7 +98,7 @@ export async function callCopilotServiceStream(
         "Content-Type": "application/json",
         Accept: "text/plain",
       },
-      body: JSON.stringify({ prompt, mode }),
+      body: JSON.stringify(buildCopilotRequestBody(prompt, mode, model)),
       signal,
     });
 

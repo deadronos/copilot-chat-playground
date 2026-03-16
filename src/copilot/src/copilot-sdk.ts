@@ -57,7 +57,8 @@ export class CopilotSDKService {
     requestId?: string,
     systemPrompt?: string,
     systemMode?: "append" | "replace",
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    requestedModel?: string
   ): Promise<CopilotSDKResponse> {
     // Validate token first
     const tokenCheck = validateToken();
@@ -70,7 +71,12 @@ export class CopilotSDKService {
     }
 
     try {
-      const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
+      const { session, model } = await this.createSession(
+        requestId,
+        systemPrompt,
+        systemMode,
+        requestedModel
+      );
 
       if (signal) {
         if (signal.aborted) {
@@ -176,7 +182,8 @@ export class CopilotSDKService {
     requestId?: string,
     systemPrompt?: string,
     systemMode?: "append" | "replace",
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    requestedModel?: string
   ): Promise<CopilotSDKResponse> {
     const tokenCheck = validateToken();
     if (!tokenCheck.valid) {
@@ -188,7 +195,12 @@ export class CopilotSDKService {
     }
 
     try {
-      const { session, model } = await this.createSession(requestId, systemPrompt, systemMode);
+      const { session, model } = await this.createSession(
+        requestId,
+        systemPrompt,
+        systemMode,
+        requestedModel
+      );
 
       if (signal) {
         if (signal.aborted) {
@@ -276,7 +288,8 @@ export class CopilotSDKService {
   private async createSession(
     requestId?: string,
     systemPrompt?: string,
-    systemMode?: "append" | "replace"
+    systemMode?: "append" | "replace",
+    requestedModel?: string
   ): Promise<{ session: Awaited<ReturnType<CopilotClient["createSession"]>>; model: string }> {
     if (!this.client) {
       await this.initialize();
@@ -292,8 +305,12 @@ export class CopilotSDKService {
       ? ({ content: systemPrompt, mode: systemMode ?? "append" } as SystemMessageConfig)
       : undefined;
 
-    const model = getDefaultModel();
-    this.emitLog("info", "sdk.session.model", "Using Copilot model", { requestId, model });
+    const model = requestedModel?.trim() || getDefaultModel();
+    this.emitLog("info", "sdk.session.model", "Using Copilot model", {
+      requestId,
+      model,
+      overrideApplied: Boolean(requestedModel?.trim()),
+    });
 
     const session = await this.client.createSession({
       model,
